@@ -4,12 +4,14 @@ using System.Collections.Generic;
 
 public class TerrainController : MonoBehaviour {
 
-	Cell[,] map = new Cell[50,50];
+	Cell[,] map = new Cell[8,8];
 	bool meshInitializedInEditor = false;
 	private const float hw = 1;
 	// Use this for initialization
 	void Start () {
+		GenerateMap();
 		GenerateMesh(false);
+
 	}
 	
 	// Update is called once per frame
@@ -37,24 +39,129 @@ public class TerrainController : MonoBehaviour {
 		if(meshInitializedInEditor==false)
 		{
 			meshInitializedInEditor=true;
+			GenerateMap();
 			GenerateMesh(true);
 		}
+	}
+
+	void GenerateMap()
+	{
+		int h = map.GetUpperBound(0);
+		int w = map.GetUpperBound(1);
+
+		
+		for(int i=0;i<=h;i++)
+		{
+			for(int j=0;j<=w;j++)
+			{
+				Cell c = new Cell();
+				map[i,j]=c;
+				c.Digged = (Random.Range(0,2)==0);
+				//c.Digged=false;
+			}
+		}
+		//map[1,1].Digged=true;
 	}
 
 	void GenerateMesh(bool editMode)
 	{
 
-		Mesh mesh;
-		if(editMode)
-			mesh = GetComponent<MeshFilter>().sharedMesh;
-		else 
-			mesh = GetComponent<MeshFilter>().mesh;
+		Mesh mesh = new Mesh();
+
 
 		List<Vector3> vertices = new List<Vector3>();
 
 		List<int> triangles = new List<int>();
 
-		int h = map.GetUpperBound(0)+1;
+		int h = map.GetUpperBound(0);
+		int w = map.GetUpperBound(1);
+		int index=0;
+
+		for(int i=0;i<=h;i++)
+		{
+			for(int j=0;j<=w;j++)
+			{
+				Cell c = map[i,j];
+				c.lt=-1;
+				c.lb=-1;
+				c.rt=-1;
+				c.rb=-1;
+				float level = c.Digged?hw:0;
+				//Debug.Log("lt="+c.lt+" rt="+c.rt);
+				if(j>0 && c.Digged==map[i,j-1].Digged)
+				{
+					c.lt=map[i,j-1].rt;
+					c.lb=map[i,j-1].rb;
+				}
+
+				if(i>0 && c.Digged==map[i-1,j].Digged)
+				{
+					c.lt=map[i-1,j].lb;
+					c.rt=map[i-1,j].rb;
+				}
+
+				if(c.lt==-1)
+				{
+					c.lt=index;
+					vertices.Add(new Vector3(j*hw,level,i*hw));
+					index++;
+				}
+				if(c.rt==-1)
+				{
+					c.rt=index;
+					vertices.Add(new Vector3((j+1)*hw,level,i*hw));
+					index++;
+				}
+				if(c.lb==-1)
+				{
+					c.lb=index;
+					vertices.Add(new Vector3(j*hw,level,(i+1)*hw));
+					index++;
+				}
+				if(c.rb==-1)
+				{
+					c.rb=index;
+					vertices.Add(new Vector3((j+1)*hw,level,(i+1)*hw));
+					index++;
+				}
+
+				triangles.Add(c.lt);
+				triangles.Add(c.lb);
+				triangles.Add(c.rt);
+
+				triangles.Add(c.rt);
+				triangles.Add(c.lb);
+				triangles.Add(c.rb);
+
+				if(j>0 && c.Digged!=map[i,j-1].Digged)
+				{
+					triangles.Add(map[i,j-1].rt);
+					triangles.Add(map[i,j-1].rb);
+					triangles.Add(c.lb);
+
+
+					triangles.Add(map[i,j-1].rt);
+					triangles.Add(c.lb);
+					triangles.Add(c.lt);
+				}
+
+				if(i>0 && c.Digged!=map[i-1,j].Digged)
+				{
+					triangles.Add(map[i-1,j].rb);
+					triangles.Add(map[i-1,j].lb);
+					triangles.Add(c.lt);
+					
+					
+					triangles.Add(map[i-1,j].rb);
+					triangles.Add(c.lt);
+					triangles.Add(c.rt);
+				}
+			}
+		}
+		//Debug.Log("index = "+index);
+
+
+		/*int h = map.GetUpperBound(0)+1;
 		int w = map.GetUpperBound(1)+1;
 		for(int i=0;i<h;i++)
 		{
@@ -76,10 +183,15 @@ public class TerrainController : MonoBehaviour {
 				}
 
 			}
-		}
+		}*/
 
 		mesh.vertices = vertices.ToArray();
 		mesh.triangles = triangles.ToArray();
 		mesh.RecalculateNormals();
+
+		if(editMode)
+			GetComponent<MeshFilter>().sharedMesh=mesh;
+		else 
+			GetComponent<MeshFilter>().mesh = mesh;
 	}
 }

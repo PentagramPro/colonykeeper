@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Cell {
 
+
 	public bool Digged=false;
 
+	public int lt,lb,rt,rb;
 }

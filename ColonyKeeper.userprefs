@@ -1,12 +1,16 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Src\TerrainController.cs">
     <Files>
-      <File FileName="Assets\Src\TerrainController.cs" Line="6" Column="2" />
+      <File FileName="Assets\Src\TerrainController.cs" Line="74" Column="3" />
+      <File FileName="Assets\Src\Classes\Cell.cs" Line="8" Column="33" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="G:\unity-dev\ColonyKeeper\Assets\Src\TerrainController.cs" line="65" />
+      <Breakpoint file="G:\unity-dev\ColonyKeeper\Assets\Src\TerrainController.cs" line="12" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
