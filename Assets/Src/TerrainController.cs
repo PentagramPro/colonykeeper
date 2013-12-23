@@ -78,7 +78,10 @@ public class TerrainController : MonoBehaviour {
 			{
 				Cell c = new Cell();
 				map[i,j]=c;
-				c.Digged = (Random.Range(0,2)==0);
+				if(i<2 || j<2 || i>h-2 || j>w-2)
+					c.Digged=false;
+				else
+					c.Digged = (Random.Range(0,3)==0);
 				//c.Digged=false;
 			}
 		}

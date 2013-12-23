@@ -12,7 +12,7 @@ public class FogOfWarMeshGenerator : TerrainMeshGenerator {
 
 	bool isVisibleVertex(int i, int j)
 	{
-		if(i==0 || j==0 || i==map.GetLength(0) || j==map.GetLength(1))
+		if(i<=0 || j<=0 || i>=map.GetLength(0) || j>=map.GetLength(1))
 			return false;
 
 		return 	map[i,j].Digged || 
@@ -33,29 +33,31 @@ public class FogOfWarMeshGenerator : TerrainMeshGenerator {
 
 		int h = map.GetLength(0);
 		int w = map.GetLength(1);
+		int fh = h+3;
+		int fw = w+3;
 
-		for(int i=0;i<h+1;i++)
+		for(int i=-1;i<h+2;i++)
 		{
-			for(int j=0;j<w+1;j++)
+			for(int j=-1;j<w+2;j++)
 			{
 				int idx = vertices.Count;
 				vertices.Add(new Vector3(j*CELL_SIZE,CELL_SIZE,i*CELL_SIZE));
 				uvs.Add(new Vector2(0,0));
-				if(i>0)
+				if(i>-1)
 				{
-					if(j<w)
+					if(j<w+1)
 					{
 						triangles.Add(idx);
 
-						triangles.Add(idx-w);
-						triangles.Add(idx-w-1);
+						triangles.Add(idx-fw+1);
+						triangles.Add(idx-fw);
 					}
 
-					if(j>0)
+					if(j>-1)
 					{
 						triangles.Add(idx);
 
-						triangles.Add(idx-w-1);
+						triangles.Add(idx-fw);
 						triangles.Add(idx-1);
 					}
 				}
