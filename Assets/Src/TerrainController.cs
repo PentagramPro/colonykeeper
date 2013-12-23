@@ -7,14 +7,29 @@ public class TerrainController : MonoBehaviour {
 	Cell[,] map = new Cell[16,16];
 	bool meshInitializedInEditor = false;
 
+	public GameObject fogOfWar;
+	FogController fogOfWarController = null;
+
+	TerrainMeshGenerator terrGen = null;
 
 
-	TerrainMeshGenerator terrGen;
+	void Init()
+	{
 
+		if(terrGen==null)
+		{
+			terrGen = new TerrainMeshGenerator(map);
+			GenerateMap();
+		}
+		if(fogOfWarController==null)
+		{
+			fogOfWarController = fogOfWar.GetComponent<FogController>();
+		}
+	}
 	// Use this for initialization
 	void Start () {
-		terrGen = new TerrainMeshGenerator(map);
-		GenerateMap();
+		Init();
+
 		GenerateMesh(false);
 
 	}
@@ -44,7 +59,7 @@ public class TerrainController : MonoBehaviour {
 		if(meshInitializedInEditor==false)
 		{
 			meshInitializedInEditor=true;
-			GenerateMap();
+			Init();
 			GenerateMesh(true);
 		}
 	}
@@ -82,6 +97,7 @@ public class TerrainController : MonoBehaviour {
 		else 
 			GetComponent<MeshFilter>().mesh = mesh;
 
+		fogOfWarController.GenerateFog(map,editMode);
 	}
 
 

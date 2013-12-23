@@ -3,6 +3,9 @@ using System.Collections;
 
 public class FogController : MonoBehaviour {
 
+
+	FogOfWarMeshGenerator fogGen = null;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -11,5 +14,18 @@ public class FogController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	public void GenerateFog(Cell[,] map, bool editMode)
+	{
+		if(fogGen==null)
+			fogGen = new FogOfWarMeshGenerator(map);
+
+		Mesh mesh = fogGen.Generate();
+		
+		if(editMode)
+			GetComponent<MeshFilter>().sharedMesh=mesh;
+		else 
+			GetComponent<MeshFilter>().mesh = mesh;
 	}
 }

@@ -3,8 +3,8 @@ using System.Collections;
 
 public class TerrainMeshGenerator : MeshGenerator {
 
-	private const float hw = 1;
-	Cell[,] map;
+	protected const float CELL_SIZE = 1;
+	protected Cell[,] map;
 
 	public TerrainMeshGenerator(Cell [,] targetMap)
 	{
@@ -73,44 +73,44 @@ public class TerrainMeshGenerator : MeshGenerator {
 			{
 				Cell c = map[i,j];
 				int idx = vertices.Count;
-				float level = c.Digged?0:hw;
+				float level = c.Digged?0:CELL_SIZE;
 				
 				
 				
-				AttachHRect(new Vector2(	i		*hw, j		*hw),
-				            new Vector2(	(i+1)	*hw, (j+1)	*hw),level);
+				AttachHRect(new Vector2(	i		*CELL_SIZE, j		*CELL_SIZE),
+				            new Vector2(	(i+1)	*CELL_SIZE, (j+1)	*CELL_SIZE),level);
 				
 				if(c.Digged)
 				{
 					if(j>0 && map[i,j-1].Digged==false)
 					{
 						AttachVRect(
-							new Vector2(	(i+1)	*hw, j		*hw),
-							new Vector2(	i		*hw, j		*hw),
-							hw,0);
+							new Vector2(	(i+1)	*CELL_SIZE, j		*CELL_SIZE),
+							new Vector2(	i		*CELL_SIZE, j		*CELL_SIZE),
+							CELL_SIZE,0);
 					}
 					
 					if(i>0 && map[i-1,j].Digged==false)
 					{
-						AttachVRect(new Vector2(	i		*hw, j		*hw),
-						            new Vector2(	i		*hw, (j+1)	*hw),
-						            hw,0);
+						AttachVRect(new Vector2(	i		*CELL_SIZE, j		*CELL_SIZE),
+						            new Vector2(	i		*CELL_SIZE, (j+1)	*CELL_SIZE),
+						            CELL_SIZE,0);
 					}
 					
 					if(j<w && map[i,j+1].Digged==false)
 					{
 						AttachVRect(
-							new Vector2(	i		*hw, (j+1)	*hw),
-							new Vector2(	(i+1)	*hw, (j+1)	*hw),
-							hw,0);
+							new Vector2(	i		*CELL_SIZE, (j+1)	*CELL_SIZE),
+							new Vector2(	(i+1)	*CELL_SIZE, (j+1)	*CELL_SIZE),
+							CELL_SIZE,0);
 					}
 					
 					if(i<h && map[i+1,j].Digged==false)
 					{
 						AttachVRect(
-							new Vector2(	(i+1)	*hw, (j+1)	*hw),
-							new Vector2(	(i+1)	*hw, j		*hw),
-							hw,0);
+							new Vector2(	(i+1)	*CELL_SIZE, (j+1)	*CELL_SIZE),
+							new Vector2(	(i+1)	*CELL_SIZE, j		*CELL_SIZE),
+							CELL_SIZE,0);
 					}
 				}
 			}
