@@ -6,12 +6,13 @@ public class TerrainController : MonoBehaviour {
 
 	Cell[,] map = new Cell[16,16];
 	bool meshInitializedInEditor = false;
+	bool lmbPressed=false;
 
 	public GameObject fogOfWar;
 	FogController fogOfWarController = null;
 
 	TerrainMeshGenerator terrGen = null;
-
+	Plane plane;
 
 	void Init()
 	{
@@ -32,11 +33,48 @@ public class TerrainController : MonoBehaviour {
 
 		GenerateMesh(false);
 
+		plane = new Plane(Vector3.up, transform.position);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
+		if(Input.GetMouseButtonDown(0))
+		{
+			if(lmbPressed==false)
+			{
+				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+				// plane.Raycast returns the distance from the ray start to the hit point
+				float distance;
+				
+				if (plane.Raycast(ray,out distance))
+				{
+					Debug.Log("intersects");
+					Vector3 hitPoint = ray.GetPoint(distance)-transform.position;
+
+					int i = (int)(hitPoint.z/TerrainMeshGenerator.CELL_SIZE);
+					int j = (int)(hitPoint.x/TerrainMeshGenerator.CELL_SIZE);
+
+					if(i>=0 && j>=0 && i<map.GetLength(0) && j<map.GetLength(1))
+						OnCellClicked(i,j);
+				}
+			}
+
+			lmbPressed=true;
+		}
+		else
+		{
+			lmbPressed=false;
+		}
+	}
+
+	void OnCellClicked(int i, int j)
+	{
+		if(!map[i,j].Digged)
+		{
+			map[i,j].Digged=true;
+			GenerateMesh(false);
+		}
 	}
 
 	bool IsUpperVertex(int i, int j)
@@ -101,6 +139,11 @@ public class TerrainController : MonoBehaviour {
 			GetComponent<MeshFilter>().mesh = mesh;
 
 		fogOfWarController.GenerateFog(map,editMode);
+
+		if(!editMode)
+		{
+
+		}
 	}
 
 

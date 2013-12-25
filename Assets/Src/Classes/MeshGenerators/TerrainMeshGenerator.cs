@@ -3,7 +3,7 @@ using System.Collections;
 
 public class TerrainMeshGenerator : MeshGenerator {
 
-	protected const float CELL_SIZE = 1;
+	public const float CELL_SIZE = 1;
 	protected Cell[,] map;
 
 	public TerrainMeshGenerator(Cell [,] targetMap)
@@ -29,6 +29,22 @@ public class TerrainMeshGenerator : MeshGenerator {
 		triangles.Add(idx+1);
 		triangles.Add(idx+2);
 		triangles.Add(idx+3);
+	
+		if(z==0)
+		{
+			colors.Add(new Color(0.4f,0.4f,0.4f));
+			colors.Add(new Color(0.4f,0.4f,0.4f));
+			colors.Add(new Color(0.4f,0.4f,0.4f));
+			colors.Add(new Color(0.4f,0.4f,0.4f));
+		}
+		else
+		{
+			colors.Add(new Color(1,1,1));
+			colors.Add(new Color(1,1,1));
+			colors.Add(new Color(1,1,1));
+			colors.Add(new Color(1,1,1));
+		}
+
 		
 	}
 	void AttachVRect(Vector2 p1, Vector3 p2, float z1, float z2)
@@ -50,7 +66,11 @@ public class TerrainMeshGenerator : MeshGenerator {
 		triangles.Add(idx+1);
 		triangles.Add(idx+3);
 		triangles.Add(idx+2);
-		
+
+		colors.Add(new Color(1,1,1));
+		colors.Add(new Color(1,1,1));
+		colors.Add(new Color(0.4f,0.4f,0.4f));
+		colors.Add(new Color(0.4f,0.4f,0.4f));
 		
 	}
 
@@ -62,6 +82,7 @@ public class TerrainMeshGenerator : MeshGenerator {
 		vertices.Clear();
 		triangles.Clear();
 		uvs.Clear();
+		colors.Clear();
 		
 		int h = map.GetUpperBound(0);
 		int w = map.GetUpperBound(1);
@@ -143,6 +164,7 @@ public class TerrainMeshGenerator : MeshGenerator {
 		mesh.vertices = vertices.ToArray();
 		mesh.triangles = triangles.ToArray();
 		mesh.uv = uvs.ToArray();
+		mesh.colors = colors.ToArray();
 		mesh.RecalculateNormals();
 		
 
@@ -150,6 +172,7 @@ public class TerrainMeshGenerator : MeshGenerator {
 		vertices.Clear();
 		triangles.Clear();
 		uvs.Clear();
+		colors.Clear();
 
 		return mesh;
 	}
