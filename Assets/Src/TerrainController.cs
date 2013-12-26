@@ -12,7 +12,7 @@ public class TerrainController : MonoBehaviour {
 	FogController fogOfWarController = null;
 
 	TerrainMeshGenerator terrGen = null;
-	Plane plane;
+	Plane upperPlane, lowerPlane;
 
 	void Init()
 	{
@@ -33,7 +33,8 @@ public class TerrainController : MonoBehaviour {
 
 		GenerateMesh(false);
 
-		plane = new Plane(Vector3.up, transform.position);
+		lowerPlane = new Plane(Vector3.up, transform.position);
+		upperPlane = new Plane(Vector3.up, transform.position+new Vector3(0,TerrainMeshGenerator.CELL_SIZE,0));
 	}
 	
 	// Update is called once per frame
@@ -47,7 +48,7 @@ public class TerrainController : MonoBehaviour {
 				// plane.Raycast returns the distance from the ray start to the hit point
 				float distance;
 				
-				if (plane.Raycast(ray,out distance))
+				if (upperPlane.Raycast(ray,out distance))
 				{
 					Debug.Log("intersects");
 					Vector3 hitPoint = ray.GetPoint(distance)-transform.position;
@@ -56,7 +57,24 @@ public class TerrainController : MonoBehaviour {
 					int j = (int)(hitPoint.x/TerrainMeshGenerator.CELL_SIZE);
 
 					if(i>=0 && j>=0 && i<map.GetLength(0) && j<map.GetLength(1))
-						OnCellClicked(i,j);
+					{
+						if(!map[i,j].Digged)
+							OnCellClicked(i,j);
+						else
+						{
+							if (lowerPlane.Raycast(ray,out distance))
+							{
+
+								hitPoint = ray.GetPoint(distance)-transform.position;
+								
+								i = (int)(hitPoint.z/TerrainMeshGenerator.CELL_SIZE);
+								j = (int)(hitPoint.x/TerrainMeshGenerator.CELL_SIZE);
+								if(i>=0 && j>=0 && i<map.GetLength(0) && j<map.GetLength(1))
+									OnCellClicked(i,j);
+							}
+						}
+					}
+						
 				}
 			}
 
