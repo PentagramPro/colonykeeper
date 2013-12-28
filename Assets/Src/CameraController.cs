@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CameraController : MonoBehaviour {
+public class CameraController : BaseController {
 	float scrollArea=60;
 	float scrollSpeed=5;
 	float dragSpeed=5;

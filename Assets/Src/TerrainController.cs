@@ -2,13 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class TerrainController : MonoBehaviour {
+public class TerrainController : BaseManagedController {
 
 	Cell[,] map = new Cell[16,16];
 	bool meshInitializedInEditor = false;
 	bool lmbPressed=false;
 
 	public GameObject fogOfWar;
+
+
 	FogController fogOfWarController = null;
 
 	TerrainMeshGenerator terrGen = null;
@@ -26,66 +28,85 @@ public class TerrainController : MonoBehaviour {
 		{
 			fogOfWarController = fogOfWar.GetComponent<FogController>();
 		}
+
 	}
 	// Use this for initialization
 	void Start () {
 		Init();
 
+		M.GetGUIController().ItemPicked+=OnItemPicked;
 		GenerateMesh(false);
 
 		lowerPlane = new Plane(Vector3.up, transform.position);
 		upperPlane = new Plane(Vector3.up, transform.position+new Vector3(0,TerrainMeshGenerator.CELL_SIZE,0));
 	}
-	
+
+	void OnItemPicked(GameObject prefab)
+	{
+	}
 	// Update is called once per frame
 	void Update () {
 	
+
+		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		float distance;
+		bool clicked=false;
 		if(Input.GetMouseButtonDown(0))
 		{
 			if(lmbPressed==false)
 			{
-				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-				// plane.Raycast returns the distance from the ray start to the hit point
-				float distance;
-				
-				if (upperPlane.Raycast(ray,out distance))
-				{
-					Debug.Log("intersects");
-					Vector3 hitPoint = ray.GetPoint(distance)-transform.position;
-
-					int i = (int)(hitPoint.z/TerrainMeshGenerator.CELL_SIZE);
-					int j = (int)(hitPoint.x/TerrainMeshGenerator.CELL_SIZE);
-
-					if(i>=0 && j>=0 && i<map.GetLength(0) && j<map.GetLength(1))
-					{
-						if(!map[i,j].Digged)
-							OnCellClicked(i,j);
-						else
-						{
-							if (lowerPlane.Raycast(ray,out distance))
-							{
-
-								hitPoint = ray.GetPoint(distance)-transform.position;
-								
-								i = (int)(hitPoint.z/TerrainMeshGenerator.CELL_SIZE);
-								j = (int)(hitPoint.x/TerrainMeshGenerator.CELL_SIZE);
-								if(i>=0 && j>=0 && i<map.GetLength(0) && j<map.GetLength(1))
-									OnCellClicked(i,j);
-							}
-						}
-					}
-						
-				}
+				clicked=true;		
 			}
-
+			
 			lmbPressed=true;
 		}
 		else
 		{
 			lmbPressed=false;
 		}
+
+		if (upperPlane.Raycast(ray,out distance))
+		{
+			//Debug.Log("intersects");
+			Vector3 hitPoint = ray.GetPoint(distance)-transform.position;
+			
+			int i = (int)(hitPoint.z/TerrainMeshGenerator.CELL_SIZE);
+			int j = (int)(hitPoint.x/TerrainMeshGenerator.CELL_SIZE);
+			
+			if(i>=0 && j>=0 && i<map.GetLength(0) && j<map.GetLength(1))
+			{
+				if(!map[i,j].Digged)
+				{
+					OnCellHover(i,j);
+					if(clicked)
+						OnCellClicked(i,j);
+				}
+				else
+				{
+					if (lowerPlane.Raycast(ray,out distance))
+					{
+						
+						hitPoint = ray.GetPoint(distance)-transform.position;
+						
+						i = (int)(hitPoint.z/TerrainMeshGenerator.CELL_SIZE);
+						j = (int)(hitPoint.x/TerrainMeshGenerator.CELL_SIZE);
+						if(i>=0 && j>=0 && i<map.GetLength(0) && j<map.GetLength(1))
+						{
+							OnCellHover(i,j);
+							if(clicked)
+								OnCellClicked(i,j);
+						}
+					}
+				}
+			}
+		}
+
 	}
 
+	void OnCellHover(int i, int j)
+	{
+
+	}
 	void OnCellClicked(int i, int j)
 	{
 		if(!map[i,j].Digged)

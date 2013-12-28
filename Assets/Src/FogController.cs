@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FogController : MonoBehaviour {
+public class FogController : BaseController {
 
 
 	FogOfWarMeshGenerator fogGen = null;
