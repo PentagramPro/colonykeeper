@@ -2,6 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
+enum TerrainControllerMode
+{
+	Idle,Picked
+}
 public class TerrainController : BaseManagedController {
 
 	Cell[,] map = new Cell[16,16];
@@ -9,7 +13,8 @@ public class TerrainController : BaseManagedController {
 	bool lmbPressed=false;
 
 	public GameObject fogOfWar;
-
+	public GameObject pickedObject;
+	TerrainControllerMode mode = TerrainControllerMode.Idle;
 
 	FogController fogOfWarController = null;
 
@@ -43,28 +48,18 @@ public class TerrainController : BaseManagedController {
 
 	void OnItemPicked(GameObject prefab)
 	{
+		mode = TerrainControllerMode.Picked;
+		pickedObject = (GameObject)Instantiate(prefab);
+		pickedObject.transform.parent = transform;
+		pickedObject.transform.position = new Vector3(0,0,0);
 	}
-	// Update is called once per frame
-	void Update () {
-	
 
+	bool DetectCellUnderMouse(out int iRes, out int jRes)
+	{
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		float distance;
-		bool clicked=false;
-		if(Input.GetMouseButtonDown(0))
-		{
-			if(lmbPressed==false)
-			{
-				clicked=true;		
-			}
-			
-			lmbPressed=true;
-		}
-		else
-		{
-			lmbPressed=false;
-		}
-
+		iRes=jRes=-1;
+		
 		if (upperPlane.Raycast(ray,out distance))
 		{
 			//Debug.Log("intersects");
@@ -77,9 +72,8 @@ public class TerrainController : BaseManagedController {
 			{
 				if(!map[i,j].Digged)
 				{
-					OnCellHover(i,j);
-					if(clicked)
-						OnCellClicked(i,j);
+					iRes=i;jRes=j;
+					return true;
 				}
 				else
 				{
@@ -92,27 +86,57 @@ public class TerrainController : BaseManagedController {
 						j = (int)(hitPoint.x/TerrainMeshGenerator.CELL_SIZE);
 						if(i>=0 && j>=0 && i<map.GetLength(0) && j<map.GetLength(1))
 						{
-							OnCellHover(i,j);
-							if(clicked)
-								OnCellClicked(i,j);
+							iRes=i;jRes=j;
+							return true;
 						}
 					}
 				}
 			}
 		}
+		return false;
+	}
+	// Update is called once per frame
+	void Update () {
+	
+		int i,j;
+		if(DetectCellUnderMouse(out i, out j))
+		   OnCellHover(i,j);
 
+
+	}
+
+	void OnMouseDown()
+	{
+		int i,j;
+		if(DetectCellUnderMouse(out i, out j))
+		   OnCellClicked(i,j);
+			
 	}
 
 	void OnCellHover(int i, int j)
 	{
+		if(mode==TerrainControllerMode.Picked)
+		{
+			float cx = (j+0.5f)*TerrainMeshGenerator.CELL_SIZE;
+			float cy = (i+0.5f)*TerrainMeshGenerator.CELL_SIZE;
 
+			pickedObject.transform.localPosition = new Vector3(cx,0,cy);
+		}
 	}
 	void OnCellClicked(int i, int j)
 	{
-		if(!map[i,j].Digged)
+		if(mode==TerrainControllerMode.Idle)
 		{
-			map[i,j].Digged=true;
-			GenerateMesh(false);
+			if(!map[i,j].Digged)
+			{
+				map[i,j].Digged=true;
+				GenerateMesh(false);
+			}
+		}
+		else if(mode==TerrainControllerMode.Picked)
+		{
+			mode=TerrainControllerMode.Idle;
+			Destroy(pickedObject);
 		}
 	}
 

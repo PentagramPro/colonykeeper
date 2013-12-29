@@ -9,11 +9,13 @@ public class Manager : MonoBehaviour {
 
 	public GUIController GetGUIController()
 	{
+		if(guiController==null)
+			guiController = gui.GetComponent<GUIController>();
 		return guiController;
 	}
 	// Use this for initialization
 	void Start () {
-		guiController = gui.GetComponent<GUIController>();
+
 	}
 	
 	// Update is called once per frame
