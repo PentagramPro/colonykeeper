@@ -5,7 +5,7 @@ public class Manager : MonoBehaviour {
 
 	GUIController guiController;
 	public GameObject gui;
-
+	public GameDictionary GameD;
 
 	public GUIController GetGUIController()
 	{

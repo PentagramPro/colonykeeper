@@ -3,6 +3,9 @@ using System.Collections;
 
 public class BlockController : BaseController {
 
+
+
+
 	public string Name = "Lamp";
 	// Use this for initialization
 	void Start () {

@@ -10,7 +10,7 @@ public class TerrainController : BaseManagedController {
 
 	Cell[,] map = new Cell[16,16];
 	bool meshInitializedInEditor = false;
-	bool lmbPressed=false;
+
 
 	public GameObject fogOfWar;
 	public GameObject pickedObject;
@@ -135,8 +135,20 @@ public class TerrainController : BaseManagedController {
 		}
 		else if(mode==TerrainControllerMode.Picked)
 		{
-			mode=TerrainControllerMode.Idle;
-			Destroy(pickedObject);
+			if(map[i,j].Digged)
+			{
+				if(map[i,j].Block==null)
+				{
+					map[i,j].Block=pickedObject.GetComponent<BlockController>();
+					pickedObject=null;
+					mode=TerrainControllerMode.Idle;
+				}
+			}
+			else
+			{
+				mode=TerrainControllerMode.Idle;
+				Destroy(pickedObject);
+			}
 		}
 	}
 

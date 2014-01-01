@@ -33,7 +33,7 @@ public class FogOfWarMeshGenerator : TerrainMeshGenerator {
 
 		int h = map.GetLength(0);
 		int w = map.GetLength(1);
-		int fh = h+3;
+//		int fh = h+3;
 		int fw = w+3;
 
 		for(int i=-1;i<h+2;i++)

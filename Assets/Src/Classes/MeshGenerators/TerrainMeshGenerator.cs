@@ -4,6 +4,7 @@ using System.Collections;
 public class TerrainMeshGenerator : MeshGenerator {
 
 	public const float CELL_SIZE = 1;
+	public static Color AMBIENT_LIGHT = new Color(0.2f,0.2f,0.2f);
 	protected Cell[,] map;
 
 	public TerrainMeshGenerator(Cell [,] targetMap)
@@ -86,14 +87,14 @@ public class TerrainMeshGenerator : MeshGenerator {
 		
 		int h = map.GetUpperBound(0);
 		int w = map.GetUpperBound(1);
-		int index=0;
+
 		
 		for(int i=0;i<=h;i++)
 		{
 			for(int j=0;j<=w;j++)
 			{
 				Cell c = map[i,j];
-				int idx = vertices.Count;
+
 				float level = c.Digged?0:CELL_SIZE;
 				
 				

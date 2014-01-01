@@ -4,7 +4,7 @@ using System.Collections;
 public class CameraController : BaseController {
 	float scrollArea=60;
 	float scrollSpeed=5;
-	float dragSpeed=5;
+//	float dragSpeed=5;
 	// Use this for initialization
 	void Start () {
 	
