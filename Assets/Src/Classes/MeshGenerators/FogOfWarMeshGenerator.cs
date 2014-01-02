@@ -21,7 +21,7 @@ public class FogOfWarMeshGenerator : TerrainMeshGenerator {
 		   		map[i-1,j-1].Digged;
 	}
 
-	public override Mesh Generate ()
+	public override Mesh Generate (int iq, int jq)
 	{
 		Mesh mesh = new Mesh();
 		

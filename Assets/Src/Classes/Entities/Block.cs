@@ -22,6 +22,9 @@ public class Block  {
 	[XmlArray("Loot"),XmlArrayItem("LootRec")]
 	public List<LootRec> Loot = new List<LootRec>();
 
+	[XmlAttribute("Name")]
+	public string Name;
+
 	[XmlAttribute("PrefabName")]
 	public string PrefabName;
 

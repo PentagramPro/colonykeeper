@@ -11,7 +11,8 @@ public class TerrainController : BaseManagedController {
 	Cell[,] map = new Cell[16,16];
 	bool meshInitializedInEditor = false;
 
-
+	public GameObject cellContainer;
+	public GameObject cellPrefab;
 	public GameObject fogOfWar;
 	public GameObject pickedObject;
 	TerrainControllerMode mode = TerrainControllerMode.Idle;
@@ -21,23 +22,28 @@ public class TerrainController : BaseManagedController {
 	TerrainMeshGenerator terrGen = null;
 	Plane upperPlane, lowerPlane;
 
-	void Init()
+	void Init(bool editMode)
 	{
-
+		if(M==null)
+		{
+			PrepareManager();
+		}
+		M.LoadResources();
 		if(terrGen==null)
 		{
 			terrGen = new TerrainMeshGenerator(map);
-			GenerateMap();
+			GenerateMap(editMode);
 		}
 		if(fogOfWarController==null)
 		{
 			fogOfWarController = fogOfWar.GetComponent<FogController>();
 		}
 
+
 	}
 	// Use this for initialization
 	void Start () {
-		Init();
+		Init(false);
 
 		M.GetGUIController().ItemPicked+=OnItemPicked;
 		GenerateMesh(false);
@@ -129,20 +135,20 @@ public class TerrainController : BaseManagedController {
 		{
 			if(!map[i,j].Digged)
 			{
-				map[i,j].Digged=true;
+				map[i,j].CellBlock=null;
 				GenerateMesh(false);
 			}
 		}
 		else if(mode==TerrainControllerMode.Picked)
 		{
-			if(map[i,j].Digged)
+			if(map[i,j].CellBlock==null)
 			{
-				if(map[i,j].Block==null)
-				{
-					map[i,j].Block=pickedObject.GetComponent<BlockController>();
-					pickedObject=null;
-					mode=TerrainControllerMode.Idle;
-				}
+
+
+				//map[i,j].Block=pickedObject.GetComponent<BlockController>();
+				pickedObject=null;
+				mode=TerrainControllerMode.Idle;
+
 			}
 			else
 			{
@@ -172,46 +178,79 @@ public class TerrainController : BaseManagedController {
 		if(meshInitializedInEditor==false)
 		{
 			meshInitializedInEditor=true;
-			Init();
+			Init(true);
 			GenerateMesh(true);
 		}
 	}
 
-	void GenerateMap()
+	void GenerateMap(bool editMode)
 	{
 		int h = map.GetUpperBound(0);
 		int w = map.GetUpperBound(1);
 
+		Debug.Log("Generate Map");
 
+		foreach(Transform children in cellContainer.transform)
+		{
+
+			if(!editMode)
+				Destroy(children.gameObject);
+			else
+				DestroyImmediate(children.gameObject);
+
+		}
 
 		
 		for(int i=0;i<=h;i++)
 		{
 			for(int j=0;j<=w;j++)
 			{
-				Cell c = new Cell();
+
+				Cell c = new Cell(i,j);
 				map[i,j]=c;
 				if(i<2 || j<2 || i>h-2 || j>w-2)
-					c.Digged=false;
+				{
+					c.CellBlock = M.GameD.Blocks[0];
+				}
 				else
-					c.Digged = (Random.Range(0,3)==0);
+				{
+					int v = Random.Range(0,M.GameD.Blocks.Count+1);
+					if(v<M.GameD.Blocks.Count)
+						c.CellBlock=M.GameD.Blocks[v];
+				}
 				//c.Digged=false;
 			}
 		}
 		//map[1,1].Digged=true;
 	}
 
+	void OnDestroy () 
+	{
+		Debug.Log("OnDestroy");
+		foreach(Transform children in cellContainer.transform)
+		{
+			
 
+			DestroyImmediate(children.gameObject);
+			
+		}
+	}
 
 
 	void GenerateMesh(bool editMode)
 	{
-		Mesh mesh = terrGen.Generate();
 
-		if(editMode)
-			GetComponent<MeshFilter>().sharedMesh=mesh;
-		else 
-			GetComponent<MeshFilter>().mesh = mesh;
+		Debug.Log("Generate Mesh");
+
+		for(int i=0;i<map.GetLength(0);i++)
+		{
+			for(int j=0;j<map.GetLength(1);j++)
+			{
+				GameObject cellObj = map[i,j].Generate(terrGen,cellPrefab,cellContainer, editMode);
+
+			}
+		}
+
 
 		fogOfWarController.GenerateFog(map,editMode);
 

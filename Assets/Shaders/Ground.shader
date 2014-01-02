@@ -2,33 +2,33 @@ Shader "Custom/Ground"
 {
 	Properties 
 	{
-	    _Color ("Main Color", Color) = (1,1,1,1)
-	        _SpecColor ("Spec Color", Color) = (1,1,1,1)
-	    _Emission ("Emmisive Color", Color) = (0,0,0,0)
-	    _Shininess ("Shininess", Range (0.01, 1)) = 0.7
+	    
 	    _MainTex ("Base (RGB)", 2D) = "white" {}
+	    _OreTex ("Ore (RGB)", 2D) = "white" {}
 	}
 
 	SubShader 
 	{
 	    Pass 
 	    {
-	        Material 
-	        {
-	            Shininess [_Shininess]
-	            Specular [_SpecColor]
-	            Emission [_Emission]    
-	        }
+
+	
+			BindChannels {
+			   Bind "Vertex", vertex
+			   Bind "texcoord", texcoord0
+			   Bind "texcoord1", texcoord1
+			   
+			   Bind "Color", Color 
+			} 
 	        ColorMaterial AmbientAndDiffuse
 	        Lighting Off
-	        SeparateSpecular On
+	        
 	        SetTexture [_MainTex] {
-	            Combine texture * primary, texture * primary
+	            Combine texture * primary
 	        }
-	        SetTexture [_MainTex] {
-	            constantColor [_Color]
-	            Combine previous * constant DOUBLE, previous * constant
-	        } 
+	        SetTexture [_OreTex] {
+	        	Combine texture * previous
+	        }
 	    }
 	}
 

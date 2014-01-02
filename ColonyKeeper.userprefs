@@ -1,20 +1,19 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Src\Manager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Src\Classes\Cell.cs">
     <Files>
-      <File FileName="Assets\Src\Classes\Entities\Item.cs" Line="4" Column="32" />
-      <File FileName="Assets\Src\Classes\Entities\Block.cs" Line="3" Column="1" />
-      <File FileName="Assets\Src\Classes\MeshGenerators\TerrainMeshGenerator.cs" Line="90" Column="3" />
-      <File FileName="Assets\Src\CameraController.cs" Line="7" Column="1" />
-      <File FileName="Assets\Src\TerrainController.cs" Line="13" Column="1" />
-      <File FileName="Assets\Src\Classes\MeshGenerators\FogOfWarMeshGenerator.cs" Line="36" Column="3" />
-      <File FileName="Assets\Src\Classes\Entities\GameDictionary.cs" Line="12" Column="18" />
-      <File FileName="Assets\Src\Manager.cs" Line="26" Column="1" />
+      <File FileName="Assets\Src\TerrainController.cs" Line="234" Column="1" />
+      <File FileName="Assets\Src\TerrainController.cs" Line="229" Column="23" />
+      <File FileName="Assets\Src\Classes\Cell.cs" Line="40" Column="38" />
+      <File FileName="Assets\Resources\gamedictionary.xml" Line="1" Column="1" />
+      <File FileName="Assets\Src\Manager.cs" Line="26" Column="29" />
+      <File FileName="Assets\Src\Classes\Entities\GameDictionary.cs" Line="29" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="D:\workspace\unity\colonykeeper\Assets\Src\GUIController.cs" line="13" />
+      <Breakpoint file="F:\workspace\unity\colonykeeper\Assets\Src\Classes\Cell.cs" line="59" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

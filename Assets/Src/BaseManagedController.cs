@@ -7,11 +7,16 @@ public class BaseManagedController : BaseController {
 	public GameObject manager;
 	Manager managerController;
 
-	void Awake()
+	public void PrepareManager()
 	{
 		if(manager==null)
 			throw new Exception("Manager field is not set!");
-		managerController = manager.GetComponent<Manager>();
+		if(managerController==null)
+			managerController = manager.GetComponent<Manager>();
+	}
+	void Awake()
+	{
+		PrepareManager();
 	}
 	// Use this for initialization
 	void Start () {

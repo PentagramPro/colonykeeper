@@ -21,7 +21,7 @@ public class FogController : BaseController {
 		if(fogGen==null)
 			fogGen = new FogOfWarMeshGenerator(map);
 
-		Mesh mesh = fogGen.Generate();
+		Mesh mesh = fogGen.Generate(0,0);
 		
 		if(editMode)
 			GetComponent<MeshFilter>().sharedMesh=mesh;
