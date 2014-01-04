@@ -14,18 +14,17 @@ public class TerrainMeshGenerator : MeshGenerator {
 	void AttachHRect(Vector2 p1, Vector2 p2, float z)
 	{
 		int idx = vertices.Count;
-		vertices.Add(new Vector3(p1.x,z,p1.y));
-		uvs.Add(new Vector2(0,0));
-		uvs2.Add(new Vector2(0.3f,0.3f));
-		vertices.Add(new Vector3(p2.x,z,p1.y));
-		uvs.Add(new Vector2(1,0));
-		uvs2.Add(new Vector2(0.6f,0.3f));
-		vertices.Add(new Vector3(p1.x,z,p2.y));
-		uvs.Add(new Vector2(0,1));
-		uvs2.Add(new Vector2(0.3f,0.6f));
-		vertices.Add(new Vector3(p2.x,z,p2.y));
-		uvs.Add(new Vector2(1,1));
-		uvs2.Add(new Vector2(0.6f,0.6f));
+		AddVertex(p1.x,z,p1.y);
+		AddUV(0,0,0.3f,0.3f);
+
+		AddVertex(p2.x,z,p1.y);
+		AddUV(1,0,0.6f,0.3f);
+
+		AddVertex(p1.x,z,p2.y);
+		AddUV(0,1,0.3f,0.6f);
+
+		AddVertex(p2.x,z,p2.y);
+		AddUV(1,1,0.6f,0.6f);
 		
 		triangles.Add(idx);
 		triangles.Add(idx+2);
@@ -55,18 +54,17 @@ public class TerrainMeshGenerator : MeshGenerator {
 	void AttachVRect(Vector2 p1, Vector3 p2, float z1, float z2)
 	{
 		int idx = vertices.Count;
-		vertices.Add(new Vector3(p1.x,z1,p1.y));
-		uvs.Add(new Vector2(0.3f,0));
-		uvs2.Add(new Vector2(0,0));
-		vertices.Add(new Vector3(p2.x,z1,p2.y));
-		uvs.Add(new Vector2(0,1));
-		uvs2.Add(new Vector2(0.6f,0));
-		vertices.Add(new Vector3(p1.x,z2,p1.y));
-		uvs.Add(new Vector2(1,0));
-		uvs2.Add(new Vector2(0.3f,0.3f));
-		vertices.Add(new Vector3(p2.x,z2,p2.y));
-		uvs.Add(new Vector2(1,1));
-		uvs2.Add(new Vector2(0.6f,0.3f));
+		AddVertex(p1.x,z1,p1.y);
+		AddUV(0,0,0.3f,0);
+
+		AddVertex(p2.x,z1,p2.y);
+		AddUV(0,1,0.6f,0);
+
+		AddVertex(p1.x,z2,p1.y);
+		AddUV(1,0,0.3f,0.3f);
+
+		AddVertex(p2.x,z2,p2.y);
+		AddUV(1,1,0.6f,0.3f);
 		
 		triangles.Add(idx);
 		triangles.Add(idx+1);
@@ -88,11 +86,7 @@ public class TerrainMeshGenerator : MeshGenerator {
 		Mesh mesh = new Mesh();
 		
 		
-		vertices.Clear();
-		triangles.Clear();
-		uvs.Clear();
-		uvs2.Clear();
-		colors.Clear();
+		Clear();
 		
 		int h = map.GetUpperBound(0);
 		int w = map.GetUpperBound(1);
@@ -147,25 +141,7 @@ public class TerrainMeshGenerator : MeshGenerator {
 		}
 
 		
-		/*for(int i=0;i<=h+1;i++)
-		{
-			for(int j=0;j<=w+1;j++)
-			{
-				int idx = vertices.Count;
-				vertices.Add(new Vector3(j*hw,hw,i*hw));
-				uvs.Add(new Vector2(0,0));
-				if(i>0 && j>0 && i<=h && j<=w)
-				{
-					triangles.Add(idx-2-w);
-					triangles.Add(idx-w-1);
-					triangles.Add(idx);
-					
-					//triangles.Add(idx-1-w);
-					//triangles.Add(idx);
-					//triangles.Add(idx-1);
-				}
-			}
-		}*/
+	
 		
 		mesh.vertices = vertices.ToArray();
 		mesh.triangles = triangles.ToArray();
