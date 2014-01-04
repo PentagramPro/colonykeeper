@@ -102,40 +102,41 @@ public class TerrainMeshGenerator : MeshGenerator {
 		AttachHRect(new Vector2(	j		*CELL_SIZE, i		*CELL_SIZE),
 		            new Vector2(	(j+1)	*CELL_SIZE, (i+1)	*CELL_SIZE),level);
 		
-		if(c.Digged)
+		if(!c.Digged)
 		{
-			if(j>0 && map[i,j-1].Digged==false)
+			if(j>0 && map[i,j-1].Digged==true)
 			{
 				AttachVRect(
-
-					new Vector2(	j		*CELL_SIZE, i		*CELL_SIZE),
 					new Vector2(	j		*CELL_SIZE, (i+1)	*CELL_SIZE),
+					new Vector2(	j		*CELL_SIZE, i		*CELL_SIZE),
+
 					CELL_SIZE,0);
 			}
 			
-			if(i>0 && map[i-1,j].Digged==false)
+			if(i>0 && map[i-1,j].Digged==true)
 			{
 				AttachVRect(
-				            new Vector2(	(j+1)	*CELL_SIZE, i	*CELL_SIZE),
 							new Vector2(	j		*CELL_SIZE, i		*CELL_SIZE),
+				            new Vector2(	(j+1)	*CELL_SIZE, i	*CELL_SIZE),
+							
 				            CELL_SIZE,0);
 			}
 			
-			if(j<w && map[i,j+1].Digged==false)
+			if(j<w && map[i,j+1].Digged==true)
 			{
 				AttachVRect(
-
-					new Vector2(	(j+1)	*CELL_SIZE, (i+1)	*CELL_SIZE),
 					new Vector2(	(j+1)	*CELL_SIZE, i		*CELL_SIZE),
+					new Vector2(	(j+1)	*CELL_SIZE, (i+1)	*CELL_SIZE),
+
 					CELL_SIZE,0);
 			}
 			
-			if(i<h && map[i+1,j].Digged==false)
+			if(i<h && map[i+1,j].Digged==true)
 			{
 				AttachVRect(
-
-					new Vector2(	j		*CELL_SIZE, (i+1)	*CELL_SIZE),
 					new Vector2(	(j+1)	*CELL_SIZE, (i+1)	*CELL_SIZE),
+					new Vector2(	j		*CELL_SIZE, (i+1)	*CELL_SIZE),
+
 					CELL_SIZE,0);
 			}
 		}
