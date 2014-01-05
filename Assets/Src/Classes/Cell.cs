@@ -19,6 +19,8 @@ public class Cell {
 	// block attached to this cell
 	public Block CellBlock;
 
+	public BlockController CellBlockController;
+
 
 	public GameObject cellObj;
 

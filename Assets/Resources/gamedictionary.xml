@@ -3,6 +3,8 @@
   <Blocks>
   	<Block Name="Ground" MaterialName="Ground"></Block>
   	<Block Name="Iron Ore" MaterialName="IronOre"></Block>
+  	<Block Name="Lamp" PrefabName="Lamp"></Block>
+  	<Block Name="Store" PrefabName="Store"></Block>
   </Blocks>
   <Items />
 </GameDictionary>

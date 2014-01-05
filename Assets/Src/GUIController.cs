@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class GUIController : BaseController {
+public class GUIController : BaseManagedController {
 
-	List<GameObject> blocks = new List<GameObject>();
+	//List<Block> blocks = new List<Block>();
 
 
 	public delegate void PickedDelegate(GameObject pickedPrefab);
@@ -14,7 +14,7 @@ public class GUIController : BaseController {
 
 	// Use this for initialization
 	void Start () {
-		Object[] prefabs = Resources.LoadAll("Prefabs/Blocks");
+		/*Object[] prefabs = Resources.LoadAll("Prefabs/Blocks");
 
 
 		foreach(Object o in prefabs)
@@ -28,33 +28,30 @@ public class GUIController : BaseController {
 				}
 			}
 			Debug.Log("object! "+o.GetType()+" ");
-		}
+		}*/
 	}
 
 	void OnGUI()
 	{
 		float pos=0,height=80;
-		GameObject selected = null;
+		Block selected = null;
 
-
-
-		foreach(GameObject b in blocks)
+		foreach(Block b in M.GameD.ObjectBlocks)
 		{
-			
-			BlockController bc = b.GetComponent<BlockController>();
-			
-			if(GUI.Button(new Rect(0,pos,150,height),bc.Name))
+			if(GUI.Button(new Rect(0,pos,150,height),b.Name))
 			{
 				selected = b;	
-
+				
 			}
 			pos+=height;
 		}
+
+
 		if(selected!=null)
 		{
-
+			GameObject obj = selected.Instantiate();
 			if(ItemPicked!=null)
-				ItemPicked(selected);
+				ItemPicked(obj);
 	//		mode = Modes.Place;
 	//		pickedItem = CreatePickedObject (selected);
 			

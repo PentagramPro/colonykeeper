@@ -3,7 +3,7 @@ using System.Collections;
 
 public class BlockController : BaseController {
 
-
+	public Block BlockProt;
 
 
 	public string Name = "Lamp";

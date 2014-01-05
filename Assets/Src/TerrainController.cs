@@ -144,7 +144,10 @@ public class TerrainController : BaseManagedController {
 			if(map[i,j].CellBlock==null)
 			{
 
+				BlockController bc = pickedObject.GetComponent<BlockController>();
 
+				map[i,j].CellBlock = bc.BlockProt;
+				map[i,j].CellBlockController = bc;
 				//map[i,j].Block=pickedObject.GetComponent<BlockController>();
 				pickedObject=null;
 				mode=TerrainControllerMode.Idle;
@@ -210,13 +213,13 @@ public class TerrainController : BaseManagedController {
 				map[i,j]=c;
 				if(i<2 || j<2 || i>h-2 || j>w-2)
 				{
-					c.CellBlock = M.GameD.Blocks[0];
+					c.CellBlock = M.GameD.CellBlocks[0];
 				}
 				else
 				{
-					int v = Random.Range(0,M.GameD.Blocks.Count+1);
-					if(v<M.GameD.Blocks.Count)
-						c.CellBlock=M.GameD.Blocks[v];
+					int v = Random.Range(0,M.GameD.CellBlocks.Count+1);
+					if(v<M.GameD.CellBlocks.Count)
+						c.CellBlock=M.GameD.CellBlocks[v];
 				}
 				//c.Digged=false;
 			}
