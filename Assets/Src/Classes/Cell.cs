@@ -15,6 +15,7 @@ public class Cell {
 	//public Mesh mapMesh;
 	public Color Lighting = new Color(0,0,0);
 
+	public Job AttachedJob;
 	// [data]
 	// block attached to this cell
 	public Block CellBlock;
@@ -28,7 +29,7 @@ public class Cell {
 	{
 		get
 		{
-			return CellBlock==null;
+			return CellBlock==null || CellBlockController!=null;
 		}
 	}
 
@@ -41,6 +42,12 @@ public class Cell {
 
 		return Resources.Load("Materials/"+name, typeof(Material)) as Material;
 	}
+
+	public void DesignateDigJob(JobManager jm)
+	{
+
+	}
+
 	public GameObject Generate(TerrainMeshGenerator terrGen, GameObject cellPrefab, GameObject parent, bool editMode)
 	{
 		if(cellObj==null)

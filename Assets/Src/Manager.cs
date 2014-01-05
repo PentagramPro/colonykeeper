@@ -7,6 +7,7 @@ public class Manager : MonoBehaviour {
 	GUIController guiController;
 	public GameObject gui;
 	public GameDictionary GameD;
+	public JobManager JobManager = new JobManager();
 
 	public GUIController GetGUIController()
 	{

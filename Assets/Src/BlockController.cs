@@ -22,4 +22,12 @@ public class BlockController : BaseController {
 	void Update () {
 	
 	}
+
+	public void OnSelected()
+	{
+	}
+
+	public void OnDeselected()
+	{
+	}
 }

@@ -9,6 +9,8 @@ enum TerrainControllerMode
 public class TerrainController : BaseManagedController {
 
 	Cell[,] map = new Cell[16,16];
+
+	BlockController lastSelected;
 	bool meshInitializedInEditor = false;
 
 	public GameObject cellContainer;
@@ -131,23 +133,30 @@ public class TerrainController : BaseManagedController {
 	}
 	void OnCellClicked(int i, int j)
 	{
+		Cell c=map[i,j];
 		if(mode==TerrainControllerMode.Idle)
 		{
-			if(!map[i,j].Digged)
+			if(!c.Digged)
 			{
-				map[i,j].CellBlock=null;
-				GenerateMesh(false);
+				c.DesignateDigJob(M.JobManager);
+			}
+			else if(c.CellBlockController!=null)
+			{
+				if(lastSelected!=null)
+					lastSelected.OnDeselected();
+				c.CellBlockController.OnSelected();
+				lastSelected = c.CellBlockController;
 			}
 		}
 		else if(mode==TerrainControllerMode.Picked)
 		{
-			if(map[i,j].CellBlock==null)
+			if(c.CellBlock==null)
 			{
 
 				BlockController bc = pickedObject.GetComponent<BlockController>();
 
-				map[i,j].CellBlock = bc.BlockProt;
-				map[i,j].CellBlockController = bc;
+				c.CellBlock = bc.BlockProt;
+				c.CellBlockController = bc;
 				//map[i,j].Block=pickedObject.GetComponent<BlockController>();
 				pickedObject=null;
 				mode=TerrainControllerMode.Idle;
