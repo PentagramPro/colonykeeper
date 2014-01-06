@@ -212,21 +212,23 @@ public class TerrainController : BaseManagedController {
 
 		}
 
+		int middleI=h/2;
+		int middleJ=w/2;
 		
 		for(int i=0;i<=h;i++)
 		{
 			for(int j=0;j<=w;j++)
 			{
 
-				Cell c = new Cell(i,j);
+				Cell c = new Cell(i,j,map);
 				map[i,j]=c;
-				if(i<2 || j<2 || i>h-2 || j>w-2)
+				if(i>middleI-2 && j>middleJ-2 && i<middleI+2 && j<middleJ+2)
 				{
-					c.CellBlock = M.GameD.CellBlocks[0];
+
 				}
 				else
 				{
-					int v = Random.Range(0,M.GameD.CellBlocks.Count+1);
+					int v = Random.Range(0,M.GameD.CellBlocks.Count);
 					if(v<M.GameD.CellBlocks.Count)
 						c.CellBlock=M.GameD.CellBlocks[v];
 				}

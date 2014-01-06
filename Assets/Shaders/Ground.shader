@@ -5,6 +5,7 @@ Shader "Custom/Ground"
 	    
 	    _MainTex ("Base (RGB)", 2D) = "white" {}
 	    _OreTex ("Ore (RGB)", 2D) = "white" {}
+	    _Color ("Color", Color) = (1,1,1,1) 
 	}
 
 	SubShader 
@@ -24,10 +25,18 @@ Shader "Custom/Ground"
 	        Lighting Off
 	        
 	        SetTexture [_MainTex] {
+	        	
 	            Combine texture * primary
+	            
+	            
+	        }
+	        SetTexture [_MainTex] {
+	        	constantColor [_Color]
+	        	Combine previous lerp(constant) constant
 	        }
 	        SetTexture [_OreTex] {
 	        	Combine texture * previous
+	        	
 	        }
 	    }
 	}
