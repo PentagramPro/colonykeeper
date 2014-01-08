@@ -24,7 +24,12 @@ public class Cell {
 
 	public BlockController CellBlockController;
 
-
+	public Vector3 Position
+	{
+		get{
+			return cellObj.transform.position;
+		}
+	}
 	public GameObject cellObj;
 
 	public bool Digged
@@ -63,10 +68,12 @@ public class Cell {
 	{
 		if(cellObj==null)
 		{
+			float halfCell = TerrainMeshGenerator.CELL_SIZE/2;
 			cellObj = (GameObject)GameObject.Instantiate(cellPrefab);
 			cellObj.transform.parent=parent.transform;
-			cellObj.transform.localPosition=Vector3.zero;
-
+			cellObj.transform.localPosition=new Vector3(posJ*TerrainMeshGenerator.CELL_SIZE,0,posI*TerrainMeshGenerator.CELL_SIZE);
+			((BoxCollider)cellObj.collider).center = new Vector3(halfCell,halfCell,halfCell);
+			cellObj.collider.isTrigger=false;
 		}
 
 		cellObj.GetComponent<MeshFilter>().sharedMesh=null;
@@ -76,9 +83,14 @@ public class Cell {
 
 		if(CellBlock!=null)
 		{
+			cellObj.collider.enabled=true;
 			Material mat = LoadMaterial(CellBlock.MaterialName);
 			if(mat!=null)
 				cellObj.renderer.material = mat;
+		}
+		else
+		{
+			cellObj.collider.enabled=false;
 		}
 		if(editMode)
 			cellObj.GetComponent<MeshFilter>().sharedMesh=mesh;

@@ -1,13 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Src\TerrainController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Src\Classes\JobManager.cs">
     <Files>
-      <File FileName="Assets\Src\TerrainController.cs" Line="225" Column="65" />
-      <File FileName="Assets\Src\Classes\Cell.cs" Line="101" Column="49" />
-      <File FileName="Assets\Src\BlockController.cs" Line="32" Column="3" />
-      <File FileName="Assets\Shaders\Ground.shader" Line="33" Column="32" />
-      <File FileName="Assets\Src\Classes\Job.cs" Line="8" Column="2" />
-      <File FileName="Assets\Src\Classes\JobManager.cs" Line="23" Column="33" />
+      <File FileName="Assets\Src\DroneController.cs" Line="7" Column="19" />
+      <File FileName="Assets\Src\Classes\JobManager.cs" Line="29" Column="5" />
+      <File FileName="Assets\Src\Classes\Job.cs" Line="18" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

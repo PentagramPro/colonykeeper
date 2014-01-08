@@ -59,7 +59,7 @@ public class GameDictionary  {
 				res =  serializer.Deserialize(stream) as GameDictionary;	
 			}
 		}
-		catch (FileNotFoundException e)
+		catch (FileNotFoundException)
 		{
 			res =  new GameDictionary();
 		}

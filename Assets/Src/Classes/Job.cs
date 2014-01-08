@@ -6,4 +6,21 @@ public class Job  {
 	public Cell JobCell;
 
 
+	IJobExecutor owner;
+	public IJobExecutor Owner
+	{
+		get{return owner;}
+	}
+
+	public void CancelJob()
+	{
+		owner.CancelJob();
+	}
+
+	public void AssignJob(IJobExecutor jobOwner)
+	{
+		owner=jobOwner;
+	}
+
+
 }

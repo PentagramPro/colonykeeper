@@ -260,7 +260,7 @@ public class TerrainController : BaseManagedController {
 		{
 			for(int j=0;j<map.GetLength(1);j++)
 			{
-				GameObject cellObj = map[i,j].Generate(terrGen,cellPrefab,cellContainer, editMode);
+				map[i,j].Generate(terrGen,cellPrefab,cellContainer, editMode);
 
 			}
 		}
