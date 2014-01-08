@@ -19,6 +19,17 @@ public class JobManager  {
 			DigJobAdded(j);
 	}
 
+	public Job FindDigJob()
+	{
+	
+		var it = DigJobs.GetEnumerator();
+		if(it.MoveNext())
+			return it.Current.Value;
+
+	
+			
+		return null;
+	}
 	public void AssignDigJob(Job j,IJobExecutor owner)
 	{
 		if(j.Owner==null)

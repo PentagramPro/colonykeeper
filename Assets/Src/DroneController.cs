@@ -39,32 +39,41 @@ public class DroneController : BaseManagedController, IJobExecutor{
 				break;
 			case Modes.Work:
 				M.JobManager.RemoveDigJob(digJob.JobCell);
+				Job j = M.JobManager.FindDigJob();
+				if(j==null)
+					state = Modes.Idle;
+				else
+					AssignJob(j);
+
 				break;
 			}
 		}
 	}
 
 	public void FixedUpdate () {
-		if (path == null) {
-			//We have no path to move after yet
-			return;
-		}
-		if (currentWaypoint >= path.vectorPath.Count) {
-			state=Modes.Work;
-			return;
-		}
-		//Direction to the next waypoint
-		Vector3 dir = (path.vectorPath[currentWaypoint]-transform.position).normalized;
-		dir *= speed * Time.fixedDeltaTime;
+		if(state==Modes.Follow)
+		{
+			if (path == null) {
+				//We have no path to move after yet
+				return;
+			}
+			if (currentWaypoint >= path.vectorPath.Count) {
+				state=Modes.Work;
+				return;
+			}
+			//Direction to the next waypoint
+			Vector3 dir = (path.vectorPath[currentWaypoint]-transform.position).normalized;
+			dir *= speed * Time.fixedDeltaTime;
 
-		dir.y=0;
-		transform.position+=dir;
-		//controller.SimpleMove (dir);
-		//Check if we are close enough to the next waypoint
-		//If we are, proceed to follow the next waypoint
-		if (Vector3.Distance (transform.position,path.vectorPath[currentWaypoint]) < 0.5f) {
-			currentWaypoint++;
-			return;
+			dir.y=0;
+			transform.position+=dir;
+			//controller.SimpleMove (dir);
+			//Check if we are close enough to the next waypoint
+			//If we are, proceed to follow the next waypoint
+			if (Vector3.Distance (transform.position,path.vectorPath[currentWaypoint]) < 0.3f) {
+				currentWaypoint++;
+				return;
+			}
 		}
 	}
 
@@ -77,15 +86,18 @@ public class DroneController : BaseManagedController, IJobExecutor{
 		}
 	}
 
+	void AssignJob(Job j)
+	{
+		state = Modes.Calc;
+		M.JobManager.AssignDigJob(j,this);
+		digJob=j;
+		seeker.StartPath (transform.position,j.JobCell.Position, OnPathComplete);
+	}
 	void OnDigJobAdded(Job j)
 	{
 		if(j.Owner==null && state==Modes.Idle)
 		{
-			state = Modes.Calc;
-			M.JobManager.AssignDigJob(j,this);
-			digJob=j;
-			seeker.StartPath (transform.position,j.JobCell.Position, OnPathComplete);
-
+			AssignJob(j);
 		}
 	}
 	#region IJobExecutor implementation
