@@ -39,6 +39,13 @@ public class JobManager  {
 			j.AssignJob(owner);
 		}
 	}
+
+
+	public void CompleteDigJob(Job j)
+	{
+		DigJobs.Remove(j.JobCell);
+		AssignedDigJobs.Remove(j.JobCell);
+	}
 	public void RemoveDigJob(Cell c)
 	{
 		if(!DigJobs.Remove(c))
@@ -53,6 +60,6 @@ public class JobManager  {
 
 	public bool IsForDig(Cell c)
 	{
-		return DigJobs.ContainsKey(c);
+		return DigJobs.ContainsKey(c) || AssignedDigJobs.ContainsKey(c);
 	}
 }

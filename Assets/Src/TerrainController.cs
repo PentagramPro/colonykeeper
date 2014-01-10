@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 
 enum TerrainControllerMode
 {
@@ -195,6 +196,12 @@ public class TerrainController : BaseManagedController {
 		}
 	}
 
+
+	void OnCellUpdated()
+	{
+		GenerateMesh(false);
+	}
+
 	void GenerateMap(bool editMode)
 	{
 		int h = map.GetUpperBound(0);
@@ -222,6 +229,7 @@ public class TerrainController : BaseManagedController {
 
 				Cell c = new Cell(i,j,map);
 				map[i,j]=c;
+				c.CellUpdated+=OnCellUpdated;
 				if(i>middleI-2 && j>middleJ-2 && i<middleI+2 && j<middleJ+2)
 				{
 
@@ -260,17 +268,20 @@ public class TerrainController : BaseManagedController {
 		{
 			for(int j=0;j<map.GetLength(1);j++)
 			{
-				map[i,j].Generate(terrGen,cellPrefab,cellContainer, editMode);
+				map[i,j].Generate(M,terrGen,cellPrefab,cellContainer, editMode);
 
 			}
 		}
+
 
 
 		fogOfWarController.GenerateFog(map,editMode);
 
 		if(!editMode)
 		{
-
+			Debug.Log("Updating graph");
+			GraphUpdateObject guo = new GraphUpdateObject(collider.bounds);
+			AstarPath.active.UpdateGraphs(guo);
 		}
 	}
 

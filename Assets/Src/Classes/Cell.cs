@@ -1,12 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.IO;
+using Pathfinding;
 
 public class Cell {
 
+
+	public delegate void CellUpdatedHandler();
+	public event CellUpdatedHandler CellUpdated;
+
+
+	Color COLOR_DESIGNATED = new Color(0,0,1,0.5f);
+	Color COLOR_DEFAULT = new Color(0,0,1,1);
 	int posI, posJ;
 	Cell[,] map;
-
+	float half_cell = TerrainMeshGenerator.CELL_SIZE/2;
 	public Cell(int i, int j,Cell[,] m)
 	{
 		posI=i;
@@ -27,7 +35,7 @@ public class Cell {
 	public Vector3 Position
 	{
 		get{
-			return cellObj.transform.position;
+			return cellObj.transform.position+new Vector3(half_cell,0,half_cell);
 		}
 	}
 	public GameObject cellObj;
@@ -50,21 +58,39 @@ public class Cell {
 		return Resources.Load("Materials/"+name, typeof(Material)) as Material;
 	}
 
+	public void Dig()
+	{
+		CellBlock=null;
+		if(CellUpdated!=null)
+			CellUpdated();
+		cellObj.renderer.material.SetColor("_Color",COLOR_DEFAULT);
+	}
+
+	void UpdateCellColor(JobManager jm)
+	{
+		if(jm.IsForDig(this))
+		{
+			cellObj.renderer.material.SetColor("_Color",COLOR_DESIGNATED);
+		}
+		else
+		{
+			cellObj.renderer.material.SetColor("_Color",COLOR_DEFAULT);
+		}
+	}
 	public void DesignateDigJob(JobManager jm)
 	{
 		if(jm.IsForDig(this))
 		{
 			jm.RemoveDigJob(this);
-			cellObj.renderer.material.SetColor("_Color",new Color(0,0,1,1f));
 		}
 		else
 		{
 			jm.AddDigJob(this);
-			cellObj.renderer.material.SetColor("_Color",new Color(0,0,1,0.5f));
 		}
+		UpdateCellColor(jm);
 	}
 
-	public GameObject Generate(TerrainMeshGenerator terrGen, GameObject cellPrefab, GameObject parent, bool editMode)
+	public GameObject Generate(Manager manager, TerrainMeshGenerator terrGen, GameObject cellPrefab, GameObject parent, bool editMode)
 	{
 		if(cellObj==null)
 		{
@@ -96,9 +122,13 @@ public class Cell {
 			cellObj.GetComponent<MeshFilter>().sharedMesh=mesh;
 		else 
 			cellObj.GetComponent<MeshFilter>().mesh = mesh;
+		if(!editMode)
+		{
+			UpdateCellColor(manager.JobManager);
 
 
 
+		}
 		return cellObj;
 	}
 

@@ -5,10 +5,11 @@ using Pathfinding;
 public class DroneController : BaseManagedController, IJobExecutor{
 	enum Modes
 	{
-		Init,Idle,Calc,Follow,Work
+		Init,Idle,Calc,Turn,Follow,Work
 	}
 
 	public float speed = 2;
+	public float turnSpeed=30;
 
 	int currentWaypoint;
 	//CharacterController controller;
@@ -35,10 +36,14 @@ public class DroneController : BaseManagedController, IJobExecutor{
 				break;
 			case Modes.Follow:
 				break;
+			case Modes.Turn:
+
+				break;
 			case Modes.Calc:
 				break;
 			case Modes.Work:
-				M.JobManager.RemoveDigJob(digJob.JobCell);
+				digJob.JobCell.Dig();
+				M.JobManager.CompleteDigJob(digJob);
 				Job j = M.JobManager.FindDigJob();
 				if(j==null)
 					state = Modes.Idle;
@@ -48,41 +53,64 @@ public class DroneController : BaseManagedController, IJobExecutor{
 				break;
 			}
 		}
-	}
 
-	public void FixedUpdate () {
-		if(state==Modes.Follow)
+		if(state==Modes.Follow || state==Modes.Turn)
 		{
 			if (path == null) {
 				//We have no path to move after yet
+				throw new UnityException("No path!");
 				return;
 			}
 			if (currentWaypoint >= path.vectorPath.Count) {
 				state=Modes.Work;
 				return;
 			}
-			//Direction to the next waypoint
+			
 			Vector3 dir = (path.vectorPath[currentWaypoint]-transform.position).normalized;
-			dir *= speed * Time.fixedDeltaTime;
-
 			dir.y=0;
-			transform.position+=dir;
-			//controller.SimpleMove (dir);
-			//Check if we are close enough to the next waypoint
-			//If we are, proceed to follow the next waypoint
-			if (Vector3.Distance (transform.position,path.vectorPath[currentWaypoint]) < 0.3f) {
-				currentWaypoint++;
-				return;
+			Quaternion dirRot = Quaternion.LookRotation(dir);
+			
+			if(state==Modes.Follow)
+			{
+				
+				//Direction to the next waypoint
+				
+				dir *= speed * Time.smoothDeltaTime;
+				
+				
+				transform.localRotation = dirRot;
+				transform.position+=dir;
+				//controller.SimpleMove (dir);
+				//Check if we are close enough to the next waypoint
+				//If we are, proceed to follow the next waypoint
+				if (Vector3.Distance (transform.position,path.vectorPath[currentWaypoint]) < 0.3f) {
+					currentWaypoint++;
+					return;
+				}
+			}
+			else if(state==Modes.Turn)
+			{
+				
+				transform.localRotation=Quaternion.RotateTowards(transform.localRotation,dirRot,turnSpeed*Time.smoothDeltaTime);
+				
+				
+				if(transform.localRotation==dirRot)
+					state=Modes.Follow;
 			}
 		}
+	}
+
+	public void FixedUpdate () {
+
+
 	}
 
 	public void OnPathComplete (Path p) {
 		Debug.Log ("Yey, we got a path back. Did it have an error? "+p.error);
 		if (!p.error && state==Modes.Calc) {
 			path = p;
-			currentWaypoint=0;
-			state = Modes.Follow;
+			currentWaypoint=1;
+			state = Modes.Turn;
 		}
 	}
 
