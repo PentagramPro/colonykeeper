@@ -28,9 +28,10 @@ public class Cell {
 
 	// [data]
 	// block attached to this cell
-	public Block CellBlock;
+	//public Block CellBlock;
 
-	public BlockController CellBlockController;
+	//public BlockController CellBlockController;
+	public IBlock CellBlock;
 
 	public Vector3 Position
 	{
@@ -44,7 +45,7 @@ public class Cell {
 	{
 		get
 		{
-			return CellBlock==null || CellBlockController!=null;
+			return CellBlock==null || !CellBlock.IsDiggable();
 		}
 	}
 
@@ -60,9 +61,12 @@ public class Cell {
 
 	public void Dig()
 	{
-		CellBlock=null;
-		if(CellUpdated!=null)
-			CellUpdated();
+		if(CellBlock!=null && CellBlock.IsDiggable())
+		{
+			CellBlock=null;
+			if(CellUpdated!=null)
+				CellUpdated();
+		}
 		cellObj.renderer.material.SetColor("_Color",COLOR_DEFAULT);
 	}
 
@@ -110,7 +114,7 @@ public class Cell {
 		if(CellBlock!=null)
 		{
 			cellObj.collider.enabled=true;
-			Material mat = LoadMaterial(CellBlock.MaterialName);
+			Material mat = LoadMaterial(CellBlock.GetMaterialName());
 			if(mat!=null)
 				cellObj.renderer.material = mat;
 		}

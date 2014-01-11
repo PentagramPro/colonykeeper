@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BlockController : BaseController {
+public class BlockController : BaseController, IBlock {
 
 	public Block BlockProt;
 
@@ -30,4 +30,27 @@ public class BlockController : BaseController {
 	public void OnDeselected()
 	{
 	}
+
+	#region IBlock implementation
+
+	public bool IsDiggable ()
+	{
+		return false;
+	}
+
+
+
+
+	public string GetMaterialName ()
+	{
+		return null;
+	}
+
+
+	public BlockController GetBlockController()
+	{
+		return this;
+	}
+
+	#endregion
 }

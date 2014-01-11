@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
 
-public class Block  {
+public class Block  : IBlock {
 	public class LootRec
 	{
 		[XmlAttribute("p")]
@@ -50,4 +50,22 @@ public class Block  {
 
 	[XmlAttribute("MaterialName")]
 	public string MaterialName;
+
+	#region IBlock implementation
+
+	public bool IsDiggable ()
+	{
+		return !string.IsNullOrEmpty(MaterialName);
+	}
+
+	public string GetMaterialName ()
+	{
+		return MaterialName;
+	}
+
+	public BlockController GetBlockController()
+	{
+		return null;
+	}
+	#endregion
 }

@@ -59,7 +59,6 @@ public class DroneController : BaseManagedController, IJobExecutor{
 			if (path == null) {
 				//We have no path to move after yet
 				throw new UnityException("No path!");
-				return;
 			}
 			if (currentWaypoint >= path.vectorPath.Count) {
 				state=Modes.Work;

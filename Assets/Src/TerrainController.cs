@@ -141,12 +141,14 @@ public class TerrainController : BaseManagedController {
 			{
 				c.DesignateDigJob(M.JobManager);
 			}
-			else if(c.CellBlockController!=null)
+			else if(!c.CellBlock.IsDiggable())
 			{
 				if(lastSelected!=null)
 					lastSelected.OnDeselected();
-				c.CellBlockController.OnSelected();
-				lastSelected = c.CellBlockController;
+				lastSelected = c.CellBlock.GetBlockController();
+				if(lastSelected!=null)
+					lastSelected.OnSelected();
+
 			}
 		}
 		else if(mode==TerrainControllerMode.Picked)
@@ -156,8 +158,8 @@ public class TerrainController : BaseManagedController {
 
 				BlockController bc = pickedObject.GetComponent<BlockController>();
 
-				c.CellBlock = bc.BlockProt;
-				c.CellBlockController = bc;
+				c.CellBlock = (IBlock)bc;
+
 				//map[i,j].Block=pickedObject.GetComponent<BlockController>();
 				pickedObject=null;
 				mode=TerrainControllerMode.Idle;
