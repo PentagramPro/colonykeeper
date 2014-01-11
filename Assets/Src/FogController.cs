@@ -16,7 +16,7 @@ public class FogController : BaseController {
 	
 	}
 
-	public void GenerateFog(Cell[,] map, bool editMode)
+	public void GenerateFog(BlockController[,] map, bool editMode)
 	{
 		if(fogGen==null)
 			fogGen = new FogOfWarMeshGenerator(map);

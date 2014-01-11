@@ -5,9 +5,9 @@ public class TerrainMeshGenerator : MeshGenerator {
 
 	public const float CELL_SIZE = 1;
 	public static Color AMBIENT_LIGHT = new Color(0.2f,0.2f,0.2f);
-	protected Cell[,] map;
+	protected BlockController[,] map;
 
-	public TerrainMeshGenerator(Cell [,] targetMap)
+	public TerrainMeshGenerator(BlockController [,] targetMap)
 	{
 		map = targetMap;
 	}
@@ -93,7 +93,7 @@ public class TerrainMeshGenerator : MeshGenerator {
 
 		
 	
-		Cell c = map[i,j];
+		BlockController c = map[i,j];
 
 		float level = c.Digged?0:CELL_SIZE;
 		

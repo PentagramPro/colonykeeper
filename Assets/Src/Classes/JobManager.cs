@@ -7,10 +7,10 @@ public class JobManager  {
 	public delegate void JobNotification(Job j);
 	public event JobNotification DigJobAdded;
 
-	Dictionary<Cell,Job> DigJobs = new Dictionary<Cell, Job>();
-	Dictionary<Cell,Job> AssignedDigJobs = new Dictionary<Cell, Job>();
+	Dictionary<BlockController,Job> DigJobs = new Dictionary<BlockController, Job>();
+	Dictionary<BlockController,Job> AssignedDigJobs = new Dictionary<BlockController, Job>();
 
-	public void AddDigJob(Cell c)
+	public void AddDigJob(BlockController c)
 	{
 		Job j = new Job();
 		j.JobCell=c;
@@ -46,7 +46,7 @@ public class JobManager  {
 		DigJobs.Remove(j.JobCell);
 		AssignedDigJobs.Remove(j.JobCell);
 	}
-	public void RemoveDigJob(Cell c)
+	public void RemoveDigJob(BlockController c)
 	{
 		if(!DigJobs.Remove(c))
 		{
@@ -58,7 +58,7 @@ public class JobManager  {
 		}
 	}
 
-	public bool IsForDig(Cell c)
+	public bool IsForDig(BlockController c)
 	{
 		return DigJobs.ContainsKey(c) || AssignedDigJobs.ContainsKey(c);
 	}

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Job  {
 
-	public Cell JobCell;
+	public BlockController JobCell;
 
 
 	IJobExecutor owner;

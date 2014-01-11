@@ -5,7 +5,7 @@ public class FogOfWarMeshGenerator : TerrainMeshGenerator {
 
 
 
-	public FogOfWarMeshGenerator(Cell[,] m) : base(m)
+	public FogOfWarMeshGenerator(BlockController[,] m) : base(m)
 	{
 
 	}

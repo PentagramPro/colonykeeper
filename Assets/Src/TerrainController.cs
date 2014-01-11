@@ -9,7 +9,7 @@ enum TerrainControllerMode
 }
 public class TerrainController : BaseManagedController {
 
-	Cell[,] map = new Cell[16,16];
+	BlockController[,] map = new BlockController[16,16];
 
 	BlockController lastSelected;
 	bool meshInitializedInEditor = false;
@@ -114,13 +114,7 @@ public class TerrainController : BaseManagedController {
 
 	}
 
-	void OnMouseDown()
-	{
-		int i,j;
-		if(DetectCellUnderMouse(out i, out j))
-		   OnCellClicked(i,j);
-			
-	}
+
 
 	void OnCellHover(int i, int j)
 	{
@@ -134,18 +128,18 @@ public class TerrainController : BaseManagedController {
 	}
 	void OnCellClicked(int i, int j)
 	{
-		Cell c=map[i,j];
+		BlockController c=map[i,j];
 		if(mode==TerrainControllerMode.Idle)
 		{
 			if(!c.Digged)
 			{
 				c.DesignateDigJob(M.JobManager);
 			}
-			else if(!c.CellBlock.IsDiggable())
+			else if(!c.BlockProt.IsDiggable())
 			{
 				if(lastSelected!=null)
 					lastSelected.OnDeselected();
-				lastSelected = c.CellBlock.GetBlockController();
+				lastSelected = c;
 				if(lastSelected!=null)
 					lastSelected.OnSelected();
 
@@ -153,12 +147,12 @@ public class TerrainController : BaseManagedController {
 		}
 		else if(mode==TerrainControllerMode.Picked)
 		{
-			if(c.CellBlock==null)
+			if(c.BlockProt==null)
 			{
 
 				BlockController bc = pickedObject.GetComponent<BlockController>();
 
-				c.CellBlock = (IBlock)bc;
+				// TODO
 
 				//map[i,j].Block=pickedObject.GetComponent<BlockController>();
 				pickedObject=null;
@@ -199,7 +193,7 @@ public class TerrainController : BaseManagedController {
 	}
 
 
-	void OnCellUpdated()
+	void OnCellUpdated(int i, int j)
 	{
 		GenerateMesh(false);
 	}
@@ -228,10 +222,17 @@ public class TerrainController : BaseManagedController {
 		{
 			for(int j=0;j<=w;j++)
 			{
+				GameObject cellObj = (GameObject)Instantiate(cellPrefab);
+				map[i,j] = cellObj.GetComponent<BlockController>();
+				BlockController c = map[i,j];
+				c.transform.parent = cellContainer.transform;
+				c.InitCell(i,j,map);
 
-				Cell c = new Cell(i,j,map);
-				map[i,j]=c;
+
 				c.CellUpdated+=OnCellUpdated;
+				c.CellMouseOver+=OnCellHover;
+				c.CellMouseUp+=OnCellClicked;
+
 				if(i>middleI-2 && j>middleJ-2 && i<middleI+2 && j<middleJ+2)
 				{
 
@@ -240,7 +241,7 @@ public class TerrainController : BaseManagedController {
 				{
 					int v = Random.Range(0,M.GameD.CellBlocks.Count);
 					if(v<M.GameD.CellBlocks.Count)
-						c.CellBlock=M.GameD.CellBlocks[v];
+						c.BlockProt=M.GameD.CellBlocks[v];
 				}
 				//c.Digged=false;
 			}
@@ -270,7 +271,7 @@ public class TerrainController : BaseManagedController {
 		{
 			for(int j=0;j<map.GetLength(1);j++)
 			{
-				map[i,j].Generate(M,terrGen,cellPrefab,cellContainer, editMode);
+				map[i,j].Generate(M,terrGen, editMode);
 
 			}
 		}
