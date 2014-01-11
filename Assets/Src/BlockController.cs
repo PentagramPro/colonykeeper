@@ -9,7 +9,7 @@ public class BlockController : BaseController {
 	public event CellHandler CellMouseUp;
 
 	public Block BlockProt;
-
+	public BuildingController cellBuilding;
 
 	Color COLOR_DESIGNATED = new Color(0,0,1,0.5f);
 	Color COLOR_DEFAULT = new Color(0,0,1,1);
@@ -139,6 +139,29 @@ public class BlockController : BaseController {
 
 	}
 
+	public bool CanBuild()
+	{
+		if(cellBuilding!=null || BlockProt!=null)
+			return false;
+
+		return true;
+	}
+	public bool Build(GameObject building)
+	{
+		if(!CanBuild())
+			return false;
+
+		BuildingController bc = building.GetComponent<BuildingController>();
+
+		if(bc==null)
+			return false;
+
+		bc.transform.parent=transform;
+		bc.transform.localPosition=new Vector3(halfCell,0,halfCell);
+		cellBuilding = bc;
+
+		return true;
+	}
 	void UpdateCellColor(JobManager jm)
 	{
 		if(jm.IsForDig(this))

@@ -69,52 +69,48 @@ public class TerrainController : BaseManagedController {
 		float distance;
 		iRes=jRes=-1;
 		
-		if (upperPlane.Raycast(ray,out distance))
+
+		if (lowerPlane.Raycast(ray,out distance))
 		{
-			//Debug.Log("intersects");
+			
 			Vector3 hitPoint = ray.GetPoint(distance)-transform.position;
 			
 			int i = (int)(hitPoint.z/TerrainMeshGenerator.CELL_SIZE);
 			int j = (int)(hitPoint.x/TerrainMeshGenerator.CELL_SIZE);
-			
 			if(i>=0 && j>=0 && i<map.GetLength(0) && j<map.GetLength(1))
 			{
-				if(!map[i,j].Digged)
-				{
-					iRes=i;jRes=j;
-					return true;
-				}
-				else
-				{
-					if (lowerPlane.Raycast(ray,out distance))
-					{
-						
-						hitPoint = ray.GetPoint(distance)-transform.position;
-						
-						i = (int)(hitPoint.z/TerrainMeshGenerator.CELL_SIZE);
-						j = (int)(hitPoint.x/TerrainMeshGenerator.CELL_SIZE);
-						if(i>=0 && j>=0 && i<map.GetLength(0) && j<map.GetLength(1))
-						{
-							iRes=i;jRes=j;
-							return true;
-						}
-					}
-				}
+				iRes=i;jRes=j;
+				return true;
 			}
 		}
+				
 		return false;
 	}
+
+
 	// Update is called once per frame
 	void Update () {
 	
-		int i,j;
-		if(DetectCellUnderMouse(out i, out j))
-		   OnCellHover(i,j);
+		//int i,j;
+		//if(DetectCellUnderMouse(out i, out j))
+		//   OnCellHover(i,j);
 
 
 	}
 
+	void OnMouseOver()
+	{
+		int i,j;
+		if(DetectCellUnderMouse(out i, out j))
+			OnCellHover(i,j);
+	}
 
+	void OnMouseUp()
+	{
+		int i,j;
+		if(DetectCellUnderMouse(out i, out j))
+			OnCellClicked(i,j);
+	}
 
 	void OnCellHover(int i, int j)
 	{
@@ -135,29 +131,15 @@ public class TerrainController : BaseManagedController {
 			{
 				c.DesignateDigJob(M.JobManager);
 			}
-			else if(!c.BlockProt.IsDiggable())
-			{
-				if(lastSelected!=null)
-					lastSelected.OnDeselected();
-				lastSelected = c;
-				if(lastSelected!=null)
-					lastSelected.OnSelected();
 
-			}
 		}
 		else if(mode==TerrainControllerMode.Picked)
 		{
-			if(c.BlockProt==null)
+			if(c.CanBuild())
 			{
-
-				BlockController bc = pickedObject.GetComponent<BlockController>();
-
-				// TODO
-
-				//map[i,j].Block=pickedObject.GetComponent<BlockController>();
+				c.Build(pickedObject);
 				pickedObject=null;
 				mode=TerrainControllerMode.Idle;
-
 			}
 			else
 			{
@@ -237,11 +219,15 @@ public class TerrainController : BaseManagedController {
 				{
 
 				}
+				else if(i==0 || j==0 || i==h || j==w)
+				{
+					c.BlockProt=M.GameD.Blocks[0];
+				}
 				else
 				{
-					int v = Random.Range(0,M.GameD.CellBlocks.Count);
-					if(v<M.GameD.CellBlocks.Count)
-						c.BlockProt=M.GameD.CellBlocks[v];
+					int v = Random.Range(1,M.GameD.Blocks.Count);
+					if(v<M.GameD.Blocks.Count)
+						c.BlockProt=M.GameD.Blocks[v];
 				}
 				//c.Digged=false;
 			}

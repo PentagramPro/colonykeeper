@@ -1,12 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Src\Classes\Entities\GameDictionary.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Src\BlockController.cs">
     <Files>
-      <File FileName="Assets\Src\Classes\Entities\Item.cs" Line="4" Column="1" />
-      <File FileName="Assets\Src\Classes\Entities\Building.cs" Line="16" Column="27" />
-      <File FileName="Assets\Src\Classes\Entities\Block.cs" Line="47" Column="2" />
-      <File FileName="Assets\Resources\gamedictionary.xml" Line="5" Column="58" />
-      <File FileName="Assets\Src\Classes\Entities\GameDictionary.cs" Line="20" Column="2" />
+      <File FileName="Assets\Src\BlockController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Src\BlockController.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
