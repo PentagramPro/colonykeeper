@@ -13,11 +13,10 @@ public class GameDictionary  {
 	[XmlArray("Items"),XmlArrayItem("Item")]
 	public List<Item> Items = new List<Item>();
 
-	[XmlIgnore]
-	public List<Block> CellBlocks = new List<Block>();
+	[XmlArray("Buildings"),XmlArrayItem("Building")]
+	public List<Building> Buildings = new List<Building>();
 
-	[XmlIgnore]
-	public List<Block> ObjectBlocks = new List<Block>();
+
 
 	public void Save(string path)
 	{
@@ -29,24 +28,7 @@ public class GameDictionary  {
 		}
 		
 	}
-	
-	void Sort()
-	{
-		CellBlocks.Clear();
-		ObjectBlocks.Clear();
 
-		foreach(Block b in Blocks)
-		{
-			if(!string.IsNullOrEmpty(b.MaterialName))
-			{
-				CellBlocks.Add(b);
-			}
-			else if(!string.IsNullOrEmpty(b.PrefabName))
-			{
-				ObjectBlocks.Add(b);
-			}
-		}
-	}
 	
 	public static GameDictionary Load(string path)
 	{
@@ -64,8 +46,7 @@ public class GameDictionary  {
 			res =  new GameDictionary();
 		}
 
-		res.Sort();
-
+		res.Blocks[0].Breakable=false;
 		return res;
 	}
 }

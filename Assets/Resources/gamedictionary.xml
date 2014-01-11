@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <GameDictionary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Blocks>
+  	<Block Name="Bedrock" MaterialName="Bedrock"></Block>
   	<Block Name="Ground" MaterialName="Ground"></Block>
   	<Block Name="Iron Ore" MaterialName="IronOre"></Block>
-  	<Block Name="Lamp" PrefabName="Lamp"></Block>
-  	<Block Name="Store" PrefabName="Store"></Block>
   </Blocks>
   <Items />
+  <Buildings>
+  	<Building Name="Lamp" PrefabName="Lamp"></Building>
+  	<Building Name="Store" PrefabName="Store"></Building>
+  </Buildings>
 </GameDictionary>

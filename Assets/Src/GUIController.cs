@@ -34,9 +34,9 @@ public class GUIController : BaseManagedController {
 	void OnGUI()
 	{
 		float pos=0,height=80;
-		Block selected = null;
+		Building selected = null;
 
-		foreach(Block b in M.GameD.ObjectBlocks)
+		foreach(Building b in M.GameD.Buildings)
 		{
 			if(GUI.Button(new Rect(0,pos,150,height),b.Name))
 			{

@@ -10,9 +10,10 @@ public class BlockController : BaseController {
 
 	public Block BlockProt;
 
+
 	Color COLOR_DESIGNATED = new Color(0,0,1,0.5f);
 	Color COLOR_DEFAULT = new Color(0,0,1,1);
-	public string Name = "Lamp";
+
 
 	int posI, posJ;
 	BlockController[,] mapRef;
@@ -46,7 +47,7 @@ public class BlockController : BaseController {
 	{
 		get
 		{
-			return BlockProt==null || !BlockProt.IsDiggable();
+			return BlockProt==null;
 		}
 	}
 	
@@ -58,7 +59,7 @@ public class BlockController : BaseController {
 	
 	public void Dig()
 	{
-		if(BlockProt!=null && BlockProt.IsDiggable())
+		if(BlockProt!=null && BlockProt.Breakable)
 		{
 			BlockProt=null;
 			if(CellUpdated!=null)
@@ -119,7 +120,7 @@ public class BlockController : BaseController {
 		if(BlockProt!=null)
 		{
 			collider.enabled=true;
-			Material mat = LoadMaterial(BlockProt.GetMaterialName());
+			Material mat = LoadMaterial(BlockProt.MaterialName);
 			if(mat!=null)
 				renderer.material = mat;
 		}
