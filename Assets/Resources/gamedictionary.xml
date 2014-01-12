@@ -3,9 +3,11 @@
   <Blocks>
   	<Block Name="Bedrock" MaterialName="Bedrock"></Block>
   	<Block Name="Ground" MaterialName="Ground"></Block>
-  	<Block Name="Iron Ore" MaterialName="IronOre"></Block>
+  	<Block Name="Iron Ore" MaterialName="IronOre" Contains="Iron Ore"></Block>
   </Blocks>
-  <Items />
+  <Items >
+  	<Item Name="Iron Ore"></Item>
+  </Items>
   <Buildings>
   	<Building Name="Lamp" PrefabName="Lamp"></Building>
   	<Building Name="Store" PrefabName="Store"></Building>

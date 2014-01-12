@@ -1,10 +1,20 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Src\Classes\Interfaces\IInventory.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Src\Controllers\VehicleController.cs">
     <Files>
-      <File FileName="Assets\Src\Classes\Interfaces\IInventory.cs" Line="6" Column="22" />
+      <File FileName="Assets\Src\Classes\Interfaces\IInventory.cs" Line="7" Column="36" />
       <File FileName="Assets\Src\Classes\Pile.cs" Line="18" Column="2" />
-      <File FileName="Assets\Src\Classes\SingleInventory.cs" Line="3" Column="12" />
+      <File FileName="Assets\Src\Classes\SingleInventory.cs" Line="37" Column="17" />
+      <File FileName="Assets\Src\Controllers\BlockController.cs" Line="187" Column="3" />
+      <File FileName="Assets\Src\Controllers\DroneController.cs" Line="11" Column="2" />
+      <File FileName="Assets\Resources\gamedictionary.xml" Line="9" Column="33" />
+      <File FileName="Assets\Src\Classes\Entities\Block.cs" Line="23" Column="26" />
+      <File FileName="Assets\Src\Classes\Entities\Item.cs" Line="7" Column="2" />
+      <File FileName="Assets\Src\Classes\Entities\GameDictionary.cs" Line="48" Column="5" />
+      <File FileName="Assets\Src\Controllers\GUIController.cs" Line="39" Column="1" />
+      <File FileName="Assets\Src\Classes\Interfaces\IWorker.cs" Line="1" Column="1" />
+      <File FileName="Assets\Src\Controllers\BuildingController.cs" Line="11" Column="21" />
+      <File FileName="Assets\Src\Controllers\VehicleController.cs" Line="23" Column="2" />
     </Files>
     <Pads>
       <Pad Id="MonoDevelop.Debugger.WatchPad">

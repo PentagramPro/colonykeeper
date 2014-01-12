@@ -2,21 +2,23 @@ using UnityEngine;
 using System.Collections;
 using Pathfinding;
 
-public class DroneController : BaseManagedController, IWorker{
-	enum Modes
+public class DroneController : BaseManagedController, IWorker, IInventory{
+	private enum Modes
 	{
 		Init,Idle,Calc,Turn,Follow,Work
 	}
 
 	public float speed = 2;
-	public float turnSpeed=30;
-	public float digAmount=1;
+	public float turnSpeed=140;
+	public float digAmount=4;
 
 	int currentWaypoint;
 	//CharacterController controller;
 	Path path;
 	Seeker seeker;
 	Modes state = Modes.Init;
+
+	SingleInventory inventory = new SingleInventory();
 	// Use this for initialization
 	void Start () {
 		seeker = GetComponent<Seeker>();
@@ -97,8 +99,7 @@ public class DroneController : BaseManagedController, IWorker{
 
 	void DoWork()
 	{
-		float digRes=0;
-		if(digJob.JobCell.Dig(digAmount*Time.smoothDeltaTime,out digRes))
+		if(digJob.JobCell.Dig(inventory,digAmount*Time.smoothDeltaTime))
 		{
 			M.JobManager.CompleteDigJob(digJob);
 			Job j = M.JobManager.FindDigJob();
@@ -138,12 +139,30 @@ public class DroneController : BaseManagedController, IWorker{
 			AssignJob(j);
 		}
 	}
-	#region IJobExecutor implementation
+	#region IWorker implementation
 
 	public void CancelJob ()
 	{
 		state = Modes.Idle;
 	}
 
+	#endregion
+
+	#region IInventory implementation
+
+	public Pile Take (float quantity)
+	{
+		return inventory.Take(quantity);
+	}
+
+	public bool Put (Pile item)
+	{
+		return inventory.Put(item);
+	}
+
+	public bool Put(Item i, float q)
+	{
+		return inventory.Put(i,q);
+	}
 	#endregion
 }

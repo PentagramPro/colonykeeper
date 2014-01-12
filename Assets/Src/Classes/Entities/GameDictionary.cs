@@ -7,11 +7,15 @@ using System.IO;
 [XmlRoot("GameDictionary")]
 public class GameDictionary  {
 
+
+	[XmlIgnore]
+	public Dictionary<string, Item> Items = new Dictionary<string, Item>();
+
 	[XmlArray("Blocks"),XmlArrayItem("Block")]
 	public List<Block> Blocks = new List<Block>();
 
 	[XmlArray("Items"),XmlArrayItem("Item")]
-	public List<Item> Items = new List<Item>();
+	public List<Item> ItemsList = new List<Item>();
 
 	[XmlArray("Buildings"),XmlArrayItem("Building")]
 	public List<Building> Buildings = new List<Building>();
@@ -29,7 +33,22 @@ public class GameDictionary  {
 		
 	}
 
-	
+	void Sort()
+	{
+		foreach(Item i in ItemsList)
+		{
+			Items.Add(i.Name,i);
+
+		}
+		ItemsList.Clear();
+
+		foreach(Block b in Blocks)
+		{
+			if(b.Contains!=null)
+				b.ContainsItem = Items[b.Contains];
+		}
+	}
+
 	public static GameDictionary Load(string path)
 	{
 		var serializer = new XmlSerializer(typeof(GameDictionary));
@@ -45,7 +64,7 @@ public class GameDictionary  {
 		{
 			res =  new GameDictionary();
 		}
-
+		res.Sort();
 		res.Blocks[0].Breakable=false;
 		return res;
 	}

@@ -15,4 +15,10 @@ public class Block  {
 
 	[XmlIgnore]
 	public bool Breakable=true;
+
+	[XmlAttribute("Contains")]
+	public string Contains;
+
+	[XmlIgnore]
+	public Item ContainsItem;
 }

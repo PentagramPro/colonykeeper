@@ -32,15 +32,20 @@ public class SingleInventory : IInventory
 		}
 	}
 
-	public bool Put (Pile item)
+	public bool Put (Item type, float quantity)
 	{
 		if(pile==null)
-			pile = new Pile(item.ItemType);
-		else if(pile.ItemType!=item.ItemType)
+			pile = new Pile(type);
+		else if(pile.ItemType!=type)
 			return false;
-
-		pile.Quantity+=item.Quantity;
+		
+		pile.Quantity+=quantity;
 		return true;
+	}
+
+	public bool Put (Pile item)
+	{
+		return Put (item.ItemType,item.Quantity);
 
 	}
 

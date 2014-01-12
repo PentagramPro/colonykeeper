@@ -16,7 +16,7 @@ public class BlockController : BaseController {
 	float amount=10;
 
 	int posI, posJ;
-	BlockController[,] mapRef;
+
 	float halfCell = TerrainMeshGenerator.CELL_SIZE/2;
 
 	public void InitCell(int i, int j, BlockController[,] map)
@@ -24,7 +24,7 @@ public class BlockController : BaseController {
 
 		posI=i;
 		posJ=j;
-		mapRef=map;
+
 		transform.localPosition = new Vector3(TerrainMeshGenerator.CELL_SIZE*j,0,TerrainMeshGenerator.CELL_SIZE*i);
 		((BoxCollider)collider).center = new Vector3(halfCell,halfCell,halfCell);
 		//cellObj.collider.isTrigger=false;
@@ -43,6 +43,7 @@ public class BlockController : BaseController {
 		}
 	}
 
+
 	public bool Digged
 	{
 		get
@@ -54,20 +55,25 @@ public class BlockController : BaseController {
 	// [performance]
 	// vertex indexes used by mesh generator 
 	public int lt,lb,rt,rb;
-	
 
-	
-	public bool Dig(float digAmount, out float digRes)
+	public Item Contains{
+		get{
+			return BlockProt.ContainsItem;
+		}
+	}
+
+	public bool Dig(IInventory dest, float digAmount)
 	{
 
 		if(BlockProt!=null && BlockProt.Breakable)
 		{
-			digRes=digAmount;
+			digAmount = Mathf.Min(digAmount,amount);
+
 			amount-=digAmount;
+			if(BlockProt.ContainsItem!=null)
+				dest.Put(BlockProt.ContainsItem,digAmount);
 			if(amount<=0)
 			{
-				digRes+=amount;
-				amount=0;
 
 				BlockProt=null;
 				if(CellUpdated!=null)
@@ -78,8 +84,7 @@ public class BlockController : BaseController {
 
 
 		}
-		else
-			digRes=0;
+
 		return false;
 
 	}
@@ -190,12 +195,7 @@ public class BlockController : BaseController {
 		}
 	}
 
-	void OnDrawGizmos()
-	{
-		Vector3 center = transform.position+new Vector3(0,0.5f,0);
-		Gizmos.DrawWireCube(center,new Vector3(1,1,1));
-		Gizmos.DrawWireSphere(transform.position,0.2f);
-	}
+
 
 	Material LoadMaterial(string name)
 	{
