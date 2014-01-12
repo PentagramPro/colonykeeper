@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using Pathfinding;
 
-public class DroneController : BaseManagedController, IJobExecutor{
+public class DroneController : BaseManagedController, IWorker{
 	enum Modes
 	{
 		Init,Idle,Calc,Turn,Follow,Work
@@ -10,6 +10,7 @@ public class DroneController : BaseManagedController, IJobExecutor{
 
 	public float speed = 2;
 	public float turnSpeed=30;
+	public float digAmount=1;
 
 	int currentWaypoint;
 	//CharacterController controller;
@@ -42,13 +43,7 @@ public class DroneController : BaseManagedController, IJobExecutor{
 			case Modes.Calc:
 				break;
 			case Modes.Work:
-				digJob.JobCell.Dig();
-				M.JobManager.CompleteDigJob(digJob);
-				Job j = M.JobManager.FindDigJob();
-				if(j==null)
-					state = Modes.Idle;
-				else
-					AssignJob(j);
+				DoWork();
 
 				break;
 			}
@@ -99,6 +94,22 @@ public class DroneController : BaseManagedController, IJobExecutor{
 		}
 	}
 
+
+	void DoWork()
+	{
+		float digRes=0;
+		if(digJob.JobCell.Dig(digAmount*Time.smoothDeltaTime,out digRes))
+		{
+			M.JobManager.CompleteDigJob(digJob);
+			Job j = M.JobManager.FindDigJob();
+			if(j==null)
+				state = Modes.Idle;
+			else
+				AssignJob(j);
+			
+
+		}
+	}
 	public void FixedUpdate () {
 
 

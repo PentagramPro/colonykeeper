@@ -13,7 +13,7 @@ public class BlockController : BaseController {
 
 	Color COLOR_DESIGNATED = new Color(0,0,1,0.5f);
 	Color COLOR_DEFAULT = new Color(0,0,1,1);
-
+	float amount=10;
 
 	int posI, posJ;
 	BlockController[,] mapRef;
@@ -57,15 +57,31 @@ public class BlockController : BaseController {
 	
 
 	
-	public void Dig()
+	public bool Dig(float digAmount, out float digRes)
 	{
+
 		if(BlockProt!=null && BlockProt.Breakable)
 		{
-			BlockProt=null;
-			if(CellUpdated!=null)
-				CellUpdated(posI,posJ);
+			digRes=digAmount;
+			amount-=digAmount;
+			if(amount<=0)
+			{
+				digRes+=amount;
+				amount=0;
+
+				BlockProt=null;
+				if(CellUpdated!=null)
+					CellUpdated(posI,posJ);
+				renderer.material.SetColor("_Color",COLOR_DEFAULT);
+				return true;
+			}
+
+
 		}
-		renderer.material.SetColor("_Color",COLOR_DEFAULT);
+		else
+			digRes=0;
+		return false;
+
 	}
 	
 	

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 
 public class JobManager  {
@@ -30,7 +30,7 @@ public class JobManager  {
 			
 		return null;
 	}
-	public void AssignDigJob(Job j,IJobExecutor owner)
+	public void AssignDigJob(Job j,IWorker owner)
 	{
 		if(j.Owner==null)
 		{

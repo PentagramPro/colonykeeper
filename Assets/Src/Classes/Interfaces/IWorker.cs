@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public interface IJobExecutor  {
+public interface IWorker  {
 
 	void CancelJob();
 }

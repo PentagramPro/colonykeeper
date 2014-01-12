@@ -1,13 +1,13 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
-public class Job  {
+public class Job : IJob {
 
 	public BlockController JobCell;
 
 
-	IJobExecutor owner;
-	public IJobExecutor Owner
+	IWorker owner;
+	public IWorker Owner
 	{
 		get{return owner;}
 	}
@@ -17,7 +17,7 @@ public class Job  {
 		owner.CancelJob();
 	}
 
-	public void AssignJob(IJobExecutor jobOwner)
+	public void AssignJob(IWorker jobOwner)
 	{
 		owner=jobOwner;
 	}
