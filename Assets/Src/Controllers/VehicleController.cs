@@ -3,7 +3,7 @@ using System.Collections;
 using Pathfinding;
 
 public class VehicleController : BaseManagedController {
-	private enum Modes
+	private enum VehicleModes
 	{
 		Idle,Calc,Turn,Follow
 	}
@@ -14,25 +14,26 @@ public class VehicleController : BaseManagedController {
 	Path path;
 	Seeker seeker;
 	int currentWaypoint;
-	Modes state = Modes.Idle;
+	private VehicleModes vehicleState = VehicleModes.Idle;
 	private PathWalked OnPathWalked;
 
 	public delegate void PathWalked();
-	// Use this for initialization
-	void Start () {
-	
+
+	protected void Init()
+	{
+		seeker = GetComponent<Seeker>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		if(state==Modes.Follow || state==Modes.Turn)
+	protected void Update () {
+		if(vehicleState==VehicleModes.Follow || vehicleState==VehicleModes.Turn)
 		{
 			if (path == null) {
 				//We have no path to move after yet
 				throw new UnityException("No path!");
 			}
 			if (currentWaypoint >= path.vectorPath.Count) {
-				state=Modes.Idle;
+				vehicleState=VehicleModes.Idle;
 				OnPathWalked();
 				return;
 			}
@@ -41,7 +42,7 @@ public class VehicleController : BaseManagedController {
 			dir.y=0;
 			Quaternion dirRot = Quaternion.LookRotation(dir);
 			
-			if(state==Modes.Follow)
+			if(vehicleState==VehicleModes.Follow)
 			{
 				
 				//Direction to the next waypoint
@@ -59,21 +60,21 @@ public class VehicleController : BaseManagedController {
 					return;
 				}
 			}
-			else if(state==Modes.Turn)
+			else if(vehicleState==VehicleModes.Turn)
 			{
 				
 				transform.localRotation=Quaternion.RotateTowards(transform.localRotation,dirRot,turnSpeed*Time.smoothDeltaTime);
 				
 				
 				if(transform.localRotation==dirRot)
-					state=Modes.Follow;
+					vehicleState=VehicleModes.Follow;
 			}
 		}
 	}
 
 	protected void DriveTo(Vector3 dest, PathWalked onPathWalked)
 	{
-		state = Modes.Calc;
+		vehicleState = VehicleModes.Calc;
 		OnPathWalked = onPathWalked;
 		seeker.StartPath (transform.position,dest, OnPathComplete);
 	}
@@ -83,7 +84,7 @@ public class VehicleController : BaseManagedController {
 		if (!p.error) {
 			path = p;
 			currentWaypoint=1;
-			state = Modes.Turn;
+			vehicleState = VehicleModes.Turn;
 		}
 	}
 }

@@ -2,26 +2,22 @@ using UnityEngine;
 using System.Collections;
 using Pathfinding;
 
-public class DroneController : BaseManagedController, IWorker, IInventory{
+public class DroneController : VehicleController, IWorker, IInventory{
 	private enum Modes
 	{
-		Init,Idle,Calc,Turn,Follow,Work
+		Init,Idle,Go,Work
 	}
 
-	public float speed = 2;
-	public float turnSpeed=140;
-	public float digAmount=4;
 
-	int currentWaypoint;
-	//CharacterController controller;
-	Path path;
-	Seeker seeker;
-	Modes state = Modes.Init;
+	public float digAmount=5;
+
+	private Modes state = Modes.Init;
 
 	SingleInventory inventory = new SingleInventory();
 	// Use this for initialization
 	void Start () {
-		seeker = GetComponent<Seeker>();
+		base.Init ();
+
 		//controller = GetComponent<CharacterController>();
 	}
 
@@ -37,12 +33,7 @@ public class DroneController : BaseManagedController, IWorker, IInventory{
 				M.JobManager.DigJobAdded+=OnDigJobAdded;
 				state= Modes.Idle;
 				break;
-			case Modes.Follow:
-				break;
-			case Modes.Turn:
-
-				break;
-			case Modes.Calc:
+			case Modes.Go:
 				break;
 			case Modes.Work:
 				DoWork();
@@ -50,50 +41,7 @@ public class DroneController : BaseManagedController, IWorker, IInventory{
 				break;
 			}
 		}
-
-		if(state==Modes.Follow || state==Modes.Turn)
-		{
-			if (path == null) {
-				//We have no path to move after yet
-				throw new UnityException("No path!");
-			}
-			if (currentWaypoint >= path.vectorPath.Count) {
-				state=Modes.Work;
-				return;
-			}
-			
-			Vector3 dir = (path.vectorPath[currentWaypoint]-transform.position).normalized;
-			dir.y=0;
-			Quaternion dirRot = Quaternion.LookRotation(dir);
-			
-			if(state==Modes.Follow)
-			{
-				
-				//Direction to the next waypoint
-				
-				dir *= speed * Time.smoothDeltaTime;
-				
-				
-				transform.localRotation = dirRot;
-				transform.position+=dir;
-				//controller.SimpleMove (dir);
-				//Check if we are close enough to the next waypoint
-				//If we are, proceed to follow the next waypoint
-				if (Vector3.Distance (transform.position,path.vectorPath[currentWaypoint]) < 0.3f) {
-					currentWaypoint++;
-					return;
-				}
-			}
-			else if(state==Modes.Turn)
-			{
-				
-				transform.localRotation=Quaternion.RotateTowards(transform.localRotation,dirRot,turnSpeed*Time.smoothDeltaTime);
-				
-				
-				if(transform.localRotation==dirRot)
-					state=Modes.Follow;
-			}
-		}
+		base.Update ();
 	}
 
 
@@ -111,26 +59,22 @@ public class DroneController : BaseManagedController, IWorker, IInventory{
 
 		}
 	}
-	public void FixedUpdate () {
 
 
+	void OnPathWalked()
+	{
+		if(state!=Modes.Idle)
+			state = Modes.Work;
 	}
 
-	public void OnPathComplete (Path p) {
-		Debug.Log ("Yey, we got a path back. Did it have an error? "+p.error);
-		if (!p.error && state==Modes.Calc) {
-			path = p;
-			currentWaypoint=1;
-			state = Modes.Turn;
-		}
-	}
 
 	void AssignJob(Job j)
 	{
-		state = Modes.Calc;
+		state = Modes.Go;
 		M.JobManager.AssignDigJob(j,this);
 		digJob=j;
-		seeker.StartPath (transform.position,j.JobCell.Position, OnPathComplete);
+		DriveTo (j.JobCell.Position, OnPathWalked);
+
 	}
 	void OnDigJobAdded(Job j)
 	{
