@@ -10,6 +10,6 @@
   </Items>
   <Buildings>
   	<Building Name="Lamp" PrefabName="Lamp"></Building>
-  	<Building Name="Store" PrefabName="Store"></Building>
+  	<Building Name="Silo" PrefabName="Silo"></Building>
   </Buildings>
 </GameDictionary>

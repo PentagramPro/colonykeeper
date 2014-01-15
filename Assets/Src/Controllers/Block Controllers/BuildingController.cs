@@ -15,6 +15,11 @@ public class BuildingController : BaseController {
 		Gizmos.DrawWireSphere(transform.position,0.2f);
 	}
 
+
+	public void OnBuilded()
+	{
+	}
+
 	// Update is called once per frame
 	void Update () {
 	

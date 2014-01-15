@@ -9,6 +9,10 @@ public class SingleInventory : IInventory
 
 	}
 
+	public float Quantity{
+		get{ return pile.Quantity;}
+	}
+
 	#region IInventory implementation
 
 	public Pile Take (float quantity)
@@ -19,7 +23,9 @@ public class SingleInventory : IInventory
 
 		float q = Mathf.Min(quantity,pile.Quantity);
 
-		if(pile.Quantity==q)
+		if (pile == null)
+			return null;
+		else if(pile.Quantity==q)
 		{
 			Pile res=pile;
 			pile=null;
@@ -49,7 +55,19 @@ public class SingleInventory : IInventory
 
 	}
 
+	public int CanTake(Item item)
+	{
+		if (pile == null)
+			return 1;
+
+		if (pile.ItemType == item)
+			return 2;
+
+		return 0;
+	}
+
 	#endregion
 }
+
 
 

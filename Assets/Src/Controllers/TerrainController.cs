@@ -137,7 +137,7 @@ public class TerrainController : BaseManagedController {
 		{
 			if(c.CanBuild())
 			{
-				c.Build(pickedObject);
+				c.Build(M,pickedObject);
 				pickedObject=null;
 				mode=TerrainControllerMode.Idle;
 			}

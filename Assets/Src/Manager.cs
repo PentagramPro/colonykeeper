@@ -1,13 +1,22 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 
 public class Manager : MonoBehaviour {
 
 	GUIController guiController;
+
+	//Object that stores GUI controller
 	public GameObject gui;
+
+	//Game dictionary contains prototypes for blocks and items
 	public GameDictionary GameD;
+
+	//Job manager holds list of jobs
 	public JobManager JobManager = new JobManager();
+
+	public Dictionary<BlockController,BuildingController> BuildingsRegistry;
+
 
 	public GUIController GetGUIController()
 	{

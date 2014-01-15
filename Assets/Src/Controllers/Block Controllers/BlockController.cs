@@ -167,7 +167,7 @@ public class BlockController : BaseController {
 
 		return true;
 	}
-	public bool Build(GameObject building)
+	public bool Build(Manager m,GameObject building)
 	{
 		if(!CanBuild())
 			return false;
@@ -180,6 +180,10 @@ public class BlockController : BaseController {
 		bc.transform.parent=transform;
 		bc.transform.localPosition=new Vector3(halfCell,0,halfCell);
 		cellBuilding = bc;
+		m.BuildingsRegistry.Add (this, bc);
+		bc.OnBuilded ();
+
+
 
 		return true;
 	}

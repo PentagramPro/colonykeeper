@@ -5,7 +5,7 @@ using Pathfinding;
 public class DroneController : VehicleController, IWorker, IInventory{
 	private enum Modes
 	{
-		Init,Idle,Go,Work
+		Init,Idle,Go,Work,Transport,Unload
 	}
 
 
@@ -44,18 +44,36 @@ public class DroneController : VehicleController, IWorker, IInventory{
 		base.Update ();
 	}
 
+	void DoTransport()
+	{
+		state=Modes.Transport;
+		foreach (BlockController b in M.BuildingsRegistry.Keys) 
+		{
+			BuildingController building = M.BuildingsRegistry[b];
+
+			IInventory i = building.GetComponent<IInventory>();
+			if(i==null)
+				continue;
+
+
+		}
+	}
 
 	void DoWork()
 	{
 		if(digJob.JobCell.Dig(inventory,digAmount*Time.smoothDeltaTime))
 		{
 			M.JobManager.CompleteDigJob(digJob);
-			Job j = M.JobManager.FindDigJob();
-			if(j==null)
-				state = Modes.Idle;
+			if(inventory.Quantity>0)
+				DoTransport();
 			else
-				AssignJob(j);
-			
+			{
+				Job j = M.JobManager.FindDigJob();
+				if(j==null)
+					state = Modes.Idle;
+				else
+					AssignJob(j);
+			}
 
 		}
 	}
@@ -107,6 +125,11 @@ public class DroneController : VehicleController, IWorker, IInventory{
 	public bool Put(Item i, float q)
 	{
 		return inventory.Put(i,q);
+	}
+
+	public int CanTake(Item i)
+	{
+		return inventory.CanTake (i);
 	}
 	#endregion
 }
