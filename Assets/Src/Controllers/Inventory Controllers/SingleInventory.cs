@@ -4,10 +4,9 @@ using UnityEngine;
 public class SingleInventory : IInventory
 {
 	Pile pile;
-	public SingleInventory ()
-	{
+	public float MaxQuantity = 5;
 
-	}
+
 
 	public float Quantity{
 		get{ return pile==null?0:pile.Quantity;}
@@ -15,7 +14,7 @@ public class SingleInventory : IInventory
 
 	#region IInventory implementation
 
-	public override Pile Take (float quantity)
+	public override Pile Take (Item itemType, float quantity)
 	{
 
 		if(quantity<0)
@@ -23,8 +22,10 @@ public class SingleInventory : IInventory
 
 		float q = Mathf.Min(quantity,pile.Quantity);
 
-		if (pile == null)
+		if (pile == null || pile.ItemType!=itemType)
 			return null;
+
+
 		else if(pile.Quantity==q)
 		{
 			Pile res=pile;
@@ -38,29 +39,27 @@ public class SingleInventory : IInventory
 		}
 	}
 
-	public override bool Put (Item type, float quantity)
+	public override float Put (Item type, float quantity)
 	{
 		if(pile==null)
 			pile = new Pile(type);
 		else if(pile.ItemType!=type)
-			return false;
-		
-		pile.Quantity+=quantity;
-		return true;
+			return quantity;
+
+		float free = MaxQuantity -pile.Quantity;
+
+		pile.Quantity+=Mathf.Min(quantity,free);
+		return Mathf.Max(0,quantity-free);
 	}
 
-	public override bool Put (Pile item)
-	{
-		return Put (item.ItemType,item.Quantity);
 
-	}
 
 	public override int CanTake(Item item)
 	{
 		if (pile == null)
 			return 1;
 
-		if (pile.ItemType == item)
+		if (pile.ItemType == item && pile.Quantity<MaxQuantity)
 			return 2;
 
 		return 0;
@@ -76,6 +75,10 @@ public class SingleInventory : IInventory
 		return res;
 	}
 
+	public override bool IsFull()
+	{
+		return pile!=null && pile.Quantity>=MaxQuantity ;
+	}
 
 	#endregion
 }

@@ -43,9 +43,12 @@ public class DroneController : VehicleController, IWorker{
 			
 				break;
 			case Modes.Unload:
-				destinationInv.Put(inventory.Take(unloadAmount*Time.smoothDeltaTime));
+				destinationInv.Put(inventory,unloadAmount*Time.smoothDeltaTime,inventory.GetItemTypes()[0]);
+
 				if(inventory.Quantity==0)
 					FindAnotherJob();
+				else if(destinationInv.IsFull())
+					DoTransport();
 				break;
 			}
 		}
