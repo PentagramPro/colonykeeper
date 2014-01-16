@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SiloController : BaseManagedController, IInventory {
+public class SiloController : BaseManagedController {
 
-	SingleInventory inventory = new SingleInventory();
+
 	// Use this for initialization
 	void Start () {
 	
@@ -14,27 +14,5 @@ public class SiloController : BaseManagedController, IInventory {
 	
 	}
 
-	#region IInventory implementation
 
-	public Pile Take (float quantity)
-	{
-		inventory.Take (quantity);
-	}
-
-	public bool Put (Pile item)
-	{
-		inventory.Put (item);
-	}
-
-	public bool Put (Item type, float quantity)
-	{
-		inventory.Put (type, quantity);
-	}
-
-	public int CanTake(Item i)
-	{
-		return inventory.CanTake (i);
-	}
-
-	#endregion
 }

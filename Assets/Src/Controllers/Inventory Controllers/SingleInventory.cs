@@ -10,12 +10,12 @@ public class SingleInventory : IInventory
 	}
 
 	public float Quantity{
-		get{ return pile.Quantity;}
+		get{ return pile==null?0:pile.Quantity;}
 	}
 
 	#region IInventory implementation
 
-	public Pile Take (float quantity)
+	public override Pile Take (float quantity)
 	{
 
 		if(quantity<0)
@@ -38,7 +38,7 @@ public class SingleInventory : IInventory
 		}
 	}
 
-	public bool Put (Item type, float quantity)
+	public override bool Put (Item type, float quantity)
 	{
 		if(pile==null)
 			pile = new Pile(type);
@@ -49,13 +49,13 @@ public class SingleInventory : IInventory
 		return true;
 	}
 
-	public bool Put (Pile item)
+	public override bool Put (Pile item)
 	{
 		return Put (item.ItemType,item.Quantity);
 
 	}
 
-	public int CanTake(Item item)
+	public override int CanTake(Item item)
 	{
 		if (pile == null)
 			return 1;
@@ -65,6 +65,17 @@ public class SingleInventory : IInventory
 
 		return 0;
 	}
+
+
+
+	public override Item[] GetItemTypes ()
+	{
+		Item[] res = new Item[pile==null?0:1];
+		if(res.Length>0)
+			res [0] = pile.ItemType;
+		return res;
+	}
+
 
 	#endregion
 }

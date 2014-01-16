@@ -15,7 +15,7 @@ public class Manager : MonoBehaviour {
 	//Job manager holds list of jobs
 	public JobManager JobManager = new JobManager();
 
-	public Dictionary<BlockController,BuildingController> BuildingsRegistry;
+	public Dictionary<BlockController,BuildingController> BuildingsRegistry = new Dictionary<BlockController, BuildingController>();
 
 
 	public GUIController GetGUIController()

@@ -9,8 +9,12 @@ public class BaseManagedController : BaseController {
 
 	public void PrepareManager()
 	{
-		if(manager==null)
-			throw new Exception("Manager field is not set!");
+		if (manager == null) 
+		{
+			manager = GameObject.Find("Manager");
+			if(manager==null)
+				throw new UnityException("Cannot find manager object!");
+		}
 		if(managerController==null)
 			managerController = manager.GetComponent<Manager>();
 	}

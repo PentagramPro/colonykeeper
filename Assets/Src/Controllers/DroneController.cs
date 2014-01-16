@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using Pathfinding;
 
-public class DroneController : VehicleController, IWorker, IInventory{
+public class DroneController : VehicleController, IWorker{
 	private enum Modes
 	{
 		Init,Idle,Go,Work,Transport,Unload
@@ -10,15 +10,18 @@ public class DroneController : VehicleController, IWorker, IInventory{
 
 
 	public float digAmount=5;
+	public float unloadAmount = 5;
 
 	private Modes state = Modes.Init;
 
-	SingleInventory inventory = new SingleInventory();
+	IInventory destinationInv;
+
+	SingleInventory inventory;
 	// Use this for initialization
 	void Start () {
 		base.Init ();
 
-		//controller = GetComponent<CharacterController>();
+		inventory = GetComponent<SingleInventory>();
 	}
 
 	Job digJob;
@@ -37,7 +40,12 @@ public class DroneController : VehicleController, IWorker, IInventory{
 				break;
 			case Modes.Work:
 				DoWork();
-
+			
+				break;
+			case Modes.Unload:
+				destinationInv.Put(inventory.Take(unloadAmount*Time.smoothDeltaTime));
+				if(inventory.Quantity==0)
+					FindAnotherJob();
 				break;
 			}
 		}
@@ -47,6 +55,7 @@ public class DroneController : VehicleController, IWorker, IInventory{
 	void DoTransport()
 	{
 		state=Modes.Transport;
+		bool found=false;
 		foreach (BlockController b in M.BuildingsRegistry.Keys) 
 		{
 			BuildingController building = M.BuildingsRegistry[b];
@@ -55,8 +64,29 @@ public class DroneController : VehicleController, IWorker, IInventory{
 			if(i==null)
 				continue;
 
+			Item[] itemTypes = inventory.GetItemTypes();
+
+			if(i.CanTake(itemTypes[0])>0)
+			{
+				destinationInv=i;
+				DriveTo(i.transform.position,OnPathWalked);
+				found=true;
+				break;
+			}
 
 		}
+		if (!found)
+			FindAnotherJob ();
+	}
+
+
+	void FindAnotherJob()
+	{
+		Job j = M.JobManager.FindDigJob();
+		if(j==null)
+			state = Modes.Idle;
+		else
+			AssignJob(j);
 	}
 
 	void DoWork()
@@ -68,11 +98,7 @@ public class DroneController : VehicleController, IWorker, IInventory{
 				DoTransport();
 			else
 			{
-				Job j = M.JobManager.FindDigJob();
-				if(j==null)
-					state = Modes.Idle;
-				else
-					AssignJob(j);
+				FindAnotherJob();
 			}
 
 		}
@@ -81,8 +107,11 @@ public class DroneController : VehicleController, IWorker, IInventory{
 
 	void OnPathWalked()
 	{
-		if(state!=Modes.Idle)
+		if (state == Modes.Go)
 			state = Modes.Work;
+		else if (state == Modes.Transport)
+			state = Modes.Unload;
+		    
 	}
 
 
@@ -110,26 +139,5 @@ public class DroneController : VehicleController, IWorker, IInventory{
 
 	#endregion
 
-	#region IInventory implementation
 
-	public Pile Take (float quantity)
-	{
-		return inventory.Take(quantity);
-	}
-
-	public bool Put (Pile item)
-	{
-		return inventory.Put(item);
-	}
-
-	public bool Put(Item i, float q)
-	{
-		return inventory.Put(i,q);
-	}
-
-	public int CanTake(Item i)
-	{
-		return inventory.CanTake (i);
-	}
-	#endregion
 }
