@@ -11,6 +11,10 @@ public class GUIController : BaseManagedController {
 
 	public event PickedDelegate ItemPicked;
 
+	public IInteractive SelectedObject;
+
+	public float LeftPanelW = 150;
+	public float RightPanelW = 150;
 
 	// Use this for initialization
 	void Start () {
@@ -55,6 +59,13 @@ public class GUIController : BaseManagedController {
 	//		mode = Modes.Place;
 	//		pickedItem = CreatePickedObject (selected);
 			
+		}
+
+		if (SelectedObject != null)
+		{
+			GUILayout.BeginArea(new Rect(Screen.width-LeftPanelW,0,Screen.width,Screen.height));
+			SelectedObject.OnDrawSelectionGUI();
+			GUILayout.EndArea();
 		}
 		
 	}

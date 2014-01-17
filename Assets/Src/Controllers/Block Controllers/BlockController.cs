@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BlockController : BaseController {
+public class BlockController : BaseManagedController {
 
 	public delegate void CellHandler(int i, int j);
 	public event CellHandler CellUpdated;
@@ -127,6 +127,8 @@ public class BlockController : BaseController {
 	{
 		if(CellMouseUp!=null)
 			CellMouseUp(posI,posJ);
+		M.GetGUIController().SelectedObject = null;
+
 	}
 
 	public void Generate(Manager manager, TerrainMeshGenerator terrGen,  bool editMode)

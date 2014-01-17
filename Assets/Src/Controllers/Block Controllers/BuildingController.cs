@@ -18,7 +18,9 @@ public class BuildingController : BaseController {
 
 	public void OnBuilded()
 	{
+		collider.enabled = true;
 	}
+
 
 	// Update is called once per frame
 	void Update () {

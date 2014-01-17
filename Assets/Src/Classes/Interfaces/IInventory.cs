@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public abstract class IInventory : MonoBehaviour
+public abstract class IInventory : BaseManagedController
 {
 	public abstract Pile Take(Item itemType, float quantity);
 
