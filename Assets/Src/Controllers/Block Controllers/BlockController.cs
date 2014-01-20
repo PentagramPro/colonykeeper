@@ -62,8 +62,9 @@ public class BlockController : BaseManagedController {
 		}
 	}
 
-	public bool Dig(IInventory dest, float digAmount)
+	public DigResult Dig(IInventory dest, float digAmount)
 	{
+		DigResult res = DigResult.CannotDig;
 
 		if(BlockProt!=null && BlockProt.Breakable)
 		{
@@ -71,7 +72,16 @@ public class BlockController : BaseManagedController {
 
 			amount-=digAmount;
 			if(BlockProt.ContainsItem!=null)
-				dest.Put(BlockProt.ContainsItem,digAmount);
+			{
+				float left = dest.Put(BlockProt.ContainsItem,digAmount);
+				if(left>0)
+				{
+					res = DigResult.DestinationFull;
+					amount+=left;
+				}
+				else
+					res = DigResult.NotFinished;
+			}
 			if(amount<=0)
 			{
 
@@ -79,13 +89,13 @@ public class BlockController : BaseManagedController {
 				if(CellUpdated!=null)
 					CellUpdated(posI,posJ);
 				renderer.material.SetColor("_Color",COLOR_DEFAULT);
-				return true;
+				res = DigResult.Finished;
 			}
 
 
 		}
 
-		return false;
+		return res;
 
 	}
 	
@@ -207,6 +217,11 @@ public class BlockController : BaseManagedController {
 	{
 		
 		return Resources.Load("Materials/"+name, typeof(Material)) as Material;
+	}
+
+	public enum DigResult
+	{
+		CannotDig, NotFinished, Finished, DestinationFull
 	}
 
 }

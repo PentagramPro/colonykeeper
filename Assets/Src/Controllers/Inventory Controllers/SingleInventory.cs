@@ -65,7 +65,10 @@ public class SingleInventory : IInventory
 		return 0;
 	}
 
-
+	public override bool CanPut (Item item)
+	{
+		return pile==null || (pile.Quantity<MaxQuantity && pile.ItemType==item);
+	}
 
 	public override Item[] GetItemTypes ()
 	{

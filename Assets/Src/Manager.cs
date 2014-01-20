@@ -4,6 +4,9 @@ using System.IO;
 
 public class Manager : MonoBehaviour {
 
+	public delegate void UpdatedDelegate();
+
+
 	GUIController guiController;
 
 	//Object that stores GUI controller
@@ -15,7 +18,7 @@ public class Manager : MonoBehaviour {
 	//Job manager holds list of jobs
 	public JobManager JobManager = new JobManager();
 
-	public Dictionary<BlockController,BuildingController> BuildingsRegistry = new Dictionary<BlockController, BuildingController>();
+	public DictionaryEx<BlockController,BuildingController> BuildingsRegistry = new DictionaryEx<BlockController, BuildingController>();
 
 
 	public GUIController GetGUIController()
@@ -37,8 +40,5 @@ public class Manager : MonoBehaviour {
 	// 	GameD.Save(path);
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 }

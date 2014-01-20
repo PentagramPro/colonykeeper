@@ -1,11 +1,13 @@
 using UnityEngine;
 using System.Collections;
 using Pathfinding;
+using System;
+
 
 public class DroneController : VehicleController, IWorker{
 	private enum Modes
 	{
-		Init,Idle,Go,Work,Transport,Unload
+		Init,Idle,Go,Work,Transport,Unload,Blocked
 	}
 
 
@@ -34,6 +36,7 @@ public class DroneController : VehicleController, IWorker{
 			{
 			case Modes.Init:
 				M.JobManager.DigJobAdded+=OnDigJobAdded;
+				M.BuildingsRegistry.ItemAdded+=OnBuildingAdded;
 				state= Modes.Idle;
 				break;
 			case Modes.Go:
@@ -46,7 +49,15 @@ public class DroneController : VehicleController, IWorker{
 				destinationInv.Put(inventory,unloadAmount*Time.smoothDeltaTime,inventory.GetItemTypes()[0]);
 
 				if(inventory.Quantity==0)
-					FindAnotherJob();
+				{
+					if(digJob==null)
+						FindAnotherJob();
+					else
+					{
+						state = Modes.Go;
+						DriveTo (digJob.JobCell.Position, OnPathWalked);
+					}
+				}
 				else if(destinationInv.IsFull())
 					DoTransport();
 				break;
@@ -79,9 +90,15 @@ public class DroneController : VehicleController, IWorker{
 
 		}
 		if (!found)
-			FindAnotherJob ();
+			state = Modes.Blocked;
 	}
 
+	void CompleteJob()
+	{
+		M.JobManager.CompleteDigJob(digJob);
+		digJob=null;
+		state = Modes.Idle;
+	}
 
 	void FindAnotherJob()
 	{
@@ -94,19 +111,38 @@ public class DroneController : VehicleController, IWorker{
 
 	void DoWork()
 	{
-		if(digJob.JobCell.Dig(inventory,digAmount*Time.smoothDeltaTime))
+		/*M.JobManager.CompleteDigJob(digJob);
+		if(inventory.Quantity>0)
+			DoTransport();
+		else
+		{ 
+			FindAnotherJob();
+		}*/
+
+		switch(digJob.JobCell.Dig(inventory,digAmount*Time.smoothDeltaTime))
 		{
-			M.JobManager.CompleteDigJob(digJob);
-			if(inventory.Quantity>0)
-				DoTransport();
-			else
-			{
-				FindAnotherJob();
-			}
+		case BlockController.DigResult.Finished:
+			CompleteJob();
+			FindAnotherJob();
+			break;
+		case BlockController.DigResult.DestinationFull:
+			DoTransport();
+			break;
+		case BlockController.DigResult.NotFinished:
+			break;
+		case BlockController.DigResult.CannotDig:
+			CompleteJob();
+			FindAnotherJob();
+			throw new UnityException("Dig error!");
 
 		}
 	}
 
+	void OnBuildingAdded(object sender, EventArgs e)
+	{
+		if((state==Modes.Idle || state==Modes.Blocked) && inventory.Quantity>0)
+			DoTransport();
+	}
 
 	void OnPathWalked()
 	{

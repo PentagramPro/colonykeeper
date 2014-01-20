@@ -22,7 +22,13 @@ public class SiloController : SingleInventory, IInteractive {
 	#region IInteractive implementation
 	public void OnDrawSelectionGUI()
 	{
+		Item[] it = GetItemTypes();
 		GUILayout.TextArea("Silo");
+		if(it!=null && it.Length>0)
+		{
+			GUILayout.TextArea(it[0].Name+": "+Quantity);
+		}
+
 	}
 	#endregion
 }
