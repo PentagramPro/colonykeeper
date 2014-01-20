@@ -9,7 +9,7 @@
   	<Item Name="Iron Ore"></Item>
   </Items>
   <Buildings>
-  	<Building Name="Lamp" PrefabName="Lamp"></Building>
   	<Building Name="Silo" PrefabName="Silo"></Building>
+  	<Building Name="Furnace" PrefabName="Furnace"></Building>
   </Buildings>
 </GameDictionary>

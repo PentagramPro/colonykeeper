@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Pathfinding;
 
 public class BlockController : BaseManagedController {
 
@@ -195,7 +196,8 @@ public class BlockController : BaseManagedController {
 		m.BuildingsRegistry.Add (this, bc);
 		bc.OnBuilded ();
 
-
+		GraphUpdateObject guo = new GraphUpdateObject(bc.collider.bounds);
+		AstarPath.active.UpdateGraphs(guo);
 
 		return true;
 	}

@@ -54,7 +54,7 @@ public class SingleInventory : IInventory
 
 
 
-	public override int CanTake(Item item)
+	public override int CanPut(Item item)
 	{
 		if (pile == null)
 			return 1;
@@ -65,7 +65,7 @@ public class SingleInventory : IInventory
 		return 0;
 	}
 
-	public override bool CanPut (Item item)
+	public override bool CanTake (Item item)
 	{
 		return pile==null || (pile.Quantity<MaxQuantity && pile.ItemType==item);
 	}

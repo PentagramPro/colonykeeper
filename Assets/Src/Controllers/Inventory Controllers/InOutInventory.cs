@@ -60,20 +60,20 @@ public class InOutInventory : IInventory {
 	
 	
 	
-	public override int CanTake(Item item)
+	public override int CanPut(Item item)
 	{
-		if (outPile == null)
+		if (inPile == null)
 			return 1;
 		
-		if (outPile.ItemType == item && outPile.Quantity<MaxOutQuantity)
+		if (inPile.ItemType == item && inPile.Quantity<MaxInQuantity)
 			return 2;
 		
 		return 0;
 	}
 	
-	public override bool CanPut (Item item)
+	public override bool CanTake (Item item)
 	{
-		return inPile==null || (inPile.Quantity<MaxInQuantity && inPile.ItemType==item);
+		return outPile!=null && outPile.ItemType==item;
 	}
 	
 	public override Item[] GetItemTypes ()

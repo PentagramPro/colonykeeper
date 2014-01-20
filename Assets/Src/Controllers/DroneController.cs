@@ -80,7 +80,7 @@ public class DroneController : VehicleController, IWorker{
 
 			Item[] itemTypes = inventory.GetItemTypes();
 
-			if(i.CanTake(itemTypes[0])>0)
+			if(i.CanPut(itemTypes[0])>0)
 			{
 				destinationInv=i;
 				DriveTo(i.transform.position,OnPathWalked);
