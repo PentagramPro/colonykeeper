@@ -4,62 +4,49 @@ using System.Collections.Generic;
 public class JobManager  {
 
 
-	public delegate void JobNotification(Job j);
-	public event JobNotification DigJobAdded;
+	public delegate void JobNotification(IJob j);
+	public event JobNotification JobAdded;
 
-	Dictionary<BlockController,Job> DigJobs = new Dictionary<BlockController, Job>();
-	Dictionary<BlockController,Job> AssignedDigJobs = new Dictionary<BlockController, Job>();
+	List<IJob> Jobs = new List<IJob>();
 
-	public void AddDigJob(BlockController c)
+
+	public void AddJob(IJob j)
 	{
-		Job j = new Job();
-		j.JobCell=c;
-		DigJobs.Add(c,j);
-		if(DigJobAdded!=null)
-			DigJobAdded(j);
+		Jobs.Add(j);
+		if(JobAdded!=null)
+			JobAdded(j);
 	}
 
-	public Job FindDigJob()
+	public IJob FindJob()
 	{
 	
-		var it = DigJobs.GetEnumerator();
+		var it = Jobs.GetEnumerator();
 		if(it.MoveNext())
-			return it.Current.Value;
-
-	
+			return it.Current;
 			
 		return null;
 	}
-	public void AssignDigJob(Job j,IWorker owner)
+	public bool AssignJob(IJob j,IWorker owner)
 	{
-		if(j.Owner==null)
-		{
-			DigJobs.Remove(j.JobCell);
-			AssignedDigJobs.Add(j.JobCell,j);
-			j.AssignJob(owner);
-		}
+		if(j.Worker!=null || !Jobs.Contains(j))
+			return false;
+		
+		Jobs.Remove(j);
+		j.AssignTo(owner);
+		return true;
 	}
 
 
-	public void CompleteDigJob(Job j)
+	public void CompleteJob(IJob j)
 	{
-		DigJobs.Remove(j.JobCell);
-		AssignedDigJobs.Remove(j.JobCell);
-	}
-	public void RemoveDigJob(BlockController c)
-	{
-		if(!DigJobs.Remove(c))
-		{
-			Job j = AssignedDigJobs[c];
-			if(j!=null)
-			{
-				j.CancelJob();
-			}
-		}
+
 	}
 
-	public bool IsForDig(BlockController c)
+	public bool RemoveJob(IJob j)
 	{
-		return DigJobs.ContainsKey(c) || AssignedDigJobs.ContainsKey(c);
+		return Jobs.Remove(j);
+		
 	}
+
+
 }

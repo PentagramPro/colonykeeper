@@ -12,6 +12,8 @@ public class BlockController : BaseManagedController {
 	public Block BlockProt;
 	public BuildingController cellBuilding;
 
+	DigJob digJob;
+
 	Color COLOR_DESIGNATED = new Color(0,0,1,0.5f);
 	Color COLOR_DEFAULT = new Color(0,0,1,1);
 	float amount=10;
@@ -101,16 +103,22 @@ public class BlockController : BaseManagedController {
 	}
 	
 	
-	public void DesignateDigJob(JobManager jm)
+	public void DesignateDigJob()
 	{
-		if(jm.IsForDig(this))
+		JobManager jm = M.JobManager;
+
+		if(digJob!=null)
 		{
-			jm.RemoveDigJob(this);
+			if(!jm.RemoveJob(digJob))
+				digJob.Cancel();
+			digJob=null;
 		}
 		else
 		{
-			jm.AddDigJob(this);
+			digJob = new DigJob(jm,this);
+			jm.AddJob(digJob);
 		}
+
 		UpdateCellColor(jm);
 	}
 
@@ -203,7 +211,7 @@ public class BlockController : BaseManagedController {
 	}
 	void UpdateCellColor(JobManager jm)
 	{
-		if(jm.IsForDig(this))
+		if(digJob!=null)
 		{
 			renderer.material.SetColor("_Color",COLOR_DESIGNATED);
 		}

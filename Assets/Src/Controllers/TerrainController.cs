@@ -23,7 +23,7 @@ public class TerrainController : BaseManagedController {
 	FogController fogOfWarController = null;
 
 	TerrainMeshGenerator terrGen = null;
-	Plane upperPlane, lowerPlane;
+	Plane lowerPlane;
 
 	void Init(bool editMode)
 	{
@@ -52,7 +52,7 @@ public class TerrainController : BaseManagedController {
 		GenerateMesh(false);
 
 		lowerPlane = new Plane(Vector3.up, transform.position);
-		upperPlane = new Plane(Vector3.up, transform.position+new Vector3(0,TerrainMeshGenerator.CELL_SIZE,0));
+//		upperPlane = new Plane(Vector3.up, transform.position+new Vector3(0,TerrainMeshGenerator.CELL_SIZE,0));
 	}
 
 	void OnItemPicked(GameObject prefab)
@@ -129,7 +129,7 @@ public class TerrainController : BaseManagedController {
 		{
 			if(!c.Digged)
 			{
-				c.DesignateDigJob(M.JobManager);
+				c.DesignateDigJob();
 			}
 
 		}
