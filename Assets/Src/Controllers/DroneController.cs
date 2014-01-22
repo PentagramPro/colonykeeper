@@ -128,17 +128,25 @@ public class DroneController : VehicleController, IWorker{
 
 	public void Unload ()
 	{
-		Item[] itemTypes = inventory.GetItemTypes();
-
-		destinationInv = FindInventoryFor(itemTypes[0]);
-		if(destinationInv==null)
+		if(inventory.Quantity==0)
 		{
-			state = Modes.Unload;
-			DriveTo(destinationInv.transform.position,OnPathWalked);
+			state = Modes.Work;
+			currentJob.OnUnloaded();
 		}
 		else
 		{
-			state = Modes.Blocked;
+			Item[] itemTypes = inventory.GetItemTypes();
+
+			destinationInv = FindInventoryFor(itemTypes[0]);
+			if(destinationInv!=null)
+			{
+				state = Modes.Unload;
+				DriveTo(destinationInv.transform.position,OnPathWalked);
+			}
+			else
+			{
+				state = Modes.Blocked;
+			}
 		}
 
 	}

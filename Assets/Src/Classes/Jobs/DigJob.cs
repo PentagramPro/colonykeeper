@@ -53,7 +53,7 @@ public class DigJob : IJob
 	public override void OnUnloaded ()
 	{
 		if(state==States.Free)
-			state= States.Go;
+			state= States.Start;
 		else if(state==States.Transport)
 			End ();
 		else
@@ -63,6 +63,7 @@ public class DigJob : IJob
 
 	void End()
 	{
+		blockController.JobCompleted();
 		Complete();
 		state = States.End;
 	}
@@ -71,12 +72,14 @@ public class DigJob : IJob
 		switch(worker.Dig())
 		{
 		case BlockController.DigResult.DestinationFull:
-			worker.Unload();
 			state = States.Free;
+			worker.Unload();
+
 			break;
 		case BlockController.DigResult.Finished:
-			worker.Unload();
 			state = States.Transport;
+			worker.Unload();
+
 			break;
 		case BlockController.DigResult.NotFinished:
 			break;

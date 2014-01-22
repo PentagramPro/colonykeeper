@@ -65,6 +65,11 @@ public class BlockController : BaseManagedController {
 		}
 	}
 
+	public void JobCompleted()
+	{
+		digJob=null;
+
+	}
 	public DigResult Dig(IInventory dest, float digAmount)
 	{
 		DigResult res = DigResult.CannotDig;
