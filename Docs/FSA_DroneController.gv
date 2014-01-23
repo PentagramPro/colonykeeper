@@ -1,0 +1,23 @@
+digraph G
+{
+  graph[overlap="scale"]
+  graph[nodesep="0.5"]
+  edge[fontcolor="darkgreen"]
+
+
+
+  Idle->Work;
+  Work->Idle[label="OnJobComplete"];
+  Work->Work[label="-/UpdateState"];
+  Work->Go[label="DriveTo"];
+  Work->UnloadFunc[label="Unload"];
+  Go->Work[label="OnPathWalked/OnDriven"];
+  UnloadFunc[color="blue"];
+  UnloadFunc->Unload[label="inv!=null"];
+  UnloadFunc->Work[label="Q=0"];
+  UnloadFunc->BlockedUnload[label="inv=null"];
+  BlockedUnload->UnloadFunc[label="OnBuildingAdded"];
+  Unload->Feed[label="OnPathWalked"];
+  Feed->Work[label="Q=0"];
+  Feed->UnloadFunc[label="Q>0"];
+}
