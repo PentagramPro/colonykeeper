@@ -6,10 +6,21 @@
   	<Block Name="Iron Ore" MaterialName="IronOre" Contains="Iron Ore"></Block>
   </Blocks>
   <Items >
-  	<Item Name="Iron Ore"></Item>
+  	<Item Name="Iron Ore" Class="Raw.Ore"></Item>
+  	<Item Name="Iron Ingot" Class="Material.Ingot"></Item>
   </Items>
   <Buildings>
   	<Building Name="Silo" PrefabName="Silo"></Building>
   	<Building Name="Furnace" PrefabName="Furnace"></Building>
   </Buildings>
+  <Recipes>
+  	<Recipe>
+  		<Ingrediens>
+  			<Ingredient Name="Iron Ore"></Ingredient>
+  		</Ingrediens>
+  		<Results>
+  			<Ingredient Name="Iron Ingot"></Ingredient>
+  		</Results>
+  	</Recipe>
+  </Recipes>
 </GameDictionary>

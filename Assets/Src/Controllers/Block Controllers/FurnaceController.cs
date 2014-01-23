@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FurnaceController : InOutInventory {
+public class FurnaceController : InOutInventory, IInteractive {
 
 	// Use this for initialization
 	void Start () {
@@ -15,4 +15,15 @@ public class FurnaceController : InOutInventory {
 
 		}
 	}
+
+	#region IInteractive implementation
+
+	public void OnDrawSelectionGUI ()
+	{
+		GUILayout.Label("Production");
+		GUILayout.Button("+");
+		GUILayout.Button("-");
+	}
+
+	#endregion
 }
