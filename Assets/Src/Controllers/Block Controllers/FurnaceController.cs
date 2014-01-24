@@ -3,9 +3,13 @@ using System.Collections;
 
 public class FurnaceController : InOutInventory, IInteractive {
 
+	BuildingController building;
+	float targetQuantity = 0;
+	Recipe targetRecipe;
+	Vector2 scroll = new Vector2(0,0);
 	// Use this for initialization
 	void Start () {
-	
+		building = GetComponent<BuildingController>();
 	}
 	
 	// Update is called once per frame
@@ -20,9 +24,19 @@ public class FurnaceController : InOutInventory, IInteractive {
 
 	public void OnDrawSelectionGUI ()
 	{
-		GUILayout.Label("Production");
+		string prod = "";
+
+
+		GUILayout.Label("Production: "+prod);
 		GUILayout.Button("+");
 		GUILayout.Button("-");
+		scroll = GUILayout.BeginScrollView(scroll);
+		foreach (Recipe r in M.GameD.RecipesByDevice[building.Prototype.Name])
+		{
+			GUILayout.Button(r.Name);
+		}
+		GUILayout.EndScrollView();
+
 	}
 
 	#endregion

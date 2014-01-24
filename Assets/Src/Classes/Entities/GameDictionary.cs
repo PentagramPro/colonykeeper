@@ -20,6 +20,11 @@ public class GameDictionary  {
 	[XmlArray("Buildings"),XmlArrayItem("Building")]
 	public List<Building> Buildings = new List<Building>();
 
+	[XmlArray("Recipes"),XmlArrayItem("Recipe")]
+	public List<Recipe> Recipes = new List<Recipe>();
+
+	[XmlIgnore]
+	public Dictionary<string, List<Recipe>> RecipesByDevice = new Dictionary<string, List<Recipe>>();
 
 
 	public void Save(string path)
@@ -46,6 +51,20 @@ public class GameDictionary  {
 		{
 			if(b.Contains!=null)
 				b.ContainsItem = Items[b.Contains];
+		}
+
+		RecipesByDevice.Clear();
+		foreach (Recipe r in Recipes)
+		{
+			List<Recipe> list = null;
+			RecipesByDevice.TryGetValue(r.Device,out list);
+
+			if(list==null)
+			{
+				list = new List<Recipe>();
+				RecipesByDevice.Add(r.Device,list);
+			}
+			list.Add(r);
 		}
 	}
 

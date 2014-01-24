@@ -3,6 +3,7 @@ using System.Collections;
 
 public class BuildingController : BaseController {
 
+	public Building Prototype = null;
 	// Use this for initialization
 	void Start () {
 	

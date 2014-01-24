@@ -15,7 +15,11 @@ public class Building
 		if(obj==null)
 			throw new UnityException("Cannot find prefab with name: "+PrefabName);
 		
-
+		BuildingController bc = obj.GetComponent<BuildingController>();
+		if (bc != null)
+		{
+			bc.Prototype = this;
+		}
 		return obj;
 	}
 

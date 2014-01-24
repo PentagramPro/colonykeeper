@@ -14,12 +14,12 @@
   	<Building Name="Furnace" PrefabName="Furnace"></Building>
   </Buildings>
   <Recipes>
-  	<Recipe>
+  	<Recipe Device="Furnace" Name = "Smelt iron ore">
   		<Ingrediens>
-  			<Ingredient Name="Iron Ore"></Ingredient>
+  			<Ingredient Name="Iron Ore" Quantity="1"></Ingredient>
   		</Ingrediens>
   		<Results>
-  			<Ingredient Name="Iron Ingot"></Ingredient>
+  			<Result Name="Iron Ingot" Quantity="1"></Result>
   		</Results>
   	</Recipe>
   </Recipes>
