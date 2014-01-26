@@ -44,6 +44,8 @@ public abstract class IInventory : BaseManagedController
 
 	public abstract Item[] GetItemTypes();
 
+	public abstract float GetItemQuantity(Item item);
+
 	public abstract bool IsFull();
 }
 

@@ -90,6 +90,26 @@ public class VehicleController : BaseManagedController {
 		}
 		return null;
 	}
+
+	protected IInventory FindInventoryWith(Item itemType)
+	{
+		foreach (BlockController b in M.BuildingsRegistry.Keys) 
+		{
+			BuildingController building = M.BuildingsRegistry[b];
+			
+			IInventory i = building.GetComponent<IInventory>();
+			if(i==null)
+				continue;
+			
+			
+			
+			if(i.CanTake(itemType))
+				return i;
+			
+		}
+		return null;
+	}
+
 	protected void DriveTo(Vector3 dest, PathWalked onPathWalked)
 	{
 		vehicleState = VehicleModes.Calc;

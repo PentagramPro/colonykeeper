@@ -11,7 +11,7 @@ public class DroneController : VehicleController, IWorker{
 	//////////////////////////////////////////////
 	private enum Modes
 	{
-		Start,Idle,Work,Go,Unload,Feed,Blocked
+		Start,Idle,Work,Go,GoUnload,DoUnload,BlockedUnload,GoLoad,DoLoad,BlockedLoad
 	}
 
 
@@ -21,6 +21,8 @@ public class DroneController : VehicleController, IWorker{
 	private Modes state = Modes.Start;
 
 	IInventory destinationInv;
+	float maxQuantityToPick;
+	Item itemToPick;
 
 	SingleInventory inventory;
 	// Use this for initialization
@@ -47,7 +49,7 @@ public class DroneController : VehicleController, IWorker{
 				currentJob.UpdateJob();
 			
 				break;
-			case Modes.Feed:
+			case Modes.DoUnload:
 				destinationInv.Put(inventory,unloadAmount*Time.smoothDeltaTime,inventory.GetItemTypes()[0]);
 
 				if(inventory.Quantity==0)
@@ -60,6 +62,34 @@ public class DroneController : VehicleController, IWorker{
 					Unload();
 				}
 				break;
+			case Modes.DoLoad:
+				float take = maxQuantityToPick -inventory.Quantity;
+				if(take<=0)
+				{
+					currentJob.OnLoaded();
+					state = Modes.Work;
+				}
+				else
+				{
+					take = Mathf.Min(take,take*unloadAmount*Time.smoothDeltaTime);
+					float left = inventory.Put(destinationInv.Take(itemToPick,take));
+					if(left>0)
+					{
+						destinationInv.Put(itemToPick,left);
+						currentJob.OnLoaded();
+						state = Modes.Work;
+					}
+				}
+				break;
+			case Modes.BlockedLoad:
+				IInventory inv = FindInventoryWith(itemToPick);
+				if(inv!=null)
+				{
+					state = Modes.GoLoad;
+					destinationInv = inv;
+					DriveTo(inv.transform.position);
+				}
+				break;
 			}
 		}
 		base.Update ();
@@ -69,7 +99,7 @@ public class DroneController : VehicleController, IWorker{
 
 	void OnBuildingAdded(object sender, EventArgs e)
 	{
-		if(state==Modes.Blocked)
+		if(state==Modes.BlockedUnload)
 			Unload();
 	}
 
@@ -80,9 +110,13 @@ public class DroneController : VehicleController, IWorker{
 			state = Modes.Work;
 			currentJob.OnDriven();
 		}
-		else if (state == Modes.Unload)
+		else if (state == Modes.GoUnload)
 		{
-			state = Modes.Feed;
+			state = Modes.DoUnload;
+		}
+		else if( state = Modes.GoLoad)
+		{
+			state = Modes.DoUnload;
 		}
 			
 		    
@@ -140,12 +174,12 @@ public class DroneController : VehicleController, IWorker{
 			destinationInv = FindInventoryFor(itemTypes[0]);
 			if(destinationInv!=null)
 			{
-				state = Modes.Unload;
+				state = Modes.GoUnload;
 				DriveTo(destinationInv.transform.position,OnPathWalked);
 			}
 			else
 			{
-				state = Modes.Blocked;
+				state = Modes.BlockedUnload;
 			}
 		}
 
@@ -153,7 +187,19 @@ public class DroneController : VehicleController, IWorker{
 
 	public void Load (Item itemType, float maxQuantity)
 	{
-
+		IInventory inv = FindInventoryWith(itemType);
+		itemToPick = itemType;
+		maxQuantityToPick = maxQuantity;
+		if(inv!=null)
+		{
+			state = Modes.GoLoad;
+			destinationInv = inv;
+			DriveTo(inv.transform.position,OnPathWalked);
+		}
+		else
+		{
+			state = Modes.BlockedLoad;
+		}
 	}
 
 	public void OnJobCompleted ()
@@ -168,5 +214,16 @@ public class DroneController : VehicleController, IWorker{
 			}
 		}
 	}
+
+	public void Feed(IInventory inv)
+	{
+		inv.Put(inventory,inventory.Quantity,inventory.GetItemTypes()[0]);
+	}
+
+	public void Pick(IInventory inv, Item itemType, float quantity)
+	{
+		inventory.Put(inv.Take(itemType,quantity));
+	}
+
 	#endregion
 }

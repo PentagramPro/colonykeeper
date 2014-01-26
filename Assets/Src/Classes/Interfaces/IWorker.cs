@@ -17,4 +17,8 @@ public interface IWorker  {
 	void Load(Item itemType, float maxQuantity);
 
 	void OnJobCompleted();
+
+	void Feed(IInventory inv);
+
+	void Pick(IInventory inv, Item itemType, float quantity);
 }

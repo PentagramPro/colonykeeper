@@ -13,11 +13,16 @@ digraph G
   Work->UnloadFunc[label="Unload"];
   Go->Work[label="OnPathWalked/OnDriven"];
   UnloadFunc[color="blue"];
-  UnloadFunc->Unload[label="inv!=null"];
+  UnloadFunc->GoUnload[label="inv!=null"];
   UnloadFunc->Work[label="Q=0"];
   UnloadFunc->BlockedUnload[label="inv=null"];
+  Work->GoLoad[label="Load/DriveTo"];
+  Work->BlockedLoad[label="Load"];
+  BlockedLoad->GoLoad[label="/DriveTo"];
+  GoLoad->DoLoad[label="OnPathWalked"];
+  DoLoad->Work[label="/OnLoaded"];
   BlockedUnload->UnloadFunc[label="OnBuildingAdded"];
-  Unload->Feed[label="OnPathWalked"];
-  Feed->Work[label="Q=0"];
-  Feed->UnloadFunc[label="Q>0"];
+  GoUnload->DoUnload[label="OnPathWalked"];
+  DoUnload->Work[label="Q=0"];
+  DoUnload->UnloadFunc[label="Q>0"];
 }
