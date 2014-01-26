@@ -83,6 +83,17 @@ public class SingleInventory : IInventory
 		return pile!=null && pile.Quantity>=MaxQuantity ;
 	}
 
+	public override float GetItemQuantity (Item item)
+	{
+		if(pile==null)
+			return 0;
+
+		if(item==pile.ItemType)
+			return Quantity;
+
+		return 0;
+	}
+
 	#endregion
 }
 

@@ -7,7 +7,7 @@ public class GUIController : BaseManagedController {
 	//List<Block> blocks = new List<Block>();
 
 
-	public delegate void PickedDelegate(GameObject pickedPrefab);
+	public delegate void PickedDelegate(Building pickedBuilding);
 
 	public event PickedDelegate ItemPicked;
 
@@ -53,9 +53,9 @@ public class GUIController : BaseManagedController {
 
 		if(selected!=null)
 		{
-			GameObject obj = selected.Instantiate();
+
 			if(ItemPicked!=null)
-				ItemPicked(obj);
+				ItemPicked(selected);
 	//		mode = Modes.Place;
 	//		pickedItem = CreatePickedObject (selected);
 			
@@ -63,7 +63,7 @@ public class GUIController : BaseManagedController {
 
 		if (SelectedObject != null)
 		{
-			GUILayout.BeginArea(new Rect(Screen.width-LeftPanelW,0,Screen.width,Screen.height));
+			GUILayout.BeginArea(new Rect(Screen.width-LeftPanelW,0,LeftPanelW,Screen.height));
 			SelectedObject.OnDrawSelectionGUI();
 			GUILayout.EndArea();
 		}

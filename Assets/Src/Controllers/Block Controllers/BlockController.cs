@@ -2,7 +2,7 @@
 using System.Collections;
 using Pathfinding;
 
-public class BlockController : BaseManagedController {
+public class BlockController : BaseManagedController, ICustomer {
 
 	public delegate void CellHandler(int i, int j);
 	public event CellHandler CellUpdated;
@@ -120,7 +120,7 @@ public class BlockController : BaseManagedController {
 		}
 		else
 		{
-			digJob = new DigJob(jm,this);
+			digJob = new DigJob(jm,this,this);
 			jm.AddJob(digJob);
 		}
 

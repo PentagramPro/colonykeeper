@@ -15,9 +15,9 @@
   </Buildings>
   <Recipes>
   	<Recipe Device="Furnace" Name = "Smelt iron ore">
-  		<Ingrediens>
+  		<Ingredients>
   			<Ingredient Name="Iron Ore" Quantity="1"></Ingredient>
-  		</Ingrediens>
+  		</Ingredients>
   		<Results>
   			<Result Name="Iron Ingot" Quantity="1"></Result>
   		</Results>

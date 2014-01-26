@@ -18,11 +18,13 @@ public class UnloadJob : IJob
 
 	Modes state = Modes.Start;
 	IInventory inventory;
+	BuildingController building;
 
-	public UnloadJob(JobManager jobManager,BlockController target, IInventory targetInventory) 
-		: base(jobManager,target)
+	public UnloadJob(JobManager jobManager, ICustomer customer,BuildingController target, IInventory targetInventory) 
+		: base(jobManager, customer)
 	{
 		inventory = targetInventory;
+		building = target;
 	}
 
 	#region implemented abstract members of IJob
@@ -61,7 +63,7 @@ public class UnloadJob : IJob
 		switch(state)
 		{
 		case Modes.Start:
-			worker.DriveTo(BlockController.Position);
+			worker.DriveTo(building.Position);
 			state = Modes.Go;
 			break;
 		}

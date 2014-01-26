@@ -5,14 +5,7 @@ using System.Collections.Generic;
 public class Recipe
 {
 
-	public class PileXML{
 
-		[XmlAttribute("Name")]
-		public String Name;
-
-		[XmlAttribute("Quantity")]
-		public float Quantity;
-	}
 
 	[XmlAttribute("Device")]
 	public string Device;
@@ -26,6 +19,16 @@ public class Recipe
 	[XmlArray("Results"),XmlArrayItem("Result")]
 	public List<PileXML> Results = new List<PileXML>();
 
+	[XmlIgnore]
+	public List<Pile> IngredientsLinks = new List<Pile>();
+
+	[XmlIgnore]
+	public List<Pile> ResultsLinks = new List<Pile>();
+
+	public override string ToString ()
+	{
+		return Name;
+	}
 
 }
 

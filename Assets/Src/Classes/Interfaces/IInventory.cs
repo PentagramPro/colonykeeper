@@ -3,6 +3,8 @@ using UnityEngine;
 
 public abstract class IInventory : BaseManagedController
 {
+	public delegate void InventoryEvent();
+
 	public abstract Pile Take(Item itemType, float quantity);
 
 	// returns, how many items left (couldn`t be moved to

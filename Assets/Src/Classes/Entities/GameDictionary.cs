@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
@@ -65,6 +65,16 @@ public class GameDictionary  {
 				RecipesByDevice.Add(r.Device,list);
 			}
 			list.Add(r);
+
+			foreach(PileXML pxml in r.Ingredients)
+			{
+				r.IngredientsLinks.Add(new Pile(Items[pxml.Name],pxml.Quantity));
+			}
+
+			foreach(PileXML pxml in r.Results)
+			{
+				r.ResultsLinks.Add(new Pile(Items[pxml.Name],pxml.Quantity));
+			}
 		}
 	}
 

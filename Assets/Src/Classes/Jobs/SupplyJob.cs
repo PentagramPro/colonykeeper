@@ -11,13 +11,15 @@ public class SupplyJob : IJob
 	Item itemToPick;
 	float maxQuantity;
 	IInventory inventoryToSupply;
+	BuildingController building;
 
-	public SupplyJob (JobManager jobManager,BlockController target, IInventory targetInventory, Item item, float quantity) 
-		: base(jobManager,target)
+	public SupplyJob (JobManager jobManager, ICustomer customer,BuildingController target, IInventory targetInventory, Item item, float quantity) 
+		: base(jobManager, customer)
 	{
 		itemToPick = item;
 		inventoryToSupply = targetInventory;
 		maxQuantity = quantity;
+		building = target;
 	}
 
 	#region implemented abstract members of IJob
@@ -29,7 +31,7 @@ public class SupplyJob : IJob
 	}
 	public override void OnLoaded ()
 	{
-		worker.DriveTo(BlockController.Position);
+		worker.DriveTo(building.Position);
 		state = Modes.Go;
 	}
 	public override void OnUnloaded ()

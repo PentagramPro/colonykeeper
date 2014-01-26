@@ -4,6 +4,7 @@ using System.Collections;
 public class BuildingController : BaseController {
 
 	public Building Prototype = null;
+	float halfCell = TerrainMeshGenerator.CELL_SIZE/2;
 	// Use this for initialization
 	void Start () {
 	
@@ -16,6 +17,12 @@ public class BuildingController : BaseController {
 		Gizmos.DrawWireSphere(transform.position,0.2f);
 	}
 
+	public Vector3 Position
+	{
+		get{
+			return transform.position+new Vector3(halfCell,0,halfCell);
+		}
+	}
 
 	public void OnBuilded()
 	{

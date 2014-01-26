@@ -52,13 +52,18 @@ public class TerrainController : BaseManagedController {
 		GenerateMesh(false);
 
 		lowerPlane = new Plane(Vector3.up, transform.position);
+
+		Camera.main.transform.position=new Vector3(
+			transform.position.x+map.GetLength(1)*TerrainMeshGenerator.CELL_SIZE/2,
+			Camera.main.transform.position.y,
+			transform.position.y+map.GetLength(0)*TerrainMeshGenerator.CELL_SIZE/2);
 //		upperPlane = new Plane(Vector3.up, transform.position+new Vector3(0,TerrainMeshGenerator.CELL_SIZE,0));
 	}
 
-	void OnItemPicked(GameObject prefab)
+	void OnItemPicked(Building selected)
 	{
 		mode = TerrainControllerMode.Picked;
-		pickedObject = (GameObject)Instantiate(prefab);
+		pickedObject = selected.Instantiate();
 		pickedObject.transform.parent = transform;
 		pickedObject.transform.position = new Vector3(0,0,0);
 	}

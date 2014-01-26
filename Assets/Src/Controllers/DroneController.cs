@@ -50,7 +50,10 @@ public class DroneController : VehicleController, IWorker{
 			
 				break;
 			case Modes.DoUnload:
-				destinationInv.Put(inventory,unloadAmount*Time.smoothDeltaTime,inventory.GetItemTypes()[0]);
+				destinationInv.Put(
+					inventory,
+					unloadAmount*Time.smoothDeltaTime,
+					inventory.GetItemTypes()[0]);
 
 				if(inventory.Quantity==0)
 				{
@@ -114,9 +117,9 @@ public class DroneController : VehicleController, IWorker{
 		{
 			state = Modes.DoUnload;
 		}
-		else if( state = Modes.GoLoad)
+		else if( state == Modes.GoLoad)
 		{
-			state = Modes.DoUnload;
+			state = Modes.DoLoad;
 		}
 			
 		    
@@ -155,9 +158,9 @@ public class DroneController : VehicleController, IWorker{
 		DriveTo (dest, OnPathWalked);
 	}
 
-	public BlockController.DigResult Dig ()
+	public BlockController.DigResult Dig (BlockController block)
 	{
-		return currentJob.BlockController.Dig(inventory,digAmount*Time.smoothDeltaTime);
+		return block.Dig(inventory,digAmount*Time.smoothDeltaTime);
 	}
 
 	public void Unload ()

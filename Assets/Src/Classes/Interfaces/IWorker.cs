@@ -10,7 +10,7 @@ public interface IWorker  {
 
 	void DriveTo(Vector3 dest);
 
-	BlockController.DigResult Dig();
+	BlockController.DigResult Dig(BlockController block);
 
 	void Unload();
 

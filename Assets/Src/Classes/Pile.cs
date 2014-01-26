@@ -16,6 +16,7 @@ public class Pile {
 		itemType=type;
 	}
 
+
 	public Pile(Item type, float q)
 	{
 		itemType=type;

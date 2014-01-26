@@ -6,11 +6,13 @@ public class DigJob : IJob
 	enum States{
 		Start,Go,Dig,Free,Transport,End
 	}
+	BlockController blockController;
 	States state = States.Start;
 
-	public DigJob (JobManager jobManager,BlockController block) 
-		: base(jobManager,block)
+	public DigJob (JobManager jobManager, ICustomer customer,BlockController block) 
+		: base(jobManager,customer)
 	{
+		blockController = block;
 	}
 	
 	#region IJob implementation
@@ -63,13 +65,13 @@ public class DigJob : IJob
 
 	void End()
 	{
-		blockController.JobCompleted();
+
 		Complete();
 		state = States.End;
 	}
 	void HandleDig()
 	{
-		switch(worker.Dig())
+		switch(worker.Dig(blockController))
 		{
 		case BlockController.DigResult.DestinationFull:
 			state = States.Free;

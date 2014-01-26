@@ -3,22 +3,17 @@ using System;
 public abstract class IJob
 {
 
-	protected BlockController blockController;
+
 	protected JobManager jobManager;
 	protected IWorker worker;
-
-	public IJob(JobManager jobManager,BlockController block)
+	protected ICustomer customer;
+	public IJob(JobManager jobManager, ICustomer customer)
 	{
-		this.blockController=block;
+		this.customer = customer;
 		this.jobManager = jobManager;
 	}
 
-	public BlockController BlockController
-	{
-		get{
-			return blockController;
-		}
-	}
+
 
 	public IWorker Worker
 	{
@@ -30,8 +25,9 @@ public abstract class IJob
 	protected void Complete()
 	{
 		worker.OnJobCompleted();
+		customer.JobCompleted();
 		jobManager.CompleteJob(this);
-		blockController = null;
+		customer = null;
 		worker = null;
 	}
 	public void AssignTo(IWorker worker)
@@ -50,7 +46,7 @@ public abstract class IJob
 	public void Cancel()
 	{
 		worker.CancelCurrentJob();
-		blockController = null;
+		customer = null;
 		worker = null;
 	}
 }
