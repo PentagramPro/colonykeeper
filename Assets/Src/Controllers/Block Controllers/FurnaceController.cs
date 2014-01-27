@@ -86,6 +86,7 @@ public class FurnaceController : BaseManagedController, IInteractive, ICustomer{
 					else
 					{
 						productionPoints=0;
+						targetQuantity--;
 						outInventory.Put(targetRecipe.ResultsLinks[0].ItemType, targetRecipe.ResultsLinks[0].Quantity);
 					}
 				}
@@ -182,6 +183,10 @@ public class FurnaceController : BaseManagedController, IInteractive, ICustomer{
 		{
 			GUILayout.Label("Production: "+targetRecipe.Name);
 			GUILayout.Button("Cancel");
+			if(state == Modes.Prod)
+			{
+				GUILayout.Label("completed: "+productionPoints.ToString("n2"));
+			}
 		}
 		else if(state == Modes.FreeIn)
 		{

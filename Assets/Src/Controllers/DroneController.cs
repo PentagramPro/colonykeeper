@@ -18,7 +18,14 @@ public class DroneController : VehicleController, IWorker{
 	public float digAmount=5;
 	public float unloadAmount = 5;
 
-	private Modes state = Modes.Start;
+	private Modes state_int = Modes.Start;
+	private Modes state{
+		get{ return state_int;}
+		set{
+			state_int = value;
+			Debug.Log(this.GetHashCode()+": setting state to " + Enum.GetName(typeof(Modes), state));
+		}
+	}
 
 	IInventory destinationInv;
 	float maxQuantityToPick;
@@ -66,15 +73,15 @@ public class DroneController : VehicleController, IWorker{
 				}
 				break;
 			case Modes.DoLoad:
-				float take = maxQuantityToPick -inventory.Quantity;
+				float take = maxQuantityToPick -inventory.Quantity;//destinationInv.GetItemQuantity(itemToPick);
 				if(take<=0)
 				{
-					currentJob.OnLoaded();
 					state = Modes.Work;
+					currentJob.OnLoaded();
 				}
 				else
 				{
-					take = Mathf.Min(take,take*unloadAmount*Time.smoothDeltaTime);
+					take = Mathf.Min(take,unloadAmount*Time.smoothDeltaTime);
 					float left = inventory.Put(destinationInv.Take(itemToPick,take));
 					if(left>0)
 					{
@@ -108,6 +115,7 @@ public class DroneController : VehicleController, IWorker{
 
 	void OnPathWalked()
 	{
+		Debug.Log("OnPathWalked, state = " + Enum.GetName(typeof(Modes), state));
 		if (state == Modes.Go)
 		{
 			state = Modes.Work;
