@@ -8,7 +8,7 @@ public class JobManager  {
 	public event JobNotification JobAdded;
 
 	List<IJob> Jobs = new List<IJob>();
-
+	List<IJob> InaccessibleJobs = new List<IJob>();
 
 	public void AddJob(IJob j)
 	{

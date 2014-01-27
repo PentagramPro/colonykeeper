@@ -33,6 +33,7 @@ public class FurnaceController : BaseManagedController, IInteractive, ICustomer{
 		if(inInventory==outInventory)
 			throw new UnityException("Inventories must be different");
 		inInventory.OnFreed+=OnFreedInput;
+		outInventory.OnFreed+=OnFreedOutput;
 	}
 
 
@@ -95,6 +96,11 @@ public class FurnaceController : BaseManagedController, IInteractive, ICustomer{
 		}
 	}
 
+	void Cancel()
+	{
+
+	}
+
 	void UI()
 	{
 		if(inInventory.Quantity>0)
@@ -118,6 +124,7 @@ public class FurnaceController : BaseManagedController, IInteractive, ICustomer{
 	void OnFreedOutput()
 	{
 		state = Modes.Idle;
+		targetRecipe = null;
 	}
 
 	void AddSupplyJob()

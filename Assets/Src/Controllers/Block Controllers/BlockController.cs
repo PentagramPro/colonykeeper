@@ -11,6 +11,7 @@ public class BlockController : BaseManagedController, ICustomer {
 
 	public Block BlockProt;
 	public BuildingController cellBuilding;
+	public bool Accessible = false;
 
 	DigJob digJob;
 

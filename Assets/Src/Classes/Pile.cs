@@ -9,7 +9,15 @@ public class Pile {
 		get{return itemType;}
 	}
 
-	public float Quantity=0;
+	private float quantity=0;
+	public float Quantity{
+		get{
+			return quantity;
+		}
+		set{
+			quantity = value;
+		}
+	}
 
 	public Pile(Item type)
 	{
