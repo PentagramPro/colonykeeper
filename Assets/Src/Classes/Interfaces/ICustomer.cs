@@ -11,7 +11,7 @@ using System;
 
 public interface ICustomer
 {
-	void JobCompleted();
+	void JobCompleted(IJob job);
 }
 
 

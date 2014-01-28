@@ -25,6 +25,9 @@ public class FurnaceController : BaseManagedController, IInteractive, ICustomer{
 	Vector2 scroll = new Vector2(0,0);
 	List<Recipe> craftableRecipes;
 	string[] nameCache;
+
+	List<SupplyJob> supplyJobs;
+
 	// Use this for initialization
 	void Start () {
 		building = GetComponent<BuildingController>();
@@ -111,14 +114,14 @@ public class FurnaceController : BaseManagedController, IInteractive, ICustomer{
 		else
 		{
 			state = Modes.Fill;
-			AddSupplyJob();
+			AddSupplyJobs();
 		}
 	}
 
 	void OnFreedInput()
 	{
 		state = Modes.Fill;
-		AddSupplyJob();
+		AddSupplyJobs();
 	}
 
 	void OnFreedOutput()
@@ -127,11 +130,17 @@ public class FurnaceController : BaseManagedController, IInteractive, ICustomer{
 		targetRecipe = null;
 	}
 
-	void AddSupplyJob()
+	void AddSupplyJobs()
 	{
-		SupplyJob j = new SupplyJob(M.JobManager,this,building,inInventory,
-		                            targetRecipe.IngredientsLinks[0].ItemType,targetRecipe.IngredientsLinks[0].Quantity*targetQuantity);
-		M.JobManager.AddJob(j);
+		foreach (Pile ingredient in targetRecipe.IngredientsLinks)
+		{
+			SupplyJob j = new SupplyJob(M.JobManager,this,building,inInventory,
+			                            ingredient.ItemType,ingredient.Quantity*targetQuantity);
+			M.JobManager.AddJob(j);
+			supplyJobs.Add(j);
+		}
+
+
 	}
 
 
@@ -211,8 +220,13 @@ public class FurnaceController : BaseManagedController, IInteractive, ICustomer{
 
 	#region ICustomer implementation
 	
-	public void JobCompleted ()
+	public void JobCompleted (IJob j)
 	{
+		if(j.GetType()!=typeof(SupplyJob))
+		   return ;
+		SupplyJob sj = (SupplyJob)j;
+		supplyJobs.Remove(sj);
+
 
 	}
 	

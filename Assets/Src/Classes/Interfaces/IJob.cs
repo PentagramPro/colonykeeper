@@ -25,7 +25,7 @@ public abstract class IJob
 	protected void Complete()
 	{
 		worker.OnJobCompleted();
-		customer.JobCompleted();
+		customer.JobCompleted(this);
 		jobManager.CompleteJob(this);
 		customer = null;
 		worker = null;
