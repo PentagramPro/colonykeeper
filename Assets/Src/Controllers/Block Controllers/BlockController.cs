@@ -66,7 +66,7 @@ public class BlockController : BaseManagedController, ICustomer {
 		}
 	}
 
-	public void JobCompleted()
+	public void JobCompleted(IJob j)
 	{
 		digJob=null;
 

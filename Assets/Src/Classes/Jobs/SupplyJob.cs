@@ -13,6 +13,10 @@ public class SupplyJob : IJob
 	IInventory inventoryToSupply;
 	BuildingController building;
 
+	public Item ItemType{
+		get{ return itemToPick;}
+	}
+
 	public SupplyJob (JobManager jobManager, ICustomer customer,BuildingController target, IInventory targetInventory, Item item, float quantity) 
 		: base(jobManager, customer)
 	{

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -26,7 +27,7 @@ public class FurnaceController : BaseManagedController, IInteractive, ICustomer{
 	List<Recipe> craftableRecipes;
 	string[] nameCache;
 
-	List<SupplyJob> supplyJobs;
+	List<SupplyJob> supplyJobs = new List<SupplyJob>();
 
 	// Use this for initialization
 	void Start () {
@@ -101,7 +102,13 @@ public class FurnaceController : BaseManagedController, IInteractive, ICustomer{
 
 	void Cancel()
 	{
+		foreach (SupplyJob sj in supplyJobs)
+			sj.Cancel();
+		supplyJobs.Clear();
 
+		targetQuantity = 0;
+		state = Modes.FreeOut;
+		outInventory.FreeInventory();
 	}
 
 	void UI()
@@ -198,7 +205,8 @@ public class FurnaceController : BaseManagedController, IInteractive, ICustomer{
 		else if(state == Modes.Fill || state == Modes.Prod)
 		{
 			GUILayout.Label("Production: "+targetRecipe.Name);
-			GUILayout.Button("Cancel");
+			if(GUILayout.Button("Cancel"))
+				Cancel();
 			if(state == Modes.Prod)
 			{
 				GUILayout.Label("completed: "+productionPoints.ToString("n2"));
@@ -222,12 +230,27 @@ public class FurnaceController : BaseManagedController, IInteractive, ICustomer{
 	
 	public void JobCompleted (IJob j)
 	{
-		if(j.GetType()!=typeof(SupplyJob))
-		   return ;
-		SupplyJob sj = (SupplyJob)j;
-		supplyJobs.Remove(sj);
+		if (state == Modes.Fill || state == Modes.Prod)
+		{
+			if (j.GetType() != typeof(SupplyJob))
+				return;
+			SupplyJob sj = (SupplyJob)j;
+			supplyJobs.Remove(sj);
 
-
+			Pile ingredient = targetRecipe.GetIngredient(sj.ItemType);
+			float needed = targetQuantity * ingredient.Quantity;
+			float have = inInventory.GetItemQuantity(sj.ItemType);
+			if (have < needed)
+			{
+				SupplyJob nj = new SupplyJob(M.JobManager, this, building, inInventory,
+			                            ingredient.ItemType, needed - have);
+				M.JobManager.AddJob(nj);
+				supplyJobs.Add(nj);
+			}
+		} else
+		{
+			throw new UnityException("wrong state: "+Enum.GetName(typeof(Modes),state));
+		}
 	}
 	
 	#endregion

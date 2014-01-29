@@ -62,7 +62,7 @@ public class BlockedInventory : SingleInventory, ICustomer
 		return true;
 	}
 	#region ICustomer implementation
-	public void JobCompleted ()
+	public void JobCompleted (IJob j)
 	{
 		if(state == Modes.Unload)
 		{

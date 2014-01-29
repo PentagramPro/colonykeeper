@@ -30,6 +30,14 @@ public class Recipe
 		return Name;
 	}
 
+	public Pile GetIngredient(Item itemType)
+	{
+		foreach (Pile p in IngredientsLinks)
+			if (p.ItemType == itemType)
+				return p;
+		return null;
+	}
+
 }
 
 
