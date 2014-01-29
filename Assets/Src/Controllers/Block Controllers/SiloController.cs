@@ -26,7 +26,7 @@ public class SiloController : SingleInventory, IInteractive {
 		GUILayout.TextArea("Silo");
 		if(it!=null && it.Length>0)
 		{
-			GUILayout.TextArea(it[0].Name+": "+Quantity);
+			GUILayout.TextArea(it[0].Name+": "+(Quantity/100.0f).ToString("n2"));
 		}
 
 	}

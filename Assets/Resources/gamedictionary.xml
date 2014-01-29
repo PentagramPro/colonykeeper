@@ -16,10 +16,10 @@
   <Recipes>
   	<Recipe Device="Furnace" Name = "Smelt iron ore">
   		<Ingredients>
-  			<Ingredient Name="Iron Ore" Quantity="1"></Ingredient>
+  			<Ingredient Name="Iron Ore" Quantity="100"></Ingredient>
   		</Ingredients>
   		<Results>
-  			<Result Name="Iron Ingot" Quantity="1"></Result>
+  			<Result Name="Iron Ingot" Quantity="100"></Result>
   		</Results>
   	</Recipe>
   </Recipes>

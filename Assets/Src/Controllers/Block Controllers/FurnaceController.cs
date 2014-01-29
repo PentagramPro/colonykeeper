@@ -20,7 +20,7 @@ public class FurnaceController : BaseManagedController, IInteractive, ICustomer{
 
 	float productionPoints=0;
 	float productionIncome = 0.5f;
-	float targetQuantity = 0;
+	int targetQuantity = 0;
 	Recipe targetRecipe;
 
 	Vector2 scroll = new Vector2(0,0);
@@ -238,8 +238,8 @@ public class FurnaceController : BaseManagedController, IInteractive, ICustomer{
 			supplyJobs.Remove(sj);
 
 			Pile ingredient = targetRecipe.GetIngredient(sj.ItemType);
-			float needed = targetQuantity * ingredient.Quantity;
-			float have = inInventory.GetItemQuantity(sj.ItemType);
+			int needed = targetQuantity * ingredient.Quantity;
+			int have = inInventory.GetItemQuantity(sj.ItemType);
 			if (have < needed)
 			{
 				SupplyJob nj = new SupplyJob(M.JobManager, this, building, inInventory,

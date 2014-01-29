@@ -16,7 +16,7 @@ public class PileXML
 	public String Name;
 	
 	[XmlAttribute("Quantity")]
-	public float Quantity;
+	public int Quantity;
 }
 
 

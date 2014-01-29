@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Pathfinding;
+using System;
 
 public class BlockController : BaseManagedController, ICustomer {
 
@@ -17,7 +18,7 @@ public class BlockController : BaseManagedController, ICustomer {
 
 	Color COLOR_DESIGNATED = new Color(0,0,1,0.5f);
 	Color COLOR_DEFAULT = new Color(0,0,1,1);
-	float amount=10;
+	int amount=1000;
 
 	int posI, posJ;
 
@@ -71,18 +72,18 @@ public class BlockController : BaseManagedController, ICustomer {
 		digJob=null;
 
 	}
-	public DigResult Dig(IInventory dest, float digAmount)
+	public DigResult Dig(IInventory dest, int digAmount)
 	{
 		DigResult res = DigResult.CannotDig;
 
 		if(BlockProt!=null && BlockProt.Breakable)
 		{
-			digAmount = Mathf.Min(digAmount,amount);
+			digAmount = Math.Min(digAmount,amount);
 
 			amount-=digAmount;
 			if(BlockProt.ContainsItem!=null)
 			{
-				float left = dest.Put(BlockProt.ContainsItem,digAmount);
+				int left = dest.Put(BlockProt.ContainsItem,digAmount);
 				if(left>0)
 				{
 					res = DigResult.DestinationFull;

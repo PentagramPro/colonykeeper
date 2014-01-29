@@ -9,8 +9,8 @@ public class Pile {
 		get{return itemType;}
 	}
 
-	private float quantity=0;
-	public float Quantity{
+	private int quantity=0;
+	public int Quantity{
 		get{
 			return quantity;
 		}
@@ -25,7 +25,7 @@ public class Pile {
 	}
 
 
-	public Pile(Item type, float q)
+	public Pile(Item type, int q)
 	{
 		itemType=type;
 		Quantity=q;

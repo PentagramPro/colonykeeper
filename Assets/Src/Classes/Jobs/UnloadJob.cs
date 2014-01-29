@@ -34,7 +34,7 @@ public class UnloadJob : IJob
 		Item[] items = inventory.GetItemTypes();
 		if(items.GetLength(0)>0)
 		{
-			float q = inventory.GetItemQuantity(items[0]);
+			int q = inventory.GetItemQuantity(items[0]);
 			worker.Pick(inventory,items[0],q);
 			state = Modes.Unload;
 			worker.Unload();

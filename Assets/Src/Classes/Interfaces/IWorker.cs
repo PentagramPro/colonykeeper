@@ -14,11 +14,11 @@ public interface IWorker  {
 
 	void Unload();
 
-	void Load(Item itemType, float maxQuantity);
+	void Load(Item itemType, int maxQuantity);
 
 	void OnJobCompleted();
 
 	void Feed(IInventory inv);
 
-	void Pick(IInventory inv, Item itemType, float quantity);
+	void Pick(IInventory inv, Item itemType, int quantity);
 }

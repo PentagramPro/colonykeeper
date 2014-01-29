@@ -1,26 +1,27 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class SingleInventory : IInventory
 {
 	Pile pile;
-	public float MaxQuantity = 5;
+	public int MaxQuantity = 2000;
 
 
 
-	public float Quantity{
+	public int Quantity{
 		get{ return pile==null?0:pile.Quantity;}
 	}
 
 	#region IInventory implementation
 
-	public override Pile Take (Item itemType, float quantity)
+	public override Pile Take (Item itemType, int quantity)
 	{
 
 		if(quantity<0)
 			throw new UnityException("Negative values are not allowed!");
 
-		float q = Mathf.Min(quantity,pile.Quantity);
+		int q = Math.Min(quantity,pile.Quantity);
 
 		if (pile == null || pile.ItemType!=itemType)
 			return null;
@@ -39,14 +40,14 @@ public class SingleInventory : IInventory
 		}
 	}
 
-	public override float Put (Item type, float quantity)
+	public override int Put (Item type, int quantity)
 	{
 		if(pile==null)
 			pile = new Pile(type);
 		else if(pile.ItemType!=type)
 			return quantity;
 
-		float free = MaxQuantity -pile.Quantity;
+		int free = MaxQuantity -pile.Quantity;
 
 		pile.Quantity+=Mathf.Min(quantity,free);
 		return Mathf.Max(0,quantity-free);
@@ -83,7 +84,7 @@ public class SingleInventory : IInventory
 		return pile!=null && pile.Quantity>=MaxQuantity ;
 	}
 
-	public override float GetItemQuantity (Item item)
+	public override int GetItemQuantity (Item item)
 	{
 		if(pile==null)
 			return 0;

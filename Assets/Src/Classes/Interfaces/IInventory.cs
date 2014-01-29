@@ -5,26 +5,26 @@ public abstract class IInventory : BaseManagedController
 {
 	public delegate void InventoryEvent();
 
-	public abstract Pile Take(Item itemType, float quantity);
+	public abstract Pile Take(Item itemType, int quantity);
 
 	// returns, how many items left (couldn`t be moved to
 	// this inventory)
-	public float Put(Pile item)
+	public int Put(Pile item)
 	{
 		return Put (item.ItemType,item.Quantity);
 	}
 
 	// returns, how many items left (couldn`t be moved to
 	// this inventory)
-	public abstract float Put(Item type, float quantity);
+	public abstract int Put(Item type, int quantity);
 
 
-	public bool Put(IInventory source, float amount, Item type)
+	public bool Put(IInventory source, int amount, Item type)
 	{
 		Pile taken = source.Take(type,amount);
 		if(taken==null)
 			return false;
-		float put = Put(taken);
+		int put = Put(taken);
 		
 		if(put>0)
 		{
@@ -46,7 +46,7 @@ public abstract class IInventory : BaseManagedController
 
 	public abstract Item[] GetItemTypes();
 
-	public abstract float GetItemQuantity(Item item);
+	public abstract int GetItemQuantity(Item item);
 
 	public abstract bool IsFull();
 }

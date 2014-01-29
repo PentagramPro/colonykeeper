@@ -15,8 +15,8 @@ public class DroneController : VehicleController, IWorker{
 	}
 
 
-	public float digAmount=5;
-	public float unloadAmount = 5;
+	public int digAmount=1000;
+	public int unloadAmount = 500;
 
 	private Modes state_int = Modes.Start;
 	private Modes state{
@@ -28,7 +28,7 @@ public class DroneController : VehicleController, IWorker{
 	}
 
 	IInventory destinationInv;
-	float maxQuantityToPick;
+	int maxQuantityToPick;
 	Item itemToPick;
 
 	SingleInventory inventory;
@@ -59,7 +59,7 @@ public class DroneController : VehicleController, IWorker{
 			case Modes.DoUnload:
 				destinationInv.Put(
 					inventory,
-					unloadAmount*Time.smoothDeltaTime,
+					(int)(unloadAmount*Time.smoothDeltaTime),
 					inventory.GetItemTypes()[0]);
 
 				if(inventory.Quantity==0)
@@ -73,7 +73,7 @@ public class DroneController : VehicleController, IWorker{
 				}
 				break;
 			case Modes.DoLoad:
-				float take = maxQuantityToPick -inventory.Quantity;//destinationInv.GetItemQuantity(itemToPick);
+				int take = maxQuantityToPick -inventory.Quantity;//destinationInv.GetItemQuantity(itemToPick);
 				if(take<=0)
 				{
 					state = Modes.Work;
@@ -81,8 +81,8 @@ public class DroneController : VehicleController, IWorker{
 				}
 				else
 				{
-					take = Mathf.Min(take,unloadAmount*Time.smoothDeltaTime);
-					float left = inventory.Put(destinationInv.Take(itemToPick,take));
+					take = (int)Mathf.Min(take,unloadAmount*Time.smoothDeltaTime);
+					int left = inventory.Put(destinationInv.Take(itemToPick,take));
 					if(left>0)
 					{
 						destinationInv.Put(itemToPick,left);
@@ -168,7 +168,7 @@ public class DroneController : VehicleController, IWorker{
 
 	public BlockController.DigResult Dig (BlockController block)
 	{
-		return block.Dig(inventory,digAmount*Time.smoothDeltaTime);
+		return block.Dig(inventory,(int)(digAmount*Time.smoothDeltaTime));
 	}
 
 	public void Unload ()
@@ -196,7 +196,7 @@ public class DroneController : VehicleController, IWorker{
 
 	}
 
-	public void Load (Item itemType, float maxQuantity)
+	public void Load (Item itemType, int maxQuantity)
 	{
 		IInventory inv = FindInventoryWith(itemType);
 		itemToPick = itemType;
@@ -231,7 +231,7 @@ public class DroneController : VehicleController, IWorker{
 		inv.Put(inventory,inventory.Quantity,inventory.GetItemTypes()[0]);
 	}
 
-	public void Pick(IInventory inv, Item itemType, float quantity)
+	public void Pick(IInventory inv, Item itemType, int quantity)
 	{
 		inventory.Put(inv.Take(itemType,quantity));
 	}

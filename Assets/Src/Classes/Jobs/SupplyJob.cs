@@ -9,7 +9,7 @@ public class SupplyJob : IJob
 
 	Modes state = Modes.Start;
 	Item itemToPick;
-	float maxQuantity;
+	int maxQuantity;
 	IInventory inventoryToSupply;
 	BuildingController building;
 
@@ -17,7 +17,7 @@ public class SupplyJob : IJob
 		get{ return itemToPick;}
 	}
 
-	public SupplyJob (JobManager jobManager, ICustomer customer,BuildingController target, IInventory targetInventory, Item item, float quantity) 
+	public SupplyJob (JobManager jobManager, ICustomer customer,BuildingController target, IInventory targetInventory, Item item, int quantity) 
 		: base(jobManager, customer)
 	{
 		itemToPick = item;
