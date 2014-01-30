@@ -5,6 +5,10 @@ using System;
 
 public class BlockController : BaseManagedController, ICustomer {
 
+	public enum Accessibility{
+		Enclosed, // closed with blocks from all sides
+		Cliff // has at least one cell without block among neibours
+	}
 	public delegate void CellHandler(int i, int j);
 	public event CellHandler CellUpdated;
 	public event CellHandler CellMouseOver;
@@ -12,7 +16,7 @@ public class BlockController : BaseManagedController, ICustomer {
 
 	public Block BlockProt;
 	public BuildingController cellBuilding;
-	public bool Accessible = false;
+	public Accessibility IsAccessible;
 
 	DigJob digJob;
 
@@ -97,8 +101,14 @@ public class BlockController : BaseManagedController, ICustomer {
 
 				BlockProt=null;
 				if(CellUpdated!=null)
+				{
 					CellUpdated(posI,posJ);
-				renderer.material.SetColor("_Color",COLOR_DEFAULT);
+					CellUpdated(posI-1,posJ);
+					CellUpdated(posI+1,posJ);
+					CellUpdated(posI,posJ-1);
+					CellUpdated(posI,posJ+1);
+				}
+				digJob=null;
 				res = DigResult.Finished;
 			}
 
@@ -154,21 +164,29 @@ public class BlockController : BaseManagedController, ICustomer {
 		if(CellMouseUp!=null)
 			CellMouseUp(posI,posJ);
 		M.GetGUIController().SelectedObject = null;
+		if (!Digged)
+			DesignateDigJob();
 
 	}
 
-	public void Generate(Manager manager, TerrainMeshGenerator terrGen,  bool editMode)
+	public void Generate(TerrainMeshGenerator terrGen,  bool editMode)
 	{
-	
+		Manager manager = M;
 		
 		GetComponent<MeshFilter>().sharedMesh=null;
 		GetComponent<MeshFilter>().mesh=null;
-		
+
+		// Creating mesh
 		Mesh mesh = terrGen.Generate(posI,posJ);
-		
+
+		// Checking cell block
 		if(BlockProt!=null)
 		{
+			// Cell with block
 			collider.enabled=true;
+
+			if(!editMode)
+				AstarPath.active.UpdateGraphs(new GraphUpdateObject(collider.bounds));
 			Material mat = LoadMaterial(BlockProt.MaterialName);
 			if(mat!=null)
 				renderer.material = mat;
@@ -177,10 +195,16 @@ public class BlockController : BaseManagedController, ICustomer {
 		{
 			collider.enabled=false;
 		}
+		// checking accessibility
+		IsAccessible = terrGen.GetAccessibility(posI, posJ);
+
+		// Setting mesh to component
 		if(editMode)
 			GetComponent<MeshFilter>().sharedMesh=mesh;
 		else 
 			GetComponent<MeshFilter>().mesh = mesh;
+
+		//Updating color 
 		if(!editMode)
 		{
 			UpdateCellColor(manager.JobManager);
@@ -224,7 +248,12 @@ public class BlockController : BaseManagedController, ICustomer {
 		}
 		else
 		{
-			renderer.material.SetColor("_Color",COLOR_DEFAULT);
+			if(IsAccessible == Accessibility.Enclosed)
+				renderer.material.SetColor("_Color",new Color(1,0,0,0.5f));
+			else
+				renderer.material.SetColor("_Color",COLOR_DEFAULT);
+
+
 		}
 	}
 

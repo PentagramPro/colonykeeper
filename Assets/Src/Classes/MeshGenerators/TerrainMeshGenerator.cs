@@ -7,6 +7,18 @@ public class TerrainMeshGenerator : MeshGenerator {
 	public static Color AMBIENT_LIGHT = new Color(0.2f,0.2f,0.2f);
 	protected BlockController[,] map;
 
+	public BlockController.Accessibility GetAccessibility(int i, int j)
+	{
+		if (i < map.GetLength(0) - 1 && map [i + 1, j].Digged)
+			return BlockController.Accessibility.Cliff;
+		if (j < map.GetLength(1) - 1 && map [i, j + 1].Digged)
+			return BlockController.Accessibility.Cliff;
+		if (i > 0 && map [i - 1, j].Digged)
+			return BlockController.Accessibility.Cliff;
+		if (j > 0 && map [i, j - 1].Digged)
+			return BlockController.Accessibility.Cliff;
+		return BlockController.Accessibility.Enclosed;
+	}
 	public TerrainMeshGenerator(BlockController [,] targetMap)
 	{
 		map = targetMap;

@@ -25,6 +25,8 @@ public class TerrainController : BaseManagedController {
 	TerrainMeshGenerator terrGen = null;
 	Plane lowerPlane;
 
+	List<BlockController> updateList = new List<BlockController>();
+
 	void Init(bool editMode)
 	{
 		if(M==null)
@@ -96,10 +98,12 @@ public class TerrainController : BaseManagedController {
 	// Update is called once per frame
 	void Update () {
 	
-		//int i,j;
-		//if(DetectCellUnderMouse(out i, out j))
-		//   OnCellHover(i,j);
-
+		if (updateList.Count > 0)
+		{
+			foreach(BlockController b in updateList)
+				b.Generate(terrGen,false);
+			updateList.Clear();
+		}
 
 	}
 
@@ -130,15 +134,7 @@ public class TerrainController : BaseManagedController {
 	void OnCellClicked(int i, int j)
 	{
 		BlockController c=map[i,j];
-		if(mode==TerrainControllerMode.Idle)
-		{
-			if(!c.Digged)
-			{
-				c.DesignateDigJob();
-			}
-
-		}
-		else if(mode==TerrainControllerMode.Picked)
+		if(mode==TerrainControllerMode.Picked)
 		{
 			if(c.CanBuild())
 			{
@@ -182,8 +178,11 @@ public class TerrainController : BaseManagedController {
 
 	void OnCellUpdated(int i, int j)
 	{
-		GenerateMesh(false);
+		updateList.Add(map [i, j]);
+
 	}
+
+
 
 	void GenerateMap(bool editMode)
 	{
@@ -262,7 +261,7 @@ public class TerrainController : BaseManagedController {
 		{
 			for(int j=0;j<map.GetLength(1);j++)
 			{
-				map[i,j].Generate(M,terrGen, editMode);
+				map[i,j].Generate(terrGen, editMode);
 
 			}
 		}
