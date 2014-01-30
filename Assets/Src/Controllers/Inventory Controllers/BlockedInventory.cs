@@ -39,7 +39,7 @@ public class BlockedInventory : SingleInventory, ICustomer
 		if(bc == null)
 			throw new UnityException("BlockedInventory should be attached to GameObject with BuildingController attached");
 		UnloadJob j = new UnloadJob(M.JobManager,this,bc,this);
-		M.JobManager.AddJob(j);
+		M.JobManager.AddJob(j,false);
 	}
 
 	void CallOnFreed()

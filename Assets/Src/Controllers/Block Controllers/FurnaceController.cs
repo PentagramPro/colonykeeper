@@ -143,7 +143,7 @@ public class FurnaceController : BaseManagedController, IInteractive, ICustomer{
 		{
 			SupplyJob j = new SupplyJob(M.JobManager,this,building,inInventory,
 			                            ingredient.ItemType,ingredient.Quantity*targetQuantity);
-			M.JobManager.AddJob(j);
+			M.JobManager.AddJob(j,false);
 			supplyJobs.Add(j);
 		}
 
@@ -244,7 +244,7 @@ public class FurnaceController : BaseManagedController, IInteractive, ICustomer{
 			{
 				SupplyJob nj = new SupplyJob(M.JobManager, this, building, inInventory,
 			                            ingredient.ItemType, needed - have);
-				M.JobManager.AddJob(nj);
+				M.JobManager.AddJob(nj,false);
 				supplyJobs.Add(nj);
 			}
 		} else

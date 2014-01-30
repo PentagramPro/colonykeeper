@@ -23,18 +23,22 @@ public class TerrainMeshGenerator : MeshGenerator {
 	{
 		map = targetMap;
 	}
-	void AttachHRect(Vector2 p1, Vector2 p2, float z)
+	void AttachHRect(Vector2 p1, Vector2 p2, float z, int[] ligthPattern)
 	{
 		int idx = vertices.Count;
+		//0
 		AddVertex(p1.x,z,p1.y);
 		AddUV(0,0,0.3f,0.3f);
 
+		//1
 		AddVertex(p2.x,z,p1.y);
 		AddUV(1,0,0.6f,0.3f);
 
+		//3
 		AddVertex(p1.x,z,p2.y);
 		AddUV(0,1,0.3f,0.6f);
 
+		//2
 		AddVertex(p2.x,z,p2.y);
 		AddUV(1,1,0.6f,0.6f);
 		
@@ -46,21 +50,14 @@ public class TerrainMeshGenerator : MeshGenerator {
 		triangles.Add(idx+2);
 		triangles.Add(idx+3);
 	
-		if(z==0)
-		{
-			colors.Add(new Color(0.4f,0.4f,0.4f));
-			colors.Add(new Color(0.4f,0.4f,0.4f));
-			colors.Add(new Color(0.4f,0.4f,0.4f));
-			colors.Add(new Color(0.4f,0.4f,0.4f));
-		}
-		else
-		{
-			colors.Add(new Color(1,1,1));
-			colors.Add(new Color(1,1,1));
-			colors.Add(new Color(1,1,1));
-			colors.Add(new Color(1,1,1));
-		}
+		float colorBase = z==0?0.4f:1;
+		Color color = new Color(colorBase,colorBase,colorBase);
 
+
+		colors.Add(color*ligthPattern[0]);
+		colors.Add(color*ligthPattern[1]);
+		colors.Add(color*ligthPattern[3]);
+		colors.Add(color*ligthPattern[2]);
 		
 	}
 	void AttachVRect(Vector2 p1, Vector3 p2, float z1, float z2)
@@ -109,10 +106,9 @@ public class TerrainMeshGenerator : MeshGenerator {
 
 		float level = c.Digged?0:CELL_SIZE;
 		
+		int[] lightPattern = {0,0,0,0};
 		
-		
-		AttachHRect(new Vector2(	0, 0),
-		            new Vector2(	CELL_SIZE, CELL_SIZE),level);
+
 		
 		if(!c.Digged)
 		{
@@ -123,6 +119,9 @@ public class TerrainMeshGenerator : MeshGenerator {
 					new Vector2(	0, 0),
 
 					CELL_SIZE,0);
+				lightPattern[0]|=1;
+				lightPattern[3]|=1;
+
 			}
 			
 			if(i>0 && map[i-1,j].Digged==true)
@@ -132,6 +131,8 @@ public class TerrainMeshGenerator : MeshGenerator {
 				            new Vector2(	CELL_SIZE, 0),
 							
 				            CELL_SIZE,0);
+				lightPattern[0]|=1;
+				lightPattern[1]|=1;
 			}
 			
 			if(j<w && map[i,j+1].Digged==true)
@@ -141,6 +142,8 @@ public class TerrainMeshGenerator : MeshGenerator {
 					new Vector2(	CELL_SIZE, CELL_SIZE),
 
 					CELL_SIZE,0);
+				lightPattern[1]|=1;
+				lightPattern[2]|=1;
 			}
 			
 			if(i<h && map[i+1,j].Digged==true)
@@ -150,10 +153,20 @@ public class TerrainMeshGenerator : MeshGenerator {
 					new Vector2(	0, CELL_SIZE),
 
 					CELL_SIZE,0);
+				lightPattern[2]|=1;
+				lightPattern[3]|=1;
 			}
+
+
+		}
+		else
+		{
+			lightPattern = new int[] {1,1,1,1};
 		}
 
-		
+		AttachHRect(new Vector2(	0, 0),
+		            new Vector2(	CELL_SIZE, CELL_SIZE),level,
+		            lightPattern);
 	
 		
 		mesh.vertices = vertices.ToArray();

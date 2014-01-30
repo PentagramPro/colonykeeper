@@ -133,7 +133,7 @@ public class BlockController : BaseManagedController, ICustomer {
 		else
 		{
 			digJob = new DigJob(jm,this,this);
-			jm.AddJob(digJob);
+			jm.AddJob(digJob,IsAccessible==Accessibility.Enclosed);
 		}
 
 		UpdateCellColor(jm);
@@ -196,7 +196,10 @@ public class BlockController : BaseManagedController, ICustomer {
 			collider.enabled=false;
 		}
 		// checking accessibility
+		Accessibility oldAc = IsAccessible;
 		IsAccessible = terrGen.GetAccessibility(posI, posJ);
+		if(digJob!=null && oldAc==Accessibility.Enclosed && IsAccessible==Accessibility.Cliff)
+			M.JobManager.UnblockJob(digJob);
 
 		// Setting mesh to component
 		if(editMode)
@@ -240,6 +243,7 @@ public class BlockController : BaseManagedController, ICustomer {
 
 		return true;
 	}
+
 	void UpdateCellColor(JobManager jm)
 	{
 		if(digJob!=null)
@@ -248,12 +252,7 @@ public class BlockController : BaseManagedController, ICustomer {
 		}
 		else
 		{
-			if(IsAccessible == Accessibility.Enclosed)
-				renderer.material.SetColor("_Color",new Color(1,0,0,0.5f));
-			else
-				renderer.material.SetColor("_Color",COLOR_DEFAULT);
-
-
+			renderer.material.SetColor("_Color",COLOR_DEFAULT);
 		}
 	}
 
