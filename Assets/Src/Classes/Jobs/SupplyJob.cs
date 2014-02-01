@@ -47,8 +47,13 @@ public class SupplyJob : IJob
 		switch(state)
 		{
 		case Modes.Start:
-			worker.Load(itemToPick,maxQuantity);
-			state = Modes.Load;
+			if(worker.Load(itemToPick,maxQuantity))
+				state = Modes.Load;
+			else
+			{
+				DelayThisJob();
+				state = Modes.Start;
+			}
 			break;
 		}
 	}

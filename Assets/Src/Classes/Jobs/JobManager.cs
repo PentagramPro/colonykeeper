@@ -9,6 +9,9 @@ public class JobManager  {
 
 	List<IJob> Jobs = new List<IJob>();
 	List<IJob> BlockedJobs = new List<IJob>();
+	SortedList<float, IJob> DelayedJobs = new SortedList<float, IJob>();
+
+	const float JOB_DELAY = 10;
 
 	public void AddJob(IJob j, bool isBlocked)
 	{
@@ -62,6 +65,10 @@ public class JobManager  {
 		{
 			BlockedJobs.Add(j);
 		}
+		else
+		{
+			Debug.LogWarning("No such job!");
+		}
 	}
 
 	public void UnblockJob(IJob j)
@@ -70,7 +77,31 @@ public class JobManager  {
 		{
 			AddJob(j,false);
 		}
+		else
+		{
+			Debug.LogWarning("No such job!");
+		}
 	}
 
+	public void DelayJob(IJob j)
+	{
+		float key = Time.time;
+		while(DelayedJobs.ContainsKey(key))
+			key+=0.001f;
 
+		DelayedJobs.Add(key, j);
+		Debug.Log("Delaying job "+j.GetHashCode());
+	}
+
+	public void UpdateJobs()
+	{
+
+		if(DelayedJobs.Count>0 && Time.time>DelayedJobs.Keys[0]+JOB_DELAY)
+		{
+			IJob j = DelayedJobs.Values[0];
+			DelayedJobs.RemoveAt(0);
+			AddJob(j,false);
+			Debug.Log("Returning job to queue "+j.GetHashCode());
+		}
+	}
 }

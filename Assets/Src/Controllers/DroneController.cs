@@ -196,8 +196,9 @@ public class DroneController : VehicleController, IWorker{
 
 	}
 
-	public void Load (Item itemType, int maxQuantity)
+	public bool Load (Item itemType, int maxQuantity)
 	{
+		bool res = false;
 		IInventory inv = FindInventoryWith(itemType);
 		itemToPick = itemType;
 		maxQuantityToPick = maxQuantity;
@@ -206,11 +207,13 @@ public class DroneController : VehicleController, IWorker{
 			state = Modes.GoLoad;
 			destinationInv = inv;
 			DriveTo(inv.transform.position,OnPathWalked);
+			res = true;
 		}
 		else
 		{
 			state = Modes.BlockedLoad;
 		}
+		return res;
 	}
 
 	public void OnJobCompleted ()

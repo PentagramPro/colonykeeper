@@ -14,7 +14,7 @@ public interface IWorker  {
 
 	void Unload();
 
-	void Load(Item itemType, int maxQuantity);
+	bool Load(Item itemType, int maxQuantity);
 
 	void OnJobCompleted();
 

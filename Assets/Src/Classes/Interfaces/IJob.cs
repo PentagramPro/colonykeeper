@@ -35,6 +35,14 @@ public abstract class IJob
 		this.worker = worker;
 	}
 
+	protected void DelayThisJob()
+	{
+		worker.CancelCurrentJob();
+
+		worker = null;
+		jobManager.DelayJob(this);
+	}
+
 	public abstract void OnDriven();
 
 	public abstract void OnLoaded();

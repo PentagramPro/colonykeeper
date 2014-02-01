@@ -32,6 +32,11 @@ public class Manager : MonoBehaviour {
 
 	}
 
+	void Update()
+	{
+		JobManager.UpdateJobs();
+	}
+
 	public void LoadResources()
 	{
 		string path = Path.Combine(Application.dataPath, "Resources/gamedictionary.xml");
