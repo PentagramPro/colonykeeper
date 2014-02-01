@@ -68,7 +68,10 @@ public class SingleInventory : IInventory
 
 	public override bool CanTake (Item item)
 	{
-		return pile==null || (pile.Quantity<MaxQuantity && pile.ItemType==item);
+		if(pile==null)
+			return false;
+
+		return (pile.Quantity>0 && pile.ItemType==item);
 	}
 
 	public override Item[] GetItemTypes ()
