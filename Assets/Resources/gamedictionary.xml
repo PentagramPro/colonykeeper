@@ -32,7 +32,7 @@
   	<!--       MILL RECIPES             -->
   	<Recipe Device="Mill" Name = "Roll iron plate">
   		<Ingredients>
-  			<Ingredient Name="Iron Ore" Quantity="200"></Ingredient>
+  			<Ingredient Name="Iron Ingot" Quantity="200"></Ingredient>
   		</Ingredients>
   		<Results>
   			<Result Name="Iron Plate" Quantity="100"></Result>
@@ -40,7 +40,7 @@
   	</Recipe>
   	<Recipe Device="Mill" Name = "Roll iron beam">
   		<Ingredients>
-  			<Ingredient Name="Iron Ore" Quantity="100"></Ingredient>
+  			<Ingredient Name="Iron Ingot" Quantity="100"></Ingredient>
   		</Ingredients>
   		<Results>
   			<Result Name="Iron Beam" Quantity="100"></Result>
@@ -48,7 +48,7 @@
   	</Recipe>
   	<Recipe Device="Mill" Name = "Roll iron wire">
   		<Ingredients>
-  			<Ingredient Name="Iron Ore" Quantity="100"></Ingredient>
+  			<Ingredient Name="Iron Ingot" Quantity="100"></Ingredient>
   		</Ingredients>
   		<Results>
   			<Result Name="Iron Wire" Quantity="100"></Result>

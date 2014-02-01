@@ -112,6 +112,13 @@ public class TerrainController : BaseManagedController {
 
 	void OnMouseOver()
 	{
+		if(Input.GetMouseButtonUp(1) && mode == TerrainControllerMode.Picked)
+		{
+			M.GetGUIController().OnPlaced();
+			mode=TerrainControllerMode.Idle;
+			Destroy(pickedObject);
+			pickedObject=null;
+		}
 		int i,j;
 		if(DetectCellUnderMouse(out i, out j))
 			OnCellHover(i,j);
@@ -119,9 +126,11 @@ public class TerrainController : BaseManagedController {
 
 	void OnMouseUp()
 	{
+
 		int i,j;
 		if(DetectCellUnderMouse(out i, out j))
 			OnCellClicked(i,j);
+
 	}
 
 	void OnCellHover(int i, int j)
@@ -144,12 +153,10 @@ public class TerrainController : BaseManagedController {
 				c.Build(M,pickedObject);
 				pickedObject=null;
 				mode=TerrainControllerMode.Idle;
+				M.GetGUIController().OnPlaced();
 			}
-			else
-			{
-				mode=TerrainControllerMode.Idle;
-				Destroy(pickedObject);
-			}
+		
+
 		}
 	}
 

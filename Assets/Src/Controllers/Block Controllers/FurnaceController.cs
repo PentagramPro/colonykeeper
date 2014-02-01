@@ -175,17 +175,19 @@ public class FurnaceController : BaseManagedController, IInteractive, ICustomer{
 		if(state == Modes.Idle)
 		{
 			GUILayout.BeginHorizontal();
-			if(GUILayout.Button("+"))
-				targetQuantity++;
-			GUILayout.Space(5);
-			GUILayout.Label(targetQuantity.ToString("n2"));
-			GUILayout.Space(5);
+
 			if(GUILayout.Button("-"))
 			{
 				targetQuantity--;
 				if(targetQuantity<0)
 					targetQuantity=0;
 			}
+			GUILayout.Space(5);
+			GUILayout.Label(targetQuantity.ToString("n2"));
+			GUILayout.Space(5);
+
+			if(GUILayout.Button("+"))
+				targetQuantity++;
 
 			GUILayout.EndHorizontal();
 			GUILayout.Space(20);

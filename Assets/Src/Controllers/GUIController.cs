@@ -5,7 +5,10 @@ using System.Collections.Generic;
 public class GUIController : BaseManagedController {
 
 	//List<Block> blocks = new List<Block>();
-
+	enum Modes {
+		Idle, Choose, Place
+	}
+	private Modes state = Modes.Idle;
 
 	public delegate void PickedDelegate(Building pickedBuilding);
 
@@ -13,32 +16,95 @@ public class GUIController : BaseManagedController {
 
 	public IInteractive SelectedObject;
 
-	public float LeftPanelW = 150;
-	public float RightPanelW = 150;
+	public GUISkin Skin;
+
+	float panelWidth;
+	float mapHeight;
+	float toolbarHeight;
+	float pad = 10;
+	Vector2 buildingScrollPos = new Vector2();
 
 	// Use this for initialization
 	void Start () {
-		/*Object[] prefabs = Resources.LoadAll("Prefabs/Blocks");
+		panelWidth = Screen.width *0.25f;
+		mapHeight = Screen.height * 0.25f;
+		toolbarHeight = Screen.height*0.1f;
 
 
-		foreach(Object o in prefabs)
-		{
-			if(o.GetType()==typeof(GameObject))
-			{
-				BlockController bc = ((GameObject)o).GetComponent<BlockController>();
-				if(bc!=null)
-				{
-					blocks.Add((GameObject)o);					
-				}
-			}
-			Debug.Log("object! "+o.GetType()+" ");
-		}*/
 	}
 
 	void OnGUI()
 	{
+		GUI.skin = Skin;
+
+		GUI.Box(new Rect(0,Screen.height-mapHeight-toolbarHeight,panelWidth,mapHeight+toolbarHeight),"");
+
+		Rect rct = new Rect(0,0,panelWidth,Screen.height-mapHeight-toolbarHeight);
+
+		if(state== Modes.Idle)
+		{
+			if(GUI.Button(new Rect(
+				0+pad,Screen.height - mapHeight-toolbarHeight+pad,
+				panelWidth-pad*2,toolbarHeight-pad*2),"Build"))
+			{
+				state = Modes.Choose;
+			}
+
+
+
+			if (SelectedObject != null)
+			{
+				GUI.Box(rct,"");
+				rct.x+=pad;
+				rct.y+=pad;
+				rct.width-=pad*2;
+				rct.height-=pad*2;
+
+				GUILayout.BeginArea(rct);
+				SelectedObject.OnDrawSelectionGUI();
+				GUILayout.EndArea();
+			}
+		}
+		else if(state == Modes.Choose)
+		{
+
+			GUI.Box(rct,"");
+			rct.x+=pad;
+			rct.y+=pad;
+			rct.width-=pad*2;
+			rct.height-=pad*2;
+			GUILayout.BeginArea(rct);
+			GUILayout.BeginScrollView(buildingScrollPos);
+
+			Building selected = null;
+			
+			
+			foreach(Building b in M.GameD.Buildings)
+			{
+				if(GUILayout.Button(b.Name))
+				{
+					selected = b;	
+				}
+			}
+
+
+			GUILayout.EndScrollView();
+			GUILayout.EndArea();
+
+			if(selected!=null)
+			{
+				
+				if(ItemPicked!=null)
+					ItemPicked(selected);
+				state = Modes.Place;
+				
+			}
+
+		}
+		/*
 		float pos=0,height=80;
 		Building selected = null;
+
 
 		foreach(Building b in M.GameD.Buildings)
 		{
@@ -56,8 +122,7 @@ public class GUIController : BaseManagedController {
 
 			if(ItemPicked!=null)
 				ItemPicked(selected);
-	//		mode = Modes.Place;
-	//		pickedItem = CreatePickedObject (selected);
+
 			
 		}
 
@@ -67,7 +132,14 @@ public class GUIController : BaseManagedController {
 			SelectedObject.OnDrawSelectionGUI();
 			GUILayout.EndArea();
 		}
+		*/
 		
+	}
+
+	public void OnPlaced()
+	{
+		if(state==Modes.Place)
+			state= Modes.Idle;
 	}
 	// Update is called once per frame
 	void Update () {
