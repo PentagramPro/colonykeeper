@@ -103,6 +103,9 @@ public class TerrainController : BaseManagedController {
 			foreach(BlockController b in updateList)
 				b.Generate(terrGen,false);
 			updateList.Clear();
+
+			GraphUpdateObject guo = new GraphUpdateObject(collider.bounds);
+			AstarPath.active.UpdateGraphs(guo);
 		}
 
 	}

@@ -185,8 +185,7 @@ public class BlockController : BaseManagedController, ICustomer {
 			// Cell with block
 			collider.enabled=true;
 
-			if(!editMode)
-				AstarPath.active.UpdateGraphs(new GraphUpdateObject(collider.bounds));
+
 			Material mat = LoadMaterial(BlockProt.MaterialName);
 			if(mat!=null)
 				renderer.material = mat;
@@ -195,6 +194,10 @@ public class BlockController : BaseManagedController, ICustomer {
 		{
 			collider.enabled=false;
 		}
+
+		//if(!editMode)
+		//	AstarPath.active.UpdateGraphs(new GraphUpdateObject(collider.bounds));
+
 		// checking accessibility
 		Accessibility oldAc = IsAccessible;
 		IsAccessible = terrGen.GetAccessibility(posI, posJ);
