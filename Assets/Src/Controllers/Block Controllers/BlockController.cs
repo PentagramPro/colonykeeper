@@ -103,10 +103,16 @@ public class BlockController : BaseManagedController, ICustomer {
 				if(CellUpdated!=null)
 				{
 					CellUpdated(posI,posJ);
+
 					CellUpdated(posI-1,posJ);
 					CellUpdated(posI+1,posJ);
 					CellUpdated(posI,posJ-1);
 					CellUpdated(posI,posJ+1);
+
+					CellUpdated(posI-1,posJ-1);
+					CellUpdated(posI-1,posJ+1);
+					CellUpdated(posI+1,posJ-1);
+					CellUpdated(posI+1,posJ+1);
 				}
 				digJob=null;
 				res = DigResult.Finished;
