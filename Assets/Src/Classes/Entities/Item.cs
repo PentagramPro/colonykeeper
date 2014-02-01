@@ -11,4 +11,14 @@ public class Item  {
 
 	[XmlAttribute("Description")]
 	public string Description;
+
+	[XmlAttribute("Class")]
+	public string ItemClass;
+
+	public bool IsOfClass(string cls)
+	{
+		if(string.IsNullOrEmpty(ItemClass))
+			return string.IsNullOrEmpty(cls);
+		return ItemClass.StartsWith(cls);
+	}
 }

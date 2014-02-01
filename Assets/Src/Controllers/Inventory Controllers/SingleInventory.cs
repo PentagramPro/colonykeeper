@@ -7,11 +7,12 @@ public class SingleInventory : IInventory
 	Pile pile;
 	public int MaxQuantity = 2000;
 
-
+	public String ItemClass = "";
 
 	public int Quantity{
 		get{ return pile==null?0:pile.Quantity;}
 	}
+
 
 	#region IInventory implementation
 
@@ -42,7 +43,9 @@ public class SingleInventory : IInventory
 
 	public override int Put (Item type, int quantity)
 	{
-		if(pile==null)
+		if(!type.IsOfClass(ItemClass))
+			return quantity;
+		else if(pile==null)
 			pile = new Pile(type);
 		else if(pile.ItemType!=type)
 			return quantity;
@@ -57,6 +60,9 @@ public class SingleInventory : IInventory
 
 	public override int CanPut(Item item)
 	{
+		if(!item.IsOfClass(ItemClass))
+			return 0;
+
 		if (pile == null)
 			return 1;
 
