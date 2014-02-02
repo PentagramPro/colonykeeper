@@ -13,10 +13,32 @@
   	<Item Name="Iron Wire" Class="Good.Part"></Item>
   </Items>
   <Buildings>
-  	<Building Name="Silo" PrefabName="Silo"></Building>
-  	<Building Name="Storage" PrefabName="Storage"></Building>
-  	<Building Name="Furnace" PrefabName="Furnace"></Building>
-  	<Building Name="Mill" PrefabName="Mill"></Building>
+  	<Building Name="Silo" PrefabName="Silo">
+  		<Ingredients>
+  			<Ingredient Name="Iron Plate" Quantity="100"></Ingredient>
+  			<Ingredient Name="Iron Beam" Quantity="100"></Ingredient>
+  		</Ingredients>
+  	</Building>
+  	<Building Name="Storage" PrefabName="Storage">
+  		<Ingredients>
+  			<Ingredient Name="Iron Plate" Quantity="100"></Ingredient>
+  			<Ingredient Name="Iron Beam" Quantity="100"></Ingredient>
+  		</Ingredients>
+  	</Building>
+  	<Building Name="Furnace" PrefabName="Furnace">
+  		<Ingredients>
+  			<Ingredient Name="Iron Plate" Quantity="100"></Ingredient>
+  			<Ingredient Name="Iron Beam" Quantity="100"></Ingredient>
+  			<Ingredient Name="Iron Wire" Quantity="100"></Ingredient>
+  		</Ingredients>
+  	</Building>
+  	<Building Name="Mill" PrefabName="Mill">
+  		<Ingredients>
+  			<Ingredient Name="Iron Plate" Quantity="100"></Ingredient>
+  			<Ingredient Name="Iron Beam" Quantity="100"></Ingredient>
+  			<Ingredient Name="Iron Wire" Quantity="100"></Ingredient>
+  		</Ingredients>
+  	</Building>
   </Buildings>
   <Recipes>
   	<!--       FURNACE RECIPES             -->

@@ -31,6 +31,11 @@ public class Building
 	[XmlAttribute("PrefabName")]
 	public string PrefabName;
 
+	[XmlArray("Ingredients"),XmlArrayItem("Ingredient")]
+	public List<PileXML> Ingredients = new List<PileXML>();
+
+	[XmlIgnore]
+	public List<Pile> IngredientLinks = new List<Pile>();
 }
 
 

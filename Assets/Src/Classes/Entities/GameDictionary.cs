@@ -76,6 +76,14 @@ public class GameDictionary  {
 				r.ResultsLinks.Add(new Pile(Items[pxml.Name],pxml.Quantity));
 			}
 		}
+
+		foreach(Building b in Buildings)
+		{
+			foreach(PileXML pxml in b.Ingredients)
+			{
+				r.IngredientsLinks.Add(new Pile(Items[pxml.Name],pxml.Quantity));
+			}
+		}
 	}
 
 	public static GameDictionary Load(string path)
