@@ -81,7 +81,7 @@ public class GameDictionary  {
 		{
 			foreach(PileXML pxml in b.Ingredients)
 			{
-				r.IngredientsLinks.Add(new Pile(Items[pxml.Name],pxml.Quantity));
+				b.IngredientsLinks.Add(new Pile(Items[pxml.Name],pxml.Quantity));
 			}
 		}
 	}

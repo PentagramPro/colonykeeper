@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Xml;
 using System.Xml.Serialization;
+using System.Collections.Generic;
 
 public class Building 
 {
@@ -35,7 +36,7 @@ public class Building
 	public List<PileXML> Ingredients = new List<PileXML>();
 
 	[XmlIgnore]
-	public List<Pile> IngredientLinks = new List<Pile>();
+	public List<Pile> IngredientsLinks = new List<Pile>();
 }
 
 

@@ -25,7 +25,7 @@ public class MultiInventory : IInventory {
 		int q = Mathf.Min(quantity,pile.Quantity);		
 
 		totalQuantity -=q;
-		if(totalQuantity<=0)
+		if(totalQuantity<0)
 			throw new UnityException("Negative totalQuantity. Some bug in inventory implementation!");
 
 		if(pile.Quantity==q)

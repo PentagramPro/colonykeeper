@@ -122,8 +122,8 @@ public class TerrainMeshGenerator : MeshGenerator {
 		
 		Clear();
 		
-		int h = map.GetUpperBound(0);
-		int w = map.GetUpperBound(1);
+		//int h = map.GetUpperBound(0);
+		//int w = map.GetUpperBound(1);
 
 		
 	
