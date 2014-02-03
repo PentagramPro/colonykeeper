@@ -36,7 +36,7 @@ public class Building
 	public List<PileXML> Ingredients = new List<PileXML>();
 
 	[XmlIgnore]
-	public List<Pile> IngredientsLinks = new List<Pile>();
+	public Recipe recipe;
 }
 
 

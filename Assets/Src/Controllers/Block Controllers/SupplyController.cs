@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
+using System;
 
 public class SupplyController : BaseManagedController, ICustomer {
 
@@ -7,6 +8,9 @@ public class SupplyController : BaseManagedController, ICustomer {
 		Idle, Supply
 	}
 
+	public enum SupplyStatus{
+		Ready, NotReady, Complete
+	}
 	public BlockedInventory InInventory;
 
 	Modes state= Modes.Idle;
@@ -57,6 +61,22 @@ public class SupplyController : BaseManagedController, ICustomer {
 	
 	}
 
+	public SupplyStatus CheckSupply(Recipe targetRecipe, int targetQuantity)
+	{
+		if(targetQuantity<1)
+			return SupplyStatus.Complete;
+		
+		SupplyStatus res = SupplyStatus.Ready;
+		foreach(Pile p in targetRecipe.IngredientsLinks)
+		{
+			if(InInventory.GetItemQuantity(p.ItemType)<p.Quantity)
+			{
+				res = SupplyStatus.NotReady;
+				break;
+			}
+		}
+		return res;
+	}
 	#region ICustomer implementation
 
 
@@ -64,17 +84,17 @@ public class SupplyController : BaseManagedController, ICustomer {
 	{
 		if (state == Modes.Supply)
 		{
-			if (j.GetType() != typeof(SupplyJob))
+			if (job.GetType() != typeof(SupplyJob))
 				return;
-			SupplyJob sj = (SupplyJob)j;
+			SupplyJob sj = (SupplyJob)job;
 			supplyJobs.Remove(sj);
 			
 			Pile ingredient = targetRecipe.GetIngredient(sj.ItemType);
 			int needed = targetQuantity * ingredient.Quantity;
-			int have = inInventory.GetItemQuantity(sj.ItemType);
+			int have = InInventory.GetItemQuantity(sj.ItemType);
 			if (have < needed)
 			{
-				SupplyJob nj = new SupplyJob(M.JobManager, this, building, inInventory,
+				SupplyJob nj = new SupplyJob(M.JobManager, this, building, InInventory,
 				                             ingredient.ItemType, needed - have);
 				M.JobManager.AddJob(nj,false);
 				supplyJobs.Add(nj);

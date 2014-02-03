@@ -3,18 +3,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class FurnaceController : BaseManagedController, IInteractive, ICustomer{
+public class FurnaceController : BaseManagedController, IInteractive{
 
 	enum Modes {
 		Idle, FreeIn,Fill,Prod,FreeOut
 	}
 
-	enum SupplyStatus{
-		Ready, NotReady, Complete
-	}
+
 	Modes state = Modes.Idle;
 
 	public BlockedInventory inInventory, outInventory;
+	public SupplyController supplyController;
 
 	BuildingController building;
 
@@ -27,7 +26,6 @@ public class FurnaceController : BaseManagedController, IInteractive, ICustomer{
 	List<Recipe> craftableRecipes;
 	string[] nameCache;
 
-	List<SupplyJob> supplyJobs = new List<SupplyJob>();
 
 	// Use this for initialization
 	void Start () {
@@ -36,6 +34,8 @@ public class FurnaceController : BaseManagedController, IInteractive, ICustomer{
 			throw new UnityException("Inventories must not be null");
 		if(inInventory==outInventory)
 			throw new UnityException("Inventories must be different");
+		if(supplyController==null)
+			throw new UnityException("Supply controller must not be null");
 		inInventory.OnFreed+=OnFreedInput;
 		outInventory.OnFreed+=OnFreedOutput;
 	}
@@ -54,29 +54,29 @@ public class FurnaceController : BaseManagedController, IInteractive, ICustomer{
 
 	// Update is called once per frame
 	void Update () {
-		SupplyStatus st;
+		SupplyController.SupplyStatus st;
 		switch(state)
 		{
 		case Modes.Fill:
-			st = CheckSupply();
-			if(st==SupplyStatus.Ready)
+			st = supplyController.CheckSupply(targetRecipe,targetQuantity);
+			if(st==SupplyController.SupplyStatus.Ready)
 			{
 				state = Modes.Prod;
 				productionPoints=0;
 			}
-			else if(st==SupplyStatus.Complete)
+			else if(st==SupplyController.SupplyStatus.Complete)
 			{
 				state = Modes.FreeOut;
 				outInventory.FreeInventory();
 			}
 			break;
 		case Modes.Prod:
-			st = CheckSupply();
-			if(st==SupplyStatus.NotReady)
+			st = supplyController.CheckSupply(targetRecipe,targetQuantity);
+			if(st==SupplyController.SupplyStatus.NotReady)
 			{
 				state = Modes.Fill;
 			}
-			else if(st==SupplyStatus.Complete)
+			else if(st==SupplyController.SupplyStatus.Complete)
 			{
 				state = Modes.FreeOut;
 				outInventory.FreeInventory();
@@ -102,13 +102,11 @@ public class FurnaceController : BaseManagedController, IInteractive, ICustomer{
 
 	void Cancel()
 	{
-		foreach (SupplyJob sj in supplyJobs)
-			sj.Cancel();
-		supplyJobs.Clear();
-
+		supplyController.Cancel();
 		targetQuantity = 0;
 		state = Modes.FreeOut;
 		outInventory.FreeInventory();
+
 	}
 
 	void UI()
@@ -139,34 +137,11 @@ public class FurnaceController : BaseManagedController, IInteractive, ICustomer{
 
 	void AddSupplyJobs()
 	{
-		foreach (Pile ingredient in targetRecipe.IngredientsLinks)
-		{
-			SupplyJob j = new SupplyJob(M.JobManager,this,building,inInventory,
-			                            ingredient.ItemType,ingredient.Quantity*targetQuantity);
-			M.JobManager.AddJob(j,false);
-			supplyJobs.Add(j);
-		}
-
-
+		supplyController.Supply(targetRecipe,targetQuantity);
 	}
 
 
-	SupplyStatus CheckSupply()
-	{
-		if(targetQuantity<1)
-			return SupplyStatus.Complete;
 
-		SupplyStatus res = SupplyStatus.Ready;
-		foreach(Pile p in targetRecipe.IngredientsLinks)
-		{
-			if(inInventory.GetItemQuantity(p.ItemType)<p.Quantity)
-			{
-				res = SupplyStatus.NotReady;
-				break;
-			}
-		}
-		return res;
-	}
 
 	#region IInteractive implementation
 
@@ -228,32 +203,5 @@ public class FurnaceController : BaseManagedController, IInteractive, ICustomer{
 
 	#endregion
 
-	#region ICustomer implementation
-	
-	public void JobCompleted (IJob j)
-	{
-		if (state == Modes.Fill || state == Modes.Prod)
-		{
-			if (j.GetType() != typeof(SupplyJob))
-				return;
-			SupplyJob sj = (SupplyJob)j;
-			supplyJobs.Remove(sj);
 
-			Pile ingredient = targetRecipe.GetIngredient(sj.ItemType);
-			int needed = targetQuantity * ingredient.Quantity;
-			int have = inInventory.GetItemQuantity(sj.ItemType);
-			if (have < needed)
-			{
-				SupplyJob nj = new SupplyJob(M.JobManager, this, building, inInventory,
-			                            ingredient.ItemType, needed - have);
-				M.JobManager.AddJob(nj,false);
-				supplyJobs.Add(nj);
-			}
-		} else
-		{
-			throw new UnityException("wrong state: "+Enum.GetName(typeof(Modes),state));
-		}
-	}
-	
-	#endregion
 }
