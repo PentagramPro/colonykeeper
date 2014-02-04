@@ -27,7 +27,7 @@ public class BlockController : BaseManagedController, ICustomer {
 
 	int posI, posJ;
 
-	float halfCell = TerrainMeshGenerator.CELL_SIZE/2;
+	static float halfCell = TerrainMeshGenerator.CELL_SIZE/2;
 
 	public void InitCell(int i, int j, BlockController[,] map)
 	{
@@ -239,7 +239,7 @@ public class BlockController : BaseManagedController, ICustomer {
 		if(!CanBuild())
 			return false;
 
-		GameObject conSite = GameObject.Instantiate(ConstructionSitePrefab);
+		GameObject conSite = (GameObject)GameObject.Instantiate(ConstructionSitePrefab);
 
 		ConstructionController conC = conSite.GetComponent<ConstructionController>();
 		BuildingController bc = conSite.GetComponent<BuildingController>();
@@ -251,18 +251,27 @@ public class BlockController : BaseManagedController, ICustomer {
 		conC.TargetGameObject = building;
 		conC.Construct(bc.Prototype);
 
-		bc.transform.parent=transform;
-		bc.transform.localPosition=new Vector3(halfCell,0,halfCell);
-		cellBuilding = bc;
-		m.BuildingsRegistry.Add (this, bc);
-		bc.OnBuilded ();
+		conC.ParentBlock = this;
 
-		GraphUpdateObject guo = new GraphUpdateObject(bc.collider.bounds);
-		AstarPath.active.UpdateGraphs(guo);
+
+
+
+		BuildOn(bc);
 
 		return true;
 	}
 
+	public void  BuildOn(BuildingController building)
+	{
+		building.transform.parent = transform;
+		building.transform.localPosition=new Vector3(halfCell,0,halfCell);
+		cellBuilding = building;
+		M.BuildingsRegistry.Add (this, building);
+		building.OnBuilded();
+
+		GraphUpdateObject guo = new GraphUpdateObject(building.collider.bounds);
+		AstarPath.active.UpdateGraphs(guo);
+	}
 	void UpdateCellColor(JobManager jm)
 	{
 		if(digJob!=null)

@@ -9,6 +9,8 @@ public class ConstructionController : BaseManagedController, IInteractive {
 	Modes state = Modes.Start;
 	Building targetBuilding;
 	GameObject targetGameObject;
+	public BlockController ParentBlock;
+
 	public GameObject TargetGameObject{
 		set{
 			targetGameObject = value;
@@ -46,9 +48,12 @@ public class ConstructionController : BaseManagedController, IInteractive {
 			if(productionPoints>=1)
 			{
 				state = Modes.End;
-				
+
+				M.BuildingsRegistry.Remove(ParentBlock);
 				targetGameObject.SetActive(true);
-				
+				ParentBlock.BuildOn(targetGameObject.GetComponent<BuildingController>());
+
+				GameObject.Destroy(transform.gameObject);
 			}
 			break;
 		}
