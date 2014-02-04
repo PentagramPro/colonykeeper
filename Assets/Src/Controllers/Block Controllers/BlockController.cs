@@ -17,6 +17,7 @@ public class BlockController : BaseManagedController, ICustomer {
 	public Block BlockProt;
 	public BuildingController cellBuilding;
 	public Accessibility IsAccessible;
+	public GameObject ConstructionSitePrefab;
 
 	DigJob digJob;
 
@@ -41,6 +42,8 @@ public class BlockController : BaseManagedController, ICustomer {
 
 	// Use this for initialization
 	void Start () {
+		if (ConstructionSitePrefab == null)
+			throw new UnityException("ConstructionSitePrefab must not be null");
 	
 	}
 
@@ -236,10 +239,17 @@ public class BlockController : BaseManagedController, ICustomer {
 		if(!CanBuild())
 			return false;
 
-		BuildingController bc = building.GetComponent<BuildingController>();
+		GameObject conSite = GameObject.Instantiate(ConstructionSitePrefab);
 
-		if(bc==null)
+		ConstructionController conC = conSite.GetComponent<ConstructionController>();
+		BuildingController bc = conSite.GetComponent<BuildingController>();
+	
+
+		if(bc==null || conC==null)
 			return false;
+				
+		conC.TargetGameObject = building;
+		conC.Construct(bc.Prototype);
 
 		bc.transform.parent=transform;
 		bc.transform.localPosition=new Vector3(halfCell,0,halfCell);
