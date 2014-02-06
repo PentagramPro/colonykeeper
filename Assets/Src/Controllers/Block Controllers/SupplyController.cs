@@ -21,6 +21,7 @@ public class SupplyController : BaseManagedController, ICustomer {
 
 	public void Supply(Recipe recipe, int quantity)
 	{
+
 		this.targetRecipe = recipe;
 		this.targetQuantity = quantity;
 
@@ -48,12 +49,21 @@ public class SupplyController : BaseManagedController, ICustomer {
 		state=Modes.Idle;
 	}
 
-
+	// may be called several times 
+	public void Init()
+	{
+		if (building == null)
+		{
+			building = GetComponent<BuildingController>();
+			if (building == null)
+				throw new UnityException("Cannot find BuildingController");
+		}
+	}
 	// Use this for initialization
 	void Start () {
 		if(InInventory==null)
 			throw new UnityException("Inventory must not be null");
-		building = GetComponent<BuildingController>();
+		Init();
 	}
 	
 	// Update is called once per frame

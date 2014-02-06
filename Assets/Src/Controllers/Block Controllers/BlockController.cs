@@ -242,21 +242,21 @@ public class BlockController : BaseManagedController, ICustomer {
 		GameObject conSite = (GameObject)GameObject.Instantiate(ConstructionSitePrefab);
 
 		ConstructionController conC = conSite.GetComponent<ConstructionController>();
-		BuildingController bc = conSite.GetComponent<BuildingController>();
-	
+		BuildingController conBC = conSite.GetComponent<BuildingController>();
+		BuildingController resBC = building.GetComponent<BuildingController>();
 
-		if(bc==null || conC==null)
+		if(conBC==null || conC==null || resBC==null)
 			return false;
 				
 		conC.TargetGameObject = building;
-		conC.Construct(bc.Prototype);
+		conC.Construct(resBC.Prototype);
 
 		conC.ParentBlock = this;
 
 
 
 
-		BuildOn(bc);
+		BuildOn(conBC);
 
 		return true;
 	}
@@ -266,7 +266,8 @@ public class BlockController : BaseManagedController, ICustomer {
 		building.transform.parent = transform;
 		building.transform.localPosition=new Vector3(halfCell,0,halfCell);
 		cellBuilding = building;
-		M.BuildingsRegistry.Add (this, building);
+		if(M!=null && M.BuildingsRegistry!=null)
+			M.BuildingsRegistry.Add (this, building);
 		building.OnBuilded();
 
 		GraphUpdateObject guo = new GraphUpdateObject(building.collider.bounds);

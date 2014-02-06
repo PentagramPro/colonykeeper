@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ConstructionController : BaseManagedController, IInteractive {
 	enum Modes{
-		Start,Supply,Build,End
+		Start,Prebuild,Supply,Build,End
 	}
 
 	Modes state = Modes.Start;
@@ -18,7 +18,8 @@ public class ConstructionController : BaseManagedController, IInteractive {
 		}
 	}
 	float productionPoints;
-	float productionRate = 5;
+	float productionRate = 0.3f;
+	float prebuildRate = 0.6f;
 
 	public SupplyController supplyController;
 	// Use this for initialization
@@ -43,6 +44,17 @@ public class ConstructionController : BaseManagedController, IInteractive {
 				state = Modes.Build;
 			}
 			break;
+		case Modes.Prebuild:
+				productionPoints+=prebuildRate*Time.smoothDeltaTime;
+				//transform.position+=new Vector3(0,prebuildRate*Time.smoothDeltaTime,0);
+				if(productionPoints>=1)
+				{
+					productionPoints=0;
+					state = Modes.Supply;
+
+					supplyController.Supply(targetBuilding.recipe,1);
+				}
+			break;
 		case Modes.Build:
 			productionPoints+=productionRate*Time.smoothDeltaTime;
 			if(productionPoints>=1)
@@ -62,24 +74,34 @@ public class ConstructionController : BaseManagedController, IInteractive {
 	public void Construct(Building building)
 	{
 		targetBuilding = building;
-		state = Modes.Supply;
-		supplyController.Supply(building.recipe,1);
+		state = Modes.Prebuild;
+
+		//because Unity won`t call Start method of supply controller in time
+		//supplyController.Init();
+		//transform.position -= new Vector3(0, 1, 0);
+
 	}
 
 	#region IInteractive implementation
 
 	public void OnDrawSelectionGUI ()
 	{
-		if(state==Modes.Supply)
+		GUILayout.Label(targetBuilding.Name);
+		switch (state)
 		{
-			GUILayout.Label(targetBuilding.Name);
-			GUILayout.Label("Waiting for supply...");
+			case Modes.Prebuild:
+				GUILayout.Label("Preparing construction site.");
+				GUILayout.Label("Complete: "+productionPoints.ToString("n2"));
+				break;
+			case Modes.Supply:
+				GUILayout.Label("Waiting for supply...");
+				break;
+			case Modes.Build:
+				GUILayout.Label("Building.");
+				GUILayout.Label("Complete: "+productionPoints.ToString("n2"));
+				break;
 		}
-		else if(state == Modes.Build)
-		{
-			GUILayout.Label(targetBuilding.Name);
-			GUILayout.Label("Complete: "+productionPoints.ToString("n2"));
-		}
+
 	}
 
 	#endregion

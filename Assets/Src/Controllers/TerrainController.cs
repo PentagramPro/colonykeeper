@@ -150,7 +150,11 @@ public class TerrainController : BaseManagedController {
 		{
 			if(c.CanBuild())
 			{
-				c.Build(M,pickedObject);
+				if(!c.Build(M,pickedObject))
+				{
+					GameObject.DestroyObject(pickedObject);
+					throw new UnityException("Some error while trying to build construction site");
+				}
 				pickedObject=null;
 				mode=TerrainControllerMode.Idle;
 				M.GetGUIController().OnPlaced();
@@ -228,9 +232,23 @@ public class TerrainController : BaseManagedController {
 				c.CellUpdated+=OnCellUpdated;
 				c.CellMouseOver+=OnCellHover;
 				c.CellMouseUp+=OnCellClicked;
-
+				if(i==middleI && j==middleJ)
+				{
+					if(!editMode)
+					{
+						GameObject obj = Resources.Load<GameObject>("Prefabs/Blocks/Headquarters");
+						obj = (GameObject)GameObject.Instantiate(obj);
+						c.BuildOn(obj.GetComponent<BuildingController>());
+						StorageController st = obj.GetComponent<StorageController>();
+						foreach(PileXML item in M.GameD.StartItemsList)
+						{
+							st.Put(M.GameD.Items[item.Name],item.Quantity);
+						}
+					}
+				}
 				if(i>middleI-2 && j>middleJ-2 && i<middleI+2 && j<middleJ+2)
 				{
+
 
 				}
 				else if(i==0 || j==0 || i==h || j==w)

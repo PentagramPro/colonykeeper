@@ -12,6 +12,11 @@
   	<Item Name="Iron Beam" Class="Good.Part"></Item>
   	<Item Name="Iron Wire" Class="Good.Part"></Item>
   </Items>
+  <StartItems>
+  	<Item Name = "Iron Plate" Quantity = "200"></Item>
+  	<Item Name = "Iron Beam" Quantity = "200"></Item>
+  	<Item Name = "Iron Wire" Quantity = "200"></Item>
+  </StartItems>
   <Buildings>
   	<Building Name="Silo" PrefabName="Silo">
   		<Ingredients>

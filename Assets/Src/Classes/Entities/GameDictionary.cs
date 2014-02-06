@@ -17,6 +17,9 @@ public class GameDictionary  {
 	[XmlArray("Items"),XmlArrayItem("Item")]
 	public List<Item> ItemsList = new List<Item>();
 
+	[XmlArray("StartItems"),XmlArrayItem("Item")]
+	public List<PileXML> StartItemsList = new List<PileXML>();
+
 	[XmlArray("Buildings"),XmlArrayItem("Building")]
 	public List<Building> Buildings = new List<Building>();
 
