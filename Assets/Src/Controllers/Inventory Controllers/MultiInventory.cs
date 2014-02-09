@@ -8,6 +8,11 @@ public class MultiInventory : IInventory {
 	Dictionary<Item, Pile> items = new Dictionary<Item, Pile>();
 	int totalQuantity=0;
 
+	public int Quantity{
+		get{
+			return totalQuantity;
+		}
+	}
 
 	#region implemented abstract members of IInventory
 	public override Pile Take (Item itemType, int quantity)

@@ -82,9 +82,10 @@ public class GameDictionary  {
 
 		foreach(Building b in Buildings)
 		{
+			b.recipe = new Recipe();
 			foreach(PileXML pxml in b.Ingredients)
 			{
-				b.recipe = new Recipe();
+
 				b.recipe.IngredientsLinks.Add(new Pile(Items[pxml.Name],pxml.Quantity));
 			}
 		}

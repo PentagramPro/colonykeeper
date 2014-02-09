@@ -31,19 +31,19 @@ public class TerrainMeshGenerator : MeshGenerator {
 		int idx = vertices.Count;
 		//0
 		AddVertex(p1.x,z,p1.y);
-		AddUV(0,0,0.3f,0.3f);
+		AddUV(0.0f, 0.0f, 0.0f, 0.0f);
 
 		//1
 		AddVertex(p2.x,z,p1.y);
-		AddUV(1,0,0.6f,0.3f);
+		AddUV(0.5f, 0.0f, 0.0f, 0.0f);
 
 		//3
 		AddVertex(p1.x,z,p2.y);
-		AddUV(0,1,0.3f,0.6f);
+		AddUV(0.0f, 1.0f, 0.0f, 0.0f);
 
 		//2
 		AddVertex(p2.x,z,p2.y);
-		AddUV(1,1,0.6f,0.6f);
+		AddUV(0.5f, 1.0f, 0.0f, 0.0f);
 		
 		triangles.Add(idx);
 		triangles.Add(idx+2);
@@ -67,16 +67,16 @@ public class TerrainMeshGenerator : MeshGenerator {
 	{
 		int idx = vertices.Count;
 		AddVertex(p1.x,z1,p1.y);
-		AddUV(0,0,0.3f,0);
+		AddUV(0.0f, 0.0f, 0.0f, 0.0f);
 
 		AddVertex(p2.x,z1,p2.y);
-		AddUV(0,1,0.6f,0);
+		AddUV(0.5f, 0.0f, 0.0f, 0.0f);
 
 		AddVertex(p1.x,z2,p1.y);
-		AddUV(1,0,0.3f,0.3f);
+		AddUV(0.0f, 1.0f, 0.0f, 0.0f);
 
 		AddVertex(p2.x,z2,p2.y);
-		AddUV(1,1,0.6f,0.3f);
+		AddUV(0.5f, 1.0f, 0.0f, 0.0f);
 		
 		triangles.Add(idx);
 		triangles.Add(idx+1);

@@ -3,19 +3,22 @@
   <Blocks>
   	<Block Name="Bedrock" MaterialName="Bedrock"></Block>
   	<Block Name="Ground" MaterialName="Ground"></Block>
-  	<Block Name="Iron Ore" MaterialName="IronOre" Contains="Iron Ore"></Block>
+  	<Block Name="Iron Ore" MaterialName="IronOre" Contains="Iron Ore" Freq="0.05"></Block>
+  	<Block Name="Ice Ore" MaterialName="IceOre" Contains="Ice" Freq="0.1"></Block>
   </Blocks>
   <Items >
-  	<Item Name="Iron Ore" Class="Ore"></Item>
+  	<Item Name="Iron Ore" Class="Bulk.Ore"></Item>
+  	<Item Name="Ice" Class="Bulk.Ore"></Item>
+  	<Item Name="Water" Class="Bulk.Liquid"></Item>
   	<Item Name="Iron Ingot" Class="Good.Ingot"></Item>
   	<Item Name="Iron Plate" Class="Good.Part"></Item>
   	<Item Name="Iron Beam" Class="Good.Part"></Item>
   	<Item Name="Iron Wire" Class="Good.Part"></Item>
   </Items>
   <StartItems>
-  	<Item Name = "Iron Plate" Quantity = "200"></Item>
-  	<Item Name = "Iron Beam" Quantity = "200"></Item>
-  	<Item Name = "Iron Wire" Quantity = "200"></Item>
+  	<Item Name = "Iron Plate" Quantity = "300"></Item>
+  	<Item Name = "Iron Beam" Quantity = "300"></Item>
+  	<Item Name = "Iron Wire" Quantity = "300"></Item>
   </StartItems>
   <Buildings>
   	<Building Name="Silo" PrefabName="Silo">
@@ -49,7 +52,7 @@
   	<!--       FURNACE RECIPES             -->
   	<Recipe Device="Furnace" Name = "Smelt iron ore">
   		<Ingredients>
-  			<Ingredient Name="Iron Ore" Quantity="100"></Ingredient>
+  			<Ingredient Name="Iron Ore" Quantity="200"></Ingredient>
   		</Ingredients>
   		<Results>
   			<Result Name="Iron Ingot" Quantity="100"></Result>

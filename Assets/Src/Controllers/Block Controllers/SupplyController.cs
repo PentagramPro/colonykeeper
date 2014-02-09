@@ -11,7 +11,7 @@ public class SupplyController : BaseManagedController, ICustomer {
 	public enum SupplyStatus{
 		Ready, NotReady, Complete
 	}
-	public BlockedInventory InInventory;
+	public IInventory InInventory;
 
 	Modes state= Modes.Idle;
 	BuildingController building;

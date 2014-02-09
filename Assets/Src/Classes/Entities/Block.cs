@@ -19,6 +19,9 @@ public class Block  {
 	[XmlAttribute("Contains")]
 	public string Contains;
 
+	[XmlAttribute("Freq")]
+	public float Freq;
+
 	[XmlIgnore]
 	public Item ContainsItem;
 }
