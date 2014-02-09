@@ -55,11 +55,7 @@ public class TerrainController : BaseManagedController {
 
 		lowerPlane = new Plane(Vector3.up, transform.position);
 
-		Camera.main.transform.position=new Vector3(
-			transform.position.x+map.GetLength(1)*TerrainMeshGenerator.CELL_SIZE/2,
-			Camera.main.transform.position.y,
-			transform.position.y+map.GetLength(0)*TerrainMeshGenerator.CELL_SIZE/2);
-//		upperPlane = new Plane(Vector3.up, transform.position+new Vector3(0,TerrainMeshGenerator.CELL_SIZE,0));
+
 	}
 
 	void OnItemPicked(Building selected)
@@ -202,7 +198,7 @@ public class TerrainController : BaseManagedController {
 	{
 		int h = map.GetUpperBound(0);
 		int w = map.GetUpperBound(1);
-
+		GameObject mainBuilding = null;
 		Debug.Log("Generate Map");
 
 		foreach(Transform children in cellContainer.transform)
@@ -217,7 +213,8 @@ public class TerrainController : BaseManagedController {
 
 		int middleI=h/2;
 		int middleJ=w/2;
-		
+
+		M.cameraController.bounds = new Rect(0,0,w*TerrainMeshGenerator.CELL_SIZE,h*TerrainMeshGenerator.CELL_SIZE);
 		for(int i=0;i<=h;i++)
 		{
 			for(int j=0;j<=w;j++)
@@ -236,10 +233,11 @@ public class TerrainController : BaseManagedController {
 				{
 					if(!editMode)
 					{
-						GameObject obj = Resources.Load<GameObject>("Prefabs/Blocks/Headquarters");
-						obj = (GameObject)GameObject.Instantiate(obj);
-						c.BuildOn(obj.GetComponent<BuildingController>());
-						StorageController st = obj.GetComponent<StorageController>();
+						mainBuilding = Resources.Load<GameObject>("Prefabs/Blocks/Headquarters");
+						mainBuilding = (GameObject)GameObject.Instantiate(mainBuilding);
+
+						c.BuildOn(mainBuilding.GetComponent<BuildingController>());
+						StorageController st = mainBuilding.GetComponent<StorageController>();
 						foreach(PileXML item in M.GameD.StartItemsList)
 						{
 							st.Put(M.GameD.Items[item.Name],item.Quantity);
@@ -264,6 +262,8 @@ public class TerrainController : BaseManagedController {
 				//c.Digged=false;
 			}
 		}
+
+
 		//map[1,1].Digged=true;
 	}
 
