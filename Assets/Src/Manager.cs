@@ -20,6 +20,7 @@ public class Manager : MonoBehaviour {
 
 	public DictionaryEx<BlockController,BuildingController> BuildingsRegistry = new DictionaryEx<BlockController, BuildingController>();
 
+	public CameraController cameraController;
 
 	public GUIController GetGUIController()
 	{
