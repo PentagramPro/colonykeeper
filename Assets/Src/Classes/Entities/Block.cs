@@ -20,7 +20,7 @@ public class Block  {
 	public string Contains;
 
 	[XmlAttribute("Freq")]
-	public float Freq;
+	public float Freq=1;
 
 	[XmlIgnore]
 	public Item ContainsItem;
