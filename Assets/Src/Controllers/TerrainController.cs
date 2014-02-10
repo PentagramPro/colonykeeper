@@ -196,8 +196,8 @@ public class TerrainController : BaseManagedController {
 
 	void GenerateMap(bool editMode)
 	{
-		int h = map.GetUpperBound(0);
-		int w = map.GetUpperBound(1);
+		int h = map.GetLength(0);
+		int w = map.GetLength(1);
 		GameObject mainBuilding = null;
 		Debug.Log("Generate Map");
 
@@ -211,13 +211,15 @@ public class TerrainController : BaseManagedController {
 
 		}
 
-		int middleI=h/2;
-		int middleJ=w/2;
+
 
 		M.cameraController.bounds = new Rect(0,0,w*TerrainMeshGenerator.CELL_SIZE,h*TerrainMeshGenerator.CELL_SIZE);
-		for(int i=0;i<=h;i++)
+
+		Block[,] pattern = MapGenerator.GenerateBlocksPattern(M, h, w);
+
+		for(int i=0;i<h;i++)
 		{
-			for(int j=0;j<=w;j++)
+			for(int j=0;j<w;j++)
 			{
 				GameObject cellObj = (GameObject)Instantiate(cellPrefab);
 				map[i,j] = cellObj.GetComponent<BlockController>();
@@ -229,36 +231,22 @@ public class TerrainController : BaseManagedController {
 				c.CellUpdated+=OnCellUpdated;
 				c.CellMouseOver+=OnCellHover;
 				c.CellMouseUp+=OnCellClicked;
-				if(i==middleI && j==middleJ)
-				{
-					if(!editMode)
-					{
-						mainBuilding = Resources.Load<GameObject>("Prefabs/Blocks/Headquarters");
-						mainBuilding = (GameObject)GameObject.Instantiate(mainBuilding);
+				c.BlockProt = pattern[i,j];
 
-						c.BuildOn(mainBuilding.GetComponent<BuildingController>());
-						StorageController st = mainBuilding.GetComponent<StorageController>();
-						foreach(PileXML item in M.GameD.StartItemsList)
-						{
-							st.Put(M.GameD.Items[item.Name],item.Quantity);
-						}
+				if(!editMode && i==h/2 && j==w/2)
+				{
+
+					mainBuilding = Resources.Load<GameObject>("Prefabs/Blocks/Headquarters");
+					mainBuilding = (GameObject)GameObject.Instantiate(mainBuilding);
+
+					c.BuildOn(mainBuilding.GetComponent<BuildingController>());
+					StorageController st = mainBuilding.GetComponent<StorageController>();
+					foreach(PileXML item in M.GameD.StartItemsList)
+					{
+						st.Put(M.GameD.Items[item.Name],item.Quantity);
 					}
 				}
-				if(i>middleI-2 && j>middleJ-2 && i<middleI+2 && j<middleJ+2)
-				{
 
-
-				}
-				else if(i==0 || j==0 || i==h || j==w)
-				{
-					c.BlockProt=M.GameD.Blocks[0];
-				}
-				else
-				{
-					int v = Random.Range(1,M.GameD.Blocks.Count);
-					if(v<M.GameD.Blocks.Count)
-						c.BlockProt=M.GameD.Blocks[v];
-				}
 				//c.Digged=false;
 			}
 		}

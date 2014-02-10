@@ -7,7 +7,7 @@ public class MapGenerator
 
 	static List<Block> blocksToPlace = new List<Block>();
 
-	public static Block[,] GenerateBlocksPattern(Manager m, int iLen, int jLen, Func<int, int, int> placeHeadquarters )
+	public static Block[,] GenerateBlocksPattern(Manager m, int iLen, int jLen )
 	{
 		Block[,] map = new Block[iLen, jLen];
 
@@ -28,6 +28,9 @@ public class MapGenerator
 
 		foreach (Block b in m.GameD.Blocks)
 		{
+			if(b.Breakable==false)
+				continue;
+
 			int count = (int)(blocksCount/freqSum*b.Freq+1);
 			for(int n=0;n<count;n++)
 			{
@@ -51,8 +54,7 @@ public class MapGenerator
 
 				if(i>=iMid-1 && i<=iMid+1 && j>=jMid-1 && j<=jMid+1)
 				{
-					if(i==iMid && j==jMid)
-						placeHeadquarters(i,j);
+
 					continue;
 				}
 

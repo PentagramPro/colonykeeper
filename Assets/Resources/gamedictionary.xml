@@ -3,8 +3,8 @@
   <Blocks>
   	<Block Name="Bedrock" MaterialName="Bedrock"></Block>
   	<Block Name="Ground" MaterialName="Ground"></Block>
-  	<Block Name="Iron Ore" MaterialName="IronOre" Contains="Iron Ore" Freq="0.05"></Block>
-  	<Block Name="Ice Ore" MaterialName="IceOre" Contains="Ice" Freq="0.1"></Block>
+  	<Block Name="Iron Ore" MaterialName="IronOre" Contains="Iron Ore" Freq="0.01"></Block>
+  	<Block Name="Ice Ore" MaterialName="IceOre" Contains="Ice" Freq="0.04"></Block>
   </Blocks>
   <Items >
   	<Item Name="Iron Ore" Class="Bulk.Ore"></Item>
