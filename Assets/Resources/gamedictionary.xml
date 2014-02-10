@@ -47,6 +47,13 @@
   			<Ingredient Name="Iron Wire" Quantity="100"></Ingredient>
   		</Ingredients>
   	</Building>
+  	<Building Name="Still" PrefabName="Still">
+  		<Ingredients>
+  			<Ingredient Name="Iron Plate" Quantity="100"></Ingredient>
+  			<Ingredient Name="Iron Beam" Quantity="100"></Ingredient>
+  			<Ingredient Name="Iron Wire" Quantity="200"></Ingredient>
+  		</Ingredients>
+  	</Building>
   </Buildings>
   <Recipes>
   	<!--       FURNACE RECIPES             -->
@@ -82,6 +89,16 @@
   		</Ingredients>
   		<Results>
   			<Result Name="Iron Wire" Quantity="100"></Result>
+  		</Results>
+  	</Recipe>
+  	
+  	<!--       STILL RECIPES             -->
+  	<Recipe Device="Still" Name = "Smelt ice">
+  		<Ingredients>
+  			<Ingredient Name="Ice" Quantity="100"></Ingredient>
+  		</Ingredients>
+  		<Results>
+  			<Result Name="Water" Quantity="40"></Result>
   		</Results>
   	</Recipe>
   </Recipes>

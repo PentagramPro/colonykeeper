@@ -71,6 +71,8 @@ public class GameDictionary  {
 
 			foreach(PileXML pxml in r.Ingredients)
 			{
+				if(!Items.ContainsKey(pxml.Name))
+					throw new UnityException("Item with name "+pxml.Name+" was not found while building ingredients for recipe "+r.Name);
 				r.IngredientsLinks.Add(new Pile(Items[pxml.Name],pxml.Quantity));
 			}
 

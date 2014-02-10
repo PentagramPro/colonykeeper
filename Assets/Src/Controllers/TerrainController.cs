@@ -20,7 +20,7 @@ public class TerrainController : BaseManagedController {
 	public GameObject pickedObject;
 	TerrainControllerMode mode = TerrainControllerMode.Idle;
 
-	FogController fogOfWarController = null;
+
 
 	TerrainMeshGenerator terrGen = null;
 	Plane lowerPlane;
@@ -39,10 +39,7 @@ public class TerrainController : BaseManagedController {
 			terrGen = new TerrainMeshGenerator(map);
 			GenerateMap(editMode);
 		}
-		if(fogOfWarController==null)
-		{
-			fogOfWarController = fogOfWar.GetComponent<FogController>();
-		}
+	
 
 
 	}
@@ -284,7 +281,7 @@ public class TerrainController : BaseManagedController {
 
 
 
-		fogOfWarController.GenerateFog(map,editMode);
+
 
 		if(!editMode)
 		{
