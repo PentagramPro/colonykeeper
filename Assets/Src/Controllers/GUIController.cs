@@ -14,7 +14,7 @@ public class GUIController : BaseManagedController {
 
 	public event PickedDelegate ItemPicked;
 
-	public IInteractive SelectedObject;
+	public GameObject SelectedObject;
 
 	public GUISkin Skin;
 
@@ -54,14 +54,19 @@ public class GUIController : BaseManagedController {
 
 			if (SelectedObject != null)
 			{
+				Component[] items = SelectedObject.GetComponents<Component>();
 				GUI.Box(rct,"");
 				rct.x+=pad;
 				rct.y+=pad;
 				rct.width-=pad*2;
 				rct.height-=pad*2;
-
+				
 				GUILayout.BeginArea(rct);
-				SelectedObject.OnDrawSelectionGUI();
+				foreach(Component item in items)
+				{
+					if(item.GetType()==typeof(IInteractive))
+						((IInteractive)item).OnDrawSelectionGUI();
+				}
 				GUILayout.EndArea();
 			}
 		}

@@ -14,11 +14,6 @@ public class SiloController : SingleInventory, IInteractive {
 	
 	}
 
-	public void OnMouseUpAsButton()
-	{
-		M.GetGUIController().SelectedObject = this;
-	}
-
 	#region IInteractive implementation
 	public void OnDrawSelectionGUI()
 	{

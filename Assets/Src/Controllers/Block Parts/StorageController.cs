@@ -3,10 +3,7 @@ using System.Collections;
 
 public class StorageController : MultiInventory, IInteractive {
 
-	public void OnMouseUpAsButton()
-	{
-		M.GetGUIController().SelectedObject = this;
-	}
+
 	
 	#region IInteractive implementation
 	public void OnDrawSelectionGUI()

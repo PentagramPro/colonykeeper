@@ -28,10 +28,7 @@ public class ConstructionController : BaseManagedController, IInteractive {
 			throw new UnityException("Supply controller must not be null");
 	}
 
-	public void OnMouseUpAsButton()
-	{
-		M.GetGUIController().SelectedObject = this;
-	}
+
 
 	// Update is called once per frame
 	void Update () {

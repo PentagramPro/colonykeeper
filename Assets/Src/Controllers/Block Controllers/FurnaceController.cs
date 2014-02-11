@@ -41,16 +41,7 @@ public class FurnaceController : BaseManagedController, IInteractive{
 	}
 
 
-	public void OnMouseUpAsButton()
-	{
-		craftableRecipes = M.GameD.RecipesByDevice[building.Prototype.Name];
-		nameCache = new string[craftableRecipes.Count];
-		int i=0;
-		foreach(Recipe r in craftableRecipes)
-			nameCache[i++]=r.Name;
 
-		M.GetGUIController().SelectedObject = this;
-	}
 
 	// Update is called once per frame
 	void Update () {
@@ -147,6 +138,14 @@ public class FurnaceController : BaseManagedController, IInteractive{
 
 	public void OnDrawSelectionGUI ()
 	{
+		if (craftableRecipes == null || nameCache==null)
+		{
+			craftableRecipes = M.GameD.RecipesByDevice[building.Prototype.Name];
+			nameCache = new string[craftableRecipes.Count];
+			int i=0;
+			foreach(Recipe r in craftableRecipes)
+				nameCache[i++]=r.Name;
+		}
 		if(state == Modes.Idle)
 		{
 			GUILayout.BeginHorizontal();

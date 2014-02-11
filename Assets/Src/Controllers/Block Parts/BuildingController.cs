@@ -1,13 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BuildingController : BaseController {
+public class BuildingController : BaseManagedController {
 
 	public Building Prototype = null;
 	float halfCell = TerrainMeshGenerator.CELL_SIZE/2;
 	// Use this for initialization
 	void Start () {
 	
+	}
+
+	public void OnMouseUpAsButton()
+	{
+		M.GetGUIController().SelectedObject = gameObject;
+			
+		
 	}
 
 	void OnDrawGizmos()
