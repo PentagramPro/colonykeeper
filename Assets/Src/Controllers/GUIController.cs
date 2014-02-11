@@ -64,7 +64,7 @@ public class GUIController : BaseManagedController {
 				GUILayout.BeginArea(rct);
 				foreach(Component item in items)
 				{
-					if(item.GetType()==typeof(IInteractive))
+					if(item is IInteractive)
 						((IInteractive)item).OnDrawSelectionGUI();
 				}
 				GUILayout.EndArea();
