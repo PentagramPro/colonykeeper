@@ -2,12 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
+using System.IO;
 
 enum TerrainControllerMode
 {
 	Idle,Picked
 }
-public class TerrainController : BaseManagedController {
+public class TerrainController : BaseManagedController, IStorable {
 
 	BlockController[,] map = new BlockController[16,16];
 
@@ -292,6 +293,30 @@ public class TerrainController : BaseManagedController {
 	}
 
 
+	#region IStorable implementation
+	public void Save (BinaryWriter b)
+	{
+		for(int i=0;i<map.GetLength(0);i++)
+		{
+			for(int j=0;j<map.GetLength(1);j++)
+			{
+				map[i,j].Save(b);
+			}
+		}
+	}
+	public void Load (BinaryReader r)
+	{
+		for(int i=0;i<map.GetLength(0);i++)
+		{
+			for(int j=0;j<map.GetLength(1);j++)
+			{
+				map[i,j].Load(r);
+			}
+		}
+		GenerateMesh(false);
+	}
+	#endregion
 }
 
 
+  

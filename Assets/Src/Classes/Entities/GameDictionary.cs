@@ -29,6 +29,8 @@ public class GameDictionary  {
 	[XmlIgnore]
 	public Dictionary<string, List<Recipe>> RecipesByDevice = new Dictionary<string, List<Recipe>>();
 
+	[XmlIgnore] 
+	public Dictionary<string, Block> BlocksByName = new Dictionary<string, Block>();
 
 	public void Save(string path)
 	{
@@ -49,11 +51,12 @@ public class GameDictionary  {
 
 		}
 		ItemsList.Clear();
-
+		BlocksByName.Clear();
 		foreach(Block b in Blocks)
 		{
 			if(b.Contains!=null)
 				b.ContainsItem = Items[b.Contains];
+			BlocksByName[b.Name]=b;
 		}
 
 		RecipesByDevice.Clear();

@@ -6,6 +6,7 @@ public class Manager : MonoBehaviour {
 
 	public delegate void UpdatedDelegate();
 
+	public TerrainController terrainController;
 
 	GUIController guiController;
 
@@ -30,7 +31,8 @@ public class Manager : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
-
+		if(terrainController==null)
+			throw new UnityException("terrainController must not be null");
 	}
 
 	void Update()
@@ -48,9 +50,17 @@ public class Manager : MonoBehaviour {
 	
 	public void SaveGame()
 	{
+		using(BinaryWriter b = new BinaryWriter(File.Open("savegame",FileMode.Create)))
+		{
+			terrainController.Save(b);
+		}
 	}
 
 	public void LoadGame()
 	{
+		using(BinaryReader b = new BinaryReader(File.Open("savegame",FileMode.Open)))
+		{
+			terrainController.Load(b);
+		}
 	}
 }

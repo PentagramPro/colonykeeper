@@ -3,7 +3,7 @@ using System.Collections;
 using Pathfinding;
 using System;
 
-public class BlockController : BaseManagedController, ICustomer {
+public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 	public enum Accessibility{
 		Enclosed, // closed with blocks from all sides
@@ -298,4 +298,19 @@ public class BlockController : BaseManagedController, ICustomer {
 		CannotDig, NotFinished, Finished, DestinationFull
 	}
 
+	#region IStorable implementation
+	public void Save (System.IO.BinaryWriter b)
+	{
+		b.Write(amount);
+		if(BlockProt==null)
+			b.Write("");
+		else
+			b.Write(BlockProt.Name);
+	}
+	public void Load (System.IO.BinaryReader r)
+	{
+		amount = r.ReadInt32();
+		M.GameD.BlocksByName.TryGetValue(r.ReadString(),out BlockProt);
+	}
+	#endregion
 }
