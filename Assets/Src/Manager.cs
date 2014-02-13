@@ -46,5 +46,11 @@ public class Manager : MonoBehaviour {
 	// 	GameD.Save(path);
 	}
 	
+	public void SaveGame()
+	{
+	}
 
+	public void LoadGame()
+	{
+	}
 }

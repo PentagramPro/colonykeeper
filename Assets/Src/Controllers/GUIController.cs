@@ -50,25 +50,38 @@ public class GUIController : BaseManagedController {
 				state = Modes.Choose;
 			}
 
-
+			GUI.Box(rct,"");
+			rct.x+=pad;
+			rct.y+=pad;
+			rct.width-=pad*2;
+			rct.height-=pad*2;
+			
+			GUILayout.BeginArea(rct);
 
 			if (SelectedObject != null)
 			{
 				Component[] items = SelectedObject.GetComponents<Component>();
-				GUI.Box(rct,"");
-				rct.x+=pad;
-				rct.y+=pad;
-				rct.width-=pad*2;
-				rct.height-=pad*2;
-				
-				GUILayout.BeginArea(rct);
+
 				foreach(Component item in items)
 				{
 					if(item is IInteractive)
 						((IInteractive)item).OnDrawSelectionGUI();
 				}
-				GUILayout.EndArea();
+
 			}
+			else
+			{
+				if(GUILayout.Button("Save"))
+				{
+					M.SaveGame();
+				}
+				if(GUILayout.Button("Load"))
+				{
+					M.LoadGame();
+				}
+
+			}
+			GUILayout.EndArea();
 		}
 		else if(state == Modes.Choose)
 		{
