@@ -2,7 +2,7 @@ using System.IO;
 
 public interface IStorable
 {
-	void Save(BinaryWriter b);
-	void Load(BinaryReader r);
+	void Save(WriterEx b);
+	void Load(Manager m, ReaderEx r);
 }
 

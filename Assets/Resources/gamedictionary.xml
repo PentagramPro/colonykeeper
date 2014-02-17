@@ -21,6 +21,8 @@
   	<Item Name = "Iron Wire" Quantity = "300"></Item>
   </StartItems>
   <Buildings>
+  	<Building Name="Headquarters" PrefabName="Headquarters">
+  	</Building>
   	<Building Name="Silo" PrefabName="Silo">
   		<Ingredients>
   			<Ingredient Name="Iron Plate" Quantity="100"></Ingredient>

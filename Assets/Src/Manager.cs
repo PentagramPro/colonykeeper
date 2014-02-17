@@ -23,6 +23,8 @@ public class Manager : MonoBehaviour {
 
 	public CameraController cameraController;
 
+	public Dictionary<int, Object> LoadedLinks = new Dictionary<int, Object>();
+
 	public GUIController GetGUIController()
 	{
 		if(guiController==null)
@@ -50,17 +52,43 @@ public class Manager : MonoBehaviour {
 	
 	public void SaveGame()
 	{
-		using(BinaryWriter b = new BinaryWriter(File.Open("savegame",FileMode.Create)))
+		using(WriterEx b = new WriterEx(File.Open("savegame",FileMode.Create)))
 		{
 			terrainController.Save(b);
+
+			b.Write(BuildingsRegistry.Count);
+			foreach(BlockController bc in BuildingsRegistry.Keys)
+			{
+				b.Write(bc.UID);
+				b.Write(BuildingsRegistry[bc].Prototype.Name);
+				BuildingsRegistry[bc].Save(b);
+			}
 		}
 	}
 
 	public void LoadGame()
 	{
-		using(BinaryReader b = new BinaryReader(File.Open("savegame",FileMode.Open)))
+		LoadedLinks.Clear();
+		using(ReaderEx b = new ReaderEx(File.Open("savegame",FileMode.Open)))
 		{
-			terrainController.Load(b);
+			foreach(BuildingController building in BuildingsRegistry.Values)
+			{
+				GameObject.Destroy(building.gameObject);
+			}
+
+			BuildingsRegistry.Clear();
+			terrainController.Load(this, b);
+
+			int count = b.ReadInt32();
+			for(int i=0;i<count;i++)
+			{
+				BlockController bc = (BlockController)LoadedLinks[b.ReadInt32()];
+				Building building = GameD.BuildingsByName [b.ReadString()];
+				BuildingController loadedBuilding = building.Instantiate().GetComponent<BuildingController>();
+				bc.BuildOn(loadedBuilding);
+				loadedBuilding.Load(this,b);
+
+			}
 		}
 	}
 }

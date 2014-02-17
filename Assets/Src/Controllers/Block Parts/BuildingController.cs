@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BuildingController : BaseManagedController {
+public class BuildingController : BaseManagedController, IStorable{
 
 	public Building Prototype = null;
 	float halfCell = TerrainMeshGenerator.CELL_SIZE/2;
@@ -41,4 +41,32 @@ public class BuildingController : BaseManagedController {
 	void Update () {
 	
 	}
+
+	#region IStorable implementation
+
+	public void Save (WriterEx b)
+	{
+		Component[] components = GetComponents<Component>();
+		foreach(Component c in components)
+		{
+			if(c is IStorable && c!=this)
+			{
+				((IStorable)c).Save(b);
+			}
+		}
+	}
+
+	public void Load (Manager m, ReaderEx r)
+	{
+		Component[] components = GetComponents<Component>();
+		foreach(Component c in components)
+		{
+			if(c is IStorable && c!=this)
+			{
+				((IStorable)c).Load(m,r);
+			}
+		}
+	}
+
+	#endregion
 }

@@ -29,6 +29,8 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 	static float halfCell = TerrainMeshGenerator.CELL_SIZE/2;
 
+
+
 	public void InitCell(int i, int j, BlockController[,] map)
 	{
 
@@ -299,16 +301,21 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	}
 
 	#region IStorable implementation
-	public void Save (System.IO.BinaryWriter b)
+	public void Save (WriterEx b)
 	{
+		SaveHash(b);
+
 		b.Write(amount);
-		if(BlockProt==null)
-			b.Write("");
-		else
-			b.Write(BlockProt.Name);
+		
+		b.WriteEx(BlockProt);
+
 	}
-	public void Load (System.IO.BinaryReader r)
+	public void Load (Manager m, ReaderEx r)
 	{
+		digJob = null;
+		cellBuilding = null;
+
+		LoadHash(r);
 		amount = r.ReadInt32();
 		M.GameD.BlocksByName.TryGetValue(r.ReadString(),out BlockProt);
 	}

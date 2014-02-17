@@ -234,8 +234,7 @@ public class TerrainController : BaseManagedController, IStorable {
 				if(!editMode && i==h/2 && j==w/2)
 				{
 
-					mainBuilding = Resources.Load<GameObject>("Prefabs/Blocks/Headquarters");
-					mainBuilding = (GameObject)GameObject.Instantiate(mainBuilding);
+					mainBuilding = M.GameD.BuildingsByName["Headquarters"].Instantiate();
 
 					c.BuildOn(mainBuilding.GetComponent<BuildingController>());
 					StorageController st = mainBuilding.GetComponent<StorageController>();
@@ -294,7 +293,7 @@ public class TerrainController : BaseManagedController, IStorable {
 
 
 	#region IStorable implementation
-	public void Save (BinaryWriter b)
+	public void Save (WriterEx b)
 	{
 		for(int i=0;i<map.GetLength(0);i++)
 		{
@@ -304,13 +303,14 @@ public class TerrainController : BaseManagedController, IStorable {
 			}
 		}
 	}
-	public void Load (BinaryReader r)
+	public void Load (Manager m, ReaderEx r)
 	{
 		for(int i=0;i<map.GetLength(0);i++)
 		{
 			for(int j=0;j<map.GetLength(1);j++)
 			{
-				map[i,j].Load(r);
+
+				map[i,j].Load(m,r);
 			}
 		}
 		GenerateMesh(false);

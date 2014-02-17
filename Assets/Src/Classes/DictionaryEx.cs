@@ -117,6 +117,8 @@ public class DictionaryEx<Tkey, Tval> : IDictionary<Tkey,Tval>
 		return dic.GetEnumerator();
 	}
 	#endregion
+
+
 	 
 }
 

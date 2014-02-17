@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Pile {
+public class Pile : IStorable {
 
 	Item itemType;
 	public Item ItemType
@@ -31,4 +31,16 @@ public class Pile {
 		Quantity=q;
 	}
 
+	#region IStorable implementation
+	public void Save (WriterEx b)
+	{
+		b.Write(itemType.Name);
+		b.Write(quantity);
+	}
+	public void Load (Manager m, ReaderEx r)
+	{
+		itemType = m.GameD.Items[r.ReadString()];
+		quantity = r.ReadInt32();
+	}
+	#endregion
 }

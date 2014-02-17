@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class MultiInventory : IInventory {
+public class MultiInventory : IInventory, IStorable {
 
 	public string ItemClass = "";
 	public int MaxQuantity= 2000;
@@ -112,5 +112,19 @@ public class MultiInventory : IInventory {
 	{
 		return totalQuantity>=MaxQuantity;
 	}
+	#endregion
+
+	#region IStorable implementation
+
+	public void Save (WriterEx b)
+	{
+		throw new System.NotImplementedException ();
+	}
+
+	public void Load (Manager m, ReaderEx r)
+	{
+		throw new System.NotImplementedException ();
+	}
+
 	#endregion
 }

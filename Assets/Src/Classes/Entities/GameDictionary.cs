@@ -32,6 +32,9 @@ public class GameDictionary  {
 	[XmlIgnore] 
 	public Dictionary<string, Block> BlocksByName = new Dictionary<string, Block>();
 
+	[XmlIgnore] 
+	public Dictionary<string, Building> BuildingsByName = new Dictionary<string, Building>();
+
 	public void Save(string path)
 	{
 		var serializer = new XmlSerializer(typeof(GameDictionary));
@@ -85,6 +88,7 @@ public class GameDictionary  {
 			}
 		}
 
+		BuildingsByName.Clear();
 		foreach(Building b in Buildings)
 		{
 			b.recipe = new Recipe();
@@ -93,6 +97,8 @@ public class GameDictionary  {
 
 				b.recipe.IngredientsLinks.Add(new Pile(Items[pxml.Name],pxml.Quantity));
 			}
+
+			BuildingsByName.Add(b.Name,b);
 		}
 	}
 
