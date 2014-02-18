@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BlockedMultiInventory : MultiInventory, ICustomer {
+public class BlockedMultiInventory : MultiInventory, ICustomer, IStorable {
 
 	enum Modes {
 		Idle, Unload

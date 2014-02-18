@@ -118,12 +118,25 @@ public class MultiInventory : IInventory, IStorable {
 
 	public void Save (WriterEx b)
 	{
-		throw new System.NotImplementedException ();
+		b.Write(items.Values.Count);
+		foreach (Pile p in items.Values)
+		{
+			p.Save(b);
+		}
 	}
 
 	public void Load (Manager m, ReaderEx r)
 	{
-		throw new System.NotImplementedException ();
+		items.Clear();
+		totalQuantity = 0;
+		int count = r.ReadInt32();
+		for(int i=0;i<count;i++)
+		{
+			Pile p = new Pile(null);
+			p.Load(m,r);
+			items.Add(p.ItemType,p);
+			totalQuantity+=p.Quantity;
+		}
 	}
 
 	#endregion

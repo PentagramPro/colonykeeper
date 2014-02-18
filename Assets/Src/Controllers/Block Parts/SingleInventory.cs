@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class SingleInventory : IInventory
+public class SingleInventory : IInventory, IStorable
 {
 	Pile pile;
 	public int MaxQuantity = 2000;
@@ -102,6 +102,20 @@ public class SingleInventory : IInventory
 			return Quantity;
 
 		return 0;
+	}
+
+	#endregion
+
+	#region IStorable implementation
+
+	public void Save(WriterEx b)
+	{
+
+	}
+
+	public void Load(Manager m, ReaderEx r)
+	{
+
 	}
 
 	#endregion

@@ -59,9 +59,10 @@ public class Manager : MonoBehaviour {
 			b.Write(BuildingsRegistry.Count);
 			foreach(BlockController bc in BuildingsRegistry.Keys)
 			{
+				BuildingController savingBuilding = BuildingsRegistry[bc];
 				b.Write(bc.UID);
-				b.Write(BuildingsRegistry[bc].Prototype.Name);
-				BuildingsRegistry[bc].Save(b);
+				b.Write(savingBuilding.Prototype.Name);
+				savingBuilding.Save(b);
 			}
 		}
 	}
