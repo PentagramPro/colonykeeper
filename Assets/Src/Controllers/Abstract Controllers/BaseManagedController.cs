@@ -7,15 +7,12 @@ public class BaseManagedController : BaseController {
 	public GameObject manager;
 	Manager managerController;
 
-	private static int nextUid=0;
-	private int uid=0;
-	public int UID{
-		get{
-			return uid;
-		}
-	}
-	private int loadedUid=0;
+	UidContainer uidc;
 
+	public int GetUID()
+	{
+		return uidc.UID;
+	}
 	public void PrepareManager()
 	{
 		if (manager == null) 
@@ -29,7 +26,7 @@ public class BaseManagedController : BaseController {
 	}
 	void Awake()
 	{
-		uid = nextUid++;
+		uidc = new UidContainer(this);
 		PrepareManager();
 	}
 	// Use this for initialization
@@ -50,15 +47,14 @@ public class BaseManagedController : BaseController {
 	
 	}
 
-	protected void SaveHash(WriterEx b)
+	public virtual void SaveUid(WriterEx b)
 	{
-		b.Write(uid);
+		uidc.Save(b);
 	}
 
-	protected void LoadHash(ReaderEx r)
+	public virtual void LoadUid(Manager m, ReaderEx r)
 	{
-		loadedUid = r.ReadInt32();
-		M.LoadedLinks.Add(loadedUid,this);
+		uidc.Load(M,r);
 	}
 
 

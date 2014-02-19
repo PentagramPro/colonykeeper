@@ -21,4 +21,6 @@ public interface IWorker  {
 	void Feed(IInventory inv);
 
 	void Pick(IInventory inv, Item itemType, int quantity);
+
+
 }

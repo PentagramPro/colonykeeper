@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using System.IO;
+using System;
 
 public class ReaderEx : BinaryReader
 {
@@ -15,6 +16,12 @@ public class ReaderEx : BinaryReader
 	{
 
 	}
+
+	public object ReadEnum(Type enumType)
+	{
+		return Enum.Parse (enumType,ReadString());
+	}
+
 }
 
 

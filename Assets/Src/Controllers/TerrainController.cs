@@ -293,6 +293,31 @@ public class TerrainController : BaseManagedController, IStorable {
 
 
 	#region IStorable implementation
+
+	public override void SaveUid (WriterEx b)
+	{
+		base.SaveUid (b);
+		for(int i=0;i<map.GetLength(0);i++)
+		{
+			for(int j=0;j<map.GetLength(1);j++)
+			{
+				map[i,j].SaveUid(b);
+			}
+		}
+	}
+
+	public override void LoadUid (Manager m, ReaderEx r)
+	{
+		base.LoadUid (m, r);
+		for(int i=0;i<map.GetLength(0);i++)
+		{
+			for(int j=0;j<map.GetLength(1);j++)
+			{
+				
+				map[i,j].LoadUid(m,r);
+			}
+		}
+	}
 	public void Save (WriterEx b)
 	{
 		for(int i=0;i<map.GetLength(0);i++)

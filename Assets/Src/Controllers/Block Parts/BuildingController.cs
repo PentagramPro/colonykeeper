@@ -43,7 +43,31 @@ public class BuildingController : BaseManagedController, IStorable{
 	}
 
 	#region IStorable implementation
+	public override void SaveUid (WriterEx b)
+	{
+		base.SaveUid (b);
+		Component[] components = GetComponents<Component>();
+		foreach(Component c in components)
+		{
+			if(c is IStorable && c!=this)
+			{
+				((IStorable)c).SaveUid(b);
+			}
+		}
+	}
 
+	public override void LoadUid (Manager m, ReaderEx r)
+	{
+		base.LoadUid (m, r);
+		Component[] components = GetComponents<Component>();
+		foreach(Component c in components)
+		{
+			if(c is IStorable && c!=this)
+			{
+				((IStorable)c).LoadUid(m,r);
+			}
+		}
+	}
 	public void Save (WriterEx b)
 	{
 		Component[] components = GetComponents<Component>();

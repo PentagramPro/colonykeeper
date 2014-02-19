@@ -11,7 +11,7 @@ using UnityEngine;
 using System;
 
 
-public class BlockedInventory : SingleInventory, ICustomer
+public class BlockedInventory : SingleInventory, ICustomer, IStorable
 {
 	enum Modes {
 		Idle, Unload
@@ -89,5 +89,16 @@ public class BlockedInventory : SingleInventory, ICustomer
 		return false;
 	}
 
+	public override void Save (WriterEx b)
+	{
+		b.WriteEnum(state);
+		base.Save (b);
+	}
+
+	public override void Load(Manager m, ReaderEx r)
+	{
+		state = (Modes)r.ReadEnum(typeof(Modes));
+		base.Load(m,r);
+	}
 }
 

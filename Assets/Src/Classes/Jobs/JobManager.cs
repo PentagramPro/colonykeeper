@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class JobManager  {
+public class JobManager : IStorable {
 
 
 	public delegate void JobNotification(IJob j);
@@ -104,4 +104,26 @@ public class JobManager  {
 			Debug.Log("Returning job to queue "+j.GetHashCode());
 		}
 	}
+
+	#region IStorable implementation
+
+	public void SaveUid(WriterEx b)
+	{
+	
+	}
+	
+	public void LoadUid(Manager m, ReaderEx r)
+	{
+	
+	}
+	
+	public void Save (WriterEx b)
+	{
+
+	}
+	public void Load (Manager m, ReaderEx r)
+	{
+
+	}
+	#endregion
 }

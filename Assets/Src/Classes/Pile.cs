@@ -32,6 +32,16 @@ public class Pile : IStorable {
 	}
 
 	#region IStorable implementation
+	public void SaveUid(WriterEx b)
+	{
+	
+	}
+	
+	public void LoadUid(Manager m, ReaderEx r)
+	{
+	
+	}
+
 	public void Save (WriterEx b)
 	{
 		b.Write(itemType.Name);

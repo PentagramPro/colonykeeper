@@ -1,8 +1,9 @@
 using System;
 
-public abstract class IJob
+public abstract class IJob : IStorable
 {
 
+	UidContainer uidc;
 
 	protected JobManager jobManager;
 	protected IWorker worker;
@@ -11,6 +12,7 @@ public abstract class IJob
 	{
 		this.customer = customer;
 		this.jobManager = jobManager;
+		uidc = new UidContainer(this);
 	}
 
 
@@ -57,5 +59,34 @@ public abstract class IJob
 		customer = null;
 		worker = null;
 	}
+
+
+	public static IJob LoadFactory(Manager m, ReaderEx r)
+	{
+
+	}
+	#region IStorable implementation
+
+	public void SaveUid(WriterEx b)
+	{
+		uidc.Save(b);
+	}
+	
+	public void LoadUid(Manager m, ReaderEx r)
+	{
+		uidc.Load(m,r);
+	}
+
+	public void Save (WriterEx b)
+	{
+		b.Write(customer.GetUID());
+	}
+
+	public void Load (Manager m, ReaderEx r)
+	{
+		customer = m.LoadedLinks[r.ReadInt32()]
+	}
+
+	#endregion
 }
 

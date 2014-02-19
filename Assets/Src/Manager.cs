@@ -23,7 +23,7 @@ public class Manager : MonoBehaviour {
 
 	public CameraController cameraController;
 
-	public Dictionary<int, Object> LoadedLinks = new Dictionary<int, Object>();
+	public Dictionary<int, object> LoadedLinks = new Dictionary<int, object>();
 
 	public GUIController GetGUIController()
 	{
@@ -52,17 +52,27 @@ public class Manager : MonoBehaviour {
 	
 	public void SaveGame()
 	{
+
 		using(WriterEx b = new WriterEx(File.Open("savegame",FileMode.Create)))
 		{
+
+
+			terrainController.SaveUid(b);
+
 			terrainController.Save(b);
 
 			b.Write(BuildingsRegistry.Count);
 			foreach(BlockController bc in BuildingsRegistry.Keys)
 			{
 				BuildingController savingBuilding = BuildingsRegistry[bc];
-				b.Write(bc.UID);
+
+
+
+				b.Write(bc.GetUID());
 				b.Write(savingBuilding.Prototype.Name);
 				savingBuilding.Save(b);
+
+				savingBuilding.SaveUid(b);
 			}
 		}
 	}
@@ -72,16 +82,22 @@ public class Manager : MonoBehaviour {
 		LoadedLinks.Clear();
 		using(ReaderEx b = new ReaderEx(File.Open("savegame",FileMode.Open)))
 		{
+			//cleanup
 			foreach(BuildingController building in BuildingsRegistry.Values)
 			{
 				GameObject.Destroy(building.gameObject);
 			}
-
+			
 			BuildingsRegistry.Clear();
+
+
+			terrainController.LoadUid(this,b);
+
+		
 			terrainController.Load(this, b);
 
-			int count = b.ReadInt32();
-			for(int i=0;i<count;i++)
+			int buildingsCount = b.ReadInt32();
+			for(int i=0;i<buildingsCount;i++)
 			{
 				BlockController bc = (BlockController)LoadedLinks[b.ReadInt32()];
 				Building building = GameD.BuildingsByName [b.ReadString()];
@@ -89,6 +105,7 @@ public class Manager : MonoBehaviour {
 				bc.BuildOn(loadedBuilding);
 				loadedBuilding.Load(this,b);
 
+				loadedBuilding.LoadUid(this,b);
 			}
 		}
 	}

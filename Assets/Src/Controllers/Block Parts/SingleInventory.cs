@@ -108,14 +108,23 @@ public class SingleInventory : IInventory, IStorable
 
 	#region IStorable implementation
 
-	public void Save(WriterEx b)
+	public virtual void Save(WriterEx b)
 	{
+		b.Write(Quantity);
+		if(pile!=null)
+			pile.Save(b);
 
 	}
 
-	public void Load(Manager m, ReaderEx r)
+	public virtual void Load(Manager m, ReaderEx r)
 	{
-
+		if(r.ReadInt32()>0)
+		{
+			pile = new Pile(null);
+			pile.Load(m,r);
+		}
+		else
+			pile = null;
 	}
 
 	#endregion

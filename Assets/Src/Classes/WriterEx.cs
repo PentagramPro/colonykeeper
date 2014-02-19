@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using System.IO;
+using System;
 
 public class WriterEx : BinaryWriter
 {
@@ -24,6 +25,13 @@ public class WriterEx : BinaryWriter
 		else 
 			Write ("");
 	}
+
+	public void WriteEnum(object obj)
+	{
+		Write (Enum.GetName(obj.GetType(),obj));
+	}
+
+
 }
 
 

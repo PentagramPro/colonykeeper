@@ -12,6 +12,8 @@ using System;
 public interface ICustomer
 {
 	void JobCompleted(IJob job);
+
+	int GetUID();
 }
 
 

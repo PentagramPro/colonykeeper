@@ -301,9 +301,12 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	}
 
 	#region IStorable implementation
+
+
+
 	public void Save (WriterEx b)
 	{
-		SaveHash(b);
+
 
 		b.Write(amount);
 		
@@ -315,7 +318,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		digJob = null;
 		cellBuilding = null;
 
-		LoadHash(r);
+
 		amount = r.ReadInt32();
 		M.GameD.BlocksByName.TryGetValue(r.ReadString(),out BlockProt);
 	}
