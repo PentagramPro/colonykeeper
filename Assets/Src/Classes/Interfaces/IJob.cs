@@ -11,6 +11,7 @@ public abstract class IJob : IStorable
 
 	public IJob()
 	{
+		uidc = new UidContainer(this);
 	}
 	public IJob(JobManager jobManager, ICustomer customer)
 	{
@@ -95,7 +96,7 @@ public abstract class IJob : IStorable
 	public virtual void Load (Manager m, ReaderEx r)
 	{
 		jobManager = m.JobManager;
-		customer = m.LoadedLinks[r.ReadInt32()];
+		customer = (ICustomer)m.LoadedLinks[r.ReadInt32()];
 	}
 
 	#endregion

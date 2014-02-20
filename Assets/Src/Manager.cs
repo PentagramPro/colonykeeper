@@ -14,15 +14,23 @@ public class Manager : MonoBehaviour {
 	public GameObject gui;
 
 	//Game dictionary contains prototypes for blocks and items
+	// loaded from resources
 	public GameDictionary GameD;
 
 	//Job manager holds list of jobs
+	// has to be stored and loaded
 	public JobManager JobManager = new JobManager();
 
+	//has to be stored and loaded
 	public DictionaryEx<BlockController,BuildingController> BuildingsRegistry = new DictionaryEx<BlockController, BuildingController>();
+
+	//has to be stored and loaded
+	public List<VehicleController> DronesRegistry = new List<VehicleController>();
+
 
 	public CameraController cameraController;
 
+	//cache for references to objects. Used during loading of game
 	public Dictionary<int, object> LoadedLinks = new Dictionary<int, object>();
 
 	public GUIController GetGUIController()

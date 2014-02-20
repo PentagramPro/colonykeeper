@@ -322,11 +322,12 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	{
 		digJob = null;
 		cellBuilding = null;
-
+		object o;
 
 		amount = r.ReadInt32();
 		M.GameD.BlocksByName.TryGetValue(r.ReadString(),out BlockProt);
-		m.LoadedLinks.TryGetValue(r.ReadInt32(),ref digJob);
+		m.LoadedLinks.TryGetValue(r.ReadInt32(),out o);
+		digJob=(DigJob)o;
 	}
 	#endregion
 }

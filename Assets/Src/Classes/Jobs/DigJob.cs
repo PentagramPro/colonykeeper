@@ -9,6 +9,10 @@ public class DigJob : IJob
 	BlockController blockController;
 	States state = States.Start;
 
+
+	public DigJob()
+	{
+	}
 	public DigJob (JobManager jobManager, ICustomer customer,BlockController block) 
 		: base(jobManager,customer)
 	{
@@ -86,6 +90,20 @@ public class DigJob : IJob
 		case BlockController.DigResult.NotFinished:
 			break;
 		}
+	}
+
+	public override void Save (WriterEx b)
+	{
+		base.Save (b);
+		b.WriteEnum(state);
+		b.Write(blockController.GetUID());
+	}
+
+	public override void Load (Manager m, ReaderEx r)
+	{
+		base.Load (m, r);
+		state = (States)r.ReadEnum(typeof(States));
+		blockController = (BlockController)m.LoadedLinks[r.ReadInt32()];
 	}
 
 
