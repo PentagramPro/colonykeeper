@@ -2,11 +2,13 @@
 using System.Collections;
 using Pathfinding;
 
-public class VehicleController : BaseManagedController {
+public class VehicleController : BaseManagedController, IStorable  {
 	private enum VehicleModes
 	{
 		Idle,Calc,Turn,Follow
 	}
+
+	Vector3 currentDestination;
 
 	public float speed = 2;
 	public float turnSpeed=140;
@@ -15,17 +17,21 @@ public class VehicleController : BaseManagedController {
 	Seeker seeker;
 	int currentWaypoint;
 	private VehicleModes vehicleState = VehicleModes.Idle;
-	private PathWalked OnPathWalked;
+
 
 	public delegate void PathWalked();
+	public event PathWalked OnPathWalked;
 
-	protected void Init()
+
+	
+	void Start()
 	{
 		seeker = GetComponent<Seeker>();
 	}
+
 	
 	// Update is called once per frame
-	protected void Update () {
+	void Update () {
 		if(vehicleState==VehicleModes.Follow || vehicleState==VehicleModes.Turn)
 		{
 			if (path == null) {
@@ -34,7 +40,8 @@ public class VehicleController : BaseManagedController {
 			}
 			if (currentWaypoint >= path.vectorPath.Count) {
 				vehicleState=VehicleModes.Idle;
-				OnPathWalked();
+				if(OnPathWalked!=null)
+					OnPathWalked();
 				return;
 			}
 			
@@ -72,7 +79,7 @@ public class VehicleController : BaseManagedController {
 		}
 	}
 
-	protected IInventory FindInventoryFor(Item itemType)
+	public IInventory FindInventoryFor(Item itemType)
 	{
 		foreach (BlockController b in M.BuildingsRegistry.Keys) 
 		{
@@ -91,7 +98,7 @@ public class VehicleController : BaseManagedController {
 		return null;
 	}
 
-	protected IInventory FindInventoryWith(Item itemType)
+	public IInventory FindInventoryWith(Item itemType)
 	{
 		foreach (BlockController b in M.BuildingsRegistry.Keys) 
 		{
@@ -110,10 +117,11 @@ public class VehicleController : BaseManagedController {
 		return null;
 	}
 
-	protected void DriveTo(Vector3 dest, PathWalked onPathWalked)
+	public void DriveTo(Vector3 dest)
 	{
+		currentDestination = dest;
 		vehicleState = VehicleModes.Calc;
-		OnPathWalked = onPathWalked;
+
 		seeker.StartPath (transform.position,dest, OnPathComplete);
 	}
 
@@ -125,4 +133,28 @@ public class VehicleController : BaseManagedController {
 			vehicleState = VehicleModes.Turn;
 		}
 	}
+
+	#region IStorable implementation
+	public override void SaveUid (WriterEx b)
+	{
+		base.SaveUid (b);
+		ComponentsSaveUid(b);
+	}
+	
+	public override void LoadUid (Manager m, ReaderEx r)
+	{
+		base.LoadUid (m, r);
+		ComponentsLoadUid(m,r);
+	}
+	public void Save (WriterEx b)
+	{
+		ComponentsSave(b);
+	}
+	
+	public void Load (Manager m, ReaderEx r)
+	{
+		ComponentsLoad(m,r);
+	}
+	
+	#endregion
 }

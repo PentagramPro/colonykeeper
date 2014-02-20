@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 using System.IO;
 using System;
+using UnityEngine;
 
 public class ReaderEx : BinaryReader
 {
@@ -22,6 +23,13 @@ public class ReaderEx : BinaryReader
 		return Enum.Parse (enumType,ReadString());
 	}
 
+	public Vector3 ReadVector3()
+	{
+		return new Vector3(
+			ReadDouble(),
+			ReadDouble(),
+			ReadDouble());
+	}
 }
 
 

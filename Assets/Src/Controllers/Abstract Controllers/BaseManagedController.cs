@@ -57,5 +57,51 @@ public class BaseManagedController : BaseController {
 		uidc.Load(M,r);
 	}
 
+	public void ComponentsSave(WriterEx b)
+	{
+		Component[] components = GetComponents<Component>();
+		foreach(Component c in components)
+		{
+			if(c is IStorable && c!=this)
+			{
+				((IStorable)c).Save(b);
+			}
+		}
+	}
+	public void ComponentsLoad(Manager m, ReaderEx r)
+	{
+		Component[] components = GetComponents<Component>();
+		foreach(Component c in components)
+		{
+			if(c is IStorable && c!=this)
+			{
+				((IStorable)c).Load(m,r);
+			}
+		}
+	}
+
+	public void ComponentsSaveUid(WriterEx b)
+	{
+		Component[] components = GetComponents<Component>();
+		foreach(Component c in components)
+		{
+			if(c is IStorable && c!=this)
+			{
+				((IStorable)c).SaveUid(b);
+			}
+		}
+	}
+	public void ComponentsLoadUid(Manager m, ReaderEx r)
+	{
+		Component[] components = GetComponents<Component>();
+		foreach(Component c in components)
+		{
+			if(c is IStorable && c!=this)
+			{
+				((IStorable)c).LoadUid(m,r);
+			}
+		}
+	}
+
 
 }

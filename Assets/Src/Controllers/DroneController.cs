@@ -4,8 +4,9 @@ using Pathfinding;
 using System;
 
 
-public class DroneController : VehicleController, IWorker{
+public class DroneController : BaseManagedController, IWorker, IStorable{
 
+	public VehicleController vehicleController;
 	IJob currentJob;
 
 	//////////////////////////////////////////////
@@ -34,15 +35,18 @@ public class DroneController : VehicleController, IWorker{
 	SingleInventory inventory;
 	// Use this for initialization
 	void Start () {
-		base.Init ();
 
+		if(vehicleController==null)
+			throw new UnityException("Vehicle exception must not be null");
 		inventory = GetComponent<SingleInventory>();
+		vehicleController.OnPathWalked+=OnPathWalked;
 	}
 
 
 	
 	// Update is called once per frame
-	new void Update () {
+	void Update ()
+	{
 		if(state!=Modes.Idle)
 		{
 			switch(state)
@@ -92,7 +96,7 @@ public class DroneController : VehicleController, IWorker{
 				}
 				break;
 			case Modes.BlockedLoad:
-				IInventory inv = FindInventoryWith(itemToPick);
+				IInventory inv = vehicleController.FindInventoryWith(itemToPick);
 				if(inv!=null)
 				{
 					state = Modes.GoLoad;
@@ -102,7 +106,7 @@ public class DroneController : VehicleController, IWorker{
 				break;
 			}
 		}
-		base.Update ();
+
 	}
 
 
@@ -163,7 +167,7 @@ public class DroneController : VehicleController, IWorker{
 	public void DriveTo (Vector3 dest)
 	{
 		state = Modes.Go;
-		DriveTo (dest, OnPathWalked);
+		vehicleController.DriveTo (dest);
 	}
 
 	public BlockController.DigResult Dig (BlockController block)
@@ -182,11 +186,11 @@ public class DroneController : VehicleController, IWorker{
 		{
 			Item[] itemTypes = inventory.GetItemTypes();
 
-			destinationInv = FindInventoryFor(itemTypes[0]);
+			destinationInv = vehicleController.FindInventoryFor(itemTypes[0]);
 			if(destinationInv!=null)
 			{
 				state = Modes.GoUnload;
-				DriveTo(destinationInv.transform.position,OnPathWalked);
+				vehicleController.DriveTo(destinationInv.transform.position);
 			}
 			else
 			{
@@ -199,14 +203,14 @@ public class DroneController : VehicleController, IWorker{
 	public bool Load (Item itemType, int maxQuantity)
 	{
 		bool res = false;
-		IInventory inv = FindInventoryWith(itemType);
+		IInventory inv = vehicleController.FindInventoryWith(itemType);
 		itemToPick = itemType;
 		maxQuantityToPick = maxQuantity;
 		if(inv!=null)
 		{
 			state = Modes.GoLoad;
 			destinationInv = inv;
-			DriveTo(inv.transform.position,OnPathWalked);
+			vehicleController.DriveTo(inv.transform.position);
 			res = true;
 		}
 		else
@@ -237,6 +241,20 @@ public class DroneController : VehicleController, IWorker{
 	public void Pick(IInventory inv, Item itemType, int quantity)
 	{
 		inventory.Put(inv.Take(itemType,quantity));
+	}
+
+	#endregion
+
+	#region IStorable implementation
+
+	public void Save (WriterEx b)
+	{
+
+	}
+
+	public void Load (Manager m, ReaderEx r)
+	{
+
 	}
 
 	#endregion

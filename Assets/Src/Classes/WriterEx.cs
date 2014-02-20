@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 using System.IO;
 using System;
+using UnityEngine;
 
 public class WriterEx : BinaryWriter
 {
@@ -29,6 +30,14 @@ public class WriterEx : BinaryWriter
 	public void WriteEnum(object obj)
 	{
 		Write (Enum.GetName(obj.GetType(),obj));
+	}
+
+	public void Write(Vector3 vec)
+	{
+		Write(vec.x);
+		Write(vec.y);
+		Write(vec.z);
+
 	}
 
 
