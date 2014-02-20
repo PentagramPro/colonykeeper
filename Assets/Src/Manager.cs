@@ -59,6 +59,8 @@ public class Manager : MonoBehaviour {
 
 			terrainController.SaveUid(b);
 
+			JobManager.SaveUid(b);
+
 			terrainController.Save(b);
 
 			b.Write(BuildingsRegistry.Count);
@@ -74,6 +76,8 @@ public class Manager : MonoBehaviour {
 
 				savingBuilding.SaveUid(b);
 			}
+
+			JobManager.Save(b);
 		}
 	}
 
@@ -93,6 +97,7 @@ public class Manager : MonoBehaviour {
 
 			terrainController.LoadUid(this,b);
 
+			JobManager.LoadUid(this,b);
 		
 			terrainController.Load(this, b);
 
@@ -107,6 +112,8 @@ public class Manager : MonoBehaviour {
 
 				loadedBuilding.LoadUid(this,b);
 			}
+
+			JobManager.Load(this,b);
 		}
 	}
 }

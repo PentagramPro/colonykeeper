@@ -8,6 +8,10 @@ public abstract class IJob : IStorable
 	protected JobManager jobManager;
 	protected IWorker worker;
 	protected ICustomer customer;
+
+	public IJob()
+	{
+	}
 	public IJob(JobManager jobManager, ICustomer customer)
 	{
 		this.customer = customer;
@@ -60,15 +64,20 @@ public abstract class IJob : IStorable
 		worker = null;
 	}
 
-
+	public int GetUID()
+	{
+		return uidc.UID;
+	}
 	public static IJob LoadFactory(Manager m, ReaderEx r)
 	{
-
+		var type = Type.GetType(r.ReadString());
+		return (IJob)Activator.CreateInstance(type);
 	}
 	#region IStorable implementation
 
 	public void SaveUid(WriterEx b)
 	{
+		b.Write(GetType().FullName);
 		uidc.Save(b);
 	}
 	
@@ -77,14 +86,16 @@ public abstract class IJob : IStorable
 		uidc.Load(m,r);
 	}
 
-	public void Save (WriterEx b)
+	public virtual void Save (WriterEx b)
 	{
+
 		b.Write(customer.GetUID());
 	}
 
-	public void Load (Manager m, ReaderEx r)
+	public virtual void Load (Manager m, ReaderEx r)
 	{
-		customer = m.LoadedLinks[r.ReadInt32()]
+		jobManager = m.JobManager;
+		customer = m.LoadedLinks[r.ReadInt32()];
 	}
 
 	#endregion

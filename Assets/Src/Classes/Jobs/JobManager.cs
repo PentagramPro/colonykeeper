@@ -109,21 +109,50 @@ public class JobManager : IStorable {
 
 	public void SaveUid(WriterEx b)
 	{
-	
+		b.Write(Jobs.Count);
+		foreach(IJob j in Jobs)
+			j.SaveUid(b);
+		b.Write(BlockedJobs.Count);
+		foreach(IJob j in BlockedJobs)
+			j.SaveUid(b);
+
 	}
 	
 	public void LoadUid(Manager m, ReaderEx r)
 	{
-	
+
+		Jobs.Clear();
+		BlockedJobs.Clear();
+		int count = r.ReadInt32();
+		for(int i=0;i<count;i++)
+		{
+			IJob j = IJob.LoadFactory(m,r);
+			j.LoadUid(m,r);
+			Jobs.Add(j);
+		}
+
+		count = r.ReadInt32();
+		for(int i=0;i<count;i++)
+		{
+			IJob j = IJob.LoadFactory(m,r);
+			j.LoadUid(m,r);
+			BlockedJobs.Add(j);
+		}
 	}
 	
 	public void Save (WriterEx b)
 	{
-
+		foreach(IJob j in Jobs)
+			j.Save(b);
+		foreach(IJob j in BlockedJobs)
+			j.Save(b);
 	}
 	public void Load (Manager m, ReaderEx r)
 	{
-
+		foreach(IJob j in Jobs)
+			j.Load(m,r);
+		foreach(IJob j in BlockedJobs)
+			j.Load(m,r);
 	}
 	#endregion
 }
