@@ -9,6 +9,7 @@ public class JobManager : IStorable {
 
 	List<IJob> Jobs = new List<IJob>();
 	List<IJob> BlockedJobs = new List<IJob>();
+	List<IJob> AssignedJobs = new List<IJob>();
 	SortedList<float, IJob> DelayedJobs = new SortedList<float, IJob>();
 
 	const float JOB_DELAY = 10;
@@ -42,6 +43,7 @@ public class JobManager : IStorable {
 		if(Jobs.Remove(j))
 		{
 			j.AssignTo(owner);
+			AssignedJobs.Add(j);
 			return true;
 		}
 		return false;
@@ -50,7 +52,7 @@ public class JobManager : IStorable {
 
 	public void CompleteJob(IJob j)
 	{
-
+		AssignedJobs.Remove(j);
 	}
 
 	public bool RemoveJob(IJob j)
@@ -89,6 +91,7 @@ public class JobManager : IStorable {
 		while(DelayedJobs.ContainsKey(key))
 			key+=0.001f;
 
+		AssignedJobs.Remove(j);
 		DelayedJobs.Add(key, j);
 		Debug.Log("Delaying job "+j.GetHashCode());
 	}
@@ -116,6 +119,17 @@ public class JobManager : IStorable {
 		foreach(IJob j in BlockedJobs)
 			j.SaveUid(b);
 
+		b.Write(AssignedJobs.Count);
+		foreach(IJob j in AssignedJobs)
+			j.SaveUid(b);
+
+		b.Write(DelayedJobs.Count);
+		foreach(float key in DelayedJobs.Keys)
+		{
+			b.Write(key);
+			DelayedJobs[key].SaveUid(b);
+		}
+			
 	}
 	
 	public void LoadUid(Manager m, ReaderEx r)
@@ -136,7 +150,25 @@ public class JobManager : IStorable {
 		{
 			IJob j = IJob.LoadFactory(m,r);
 			j.LoadUid(m,r);
-			BlockedJobs.Add(j);
+			AssignedJobs.Add(j);
+		}
+
+
+		count = r.ReadInt32();
+		for(int i=0;i<count;i++)
+		{
+			IJob j = IJob.LoadFactory(m,r);
+			j.LoadUid(m,r);
+			AssignedJobs.Add(j);
+		}
+
+		count = r.ReadInt32();
+		for(int i=0;i<count;i++)
+		{
+			float key = (float)r.ReadDouble();
+			IJob j = IJob.LoadFactory(m,r);
+			j.LoadUid(m,r);
+			DelayedJobs.Add(key,j);
 		}
 	}
 	
@@ -146,6 +178,11 @@ public class JobManager : IStorable {
 			j.Save(b);
 		foreach(IJob j in BlockedJobs)
 			j.Save(b);
+		foreach(IJob j in AssignedJobs)
+			j.Save(b);
+		foreach(IJob j in DelayedJobs.Values)
+			j.Save(b);
+
 	}
 	public void Load (Manager m, ReaderEx r)
 	{
@@ -153,6 +190,15 @@ public class JobManager : IStorable {
 			j.Load(m,r);
 		foreach(IJob j in BlockedJobs)
 			j.Load(m,r);
+		foreach(IJob j in AssignedJobs)
+			j.Load(m,r);
+		foreach(IJob j in  DelayedJobs.Values)
+			j.Load(m,r);
+	}
+
+	public int GetUID()
+	{
+		return 0;
 	}
 	#endregion
 }

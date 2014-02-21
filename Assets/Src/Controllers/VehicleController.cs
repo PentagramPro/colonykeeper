@@ -8,7 +8,7 @@ public class VehicleController : BaseManagedController, IStorable  {
 		Idle,Calc,Turn,Follow
 	}
 
-	Vector3 currentDestination;
+	Vector3 currentDestination = Vector3.zero;
 
 	public float speed = 2;
 	public float turnSpeed=140;
@@ -148,12 +148,24 @@ public class VehicleController : BaseManagedController, IStorable  {
 	}
 	public void Save (WriterEx b)
 	{
+		b.Write(currentDestination);
+		b.WriteEnum(vehicleState);
 		ComponentsSave(b);
 	}
 	
 	public void Load (Manager m, ReaderEx r)
 	{
+
+		seeker.StopAllCoroutines();
+		currentDestination = r.ReadVector3();
+		vehicleState = (VehicleModes)r.ReadEnum(typeof(VehicleModes));
 		ComponentsLoad(m,r);
+
+		if(vehicleState!=VehicleModes.Idle)
+		{
+			vehicleState=VehicleModes.Idle;
+			DriveTo(currentDestination);
+		}
 	}
 	
 	#endregion

@@ -23,12 +23,25 @@ public class ReaderEx : BinaryReader
 		return Enum.Parse (enumType,ReadString());
 	}
 
+	public Item ReadItem(Manager m)
+	{
+		Item res=null;
+		m.GameD.Items.TryGetValue(ReadString(),out res);
+		return (Item)res;
+	}
 	public Vector3 ReadVector3()
 	{
 		return new Vector3(
-			ReadDouble(),
-			ReadDouble(),
-			ReadDouble());
+			(float)ReadDouble(),
+			(float)ReadDouble(),
+			(float)ReadDouble());
+	}
+
+	public object ReadLink(Manager m)
+	{
+		object res = null;
+		m.LoadedLinks.TryGetValue(ReadInt32(),out res);
+		return res;
 	}
 }
 

@@ -48,6 +48,10 @@ public class UidContainer : IStorable
 		m.LoadedLinks.Add(loadeduid, owner);
 	}
 
+	public int GetUID()
+	{
+		return uid;
+	}
 	#endregion
 }
 

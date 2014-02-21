@@ -27,6 +27,14 @@ public class WriterEx : BinaryWriter
 			Write ("");
 	}
 
+	public void WriteEx(Item val)
+	{
+		if(val!=null)
+			Write (val.Name);
+		else 
+			Write ("");
+	}
+
 	public void WriteEnum(object obj)
 	{
 		Write (Enum.GetName(obj.GetType(),obj));
@@ -38,6 +46,14 @@ public class WriterEx : BinaryWriter
 		Write(vec.y);
 		Write(vec.z);
 
+	}
+
+	public void WriteLink(IStorable obj)
+	{
+		if(obj==null)
+			Write (0);
+		else 
+			Write (obj.GetUID());
 	}
 
 

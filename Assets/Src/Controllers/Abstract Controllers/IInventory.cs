@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public abstract class IInventory : BaseManagedController
+public abstract class IInventory : BaseManagedController, IStorable
 {
 	public delegate void InventoryEvent();
 
@@ -49,6 +49,12 @@ public abstract class IInventory : BaseManagedController
 	public abstract int GetItemQuantity(Item item);
 
 	public abstract bool IsFull();
+
+
+	#region IStorable implementation
+	public abstract void Save (WriterEx b);
+	public abstract void Load (Manager m, ReaderEx r);
+	#endregion
 }
 
 

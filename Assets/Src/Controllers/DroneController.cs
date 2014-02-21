@@ -249,12 +249,22 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 
 	public void Save (WriterEx b)
 	{
+		b.WriteEnum(state);
 
+		b.WriteLink(currentJob);
+		b.WriteLink(destinationInv);
+		b.Write(maxQuantityToPick);
+		b.WriteEx(itemToPick);
 	}
 
 	public void Load (Manager m, ReaderEx r)
 	{
+		state = (Modes)r.ReadEnum(typeof(Modes));
 
+		currentJob = (IJob)r.ReadLink(m);
+		destinationInv = (IInventory)r.ReadLink(m);
+		maxQuantityToPick = r.ReadInt32();
+		itemToPick = (Item)r.ReadItem(m);
 	}
 
 	#endregion

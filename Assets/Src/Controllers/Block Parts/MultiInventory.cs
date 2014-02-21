@@ -116,7 +116,7 @@ public class MultiInventory : IInventory, IStorable {
 
 	#region IStorable implementation
 
-	public void Save (WriterEx b)
+	public override void Save (WriterEx b)
 	{
 		b.Write(items.Values.Count);
 		foreach (Pile p in items.Values)
@@ -125,7 +125,7 @@ public class MultiInventory : IInventory, IStorable {
 		}
 	}
 
-	public void Load (Manager m, ReaderEx r)
+	public override void Load (Manager m, ReaderEx r)
 	{
 		items.Clear();
 		totalQuantity = 0;

@@ -6,5 +6,7 @@ public interface IStorable
 	void LoadUid(Manager m, ReaderEx r);
 	void Save(WriterEx b);
 	void Load(Manager m, ReaderEx r);
+
+	int GetUID();
 }
 

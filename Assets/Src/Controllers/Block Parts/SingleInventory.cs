@@ -108,7 +108,7 @@ public class SingleInventory : IInventory, IStorable
 
 	#region IStorable implementation
 
-	public virtual void Save(WriterEx b)
+	public override void Save(WriterEx b)
 	{
 		b.Write(Quantity);
 		if(pile!=null)
@@ -116,7 +116,7 @@ public class SingleInventory : IInventory, IStorable
 
 	}
 
-	public virtual void Load(Manager m, ReaderEx r)
+	public override void Load(Manager m, ReaderEx r)
 	{
 		if(r.ReadInt32()>0)
 		{

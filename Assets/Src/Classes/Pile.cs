@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Pile : IStorable {
 
+	UidContainer uid;
+
 	Item itemType;
 	public Item ItemType
 	{
@@ -22,6 +24,7 @@ public class Pile : IStorable {
 	public Pile(Item type)
 	{
 		itemType=type;
+		uid = new UidContainer(this);
 	}
 
 
@@ -29,6 +32,7 @@ public class Pile : IStorable {
 	{
 		itemType=type;
 		Quantity=q;
+		uid = new UidContainer(this);
 	}
 
 	#region IStorable implementation
@@ -51,6 +55,11 @@ public class Pile : IStorable {
 	{
 		itemType = m.GameD.Items[r.ReadString()];
 		quantity = r.ReadInt32();
+	}
+
+	public int GetUID()
+	{
+		return uid.UID;
 	}
 	#endregion
 }

@@ -69,6 +69,12 @@ public class Manager : MonoBehaviour {
 
 			JobManager.SaveUid(b);
 
+			b.Write(DronesRegistry.Count);
+			foreach(DroneController d in DronesRegistry)
+			{
+				//d.SaveUid(b);
+			}
+
 			terrainController.Save(b);
 
 			b.Write(BuildingsRegistry.Count);
@@ -107,6 +113,11 @@ public class Manager : MonoBehaviour {
 
 			JobManager.LoadUid(this,b);
 		
+			int count = b.ReadInt32();
+			for(int i=0;i<count;i++)
+			{
+			}
+
 			terrainController.Load(this, b);
 
 			int buildingsCount = b.ReadInt32();
