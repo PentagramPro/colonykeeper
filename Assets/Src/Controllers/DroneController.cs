@@ -40,8 +40,16 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 			throw new UnityException("Vehicle exception must not be null");
 		inventory = GetComponent<SingleInventory>();
 		vehicleController.OnPathWalked+=OnPathWalked;
+
+		M.JobManager.JobAdded+=OnJobAdded;
+		M.BuildingsRegistry.ItemAdded+=OnBuildingAdded;
 	}
 
+	void OnDestroy()
+	{
+		M.JobManager.JobAdded-=OnJobAdded;
+		M.BuildingsRegistry.ItemAdded-=OnBuildingAdded;
+	}
 
 	
 	// Update is called once per frame
@@ -52,8 +60,7 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 			switch(state)
 			{
 			case Modes.Start:
-				M.JobManager.JobAdded+=OnJobAdded;
-				M.BuildingsRegistry.ItemAdded+=OnBuildingAdded;
+
 				state= Modes.Idle;
 				break;
 			case Modes.Work:
@@ -249,6 +256,7 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 
 	public void Save (WriterEx b)
 	{
+		b.WriteMagic();
 		b.WriteEnum(state);
 
 		b.WriteLink(currentJob);
@@ -259,6 +267,7 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 
 	public void Load (Manager m, ReaderEx r)
 	{
+		r.CheckMagic();
 		state = (Modes)r.ReadEnum(typeof(Modes));
 
 		currentJob = (IJob)r.ReadLink(m);

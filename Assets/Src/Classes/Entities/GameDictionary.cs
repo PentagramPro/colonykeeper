@@ -26,6 +26,12 @@ public class GameDictionary  {
 	[XmlArray("Recipes"),XmlArrayItem("Recipe")]
 	public List<Recipe> Recipes = new List<Recipe>();
 
+	[XmlArray("Vehicles"),XmlArrayItem("Vehicle")]
+	public List<Vehicle> Vehicles = new List<Vehicle>();
+
+	[XmlIgnore]
+	public Dictionary<string,Vehicle> VehiclesByName = new Dictionary<string, Vehicle>();
+
 	[XmlIgnore]
 	public Dictionary<string, List<Recipe>> RecipesByDevice = new Dictionary<string, List<Recipe>>();
 
@@ -99,6 +105,12 @@ public class GameDictionary  {
 			}
 
 			BuildingsByName.Add(b.Name,b);
+		}
+
+		VehiclesByName.Clear();
+		foreach(Vehicle v in Vehicles)
+		{
+			VehiclesByName.Add(v.Name,v);
 		}
 	}
 

@@ -8,6 +8,9 @@ public class VehicleController : BaseManagedController, IStorable  {
 		Idle,Calc,Turn,Follow
 	}
 
+
+	public Vehicle Prototype;
+
 	Vector3 currentDestination = Vector3.zero;
 
 	public float speed = 2;
@@ -148,6 +151,8 @@ public class VehicleController : BaseManagedController, IStorable  {
 	}
 	public void Save (WriterEx b)
 	{
+		b.WriteMagic();
+		b.Write(transform.position);
 		b.Write(currentDestination);
 		b.WriteEnum(vehicleState);
 		ComponentsSave(b);
@@ -155,9 +160,14 @@ public class VehicleController : BaseManagedController, IStorable  {
 	
 	public void Load (Manager m, ReaderEx r)
 	{
+		r.CheckMagic();
 
-		seeker.StopAllCoroutines();
+
+		transform.position = r.ReadVector3();
+
 		currentDestination = r.ReadVector3();
+
+
 		vehicleState = (VehicleModes)r.ReadEnum(typeof(VehicleModes));
 		ComponentsLoad(m,r);
 

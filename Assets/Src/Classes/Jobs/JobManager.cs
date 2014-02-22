@@ -174,6 +174,7 @@ public class JobManager : IStorable {
 	
 	public void Save (WriterEx b)
 	{
+		b.WriteMagic();
 		foreach(IJob j in Jobs)
 			j.Save(b);
 		foreach(IJob j in BlockedJobs)
@@ -186,6 +187,7 @@ public class JobManager : IStorable {
 	}
 	public void Load (Manager m, ReaderEx r)
 	{
+		r.CheckMagic();
 		foreach(IJob j in Jobs)
 			j.Load(m,r);
 		foreach(IJob j in BlockedJobs)

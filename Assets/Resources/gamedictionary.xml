@@ -57,6 +57,10 @@
   		</Ingredients>
   	</Building>
   </Buildings>
+  <Vehicles>
+  	<Vehicle Name="Drone" PrefabName="Drone">
+  	</Vehicle>
+  </Vehicles>
   <Recipes>
   	<!--       FURNACE RECIPES             -->
   	<Recipe Device="Furnace" Name = "Smelt iron ore">

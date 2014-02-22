@@ -13,6 +13,12 @@ using UnityEngine;
 
 public class ReaderEx : BinaryReader
 {
+
+	public void CheckMagic()
+	{
+		if(ReadInt32()!=WriterEx.MAGIC)
+			throw new UnityException("Magic check failed! There is an error in Save/Load code or game file is broken.");
+	}
 	public ReaderEx(Stream stream) : base(stream)
 	{
 
@@ -20,7 +26,10 @@ public class ReaderEx : BinaryReader
 
 	public object ReadEnum(Type enumType)
 	{
-		return Enum.Parse (enumType,ReadString());
+		string name = ReadString();
+		if(name=="")
+			throw new UnityException("Enum name cannot be empty!");
+		return Enum.Parse (enumType,name);
 	}
 
 	public Item ReadItem(Manager m)
@@ -29,6 +38,14 @@ public class ReaderEx : BinaryReader
 		m.GameD.Items.TryGetValue(ReadString(),out res);
 		return (Item)res;
 	}
+
+	public Vehicle ReadVehicle(Manager m)
+	{
+		Vehicle res = null;
+		m.GameD.VehiclesByName.TryGetValue(ReadString(), out res);
+		return res;
+	}
+
 	public Vector3 ReadVector3()
 	{
 		return new Vector3(

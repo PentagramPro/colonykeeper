@@ -13,6 +13,13 @@ using UnityEngine;
 
 public class WriterEx : BinaryWriter
 {
+	public static readonly Int32 MAGIC = 0xc7f042;
+
+	public void WriteMagic()
+	{
+		Write(MAGIC);
+	}
+
 	public WriterEx(Stream stream) : base(stream)
 	{
 		
@@ -35,6 +42,14 @@ public class WriterEx : BinaryWriter
 			Write ("");
 	}
 
+	public void WriteEx(Vehicle val)
+	{
+		if(val!=null)
+			Write (val.Name);
+		else 
+			Write ("");
+	}
+
 	public void WriteEnum(object obj)
 	{
 		Write (Enum.GetName(obj.GetType(),obj));
@@ -42,9 +57,9 @@ public class WriterEx : BinaryWriter
 
 	public void Write(Vector3 vec)
 	{
-		Write(vec.x);
-		Write(vec.y);
-		Write(vec.z);
+		Write((double)vec.x);
+		Write((double)vec.y);
+		Write((double)vec.z);
 
 	}
 

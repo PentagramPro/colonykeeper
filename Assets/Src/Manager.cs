@@ -25,7 +25,7 @@ public class Manager : MonoBehaviour {
 	public DictionaryEx<BlockController,BuildingController> BuildingsRegistry = new DictionaryEx<BlockController, BuildingController>();
 
 	//has to be stored and loaded
-	public List<VehicleController> DronesRegistry = new List<VehicleController>();
+	public List<VehicleController> VehiclesRegistry = new List<VehicleController>();
 
 
 	public CameraController cameraController;
@@ -69,10 +69,11 @@ public class Manager : MonoBehaviour {
 
 			JobManager.SaveUid(b);
 
-			b.Write(DronesRegistry.Count);
-			foreach(DroneController d in DronesRegistry)
+			b.Write(VehiclesRegistry.Count);
+			foreach(VehicleController d in VehiclesRegistry)
 			{
-				//d.SaveUid(b);
+				b.WriteEx(d.Prototype);
+				d.SaveUid(b);
 			}
 
 			terrainController.Save(b);
@@ -86,12 +87,17 @@ public class Manager : MonoBehaviour {
 
 				b.Write(bc.GetUID());
 				b.Write(savingBuilding.Prototype.Name);
+				savingBuilding.SaveUid(b);
+
 				savingBuilding.Save(b);
 
-				savingBuilding.SaveUid(b);
+
 			}
 
 			JobManager.Save(b);
+
+			foreach(VehicleController v in VehiclesRegistry)
+				v.Save(b);
 		}
 	}
 
@@ -105,7 +111,12 @@ public class Manager : MonoBehaviour {
 			{
 				GameObject.Destroy(building.gameObject);
 			}
-			
+
+			foreach(VehicleController vehicle in VehiclesRegistry)
+			{
+				GameObject.Destroy(vehicle.gameObject);
+			}
+			VehiclesRegistry.Clear();
 			BuildingsRegistry.Clear();
 
 
@@ -113,9 +124,14 @@ public class Manager : MonoBehaviour {
 
 			JobManager.LoadUid(this,b);
 		
+
 			int count = b.ReadInt32();
 			for(int i=0;i<count;i++)
 			{
+				Vehicle vehicleProt = b.ReadVehicle(this);
+				VehicleController vehicleController = vehicleProt.Instantiate().GetComponent<VehicleController>();
+				vehicleController.LoadUid(this,b);
+				VehiclesRegistry.Add(vehicleController);
 			}
 
 			terrainController.Load(this, b);
@@ -127,12 +143,17 @@ public class Manager : MonoBehaviour {
 				Building building = GameD.BuildingsByName [b.ReadString()];
 				BuildingController loadedBuilding = building.Instantiate().GetComponent<BuildingController>();
 				bc.BuildOn(loadedBuilding);
-				loadedBuilding.Load(this,b);
+
 
 				loadedBuilding.LoadUid(this,b);
+
+				loadedBuilding.Load(this,b);
 			}
 
 			JobManager.Load(this,b);
+
+			foreach(VehicleController v in VehiclesRegistry)
+				v.Load(this,b);
 		}
 	}
 }
