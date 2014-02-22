@@ -46,6 +46,19 @@ public class ReaderEx : BinaryReader
 		return res;
 	}
 
+	public Recipe ReadRecipe(Manager m)
+	{
+		Recipe res = null;
+		m.GameD.RecipesByName.TryGetValue(ReadString(),out res);
+		return res;
+	}
+	public Building ReadBuilding(Manager m)
+	{
+		Building res = null;
+		m.GameD.BuildingsByName.TryGetValue(ReadString(),out res);
+		return res;
+	}
+
 	public Vector3 ReadVector3()
 	{
 		return new Vector3(

@@ -79,4 +79,15 @@ public class BlockedMultiInventory : MultiInventory, ICustomer, IStorable {
 		return false;
 	}
 
+	public override void Save (WriterEx b)
+	{
+		base.Save (b);
+		b.WriteEnum(state);
+	}
+
+	public override void Load (Manager m, ReaderEx r)
+	{
+		base.Load (m, r);
+		state = (Modes)r.ReadEnum(typeof(Modes));
+	}
 }

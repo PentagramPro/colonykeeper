@@ -36,6 +36,9 @@ public class GameDictionary  {
 	public Dictionary<string, List<Recipe>> RecipesByDevice = new Dictionary<string, List<Recipe>>();
 
 	[XmlIgnore] 
+	public Dictionary<string, Recipe> RecipesByName = new Dictionary<string, Recipe>();
+
+	[XmlIgnore] 
 	public Dictionary<string, Block> BlocksByName = new Dictionary<string, Block>();
 
 	[XmlIgnore] 
@@ -69,6 +72,7 @@ public class GameDictionary  {
 		}
 
 		RecipesByDevice.Clear();
+		RecipesByName.Clear();
 		foreach (Recipe r in Recipes)
 		{
 			List<Recipe> list = null;
@@ -92,6 +96,8 @@ public class GameDictionary  {
 			{
 				r.ResultsLinks.Add(new Pile(Items[pxml.Name],pxml.Quantity));
 			}
+
+			RecipesByName.Add(r.Name,r);
 		}
 
 		BuildingsByName.Clear();

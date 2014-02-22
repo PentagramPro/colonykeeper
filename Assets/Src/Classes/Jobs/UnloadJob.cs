@@ -20,6 +20,10 @@ public class UnloadJob : IJob
 	IInventory inventory;
 	BuildingController building;
 
+	public UnloadJob()
+	{
+	}
+
 	public UnloadJob(JobManager jobManager, ICustomer customer,BuildingController target, IInventory targetInventory) 
 		: base(jobManager, customer)
 	{
@@ -70,6 +74,22 @@ public class UnloadJob : IJob
 	}
 
 	#endregion
+
+	public override void Save (WriterEx b)
+	{
+		base.Save (b);
+		b.WriteEnum(state);
+		b.WriteLink(building);
+		b.WriteLink(inventory);
+	}
+	
+	public override void Load (Manager m, ReaderEx r)
+	{
+		base.Load (m, r);
+		state = (Modes)r.ReadEnum(typeof(Modes));
+		building = (BuildingController)r.ReadLink(m);
+		inventory = (IInventory)r.ReadLink(m);
+	}
 }
 
 

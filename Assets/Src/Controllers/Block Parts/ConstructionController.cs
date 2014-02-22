@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ConstructionController : BaseManagedController, IInteractive {
+public class ConstructionController : BaseManagedController, IInteractive, IStorable {
 	enum Modes{
 		Start,Prebuild,Supply,Build,End
 	}
@@ -99,6 +99,34 @@ public class ConstructionController : BaseManagedController, IInteractive {
 				break;
 		}
 
+	}
+
+	#endregion
+
+	#region IStorable implementation
+
+	public void Save (WriterEx b)
+	{
+		b.WriteEnum(state);
+		b.WriteEx(targetBuilding);
+		b.WriteLink(ParentBlock);
+		b.Write((double)productionPoints);
+
+	
+
+	}
+
+	public void Load (Manager m, ReaderEx r)
+	{
+		if(targetGameObject!=null)
+			GameObject.Destroy(targetGameObject);
+		state = (Modes)r.ReadEnum(typeof(Modes));
+		targetBuilding = r.ReadBuilding(m);
+		ParentBlock = (BlockController)r.ReadLink(m);
+		productionPoints = (float)r.ReadDouble();
+
+		targetGameObject = targetBuilding.Instantiate();
+		targetGameObject.SetActive(false);
 	}
 
 	#endregion

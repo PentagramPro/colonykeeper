@@ -50,6 +50,22 @@ public class WriterEx : BinaryWriter
 			Write ("");
 	}
 
+	public void WriteEx(Recipe val)
+	{
+		if(val!=null)
+			Write (val.Name);
+		else 
+			Write ("");
+	}
+
+	public void WriteEx(Building val)
+	{
+		if(val!=null)
+			Write (val.Name);
+		else 
+			Write ("");
+	}
+
 	public void WriteEnum(object obj)
 	{
 		Write (Enum.GetName(obj.GetType(),obj));

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System;
 
-public class SupplyController : BaseManagedController, ICustomer {
+public class SupplyController : BaseManagedController, ICustomer, IStorable {
 
 	enum Modes{
 		Idle, Supply
@@ -121,4 +121,34 @@ public class SupplyController : BaseManagedController, ICustomer {
 
 	#endregion
 
+	#region IStorable implementation
+	public void Save (WriterEx b)
+	{
+		b.WriteEnum(state);
+
+		b.WriteLink(building);
+		b.WriteEx(targetRecipe);
+		b.Write(targetQuantity);
+
+		b.Write(supplyJobs.Count);
+		foreach(SupplyJob s in supplyJobs)
+			b.WriteLink(s);
+
+	}
+	public void Load (Manager m, ReaderEx r)
+	{
+		state = (Modes)r.ReadEnum(typeof(Modes));
+
+		building = (BuildingController)r.ReadLink(m);
+		targetRecipe = (Recipe) r.ReadRecipe(m);
+		targetQuantity = r.ReadInt32();
+
+		supplyJobs.Clear();
+		int count = r.ReadInt32();
+		for(int i=0;i<count;i++)
+		{
+			supplyJobs.Add((SupplyJob)r.ReadLink(m));
+		}
+	}
+	#endregion
 }

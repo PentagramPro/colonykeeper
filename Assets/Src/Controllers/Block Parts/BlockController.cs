@@ -311,23 +311,21 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		b.Write(amount);
 		
 		b.WriteEx(BlockProt);
+		b.WriteLink(digJob);
 
-		if(digJob==null)
-			b.Write(0);
-		else
-			b.Write(digJob.GetUID());
 
 	}
 	public void Load (Manager m, ReaderEx r)
 	{
 		digJob = null;
 		cellBuilding = null;
-		object o;
+
 
 		amount = r.ReadInt32();
+		
 		M.GameD.BlocksByName.TryGetValue(r.ReadString(),out BlockProt);
-		m.LoadedLinks.TryGetValue(r.ReadInt32(),out o);
-		digJob=(DigJob)o;
+		digJob = (DigJob)r.ReadLink(m);
+
 	}
 	#endregion
 }
