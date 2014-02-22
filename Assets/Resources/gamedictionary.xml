@@ -23,6 +23,8 @@
   <Buildings>
   	<Building Name="Headquarters" PrefabName="Headquarters">
   	</Building>
+  	<Building Name="Construction Site" PrefabName="ConstructionSite">
+  	</Building>
   	<Building Name="Silo" PrefabName="Silo">
   		<Ingredients>
   			<Ingredient Name="Iron Plate" Quantity="100"></Ingredient>

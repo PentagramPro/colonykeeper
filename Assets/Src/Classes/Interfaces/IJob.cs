@@ -89,14 +89,16 @@ public abstract class IJob : IStorable
 
 	public virtual void Save (WriterEx b)
 	{
-
-		b.Write(customer.GetUID());
+		b.WriteLink((IStorable)worker);
+		b.WriteLink((IStorable)customer);
 	}
 
 	public virtual void Load (Manager m, ReaderEx r)
 	{
 		jobManager = m.JobManager;
-		customer = (ICustomer)m.LoadedLinks[r.ReadInt32()];
+
+		worker = (IWorker)r.ReadLink(m);
+		customer = (ICustomer)r.ReadLink(m);
 	}
 
 	#endregion

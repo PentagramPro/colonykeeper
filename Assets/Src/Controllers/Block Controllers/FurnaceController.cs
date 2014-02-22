@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class FurnaceController : BaseManagedController, IInteractive{
+public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 
 	enum Modes {
 		Idle, FreeIn,Fill,Prod,FreeOut
@@ -11,16 +11,18 @@ public class FurnaceController : BaseManagedController, IInteractive{
 
 
 	Modes state = Modes.Idle;
+	float productionPoints=0;
+	int targetQuantity = 0;
+	Recipe targetRecipe;
+
 
 	public BlockedInventory inInventory, outInventory;
 	public SupplyController supplyController;
 
 	BuildingController building;
 
-	float productionPoints=0;
+
 	float productionIncome = 0.5f;
-	int targetQuantity = 0;
-	Recipe targetRecipe;
 
 	Vector2 scroll = new Vector2(0,0);
 	List<Recipe> craftableRecipes;
@@ -203,4 +205,22 @@ public class FurnaceController : BaseManagedController, IInteractive{
 	#endregion
 
 
+	#region IStorable implementation
+	public void Save (WriterEx b)
+	{
+		b.WriteEnum(state);
+		b.Write((double)productionPoints);
+		b.Write(targetQuantity);
+		b.WriteEx(targetRecipe);
+
+	
+	}
+	public void Load (Manager m, ReaderEx r)
+	{
+		state = (Modes)r.ReadEnum(typeof(Modes));
+		productionPoints = (float)r.ReadDouble();
+		targetQuantity = r.ReadInt32();
+		targetRecipe = r.ReadRecipe(m);
+	}
+	#endregion
 }

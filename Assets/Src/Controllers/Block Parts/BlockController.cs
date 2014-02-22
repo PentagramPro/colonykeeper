@@ -241,8 +241,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		if(!CanBuild())
 			return false;
 
-		GameObject conSite = (GameObject)GameObject.Instantiate(ConstructionSitePrefab);
-
+		GameObject conSite = M.GameD.BuildingsByName["Construction Site"].Instantiate();
 		ConstructionController conC = conSite.GetComponent<ConstructionController>();
 		BuildingController conBC = conSite.GetComponent<BuildingController>();
 		BuildingController resBC = building.GetComponent<BuildingController>();

@@ -71,6 +71,22 @@ public class GameDictionary  {
 			BlocksByName[b.Name]=b;
 		}
 
+
+		BuildingsByName.Clear();
+		foreach(Building b in Buildings)
+		{
+			b.recipe = new Recipe();
+			b.recipe.Name = b.Name+".Recipe";
+			b.recipe.Device = "";
+			foreach(PileXML pxml in b.Ingredients)
+			{
+				
+				b.recipe.IngredientsLinks.Add(new Pile(Items[pxml.Name],pxml.Quantity));
+			}
+			Recipes.Add(b.recipe);
+			BuildingsByName.Add(b.Name,b);
+		}
+
 		RecipesByDevice.Clear();
 		RecipesByName.Clear();
 		foreach (Recipe r in Recipes)
@@ -100,18 +116,7 @@ public class GameDictionary  {
 			RecipesByName.Add(r.Name,r);
 		}
 
-		BuildingsByName.Clear();
-		foreach(Building b in Buildings)
-		{
-			b.recipe = new Recipe();
-			foreach(PileXML pxml in b.Ingredients)
-			{
 
-				b.recipe.IngredientsLinks.Add(new Pile(Items[pxml.Name],pxml.Quantity));
-			}
-
-			BuildingsByName.Add(b.Name,b);
-		}
 
 		VehiclesByName.Clear();
 		foreach(Vehicle v in Vehicles)

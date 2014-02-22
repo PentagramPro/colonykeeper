@@ -29,6 +29,7 @@ public class VehicleController : BaseManagedController, IStorable  {
 	
 	void Start()
 	{
+
 		seeker = GetComponent<Seeker>();
 	}
 
@@ -162,7 +163,7 @@ public class VehicleController : BaseManagedController, IStorable  {
 	{
 		r.CheckMagic();
 
-
+		seeker = GetComponent<Seeker>();
 		transform.position = r.ReadVector3();
 
 		currentDestination = r.ReadVector3();

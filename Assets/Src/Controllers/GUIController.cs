@@ -159,6 +159,12 @@ public class GUIController : BaseManagedController {
 		if(state==Modes.Place)
 			state= Modes.Idle;
 	}
+
+	public void OnDeselect()
+	{
+		if(state==Modes.Idle)
+			SelectedObject = null;
+	}
 	// Update is called once per frame
 	void Update () {
 	

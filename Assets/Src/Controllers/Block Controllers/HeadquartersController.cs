@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HeadquartersController : BaseManagedController, ICustomer {
+public class HeadquartersController : BaseManagedController, ICustomer, IStorable {
 
 	public IInventory ColonyInventory;
 
@@ -50,6 +50,20 @@ public class HeadquartersController : BaseManagedController, ICustomer {
 	public void JobCompleted(IJob job)
 	{
 		waterSupply = null;
+	}
+
+	#endregion
+
+	#region IStorable implementation
+
+	public void Save (WriterEx b)
+	{
+		b.WriteLink(waterSupply);
+	}
+
+	public void Load (Manager m, ReaderEx r)
+	{
+		waterSupply = (SupplyJob)r.ReadLink(m);
 	}
 
 	#endregion

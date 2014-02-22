@@ -156,6 +156,10 @@ public class TerrainController : BaseManagedController, IStorable {
 		
 
 		}
+		else if(mode==TerrainControllerMode.Idle)
+		{
+			M.GetGUIController().OnDeselect();
+		}
 	}
 
 	bool IsUpperVertex(int i, int j)
