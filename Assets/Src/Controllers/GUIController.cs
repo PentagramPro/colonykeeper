@@ -99,6 +99,8 @@ public class GUIController : BaseManagedController {
 			
 			foreach(Building b in M.GameD.Buildings)
 			{
+				if(b.Hide)
+					continue;
 				if(GUILayout.Button(b.Name))
 				{
 					selected = b;	

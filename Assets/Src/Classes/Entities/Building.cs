@@ -35,6 +35,8 @@ public class Building
 	[XmlArray("Ingredients"),XmlArrayItem("Ingredient")]
 	public List<PileXML> Ingredients = new List<PileXML>();
 
+	[XmlAttribute("Hide")]
+	public bool Hide = false;
 	[XmlIgnore]
 	public Recipe recipe;
 }

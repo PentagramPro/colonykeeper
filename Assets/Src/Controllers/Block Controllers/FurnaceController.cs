@@ -21,7 +21,7 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 
 	BuildingController building;
 
-
+	int selectedItem=0;
 	float productionIncome = 0.5f;
 
 	Vector2 scroll = new Vector2(0,0);
@@ -140,6 +140,7 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 
 	public void OnDrawSelectionGUI ()
 	{
+
 		if (craftableRecipes == null || nameCache==null)
 		{
 			craftableRecipes = M.GameD.RecipesByDevice[building.Prototype.Name];
@@ -170,12 +171,12 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 			GUILayout.Label("Recipes: ");
 			scroll = GUILayout.BeginScrollView(scroll);
 
-			int selected = GUILayout.SelectionGrid(0,nameCache,1);
+			selectedItem = GUILayout.SelectionGrid(selectedItem,nameCache,1);
 
 			GUILayout.Space(20);
 			if(GUILayout.Button("Produce"))
 			{
-				targetRecipe = craftableRecipes[selected];
+				targetRecipe = craftableRecipes[selectedItem];
 				UI ();
 			}
 			GUILayout.EndScrollView();

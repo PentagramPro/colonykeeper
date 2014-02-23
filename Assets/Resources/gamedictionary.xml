@@ -21,9 +21,9 @@
   	<Item Name = "Iron Wire" Quantity = "300"></Item>
   </StartItems>
   <Buildings>
-  	<Building Name="Headquarters" PrefabName="Headquarters">
+  	<Building Name="Headquarters" PrefabName="Headquarters" Hide="true">
   	</Building>
-  	<Building Name="Construction Site" PrefabName="ConstructionSite">
+  	<Building Name="Construction Site" PrefabName="ConstructionSite" Hide="true">
   	</Building>
   	<Building Name="Silo" PrefabName="Silo">
   		<Ingredients>

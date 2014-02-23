@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HeadquartersController : BaseManagedController, ICustomer, IStorable {
+public class HeadquartersController : BaseManagedController, ICustomer, IStorable, IInteractive {
 
 	public IInventory ColonyInventory;
 
 	public string waterItemName;
 	public float waterConsumption=1;
+
+	public int initialWater = 200;
 
 	Item waterItem;
 	SupplyJob waterSupply;
@@ -24,6 +26,7 @@ public class HeadquartersController : BaseManagedController, ICustomer, IStorabl
 			throw new UnityException(waterItemName+" not found in items dictionary!");
 
 		waterItem = M.GameD.Items [waterItemName];
+		ColonyInventory.Put(waterItem,initialWater);
 	}
 	
 	// Update is called once per frame
@@ -44,6 +47,17 @@ public class HeadquartersController : BaseManagedController, ICustomer, IStorabl
 
 		}
 	}
+
+	#region IInteractive implementation
+
+	public void OnDrawSelectionGUI ()
+	{
+		GUILayout.Space(10);
+		GUILayout.Label("Water left: "+ColonyInventory.GetItemQuantity(waterItem));
+
+	}
+
+	#endregion
 
 	#region ICustomer implementation
 
