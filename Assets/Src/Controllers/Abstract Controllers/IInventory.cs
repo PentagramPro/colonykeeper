@@ -11,6 +11,8 @@ public abstract class IInventory : BaseManagedController, IStorable
 	// this inventory)
 	public int Put(Pile item)
 	{
+		if(item==null)
+			return 0;
 		return Put (item.ItemType,item.Quantity);
 	}
 

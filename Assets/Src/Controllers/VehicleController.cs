@@ -52,7 +52,9 @@ public class VehicleController : BaseManagedController, IStorable  {
 			Vector3 dir = (path.vectorPath[currentWaypoint]-transform.position).normalized;
 			dir.y=0;
 			Quaternion dirRot = Quaternion.LookRotation(dir);
-			
+
+			if(Quaternion.Angle(transform.localRotation,dirRot)>10)
+				vehicleState = VehicleModes.Turn;
 			if(vehicleState==VehicleModes.Follow)
 			{
 				

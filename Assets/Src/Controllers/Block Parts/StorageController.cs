@@ -9,7 +9,7 @@ public class StorageController : MultiInventory, IInteractive {
 	public void OnDrawSelectionGUI()
 	{
 		Item[] it = GetItemTypes();
-		GUILayout.TextArea("Storage");
+		GUILayout.Label("Items:");
 		foreach(Item item in it)
 		{
 			GUILayout.Label(item.Name+": "+(GetItemQuantity(item)/100.0f).ToString("n2"));

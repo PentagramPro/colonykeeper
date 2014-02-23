@@ -247,7 +247,7 @@ public class TerrainController : BaseManagedController, IStorable {
 						st.Put(M.GameD.Items[item.Name],item.Quantity);
 					}
 				}
-				if(!editMode  && i==h/2 && j==w/2-1)
+				if(!editMode  && i==h/2 && (j==w/2-1 || j==w/2+1))
 				{
 					GameObject veh = M.GameD.VehiclesByName["Drone"].Instantiate();
 					M.VehiclesRegistry.Add(veh.GetComponent<VehicleController>());

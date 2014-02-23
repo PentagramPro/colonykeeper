@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BuildingController : BaseManagedController, IStorable{
+public class BuildingController : BaseManagedController, IStorable, IInteractive{
 
 	public Building Prototype = null;
 	float halfCell = TerrainMeshGenerator.CELL_SIZE/2;
@@ -41,6 +41,16 @@ public class BuildingController : BaseManagedController, IStorable{
 	void Update () {
 	
 	}
+
+	#region IInteractive implementation
+
+	public void OnDrawSelectionGUI ()
+	{
+		GUILayout.Label(Prototype.Name);
+		GUILayout.Space(10);
+	}
+
+	#endregion
 
 	#region IStorable implementation
 	public override void SaveUid (WriterEx b)

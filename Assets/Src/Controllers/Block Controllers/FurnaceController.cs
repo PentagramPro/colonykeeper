@@ -79,11 +79,12 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 				productionPoints+=productionIncome*Time.smoothDeltaTime;
 				if(productionPoints>1)
 				{
+					productionPoints=0;
 					if(!inInventory.TakeForRecipe(targetRecipe))
 						state = Modes.Fill;
 					else
 					{
-						productionPoints=0;
+
 						targetQuantity--;
 						outInventory.Put(targetRecipe.ResultsLinks[0].ItemType, targetRecipe.ResultsLinks[0].Quantity);
 					}

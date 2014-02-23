@@ -6,7 +6,8 @@ public class HeadquartersController : BaseManagedController, ICustomer, IStorabl
 	public IInventory ColonyInventory;
 
 	public string waterItemName;
-	public float waterConsumption=1;
+	public float waterConsumption=0.04f;
+	float waterConsumptionPoints=0;
 
 	public int initialWater = 200;
 
@@ -32,7 +33,14 @@ public class HeadquartersController : BaseManagedController, ICustomer, IStorabl
 	// Update is called once per frame
 	void Update () {
 	
-		int take = (int)(waterConsumption * Time.smoothDeltaTime);
+		int take = 0;
+		waterConsumptionPoints+=(waterConsumption * Time.smoothDeltaTime);
+		if(waterConsumptionPoints>1)
+		{
+			take = (int)waterConsumptionPoints;
+			waterConsumptionPoints=0;
+		}
+
 		int has = ColonyInventory.GetItemQuantity(waterItem);
 		if (has > 0)
 		{
@@ -41,7 +49,8 @@ public class HeadquartersController : BaseManagedController, ICustomer, IStorabl
 				waterSupply = new SupplyJob(M.JobManager, this, GetComponent<BuildingController>(), ColonyInventory, waterItem, 100);
 				M.JobManager.AddJob(waterSupply, false);
 			}
-			ColonyInventory.Take(waterItem, take);
+			if(take>0)
+				ColonyInventory.Take(waterItem, take);
 		} else
 		{
 
@@ -54,7 +63,7 @@ public class HeadquartersController : BaseManagedController, ICustomer, IStorabl
 	{
 		GUILayout.Space(10);
 		GUILayout.Label("Water left: "+ColonyInventory.GetItemQuantity(waterItem));
-
+		GUILayout.Label("Water request: "+waterConsumptionPoints.ToString("n2"));
 	}
 
 	#endregion
@@ -73,11 +82,13 @@ public class HeadquartersController : BaseManagedController, ICustomer, IStorabl
 	public void Save (WriterEx b)
 	{
 		b.WriteLink(waterSupply);
+		b.Write((double)waterConsumptionPoints);
 	}
 
 	public void Load (Manager m, ReaderEx r)
 	{
 		waterSupply = (SupplyJob)r.ReadLink(m);
+		waterConsumptionPoints = (float)r.ReadDouble();
 	}
 
 	#endregion
