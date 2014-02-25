@@ -10,6 +10,8 @@ public class Manager : MonoBehaviour {
 
 	GUIController guiController;
 
+	public Stats Stat;
+
 	//Object that stores GUI controller
 	public GameObject gui;
 
@@ -43,6 +45,8 @@ public class Manager : MonoBehaviour {
 	void Start () {
 		if(terrainController==null)
 			throw new UnityException("terrainController must not be null");
+		if(Stat==null)
+			throw new UnityException("Stat must not be null");
 	}
 
 	void Update()

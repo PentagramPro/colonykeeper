@@ -33,6 +33,7 @@ public class MultiInventory : IInventory, IStorable {
 		if(totalQuantity<0)
 			throw new UnityException("Negative totalQuantity. Some bug in inventory implementation!");
 
+		M.Stat.ChangeItemCount(itemType,-q);
 		if(pile.Quantity==q)
 		{
 			Pile res=pile;
@@ -66,6 +67,7 @@ public class MultiInventory : IInventory, IStorable {
 		int toPut = Mathf.Min(quantity,free);
 		totalQuantity+=toPut;
 		pile.Quantity+=toPut;
+		M.Stat.ChangeItemCount(type,toPut);
 
 		return Mathf.Max(0,quantity-free);
 	}

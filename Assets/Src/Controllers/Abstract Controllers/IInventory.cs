@@ -21,6 +21,7 @@ public abstract class IInventory : BaseManagedController, IStorable
 	public abstract int Put(Item type, int quantity);
 
 
+
 	public bool Put(IInventory source, int amount, Item type)
 	{
 		Pile taken = source.Take(type,amount);

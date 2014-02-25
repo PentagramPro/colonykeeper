@@ -6,7 +6,11 @@ public class GUIController : BaseManagedController {
 
 	//List<Block> blocks = new List<Block>();
 	enum Modes {
-		Idle, Choose, Place
+		Idle, BuildChoose, BuildPlace, Info
+	}
+
+	enum ToolButton{
+		None, Build,Info
 	}
 	private Modes state = Modes.Idle;
 
@@ -18,11 +22,13 @@ public class GUIController : BaseManagedController {
 
 	public GUISkin Skin;
 
+	Rect windowRect;
 	float panelWidth;
 	float mapHeight;
 	float toolbarHeight;
 	float pad = 10;
 	Vector2 buildingScrollPos = new Vector2();
+	Vector2 infoWindowScroll = new Vector2();
 
 	// Use this for initialization
 	void Start () {
@@ -30,26 +36,51 @@ public class GUIController : BaseManagedController {
 		mapHeight = Screen.height * 0.25f;
 		toolbarHeight = Screen.height*0.1f;
 
-
+		windowRect=new Rect(Screen.width*0.1f,Screen.height*0.1f, Screen.width*0.8f, Screen.height*0.8f);
 	}
 
 	void OnGUI()
 	{
+		ToolButton toolBtn = ToolButton.None;
 		GUI.skin = Skin;
 
+		//Map and toolbar box
 		GUI.Box(new Rect(0,Screen.height-mapHeight-toolbarHeight,panelWidth,mapHeight+toolbarHeight),"");
 
+		//Left panel rect
 		Rect rct = new Rect(0,0,panelWidth,Screen.height-mapHeight-toolbarHeight);
 
-		if(state== Modes.Idle)
-		{
-			if(GUI.Button(new Rect(
-				0+pad,Screen.height - mapHeight-toolbarHeight+pad,
-				panelWidth-pad*2,toolbarHeight-pad*2),"Build"))
-			{
-				state = Modes.Choose;
-			}
+		//Toolbar rect
+		Rect toolRect = new Rect(
+			0+pad,Screen.height - mapHeight-toolbarHeight+pad,
+			panelWidth-pad*2,toolbarHeight-pad*2);
 
+
+		GUILayout.BeginArea(toolRect);
+		GUILayout.BeginHorizontal();
+
+		if(GUILayout.Button("Build"))
+			toolBtn = ToolButton.Build;
+		
+		if(GUILayout.Button("Info"))
+			toolBtn = ToolButton.Info;
+
+		GUILayout.EndHorizontal();
+		GUILayout.EndArea();
+
+
+
+		switch(state)
+		{
+		case Modes.Idle:
+		{
+
+			if(toolBtn==ToolButton.Build)
+				state = Modes.BuildChoose;
+			else if(toolBtn==ToolButton.Info)
+				state = Modes.Info;
+
+			//Left panel box
 			GUI.Box(rct,"");
 			rct.x+=pad;
 			rct.y+=pad;
@@ -57,17 +88,17 @@ public class GUIController : BaseManagedController {
 			rct.height-=pad*2;
 			
 			GUILayout.BeginArea(rct);
-
+			
 			if (SelectedObject != null)
 			{
 				Component[] items = SelectedObject.GetComponents<Component>();
-
+				
 				foreach(Component item in items)
 				{
 					if(item is IInteractive)
 						((IInteractive)item).OnDrawSelectionGUI();
 				}
-
+				
 			}
 			else
 			{
@@ -79,13 +110,13 @@ public class GUIController : BaseManagedController {
 				{
 					M.LoadGame();
 				}
-
+				
 			}
 			GUILayout.EndArea();
 		}
-		else if(state == Modes.Choose)
+			break;
+		case Modes.BuildChoose:
 		{
-
 			GUI.Box(rct,"");
 			rct.x+=pad;
 			rct.y+=pad;
@@ -93,7 +124,7 @@ public class GUIController : BaseManagedController {
 			rct.height-=pad*2;
 			GUILayout.BeginArea(rct);
 			GUILayout.BeginScrollView(buildingScrollPos);
-
+			
 			Building selected = null;
 			
 			
@@ -106,59 +137,57 @@ public class GUIController : BaseManagedController {
 					selected = b;	
 				}
 			}
-
-
+			
+			
 			GUILayout.EndScrollView();
 			GUILayout.EndArea();
-
+			
 			if(selected!=null)
 			{
 				
 				if(ItemPicked!=null)
 					ItemPicked(selected);
-				state = Modes.Place;
+				state = Modes.BuildPlace;
 				
 			}
-
 		}
-		/*
-		float pos=0,height=80;
-		Building selected = null;
-
-
-		foreach(Building b in M.GameD.Buildings)
+			break;
+		case Modes.BuildPlace:
 		{
-			if(GUI.Button(new Rect(0,pos,150,height),b.Name))
-			{
-				selected = b;	
-				
-			}
-			pos+=height;
 		}
-
-
-		if(selected!=null)
+			break;
+		case Modes.Info:
 		{
-
-			if(ItemPicked!=null)
-				ItemPicked(selected);
-
-			
+			GUILayout.Window(0,windowRect,OnDrawInfoWindow,"Information");
+		}
+			break;
 		}
 
-		if (SelectedObject != null)
-		{
-			GUILayout.BeginArea(new Rect(Screen.width-LeftPanelW,0,LeftPanelW,Screen.height));
-			SelectedObject.OnDrawSelectionGUI();
-			GUILayout.EndArea();
-		}
-		*/
 		
+	}
+
+	public void OnDrawInfoWindow(int id)
+	{
+		infoWindowScroll = GUILayout.BeginScrollView(infoWindowScroll);
+
+
+		foreach(Item i in M.Stat.Items.Keys)
+		{
+
+			GUILayout.BeginHorizontal();
+			GUILayout.Label(i.Name);
+			GUILayout.Label( (M.Stat.Items[i]/100.0f).ToString("n2") );
+			GUILayout.EndHorizontal();
+
+		}
+		GUILayout.EndScrollView();
+		if(GUILayout.Button("Close"))
+			state = Modes.Idle;
 	}
 
 	public void OnPlaced()
 	{
-		if(state==Modes.Place)
+		if(state==Modes.BuildPlace)
 			state= Modes.Idle;
 	}
 

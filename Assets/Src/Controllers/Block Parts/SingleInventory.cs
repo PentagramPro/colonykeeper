@@ -32,13 +32,16 @@ public class SingleInventory : IInventory, IStorable
 		{
 			Pile res=pile;
 			pile=null;
+			M.Stat.ChangeItemCount(itemType,-q);
 			return res;
 		}
 		else
 		{
 			pile.Quantity-=q;
+			M.Stat.ChangeItemCount(itemType,-q);
 			return new Pile(pile.ItemType,q);
 		}
+
 	}
 
 	public override int Put (Item type, int quantity)
@@ -51,8 +54,10 @@ public class SingleInventory : IInventory, IStorable
 			return quantity;
 
 		int free = MaxQuantity -pile.Quantity;
+		int delta = Mathf.Min(quantity,free);
+		pile.Quantity+=delta;
+		M.Stat.ChangeItemCount(type,delta);
 
-		pile.Quantity+=Mathf.Min(quantity,free);
 		return Mathf.Max(0,quantity-free);
 	}
 
