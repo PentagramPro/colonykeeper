@@ -39,12 +39,13 @@ public class BlockedMultiInventory : MultiInventory, ICustomer, IStorable {
 	}
 	
 	
-	public bool TakeForRecipe(Recipe r)
+	public bool TakeForRecipe(RecipeInstance r)
 	{
-		foreach(Pile p in r.IngredientsLinks)
+		foreach(Pile p in r.Ingredients)
 		{
-			if(GetItemQuantity(p.ItemType)>=p.Quantity)
-				Take(p.ItemType,p.Quantity);
+			Item type = p.ItemType;
+			if(GetItemQuantity(type)>=p.Quantity)
+				Take(type,p.Quantity);
 			else
 				return false;
 		}

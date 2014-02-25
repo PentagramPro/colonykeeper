@@ -1,6 +1,7 @@
 using System;
 using System.Xml.Serialization;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Recipe
 {
@@ -20,7 +21,7 @@ public class Recipe
 	public List<PileXML> Results = new List<PileXML>();
 
 	[XmlIgnore]
-	public List<Pile> IngredientsLinks = new List<Pile>();
+	public List<Ingredient> IngredientsLinks = new List<Ingredient>();
 
 	[XmlIgnore]
 	public List<Pile> ResultsLinks = new List<Pile>();
@@ -30,12 +31,52 @@ public class Recipe
 		return Name;
 	}
 
-	public Pile GetIngredient(Item itemType)
+	public int GetIngredient(Item itemType)
 	{
-		foreach (Pile p in IngredientsLinks)
-			if (p.ItemType == itemType)
-				return p;
-		return null;
+		foreach (Ingredient i in IngredientsLinks)
+		{
+			if(i.Contains(itemType))
+				return i.Quantity;
+		}
+			
+		return 0;
+	}
+
+	public void Sort(GameDictionary g)
+	{
+
+		foreach(PileXML pxml in Ingredients)
+		{
+
+			Ingredient ing = new Ingredient();
+			ing.Quantity = pxml.Quantity;
+
+			if(pxml.Name.EndsWith(".*"))
+			{
+				string cls = pxml.Name.Substring(0,pxml.Name.Length-2);
+				foreach(Item i in g.Items.Values)
+				{
+					if(i.IsOfClass(cls))
+						ing.Items.Add(i);
+				}
+			}
+			else
+			{
+				if(!g.Items.ContainsKey(pxml.Name))
+					throw new UnityException("Item with name "+pxml.Name+" was not found while building ingredients for recipe "+Name);
+				ing.Items.Add(g.Items[pxml.Name]);
+			}
+
+			if(ing.Items.Count>0)
+				IngredientsLinks.Add(ing);
+			else
+				Debug.LogWarning("No items found for recipe "+Name+", item name="+pxml.Name);
+		}
+		
+		foreach(PileXML pxml in Results)
+		{
+			ResultsLinks.Add(new Pile(g.Items[pxml.Name],pxml.Quantity));
+		}
 	}
 
 }

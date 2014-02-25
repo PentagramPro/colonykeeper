@@ -8,6 +8,7 @@ public class ConstructionController : BaseManagedController, IInteractive, IStor
 
 	Modes state = Modes.Start;
 	Building targetBuilding;
+	RecipeInstance recipeInstance;
 	GameObject targetGameObject;
 	public BlockController ParentBlock;
 
@@ -35,7 +36,7 @@ public class ConstructionController : BaseManagedController, IInteractive, IStor
 		switch(state)
 		{
 		case Modes.Supply:
-			if(supplyController.CheckSupply(targetBuilding.recipe,1)== SupplyController.SupplyStatus.Ready)
+			if(supplyController.CheckSupply(recipeInstance,1)== SupplyController.SupplyStatus.Ready)
 			{
 				productionPoints=0;
 				state = Modes.Build;
@@ -49,7 +50,7 @@ public class ConstructionController : BaseManagedController, IInteractive, IStor
 					productionPoints=0;
 					state = Modes.Supply;
 
-					supplyController.Supply(targetBuilding.recipe,1);
+					supplyController.Supply(recipeInstance,1);
 				}
 			break;
 		case Modes.Build:
@@ -72,7 +73,12 @@ public class ConstructionController : BaseManagedController, IInteractive, IStor
 	{
 		targetBuilding = building;
 		state = Modes.Prebuild;
-
+		recipeInstance = new RecipeInstance();
+		recipeInstance.Prototype = building.recipe;
+		foreach(Ingredient i in building.recipe.IngredientsLinks)
+		{
+			recipeInstance.Ingredients.Add(new Pile(i.Items[0],i.Quantity));
+		}
 		//because Unity won`t call Start method of supply controller in time
 		//supplyController.Init();
 		//transform.position -= new Vector3(0, 1, 0);
@@ -104,6 +110,24 @@ public class ConstructionController : BaseManagedController, IInteractive, IStor
 	#endregion
 
 	#region IStorable implementation
+	public override void SaveUid (WriterEx b)
+	{
+		base.SaveUid (b);
+		
+	
+		recipeInstance.SaveUid(b);
+	
+		
+	}
+	
+	public override void LoadUid (Manager m, ReaderEx r)
+	{
+		base.LoadUid (m, r);
+
+		recipeInstance = new RecipeInstance();
+		recipeInstance.LoadUid(m,r);
+
+	}
 
 	public void Save (WriterEx b)
 	{
@@ -111,7 +135,7 @@ public class ConstructionController : BaseManagedController, IInteractive, IStor
 		b.WriteEx(targetBuilding);
 		b.WriteLink(ParentBlock);
 		b.Write((double)productionPoints);
-
+		recipeInstance.Save(b);
 	
 
 	}
@@ -124,6 +148,7 @@ public class ConstructionController : BaseManagedController, IInteractive, IStor
 		targetBuilding = r.ReadBuilding(m);
 		ParentBlock = (BlockController)r.ReadLink(m);
 		productionPoints = (float)r.ReadDouble();
+		recipeInstance.Load(m,r);
 
 		targetGameObject = targetBuilding.Instantiate();
 		targetGameObject.SetActive(false);

@@ -78,11 +78,10 @@ public class GameDictionary  {
 			b.recipe = new Recipe();
 			b.recipe.Name = b.Name+".Recipe";
 			b.recipe.Device = "";
-			foreach(PileXML pxml in b.Ingredients)
-			{
-				
-				b.recipe.IngredientsLinks.Add(new Pile(Items[pxml.Name],pxml.Quantity));
-			}
+
+			b.recipe.Ingredients = b.Ingredients;
+			//b.recipe.Sort(this);
+
 			Recipes.Add(b.recipe);
 			BuildingsByName.Add(b.Name,b);
 		}
@@ -101,17 +100,7 @@ public class GameDictionary  {
 			}
 			list.Add(r);
 
-			foreach(PileXML pxml in r.Ingredients)
-			{
-				if(!Items.ContainsKey(pxml.Name))
-					throw new UnityException("Item with name "+pxml.Name+" was not found while building ingredients for recipe "+r.Name);
-				r.IngredientsLinks.Add(new Pile(Items[pxml.Name],pxml.Quantity));
-			}
-
-			foreach(PileXML pxml in r.Results)
-			{
-				r.ResultsLinks.Add(new Pile(Items[pxml.Name],pxml.Quantity));
-			}
+			r.Sort(this);
 
 			RecipesByName.Add(r.Name,r);
 		}

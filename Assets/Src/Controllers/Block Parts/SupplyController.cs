@@ -15,18 +15,18 @@ public class SupplyController : BaseManagedController, ICustomer, IStorable {
 
 	Modes state= Modes.Idle;
 	BuildingController building;
-	Recipe targetRecipe;
+	RecipeInstance targetRecipe;
 	int targetQuantity;
 	List<SupplyJob> supplyJobs = new List<SupplyJob>();
 
-	public void Supply(Recipe recipe, int quantity)
+	public void Supply(RecipeInstance recipe, int quantity)
 	{
 
 		this.targetRecipe = recipe;
 		this.targetQuantity = quantity;
 
 
-		foreach (Pile ingredient in targetRecipe.IngredientsLinks)
+		foreach (Pile ingredient in targetRecipe.Ingredients)
 		{
 			SupplyJob j = new SupplyJob(M.JobManager,this,building,InInventory,
 			                            ingredient.ItemType,ingredient.Quantity*targetQuantity);
@@ -71,13 +71,13 @@ public class SupplyController : BaseManagedController, ICustomer, IStorable {
 	
 	}
 
-	public SupplyStatus CheckSupply(Recipe targetRecipe, int targetQuantity)
+	public SupplyStatus CheckSupply(RecipeInstance targetRecipe, int targetQuantity)
 	{
 		if(targetQuantity<1)
 			return SupplyStatus.Complete;
 		
 		SupplyStatus res = SupplyStatus.Ready;
-		foreach(Pile p in targetRecipe.IngredientsLinks)
+		foreach(Pile p in targetRecipe.Ingredients)
 		{
 			if(InInventory.GetItemQuantity(p.ItemType)<p.Quantity)
 			{
@@ -99,13 +99,13 @@ public class SupplyController : BaseManagedController, ICustomer, IStorable {
 			SupplyJob sj = (SupplyJob)job;
 			supplyJobs.Remove(sj);
 			
-			Pile ingredient = targetRecipe.GetIngredient(sj.ItemType);
-			int needed = targetQuantity * ingredient.Quantity;
+			Item itemType = sj.ItemType;
+			int needed = targetQuantity * targetRecipe.GetIngredient(sj.ItemType);
 			int have = InInventory.GetItemQuantity(sj.ItemType);
 			if (have < needed)
 			{
 				SupplyJob nj = new SupplyJob(M.JobManager, this, building, InInventory,
-				                             ingredient.ItemType, needed - have);
+				                             itemType, needed - have);
 				M.JobManager.AddJob(nj,false);
 				supplyJobs.Add(nj);
 			}
@@ -127,7 +127,7 @@ public class SupplyController : BaseManagedController, ICustomer, IStorable {
 		b.WriteEnum(state);
 
 		b.WriteLink(building);
-		b.WriteEx(targetRecipe);
+		b.WriteLink(targetRecipe);
 		b.Write(targetQuantity);
 
 		b.Write(supplyJobs.Count);
@@ -140,7 +140,7 @@ public class SupplyController : BaseManagedController, ICustomer, IStorable {
 		state = (Modes)r.ReadEnum(typeof(Modes));
 
 		building = (BuildingController)r.ReadLink(m);
-		targetRecipe = (Recipe) r.ReadRecipe(m);
+		targetRecipe = (RecipeInstance) r.ReadLink(m);
 		targetQuantity = r.ReadInt32();
 
 		supplyJobs.Clear();

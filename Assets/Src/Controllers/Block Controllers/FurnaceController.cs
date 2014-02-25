@@ -13,7 +13,7 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 	Modes state = Modes.Idle;
 	float productionPoints=0;
 	int targetQuantity = 0;
-	Recipe targetRecipe;
+	RecipeInstance targetRecipe;
 
 
 	public BlockedInventory inInventory, outInventory;
@@ -177,7 +177,15 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 			GUILayout.Space(20);
 			if(GUILayout.Button("Produce"))
 			{
-				targetRecipe = craftableRecipes[selectedItem];
+
+				Recipe recipe =craftableRecipes[selectedItem];
+				//---//
+
+				targetRecipe = new RecipeInstance();
+				targetRecipe.Prototype = recipe;
+				foreach(Ingredient ing in recipe.IngredientsLinks)
+					targetRecipe.Ingredients.Add(new Pile(ing.Items[0],ing.Quantity));
+				//---//
 				UI ();
 			}
 			GUILayout.EndScrollView();
@@ -208,12 +216,39 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 
 
 	#region IStorable implementation
+
+	public override void SaveUid (WriterEx b)
+	{
+		base.SaveUid (b);
+
+		if(targetRecipe!=null)
+		{
+			b.Write(true);
+			targetRecipe.SaveUid(b);
+		}
+		else
+			b.Write(false);
+
+	}
+
+	public override void LoadUid (Manager m, ReaderEx r)
+	{
+		base.LoadUid (m, r);
+		targetRecipe = null;
+		if(r.ReadBoolean())
+		{
+			targetRecipe = new RecipeInstance();
+			targetRecipe.LoadUid(m,r);
+		}
+	}
+
 	public void Save (WriterEx b)
 	{
 		b.WriteEnum(state);
 		b.Write((double)productionPoints);
 		b.Write(targetQuantity);
-		b.WriteEx(targetRecipe);
+			targetRecipe.Save(b);
+		
 
 	
 	}
@@ -222,7 +257,12 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 		state = (Modes)r.ReadEnum(typeof(Modes));
 		productionPoints = (float)r.ReadDouble();
 		targetQuantity = r.ReadInt32();
-		targetRecipe = r.ReadRecipe(m);
+
+
+		if(targetRecipe!=null)
+			targetRecipe.Load(m,r);
+
+
 	}
 	#endregion
 }
