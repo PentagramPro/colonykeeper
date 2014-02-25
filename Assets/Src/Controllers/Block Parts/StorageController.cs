@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class StorageController : MultiInventory, IInteractive {
+public class StorageController : IInventory, IInteractive {
 
 
 	

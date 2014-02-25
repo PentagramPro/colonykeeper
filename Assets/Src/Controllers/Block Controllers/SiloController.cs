@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SiloController : SingleInventory, IInteractive {
+public class SiloController : IInventory, IInteractive {
 
 
 	// Use this for initialization

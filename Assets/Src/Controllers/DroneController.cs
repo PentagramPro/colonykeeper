@@ -32,13 +32,13 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 	int maxQuantityToPick;
 	Item itemToPick;
 
-	SingleInventory inventory;
+	IInventory inventory;
 	// Use this for initialization
 	void Start () {
 
 		if(vehicleController==null)
 			throw new UnityException("Vehicle exception must not be null");
-		inventory = GetComponent<SingleInventory>();
+		inventory = GetComponent<IInventory>();
 		vehicleController.OnPathWalked+=OnPathWalked;
 
 		M.JobManager.JobAdded+=OnJobAdded;

@@ -16,8 +16,9 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 	RecipeInstance targetRecipe;
 
 
-	public BlockedInventory inInventory, outInventory;
+
 	public SupplyController supplyController;
+	public UnloadController inputUnloadController, outputUnloadController;
 
 	BuildingController building;
 
@@ -32,14 +33,18 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 	// Use this for initialization
 	void Start () {
 		building = GetComponent<BuildingController>();
-		if(inInventory==null || outInventory==null)
-			throw new UnityException("Inventories must not be null");
-		if(inInventory==outInventory)
-			throw new UnityException("Inventories must be different");
+
+
+		if(inputUnloadController==null || outputUnloadController==null)
+			throw new UnityException("Unload controllers must not be null");
+		if(inputUnloadController==outputUnloadController)
+			throw new UnityException("Unload controllers must be different");
+
+
 		if(supplyController==null)
 			throw new UnityException("Supply controller must not be null");
-		inInventory.OnFreed+=OnFreedInput;
-		outInventory.OnFreed+=OnFreedOutput;
+		inputUnloadController.OnFreed+=OnFreedInput;
+		outputUnloadController.OnFreed+=OnFreedOutput;
 	}
 
 
@@ -60,7 +65,7 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 			else if(st==SupplyController.SupplyStatus.Complete)
 			{
 				state = Modes.FreeOut;
-				outInventory.FreeInventory();
+				outputUnloadController.FreeInventory();
 			}
 			break;
 		case Modes.Prod:
@@ -72,7 +77,7 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 			else if(st==SupplyController.SupplyStatus.Complete)
 			{
 				state = Modes.FreeOut;
-				outInventory.FreeInventory();
+				outputUnloadController.FreeInventory();
 			}
 			else
 			{
@@ -80,13 +85,13 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 				if(productionPoints>1)
 				{
 					productionPoints=0;
-					if(!inInventory.TakeForRecipe(targetRecipe))
+					if(!inputUnloadController.TakeForRecipe(targetRecipe))
 						state = Modes.Fill;
 					else
 					{
 
 						targetQuantity--;
-						outInventory.Put(targetRecipe.ResultsLinks[0].ItemType, targetRecipe.ResultsLinks[0].Quantity);
+						outputUnloadController.InventoryToUnload.Put(targetRecipe.ResultsLinks[0].ItemType, targetRecipe.ResultsLinks[0].Quantity);
 					}
 				}
 			}
@@ -99,16 +104,16 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 		supplyController.Cancel();
 		targetQuantity = 0;
 		state = Modes.FreeOut;
-		outInventory.FreeInventory();
+		outputUnloadController.FreeInventory();
 
 	}
 
 	void UI()
 	{
-		if(inInventory.Quantity>0)
+		if(inputUnloadController.InventoryToUnload.Quantity>0)
 		{
 			state = Modes.FreeIn;
-			inInventory.FreeInventory();
+			inputUnloadController.FreeInventory();
 		}
 		else
 		{

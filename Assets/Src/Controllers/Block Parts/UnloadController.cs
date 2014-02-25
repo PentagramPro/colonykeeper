@@ -1,18 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BlockedMultiInventory : MultiInventory, ICustomer, IStorable {
+public class UnloadController : BaseManagedController,ICustomer, IStorable {
 
+	public IInventory InventoryToUnload;
 	enum Modes {
 		Idle, Unload
 	}
 	Modes state = Modes.Idle;
-	
+
+	public delegate void InventoryEvent();
+
 	public event InventoryEvent OnFreed;
 	
 	public void FreeInventory()
 	{
-		if(Quantity==0)
+		if(InventoryToUnload.Quantity==0)
 		{
 			CallOnFreed();
 		}
@@ -28,7 +31,8 @@ public class BlockedMultiInventory : MultiInventory, ICustomer, IStorable {
 		BuildingController bc = GetComponent<BuildingController>();
 		if(bc == null)
 			throw new UnityException("BlockedInventory should be attached to GameObject with BuildingController attached");
-		UnloadJob j = new UnloadJob(M.JobManager,this,bc,this);
+
+		UnloadJob j = new UnloadJob(M.JobManager,this,bc,InventoryToUnload);
 		M.JobManager.AddJob(j,false);
 	}
 	
@@ -44,8 +48,8 @@ public class BlockedMultiInventory : MultiInventory, ICustomer, IStorable {
 		foreach(Pile p in r.Ingredients)
 		{
 			Item type = p.ItemType;
-			if(GetItemQuantity(type)>=p.Quantity)
-				Take(type,p.Quantity);
+			if(InventoryToUnload.GetItemQuantity(type)>=p.Quantity)
+				InventoryToUnload.Take(type,p.Quantity);
 			else
 				return false;
 		}
@@ -57,7 +61,7 @@ public class BlockedMultiInventory : MultiInventory, ICustomer, IStorable {
 	{
 		if(state == Modes.Unload)
 		{
-			if(Quantity>0)
+			if(InventoryToUnload.Quantity>0)
 			{
 				AddJob();
 			}
@@ -70,25 +74,17 @@ public class BlockedMultiInventory : MultiInventory, ICustomer, IStorable {
 	}
 	#endregion		
 	
-	public override int CanPut (Item item)
-	{
-		return 0;
-	}
-	
-	public override bool CanTake (Item item)
-	{
-		return false;
-	}
 
-	public override void Save (WriterEx b)
+	
+	public void Save (WriterEx b)
 	{
-		base.Save (b);
+
 		b.WriteEnum(state);
 	}
-
-	public override void Load (Manager m, ReaderEx r)
+	
+	public void Load (Manager m, ReaderEx r)
 	{
-		base.Load (m, r);
+
 		state = (Modes)r.ReadEnum(typeof(Modes));
 	}
 }
