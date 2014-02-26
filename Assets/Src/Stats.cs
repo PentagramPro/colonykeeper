@@ -31,6 +31,14 @@ public class Stats : MonoBehaviour {
 
 	}
 
+	public void GetItemsForIngredient(Ingredient ingredient,List<Item> result)
+	{
+		foreach(Item item in ingredient.Items)
+		{
+			if(Items[item]>=ingredient.Quantity)
+				result.Add(item);
+		}
+	}
 
 	// Use this for initialization
 	void Start () {

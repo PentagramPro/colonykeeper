@@ -69,16 +69,12 @@ public class ConstructionController : BaseManagedController, IInteractive, IStor
 		}
 	}
 
-	public void Construct(Building building)
+	public void Construct(Building building, RecipeInstance recipe)
 	{
 		targetBuilding = building;
 		state = Modes.Prebuild;
-		recipeInstance = new RecipeInstance();
-		recipeInstance.Prototype = building.recipe;
-		foreach(Ingredient i in building.recipe.IngredientsLinks)
-		{
-			recipeInstance.Ingredients.Add(new Pile(i.Items[0],i.Quantity));
-		}
+		recipeInstance = recipe;
+		
 		//because Unity won`t call Start method of supply controller in time
 		//supplyController.Init();
 		//transform.position -= new Vector3(0, 1, 0);

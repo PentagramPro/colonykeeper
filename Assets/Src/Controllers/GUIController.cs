@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -6,7 +7,7 @@ public class GUIController : BaseManagedController {
 
 	//List<Block> blocks = new List<Block>();
 	enum Modes {
-		Idle, BuildChoose, BuildPlace, Info
+		Idle, BuildChoose, BuildIngredientsPrepare, BuildIngredients, BuildPlace, Info
 	}
 
 	enum ToolButton{
@@ -14,13 +15,21 @@ public class GUIController : BaseManagedController {
 	}
 	private Modes state = Modes.Idle;
 
-	public delegate void PickedDelegate(Building pickedBuilding);
+	public delegate void PickedDelegate(Building pickedBuilding, RecipeInstance recipe);
 
 	public event PickedDelegate ItemPicked;
 
 	public GameObject SelectedObject;
 
 	public GUISkin Skin;
+
+	Building selectedBuilding;
+	List<Item> selectedItems = new List<Item>();
+	List<Item> itemsCache = new List<Item>();
+	public RecipeInstance recipeInstance = new RecipeInstance();
+	Action<RecipeInstance> recipeCallback;
+	Action recipeCancelCallback;
+	int curItem = 0;
 
 	Rect windowRect;
 	float panelWidth;
@@ -37,6 +46,22 @@ public class GUIController : BaseManagedController {
 		toolbarHeight = Screen.height*0.1f;
 
 		windowRect=new Rect(Screen.width*0.1f,Screen.height*0.1f, Screen.width*0.8f, Screen.height*0.8f);
+	}
+
+	public bool GetItemsForRecipe(Recipe recipe, Action<RecipeInstance> callback,  Action cancel )
+	{
+		if(state!=Modes.Idle && state!=Modes.BuildChoose)
+			return false;
+
+		selectedItems.Clear();
+		curItem = 0;
+		recipeCallback=callback;
+		recipeCancelCallback = cancel;
+		recipeInstance = new RecipeInstance();
+		recipeInstance.Prototype = recipe;
+		state = Modes.BuildIngredientsPrepare;
+		return true;
+
 	}
 
 	void OnGUI()
@@ -125,8 +150,7 @@ public class GUIController : BaseManagedController {
 			GUILayout.BeginArea(rct);
 			GUILayout.BeginScrollView(buildingScrollPos);
 			
-			Building selected = null;
-			
+			selectedBuilding = null;
 			
 			foreach(Building b in M.GameD.Buildings)
 			{
@@ -134,7 +158,7 @@ public class GUIController : BaseManagedController {
 					continue;
 				if(GUILayout.Button(b.Name))
 				{
-					selected = b;	
+					selectedBuilding = b;	
 				}
 			}
 			
@@ -142,18 +166,26 @@ public class GUIController : BaseManagedController {
 			GUILayout.EndScrollView();
 			GUILayout.EndArea();
 			
-			if(selected!=null)
+			if(selectedBuilding!=null)
 			{
 				
-				if(ItemPicked!=null)
-					ItemPicked(selected);
-				state = Modes.BuildPlace;
-				
+
+				GetItemsForRecipe(selectedBuilding.recipe,(RecipeInstance res)=>{
+					if(ItemPicked!=null)
+						ItemPicked(selectedBuilding, res);
+					state = Modes.BuildPlace;
+				},null);
 			}
 		}
 			break;
 		case Modes.BuildPlace:
 		{
+		}
+			break;
+		case Modes.BuildIngredientsPrepare:
+		case Modes.BuildIngredients:
+		{
+			GUILayout.Window(0,windowRect,OnDrawIngredientsWindow,"Choose ingredients");
 		}
 			break;
 		case Modes.Info:
@@ -164,6 +196,64 @@ public class GUIController : BaseManagedController {
 		}
 
 		
+	}
+
+	public void OnDrawIngredientsWindow(int id)
+	{
+		Ingredient ingredient = recipeInstance.Prototype.IngredientsLinks[curItem];
+
+		if(state == Modes.BuildIngredientsPrepare)
+		{
+			itemsCache.Clear();
+
+
+
+			M.Stat.GetItemsForIngredient(ingredient,itemsCache);
+
+			state = Modes.BuildIngredients;
+		}
+
+		Item selected = null;
+		GUILayout.Label("Choose item for ingredient #"+(curItem+1));
+		GUILayout.BeginScrollView(infoWindowScroll);
+
+		foreach(Item item in itemsCache)
+		{
+			if(GUILayout.Button(item.Name))
+				selected = item;
+		}
+
+		GUILayout.EndScrollView();
+
+		GUILayout.BeginHorizontal();
+
+		//GUILayout.Button("Build");
+		if(GUILayout.Button("Cancel"))
+		{
+			state = Modes.Idle;
+			if(recipeCancelCallback!=null)
+				recipeCancelCallback();
+		}
+
+		GUILayout.EndHorizontal();
+
+		if(selected !=null)
+		{
+			recipeInstance.Ingredients.Add(new Pile(selected,ingredient.Quantity));
+			curItem++;
+			if(curItem>=recipeInstance.Prototype.IngredientsLinks.Count)
+			{
+				state = Modes.Idle;
+				recipeCallback(recipeInstance);
+
+			}
+			else
+			{
+				state = Modes.BuildIngredientsPrepare;
+			}
+		}
+
+
 	}
 
 	public void OnDrawInfoWindow(int id)

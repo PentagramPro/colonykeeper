@@ -236,7 +236,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 		return true;
 	}
-	public bool Build(Manager m,GameObject building)
+	public bool Build(Manager m,GameObject building, RecipeInstance recipe)
 	{
 		if(!CanBuild())
 			return false;
@@ -250,7 +250,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 			return false;
 				
 		conC.TargetGameObject = building;
-		conC.Construct(resBC.Prototype);
+		conC.Construct(resBC.Prototype,recipe);
 
 		conC.ParentBlock = this;
 

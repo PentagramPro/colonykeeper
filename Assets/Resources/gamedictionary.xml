@@ -11,9 +11,9 @@
   	<Item Name="Ice" Class="Bulk.Ore"></Item>
   	<Item Name="Water" Class="Bulk.Liquid"></Item>
   	<Item Name="Iron Ingot" Class="Good.Ingot"></Item>
-  	<Item Name="Iron Plate" Class="Good.Part"></Item>
-  	<Item Name="Iron Beam" Class="Good.Part"></Item>
-  	<Item Name="Iron Wire" Class="Good.Part"></Item>
+  	<Item Name="Iron Plate" Class="Good.Part.Plate"></Item>
+  	<Item Name="Iron Beam" Class="Good.Part.Beam"></Item>
+  	<Item Name="Iron Wire" Class="Good.Part.Wire"></Item>
   </Items>
   <StartItems>
   	<Item Name = "Iron Plate" Quantity = "300"></Item>
@@ -27,34 +27,34 @@
   	</Building>
   	<Building Name="Silo" PrefabName="Silo">
   		<Ingredients>
-  			<Ingredient Name="Iron Plate" Quantity="100"></Ingredient>
-  			<Ingredient Name="Iron Beam" Quantity="100"></Ingredient>
+  			<Ingredient Name="Good.Part.Plate.*" Quantity="100" Color="1"></Ingredient>
+  			<Ingredient Name="Good.Part.Beam.*" Quantity="100"></Ingredient>
   		</Ingredients>
   	</Building>
   	<Building Name="Storage" PrefabName="Storage">
   		<Ingredients>
-  			<Ingredient Name="Iron Plate" Quantity="100"></Ingredient>
-  			<Ingredient Name="Iron Beam" Quantity="100"></Ingredient>
+  			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
+  			<Ingredient Name="Good.Part.Beam.*" Quantity="100"></Ingredient>
   		</Ingredients>
   	</Building>
   	<Building Name="Furnace" PrefabName="Furnace">
   		<Ingredients>
-  			<Ingredient Name="Iron Plate" Quantity="100"></Ingredient>
-  			<Ingredient Name="Iron Beam" Quantity="100"></Ingredient>
-  			<Ingredient Name="Iron Wire" Quantity="100"></Ingredient>
+  			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
+  			<Ingredient Name="Good.Part.Beam.*" Quantity="100"></Ingredient>
+  			<Ingredient Name="Good.Part.Wire.*" Quantity="100"></Ingredient>
   		</Ingredients>
   	</Building>
   	<Building Name="Mill" PrefabName="Mill">
   		<Ingredients>
-  			<Ingredient Name="Iron Plate" Quantity="100"></Ingredient>
-  			<Ingredient Name="Iron Beam" Quantity="100"></Ingredient>
-  			<Ingredient Name="Iron Wire" Quantity="100"></Ingredient>
+  			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
+  			<Ingredient Name="Good.Part.Beam.*" Quantity="100"></Ingredient>
+  			<Ingredient Name="Good.Part.Wire.*" Quantity="100"></Ingredient>
   		</Ingredients>
   	</Building>
   	<Building Name="Still" PrefabName="Still">
   		<Ingredients>
-  			<Ingredient Name="Iron Plate" Quantity="100"></Ingredient>
-  			<Ingredient Name="Iron Beam" Quantity="100"></Ingredient>
+  			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
+  			<Ingredient Name="Good.Part.Beam.*" Quantity="100"></Ingredient>
   			<Ingredient Name="Iron Wire" Quantity="200"></Ingredient>
   		</Ingredients>
   	</Building>
@@ -65,7 +65,7 @@
   </Vehicles>
   <Recipes>
   	<!--       FURNACE RECIPES             -->
-  	<Recipe Device="Furnace" Name = "Smelt iron ore">
+  	<Recipe Device="Furnace" Name = "Smelt Iron Ore">
   		<Ingredients>
   			<Ingredient Name="Iron Ore" Quantity="200"></Ingredient>
   		</Ingredients>

@@ -19,6 +19,7 @@ public class TerrainController : BaseManagedController, IStorable {
 	public GameObject cellPrefab;
 	public GameObject fogOfWar;
 	public GameObject pickedObject;
+
 	TerrainControllerMode mode = TerrainControllerMode.Idle;
 
 
@@ -56,7 +57,7 @@ public class TerrainController : BaseManagedController, IStorable {
 
 	}
 
-	void OnItemPicked(Building selected)
+	void OnItemPicked(Building selected, RecipeInstance recipe)
 	{
 		mode = TerrainControllerMode.Picked;
 		pickedObject = selected.Instantiate();
@@ -144,7 +145,7 @@ public class TerrainController : BaseManagedController, IStorable {
 		{
 			if(c.CanBuild())
 			{
-				if(!c.Build(M,pickedObject))
+				if(!c.Build(M,pickedObject,M.GetGUIController().recipeInstance))
 				{
 					GameObject.DestroyObject(pickedObject);
 					throw new UnityException("Some error while trying to build construction site");

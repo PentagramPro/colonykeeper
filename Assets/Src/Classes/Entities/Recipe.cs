@@ -26,6 +26,17 @@ public class Recipe
 	[XmlIgnore]
 	public List<Pile> ResultsLinks = new List<Pile>();
 
+
+	[XmlIgnore]
+	public bool IsOneCombination
+	{
+		get{
+			foreach(Ingredient i in IngredientsLinks)
+				if(i.Items.Count>1)
+					return false;
+			return true;
+		}
+	}
 	public override string ToString ()
 	{
 		return Name;

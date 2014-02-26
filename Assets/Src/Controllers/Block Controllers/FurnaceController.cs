@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 
 	enum Modes {
-		Idle, FreeIn,Fill,Prod,FreeOut
+		Idle, Ingredients, FreeIn,Fill,Prod,FreeOut
 	}
 
 
@@ -185,13 +185,28 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 
 				Recipe recipe =craftableRecipes[selectedItem];
 				//---//
-
-				targetRecipe = new RecipeInstance();
-				targetRecipe.Prototype = recipe;
-				foreach(Ingredient ing in recipe.IngredientsLinks)
-					targetRecipe.Ingredients.Add(new Pile(ing.Items[0],ing.Quantity));
+				if(recipe.IsOneCombination)
+				{
+					targetRecipe = new RecipeInstance();
+					targetRecipe.Prototype = recipe;
+					foreach(Ingredient ing in recipe.IngredientsLinks)
+						targetRecipe.Ingredients.Add(new Pile(ing.Items[0],ing.Quantity));
+					UI ();
+				}
+				else
+				{
+					if(M.GetGUIController().GetItemsForRecipe(recipe,(RecipeInstance res)=>{
+						targetRecipe = res;
+						UI ();
+					},()=>{
+						state = Modes.Idle;
+					}))
+					{
+						state = Modes.Ingredients;
+					}
+				}
 				//---//
-				UI ();
+
 			}
 			GUILayout.EndScrollView();
 		}
