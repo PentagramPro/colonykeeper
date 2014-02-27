@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Pile : IStorable {
 
+	ItemProps Properties = new ItemProps();
 	UidContainer uid;
 
 	Item itemType;
@@ -35,26 +36,34 @@ public class Pile : IStorable {
 		uid = new UidContainer(this);
 	}
 
+	public bool IsSameItem(Pile p)
+	{
+		return p.itemType == itemType && Properties.IsSameProperties(p.Properties);
+	}
+
+
 	#region IStorable implementation
 	public void SaveUid(WriterEx b)
 	{
-	
+		Properties.SaveUid(b);
 	}
 	
 	public void LoadUid(Manager m, ReaderEx r)
 	{
-	
+		Properties.LoadUid(m,r);
 	}
 
 	public void Save (WriterEx b)
 	{
 		b.Write(itemType.Name);
 		b.Write(quantity);
+		Properties.Save(b);
 	}
 	public void Load (Manager m, ReaderEx r)
 	{
 		itemType = m.GameD.Items[r.ReadString()];
 		quantity = r.ReadInt32();
+		Properties.Load(m,r);
 	}
 
 	public int GetUID()

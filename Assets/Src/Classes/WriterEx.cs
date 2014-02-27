@@ -71,6 +71,13 @@ public class WriterEx : BinaryWriter
 		Write (Enum.GetName(obj.GetType(),obj));
 	}
 
+	public void Write(Color color)
+	{
+		Write((double)color.r);
+		Write((double)color.g);
+		Write((double)color.b);
+		Write((double)color.a);
+	}
 	public void Write(Vector3 vec)
 	{
 		Write((double)vec.x);
@@ -89,5 +96,6 @@ public class WriterEx : BinaryWriter
 
 
 }
+
 
 

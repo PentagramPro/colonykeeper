@@ -111,7 +111,13 @@ public class IInventory : BaseManagedController, IStorable
 
 
 
-
+	public void OnDestroy()
+	{
+		foreach(Pile p in items.Values)
+		{
+			M.Stat.ChangeItemCount(p.ItemType,-p.Quantity);
+		}
+	}
 
 	// returns:
 	// 0 - cannot

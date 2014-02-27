@@ -59,6 +59,15 @@ public class ReaderEx : BinaryReader
 		return res;
 	}
 
+	public Color ReadColor()
+	{
+		return new Color(
+			(float)ReadDouble(),
+			(float)ReadDouble(),
+			(float)ReadDouble(),
+			(float)ReadDouble());
+	}
+
 	public Vector3 ReadVector3()
 	{
 		return new Vector3(
