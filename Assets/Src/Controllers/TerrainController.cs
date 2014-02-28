@@ -10,7 +10,7 @@ enum TerrainControllerMode
 }
 public class TerrainController : BaseManagedController, IStorable {
 
-	BlockController[,] map = new BlockController[16,16];
+	BlockController[,] map = new BlockController[46,56];
 
 	BlockController lastSelected;
 	bool meshInitializedInEditor = false;
@@ -199,6 +199,10 @@ public class TerrainController : BaseManagedController, IStorable {
 
 	void GenerateMap(bool editMode)
 	{
+		if(editMode)
+		{
+
+		}
 		int h = map.GetLength(0);
 		int w = map.GetLength(1);
 		GameObject mainBuilding = null;
@@ -259,7 +263,19 @@ public class TerrainController : BaseManagedController, IStorable {
 			}
 		}
 
+		int graphW = map.GetLength(1)*5,graphH = map.GetLength(0)*5;
+		if(!editMode)	
+		{
+			AstarPath.active.astarData.gridGraph.width=graphW;
+				
+			AstarPath.active.astarData.gridGraph.depth=graphH;
+				
+			AstarPath.active.astarData.gridGraph.center= new Vector3(map.GetLength(1)/2,0,map.GetLength(0)/2);
+				
+			AstarPath.active.astarData.gridGraph.UpdateSizeFromWidthDepth ();
 
+			AstarPath.active.Scan();
+		}
 		//map[1,1].Digged=true;
 	}
 
