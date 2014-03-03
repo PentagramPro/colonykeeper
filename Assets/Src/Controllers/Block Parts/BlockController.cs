@@ -180,7 +180,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 	}
 
-	public void Generate(TerrainMeshGenerator terrGen,  bool editMode)
+	public void Generate(BlockController[,] map,TerrainMeshGenerator terrGen,  bool editMode)
 	{
 		Manager manager = M;
 		
@@ -188,7 +188,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		GetComponent<MeshFilter>().mesh=null;
 
 		// Creating mesh
-		Mesh mesh = terrGen.Generate(posI,posJ);
+		Mesh mesh = terrGen.Generate(map,posI,posJ);
 
 		// Checking cell block
 		if(BlockProt!=null)

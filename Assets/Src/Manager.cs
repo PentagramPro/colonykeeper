@@ -4,6 +4,9 @@ using System.IO;
 
 public class Manager : MonoBehaviour {
 
+	public enum Sides{
+		Player,Aliens
+	}
 	public delegate void UpdatedDelegate();
 
 	public TerrainController terrainController;

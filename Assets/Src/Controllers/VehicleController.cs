@@ -8,6 +8,7 @@ public class VehicleController : BaseManagedController, IStorable  {
 		Idle,Calc,Turn,Follow
 	}
 
+	public Manager.Sides Side = Manager.Sides.Player;
 
 	public Vehicle Prototype;
 

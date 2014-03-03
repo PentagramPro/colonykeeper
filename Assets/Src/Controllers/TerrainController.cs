@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
@@ -10,7 +11,7 @@ enum TerrainControllerMode
 }
 public class TerrainController : BaseManagedController, IStorable {
 
-	BlockController[,] map = new BlockController[46,56];
+	BlockController[,] map;
 
 	BlockController lastSelected;
 	bool meshInitializedInEditor = false;
@@ -19,6 +20,9 @@ public class TerrainController : BaseManagedController, IStorable {
 	public GameObject cellPrefab;
 	public GameObject fogOfWar;
 	public GameObject pickedObject;
+
+	[HideInInspector]
+	public int MapX=10,MapY=10;
 
 	TerrainControllerMode mode = TerrainControllerMode.Idle;
 
@@ -29,7 +33,7 @@ public class TerrainController : BaseManagedController, IStorable {
 
 	List<BlockController> updateList = new List<BlockController>();
 
-	void Init(bool editMode)
+	public void Init()
 	{
 		if(M==null)
 		{
@@ -38,8 +42,7 @@ public class TerrainController : BaseManagedController, IStorable {
 		M.LoadResources();
 		if(terrGen==null)
 		{
-			terrGen = new TerrainMeshGenerator(map);
-			GenerateMap(editMode);
+			terrGen = new TerrainMeshGenerator();
 		}
 	
 
@@ -47,14 +50,26 @@ public class TerrainController : BaseManagedController, IStorable {
 	}
 	// Use this for initialization
 	void Start () {
-		Init(false);
+		Init();
 
 		M.GetGUIController().ItemPicked+=OnItemPicked;
-		GenerateMesh(false);
+
+		PrepareTerrain(MapX,MapY,false);
 
 		lowerPlane = new Plane(Vector3.up, transform.position);
 
 
+	}
+
+	public void PrepareTerrain(int mapX, int mapY, bool editMode)
+	{
+		MapX = mapX;
+		MapY = mapY;
+		map = new BlockController[MapX,MapY];
+
+
+		GenerateMap(editMode);
+		GenerateMesh(editMode);
 	}
 
 	void OnItemPicked(Building selected, RecipeInstance recipe)
@@ -96,7 +111,7 @@ public class TerrainController : BaseManagedController, IStorable {
 		if (updateList.Count > 0)
 		{
 			foreach(BlockController b in updateList)
-				b.Generate(terrGen,false);
+				b.Generate(map,terrGen,false);
 			updateList.Clear();
 
 			GraphUpdateObject guo = new GraphUpdateObject(collider.bounds);
@@ -178,14 +193,7 @@ public class TerrainController : BaseManagedController, IStorable {
 
 	void OnDrawGizmos()
 	{
-		//Gizmos.DrawLine(transform.position,transform.position+new Vector3(map.GetUpperBound(0)*hw,0,0));
-		//Gizmos.DrawLine(transform.position,transform.position+new Vector3(0,0,map.GetUpperBound(1)*hw));
-		if(meshInitializedInEditor==false)
-		{
-			meshInitializedInEditor=true;
-			Init(true);
-			GenerateMesh(true);
-		}
+	
 	}
 
 
@@ -199,23 +207,22 @@ public class TerrainController : BaseManagedController, IStorable {
 
 	void GenerateMap(bool editMode)
 	{
-		if(editMode)
-		{
 
-		}
 		int h = map.GetLength(0);
 		int w = map.GetLength(1);
 		GameObject mainBuilding = null;
 		Debug.Log("Generate Map");
 
-		foreach(Transform children in cellContainer.transform)
+		Transform[] children = cellContainer.GetComponentsInChildren<Transform>();
+		foreach(Transform child in children)
 		{
-
-			if(!editMode)
-				Destroy(children.gameObject);
-			else
-				DestroyImmediate(children.gameObject);
-
+			if(child!=cellContainer.transform)
+			{
+				try{
+					Object.DestroyImmediate(child.gameObject);
+				}
+				catch(UnityException e){}
+			}
 		}
 
 
@@ -264,17 +271,22 @@ public class TerrainController : BaseManagedController, IStorable {
 		}
 
 		int graphW = map.GetLength(1)*5,graphH = map.GetLength(0)*5;
+		Vector3 pos = transform.position+new Vector3((float)map.GetLength(1)/2f,0.2f,(float)map.GetLength(0)/2f);
+
+		((BoxCollider)collider).size = new Vector3(w,0.2f,h);
+		((BoxCollider)collider).center = new Vector3(pos.x,-0.1f,pos.z);
 		if(!editMode)	
 		{
 			AstarPath.active.astarData.gridGraph.width=graphW;
 				
 			AstarPath.active.astarData.gridGraph.depth=graphH;
 				
-			AstarPath.active.astarData.gridGraph.center= new Vector3(map.GetLength(1)/2,0,map.GetLength(0)/2);
-				
+
+			AstarPath.active.astarData.gridGraph.center= pos;
+			
 			AstarPath.active.astarData.gridGraph.UpdateSizeFromWidthDepth ();
 
-			AstarPath.active.Scan();
+
 		}
 		//map[1,1].Digged=true;
 	}
@@ -301,7 +313,7 @@ public class TerrainController : BaseManagedController, IStorable {
 		{
 			for(int j=0;j<map.GetLength(1);j++)
 			{
-				map[i,j].Generate(terrGen, editMode);
+				map[i,j].Generate(map,terrGen, editMode);
 
 			}
 		}
@@ -313,8 +325,9 @@ public class TerrainController : BaseManagedController, IStorable {
 		if(!editMode)
 		{
 			Debug.Log("Updating graph");
-			GraphUpdateObject guo = new GraphUpdateObject(collider.bounds);
-			AstarPath.active.UpdateGraphs(guo);
+			AstarPath.active.Scan();
+			//GraphUpdateObject guo = new GraphUpdateObject(collider.bounds);
+			//AstarPath.active.UpdateGraphs(guo);
 		}
 	}
 

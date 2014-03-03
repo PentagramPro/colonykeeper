@@ -22,9 +22,9 @@ public class TerrainMeshGenerator : MeshGenerator {
 			return BlockController.Accessibility.Cliff;
 		return BlockController.Accessibility.Enclosed;
 	}
-	public TerrainMeshGenerator(BlockController [,] targetMap)
+	public TerrainMeshGenerator()
 	{
-		map = targetMap;
+
 	}
 	void AttachHRect(Vector2 p1, Vector2 p2, float z, int[,] pat)
 	{
@@ -115,11 +115,12 @@ public class TerrainMeshGenerator : MeshGenerator {
 
 		return p;
 	}
-	public override Mesh Generate (int i, int j)
+	public override Mesh Generate (BlockController[,] map,int i, int j)
 	{
 		Mesh mesh = new Mesh();
 		
-		
+		this.map = map;
+
 		Clear();
 		
 		//int h = map.GetUpperBound(0);
