@@ -6,13 +6,18 @@ public class WeaponController : BaseController {
 	enum Modes {
 		Idle,Attack
 	}
+
+	public delegate void TargetLost();
+	public event TargetLost OnTargetLost;
+
 	Modes state = Modes.Idle;
-	HullController target;
+	VisualContact curContact;
 
 	public float rotationSpeed = 5;
 	public float fireDelay = 1;
 	public float fireDamage = 60;
 	public GameObject projectilePrefab;
+	public Vector3 GunPosition;
 
 	float fireCounter = 0;
 
@@ -23,6 +28,9 @@ public class WeaponController : BaseController {
 	
 	// Update is called once per frame
 	void Update () {
+		if(curContact!=null)
+			curContact.Update(GunPosition+transform.position);
+
 		switch(state)
 		{
 		case Modes.Attack:
@@ -31,31 +39,56 @@ public class WeaponController : BaseController {
 		}
 	}
 
-	public void Attack(HullController target)
+	public void Attack(VisualContact target)
 	{
-		this.target = target;
+		curContact = target;
 		state = Modes.Attack;
+	}
+	void OnDrawGizmos()
+	{
+		Gizmos.color = Color.red;
+		Gizmos.DrawWireSphere(transform.position+GunPosition,0.1f);
+		Gizmos.DrawLine(transform.position+GunPosition,transform.position+GunPosition+Vector3.forward);
 	}
 
 	void DoAttack()
 	{
-
-		Quaternion dir = Quaternion.LookRotation(target.transform.position-transform.position);
-		transform.localRotation=
-			Quaternion.RotateTowards(transform.localRotation,dir,rotationSpeed*Time.smoothDeltaTime);
-		fireCounter+=Time.smoothDeltaTime;
-		if(fireCounter>fireDelay)
+		HullController target = curContact.Target;
+		if(curContact.IsTargetVisible())
 		{
-			fireCounter=0;
+			Quaternion dir = Quaternion.LookRotation(target.Center-transform.position);
+			transform.localRotation=
+				Quaternion.RotateTowards(transform.localRotation,dir,rotationSpeed*Time.smoothDeltaTime);
+			fireCounter+=Time.smoothDeltaTime;
+			if(fireCounter>fireDelay)
+			{
+				fireCounter=0;
+				Vector3 gunDir = transform.rotation*Vector3.forward;
+				Physics.Raycast(GunPosition,gunDir);
+				Shoot (gunDir);
+			}
+		}
+		else
+		{
+			state = Modes.Idle;
+			curContact = null;
+			if(OnTargetLost!=null)
+				OnTargetLost();
 
-			Vector3 gunDir = transform.rotation*Vector3.forward;
-
-			ProjectileController proj = ((GameObject)GameObject.Instantiate(projectilePrefab))
-				.GetComponent<ProjectileController>();
-
-			proj.Fire(transform.position,gunDir);
 		}
 
 
+	}
+
+	void Shoot(Vector3 dir)
+	{
+
+		
+
+		
+		ProjectileController proj = ((GameObject)Instantiate(projectilePrefab))
+			.GetComponent<ProjectileController>();
+		
+		proj.Fire(transform.position+GunPosition,dir);
 	}
 }

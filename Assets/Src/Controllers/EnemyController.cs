@@ -11,6 +11,9 @@ public class EnemyController : BaseManagedController {
 	public TargeterController targeter;
 	public WeaponController weapon;
 	public VehicleController vehicle;
+
+	VisualContact curContact = null;
+
 	// Use this for initialization
 	void Start () {
 		if(targeter==null)
@@ -23,10 +26,13 @@ public class EnemyController : BaseManagedController {
 			throw new UnityException("Vehicle must not be null");
 
 		targeter.OnFound+=OnFound;
+		weapon.OnTargetLost+=OnTargetLost;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+
 		switch(state)
 		{
 		case Modes.Inactive:
@@ -40,9 +46,17 @@ public class EnemyController : BaseManagedController {
 		}
 	}
 
-	void OnFound(HullController target)
+	void OnFound(VisualContact target)
 	{
+		curContact = target;
 		state = Modes.Attack;
 		weapon.Attack(target);
+	}
+
+	void OnTargetLost()
+	{
+		curContact = null;
+		state = Modes.Sentry;
+		targeter.Search(vehicle.Side);
 	}
 }

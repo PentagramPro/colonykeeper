@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class TargeterController : BaseManagedController {
 
@@ -10,13 +10,16 @@ public class TargeterController : BaseManagedController {
 
 	float delay = 0;
 	public float Range = 6;
-	public delegate void TargetFoundDelegate(HullController target);
+	public delegate void TargetFoundDelegate(VisualContact contact);
 	public event TargetFoundDelegate OnFound;
+
+	HullController self;
+	List<HullController> targetsList = new List<HullController>();
 
 	Manager.Sides currentSide;
 	// Use this for initialization
 	void Start () {
-	
+		self = GetComponent<HullController>();
 	}
 	
 	// Update is called once per frame
@@ -24,20 +27,24 @@ public class TargeterController : BaseManagedController {
 	
 		if(state==Modes.Search)
 		{
-			foreach(VehicleController veh in M.VehiclesRegistry)
+			targetsList.Clear();
+			ClosestTargets();
+
+			foreach(HullController hull in targetsList)
 			{
-				if(veh.Side!=currentSide)
+				RaycastHit hit;
+				if(Physics.Raycast(self.Center,hull.Center-self.Center,out hit,Range))
 				{
-					HullController hull = veh.GetComponent<HullController>();
-					if(hull!=null && Vector3.Distance(transform.position,hull.transform.position)<Range)
-					{
-						if(OnFound!=null)
-							OnFound(hull);
-						state = Modes.Idle;
-						break;
-					}
+					if(hit.transform!=hull.transform)
+						continue;
+
+					if(OnFound!=null)
+						OnFound(new VisualContact(hull));
+					state = Modes.Idle;
+					break;
 				}
 			}
+
 			if(state==Modes.Search)
 			{
 				delay=0;
@@ -58,5 +65,20 @@ public class TargeterController : BaseManagedController {
 	{
 		currentSide = searchEneminesOf;
 		state = Modes.Search;
+	}
+
+	void ClosestTargets()
+	{
+		foreach(VehicleController veh in M.VehiclesRegistry)
+		{
+			if(veh.Side!=currentSide)
+			{
+				HullController hull = veh.GetComponent<HullController>();
+				if(hull!=null && Vector3.Distance(transform.position,hull.transform.position)<Range)
+				{
+					targetsList.Add(hull);
+				}
+			}
+		}
 	}
 }

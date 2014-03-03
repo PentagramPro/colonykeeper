@@ -17,13 +17,14 @@ public class ProjectileController : BaseManagedController {
 
 	}
 
-	void OnCollisionEnter(Collision col)
+	void OnTriggerEnter(Collider other)
 	{
-		GameObject.Destroy(gameObject);
+		Destroy(gameObject);
 	}
 	public void Fire(Vector3 pos, Vector3 dir)
 	{
 		transform.position = pos;
+
 		direction = dir.normalized;
 	}
 }
