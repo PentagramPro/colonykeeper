@@ -22,6 +22,8 @@ public class Manager : MonoBehaviour {
 	// loaded from resources
 	public GameDictionary GameD;
 
+	public DefenceController defenceController;
+
 	//Job manager holds list of jobs
 	// has to be stored and loaded
 	public JobManager JobManager = new JobManager();
@@ -64,7 +66,15 @@ public class Manager : MonoBehaviour {
 		GameD = GameDictionary.Load(path);
 	// 	GameD.Save(path);
 	}
-	
+
+
+	public void UnderAttack(HullController victim, Transform attacker)
+	{
+		if(defenceController!=null)
+		{
+			defenceController.UnderAttack(victim,attacker);
+		}
+	}
 	public void SaveGame()
 	{
 

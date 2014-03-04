@@ -77,6 +77,8 @@
 	  		</Ingredients>
   		</Recipe>
   	</Vehicle>
+  	<Vehicle Name="Alien Sentry" PrefabName="Sentry">
+  	</Vehicle>
   </Vehicles>
   <Recipes>
   	<!--       FURNACE RECIPES             -->

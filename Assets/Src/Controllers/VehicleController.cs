@@ -130,6 +130,10 @@ public class VehicleController : BaseManagedController, IStorable  {
 		}
 		return null;
 	}
+	public void Stop()
+	{
+		vehicleState = VehicleModes.Idle;
+	}
 
 	public void DriveTo(Vector3 dest)
 	{
@@ -140,7 +144,7 @@ public class VehicleController : BaseManagedController, IStorable  {
 	}
 
 	private void OnPathComplete (Path p) {
-		if (vehicleState == VehicleModes.Destroyed)
+		if (vehicleState == VehicleModes.Destroyed || vehicleState == VehicleModes.Idle)
 			return;
 
 		Debug.Log ("Yey, we got a path back. Did it have an error? "+p.error);

@@ -53,6 +53,12 @@ public class WeaponController : BaseController {
 		curContact = target;
 		state = Modes.Attack;
 	}
+
+	public void Stop()
+	{
+		curContact = null;
+		state = Modes.Idle;
+	}
 	void OnDrawGizmos()
 	{
 		Gizmos.color = Color.red;

@@ -4,6 +4,7 @@ using System.Collections;
 public class BuildingController : BaseManagedController, IStorable, IInteractive{
 
 	public Building Prototype = null;
+	public Manager.Sides Side = Manager.Sides.Player;
 	float halfCell = TerrainMeshGenerator.CELL_SIZE/2;
 	// Use this for initialization
 	void Start () {

@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HullController : MonoBehaviour {
+public class HullController : BaseManagedController {
+
+	public bool ReportAttackToManager = false;
 
 	public Vector3 CenterPos;
 	public Vector3 Center
@@ -28,9 +30,12 @@ public class HullController : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other)
 	{
+
 		ProjectileController proj = other.GetComponent<ProjectileController>();
 		if (proj != null)
 		{
+			if(ReportAttackToManager)
+				M.UnderAttack(this,other.transform);
 			curHP-=(int)proj.Damage;
 			if(curHP<=0)
 				Destroy(gameObject);
