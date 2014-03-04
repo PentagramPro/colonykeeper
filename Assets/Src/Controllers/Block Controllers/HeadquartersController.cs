@@ -70,6 +70,10 @@ public class HeadquartersController : BaseManagedController, ICustomer, IStorabl
 
 	#region ICustomer implementation
 
+	public void JobCanceled(IJob job)
+	{
+		waterSupply = null;
+	}
 	public void JobCompleted(IJob job)
 	{
 		waterSupply = null;

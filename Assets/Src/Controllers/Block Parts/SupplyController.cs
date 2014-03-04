@@ -40,13 +40,14 @@ public class SupplyController : BaseManagedController, ICustomer, IStorable {
 	{
 		if(state == Modes.Supply)
 		{
+			state=Modes.Idle;
 			foreach (SupplyJob sj in supplyJobs)
 				sj.Cancel();
 			supplyJobs.Clear();
 			
 			targetQuantity = 0;
 		}
-		state=Modes.Idle;
+		//state=Modes.Idle;
 	}
 
 	// may be called several times 
@@ -89,29 +90,41 @@ public class SupplyController : BaseManagedController, ICustomer, IStorable {
 	}
 	#region ICustomer implementation
 
-
+	void CheckSupplyJob(SupplyJob sj)
+	{
+		supplyJobs.Remove(sj);
+		
+		Item itemType = sj.ItemType;
+		int needed = targetQuantity * targetRecipe.GetIngredient(sj.ItemType);
+		int have = InInventory.GetItemQuantity(sj.ItemType);
+		if (have < needed)
+		{
+			SupplyJob nj = new SupplyJob(M.JobManager, this, building, InInventory,
+			                             itemType, needed - have);
+			M.JobManager.AddJob(nj,false);
+			supplyJobs.Add(nj);
+		}
+		
+		if(supplyJobs.Count==0)
+			state = Modes.Idle;
+	}
+	public void JobCanceled(IJob job)
+	{
+		if (state == Modes.Supply)
+		{
+			if (job.GetType() != typeof(SupplyJob))
+				return;
+			CheckSupplyJob((SupplyJob)job);
+		}
+	}
 	public void JobCompleted (IJob job)
 	{
 		if (state == Modes.Supply)
 		{
 			if (job.GetType() != typeof(SupplyJob))
 				return;
-			SupplyJob sj = (SupplyJob)job;
-			supplyJobs.Remove(sj);
-			
-			Item itemType = sj.ItemType;
-			int needed = targetQuantity * targetRecipe.GetIngredient(sj.ItemType);
-			int have = InInventory.GetItemQuantity(sj.ItemType);
-			if (have < needed)
-			{
-				SupplyJob nj = new SupplyJob(M.JobManager, this, building, InInventory,
-				                             itemType, needed - have);
-				M.JobManager.AddJob(nj,false);
-				supplyJobs.Add(nj);
-			}
+			CheckSupplyJob((SupplyJob)job);
 
-			if(supplyJobs.Count==0)
-				state = Modes.Idle;
 		} else
 		{
 			throw new UnityException("wrong state: "+Enum.GetName(typeof(Modes),state));

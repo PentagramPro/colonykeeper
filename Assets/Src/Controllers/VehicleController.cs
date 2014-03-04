@@ -5,7 +5,7 @@ using Pathfinding;
 public class VehicleController : BaseManagedController, IStorable  {
 	private enum VehicleModes
 	{
-		Idle,Calc,Turn,Follow
+		Idle,Calc,Turn,Follow,Destroyed
 	}
 
 	public Manager.Sides Side = Manager.Sides.Player;
@@ -86,6 +86,13 @@ public class VehicleController : BaseManagedController, IStorable  {
 		}
 	}
 
+
+	void OnDestroy()
+	{
+		vehicleState = VehicleModes.Destroyed;
+		M.VehiclesRegistry.Remove(this);
+	}
+
 	public IInventory FindInventoryFor(Item itemType)
 	{
 		foreach (BlockController b in M.BuildingsRegistry.Keys) 
@@ -133,6 +140,9 @@ public class VehicleController : BaseManagedController, IStorable  {
 	}
 
 	private void OnPathComplete (Path p) {
+		if (vehicleState == VehicleModes.Destroyed)
+			return;
+
 		Debug.Log ("Yey, we got a path back. Did it have an error? "+p.error);
 		if (!p.error) {
 			path = p;

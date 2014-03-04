@@ -10,6 +10,7 @@ public class Vehicle
 	[XmlAttribute("PrefabName")]
 	public string PrefabName;
 
+	public Recipe Recipe;
 
 	public GameObject Instantiate()
 	{

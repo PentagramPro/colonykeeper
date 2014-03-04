@@ -24,6 +24,19 @@ public class HullController : MonoBehaviour {
 		}
 	}
 
+
+
+	void OnTriggerEnter(Collider other)
+	{
+		ProjectileController proj = other.GetComponent<ProjectileController>();
+		if (proj != null)
+		{
+			curHP-=(int)proj.Damage;
+			if(curHP<=0)
+				Destroy(gameObject);
+		}
+	}
+
 	void OnDrawGizmos()
 	{
 		Gizmos.color = Color.blue;

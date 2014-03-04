@@ -57,7 +57,9 @@ public class UnloadController : BaseManagedController,ICustomer, IStorable {
 		return true;
 	}
 	#region ICustomer implementation
-	public void JobCompleted (IJob j)
+
+
+	void CheckJob()
 	{
 		if(state == Modes.Unload)
 		{
@@ -71,6 +73,15 @@ public class UnloadController : BaseManagedController,ICustomer, IStorable {
 				CallOnFreed();
 			}
 		}
+	}
+	public void JobCanceled(IJob j)
+	{
+		CheckJob();
+	}
+
+	public void JobCompleted (IJob j)
+	{
+		CheckJob();
 	}
 	#endregion		
 	

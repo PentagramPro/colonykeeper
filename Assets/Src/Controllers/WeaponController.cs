@@ -7,15 +7,16 @@ public class WeaponController : BaseController {
 		Idle,Attack
 	}
 
-	public delegate void TargetLost();
-	public event TargetLost OnTargetLost;
+	public delegate void TargetNotification();
+	public event TargetNotification OnTargetLost;
+	public event TargetNotification OnTargetDestroyed;
 
 	Modes state = Modes.Idle;
 	VisualContact curContact;
 
 	public float rotationSpeed = 5;
 	public float fireDelay = 1;
-	public float fireDamage = 60;
+	public float fireDamage = 100;
 	public GameObject projectilePrefab;
 	public Vector3 GunPosition;
 
@@ -28,9 +29,17 @@ public class WeaponController : BaseController {
 	
 	// Update is called once per frame
 	void Update () {
-		if(curContact!=null)
-			curContact.Update(GunPosition+transform.position);
+		if (curContact != null)
+		{
+			curContact.Update(GunPosition + transform.position);
 
+			if (curContact.IsTargetDestroyed())
+			{
+				if (OnTargetDestroyed != null)
+					OnTargetDestroyed();
+				state = Modes.Idle;
+			}
+		}
 		switch(state)
 		{
 		case Modes.Attack:
@@ -89,6 +98,6 @@ public class WeaponController : BaseController {
 		ProjectileController proj = ((GameObject)Instantiate(projectilePrefab))
 			.GetComponent<ProjectileController>();
 		
-		proj.Fire(transform.position+GunPosition,dir);
+		proj.Fire(transform.position+GunPosition,dir,fireDamage);
 	}
 }

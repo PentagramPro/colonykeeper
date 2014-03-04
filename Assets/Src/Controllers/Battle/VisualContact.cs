@@ -4,7 +4,7 @@ using System;
 public class VisualContact
 {
 	enum Modes{
-		Visible,Lost
+		Visible,Lost,Destroyed
 	}
 	public HullController Target = null;
 	public Vector3 LastPosition;
@@ -21,6 +21,10 @@ public class VisualContact
 
 	public void Update(Vector3 weaponPos)
 	{
+		if (Target.CurHP <= 0)
+			state = Modes.Destroyed;
+		if (state == Modes.Destroyed)
+			return;
 		if(IsVisible(Target, weaponPos,6))
 		{
 			state = Modes.Visible;
@@ -32,7 +36,10 @@ public class VisualContact
 			state = Modes.Lost;
 		}
 	}
-
+	public bool IsTargetDestroyed()
+	{
+		return state == Modes.Destroyed;
+	}
 	public bool IsTargetVisible()
 	{
 		return state==Modes.Visible;

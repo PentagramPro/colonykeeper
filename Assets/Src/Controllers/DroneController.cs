@@ -49,6 +49,8 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 	{
 		M.JobManager.JobAdded-=OnJobAdded;
 		M.BuildingsRegistry.ItemAdded-=OnBuildingAdded;
+		if (currentJob != null)
+			currentJob.Cancel();
 	}
 
 	

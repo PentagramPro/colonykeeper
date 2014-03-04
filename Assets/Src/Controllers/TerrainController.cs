@@ -265,6 +265,12 @@ public class TerrainController : BaseManagedController, IStorable {
 					M.VehiclesRegistry.Add(veh.GetComponent<VehicleController>());
 					veh.transform.position = c.Position;
 				}
+				if(!editMode  && i==h/2+1 && j==w/2)
+				{
+					GameObject veh = M.GameD.VehiclesByName["Defender Drone"].Instantiate();
+					M.VehiclesRegistry.Add(veh.GetComponent<VehicleController>());
+					veh.transform.position = c.Position;
+				}
 
 				//c.Digged=false;
 			}

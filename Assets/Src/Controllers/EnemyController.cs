@@ -27,6 +27,7 @@ public class EnemyController : BaseManagedController {
 
 		targeter.OnFound+=OnFound;
 		weapon.OnTargetLost+=OnTargetLost;
+		weapon.OnTargetDestroyed += OnTargetDestroyed;
 	}
 	
 	// Update is called once per frame
@@ -54,6 +55,13 @@ public class EnemyController : BaseManagedController {
 	}
 
 	void OnTargetLost()
+	{
+		curContact = null;
+		state = Modes.Sentry;
+		targeter.Search(vehicle.Side);
+	}
+
+	void OnTargetDestroyed()
 	{
 		curContact = null;
 		state = Modes.Sentry;

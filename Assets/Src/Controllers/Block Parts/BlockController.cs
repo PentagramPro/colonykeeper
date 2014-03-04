@@ -76,6 +76,11 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		}
 	}
 
+	public void JobCanceled(IJob job)
+	{
+		digJob = null;
+	}
+
 	public void JobCompleted(IJob j)
 	{
 		digJob=null;
