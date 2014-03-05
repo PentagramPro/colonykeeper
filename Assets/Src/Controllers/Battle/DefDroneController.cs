@@ -11,7 +11,8 @@ public class DefDroneController : BaseManagedController {
 	public TargeterController targeter;
 	public WeaponController weapon;
 	public VehicleController vehicle;
-	
+
+	HullController hull;
 	VisualContact curContact = null;
 	
 	// Use this for initialization
@@ -28,6 +29,7 @@ public class DefDroneController : BaseManagedController {
 		targeter.OnFound+=OnFound;
 		weapon.OnTargetLost+=OnTargetLost;
 		weapon.OnTargetDestroyed += OnTargetDestroyed;
+		hull = GetComponent<HullController>();
 	}
 	
 	// Update is called once per frame
@@ -44,11 +46,11 @@ public class DefDroneController : BaseManagedController {
 			{
 				vehicle.Stop();
 				state = Modes.Attack;
-				weapon.Attack(curContact);
+				weapon.Attack(hull,curContact);
 			}
 			break;
 		case Modes.Attack:
-			curContact.Update(weapon.GunPosition);
+			//curContact.Update(weapon.GunPosition+transform.position);
 			break;
 		}
 	}

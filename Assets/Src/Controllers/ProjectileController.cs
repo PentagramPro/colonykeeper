@@ -6,6 +6,12 @@ public class ProjectileController : BaseManagedController {
 	public float speed = 20;
 	float damage=0;
 
+	HullController owner;
+	public HullController Owner{
+		get{
+			return owner;
+		}
+	}
 	Vector3 direction = Vector3.zero;
 
 	public float Damage{
@@ -27,10 +33,12 @@ public class ProjectileController : BaseManagedController {
 
 	void OnTriggerEnter(Collider other)
 	{
-		Destroy(gameObject);
+		if(other.tag!="Projectile")
+			Destroy(gameObject);
 	}
-	public void Fire(Vector3 pos, Vector3 dir, float damage)
+	public void Fire(HullController owner,Vector3 pos, Vector3 dir, float damage)
 	{
+		this.owner = owner;
 		transform.position = pos;
 
 		direction = dir.normalized;

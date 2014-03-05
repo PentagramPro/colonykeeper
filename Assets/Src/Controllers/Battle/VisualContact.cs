@@ -48,7 +48,9 @@ public class VisualContact
 	public static bool IsVisible(HullController target, Vector3 source, float range)
 	{
 		RaycastHit hit;
-		return Physics.Raycast(source,target.Center-source,out hit,range) && hit.transform==target.transform;
+		bool rayRes = Physics.Raycast(source,target.Center-source,out hit,range,0x00000700);
+
+		return rayRes && hit.transform==target.transform;
 
 	}
 

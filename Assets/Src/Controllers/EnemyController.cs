@@ -14,6 +14,8 @@ public class EnemyController : BaseManagedController {
 
 	VisualContact curContact = null;
 
+	HullController hull;
+
 	// Use this for initialization
 	void Start () {
 		if(targeter==null)
@@ -28,6 +30,7 @@ public class EnemyController : BaseManagedController {
 		targeter.OnFound+=OnFound;
 		weapon.OnTargetLost+=OnTargetLost;
 		weapon.OnTargetDestroyed += OnTargetDestroyed;
+		hull = GetComponent<HullController>();
 	}
 	
 	// Update is called once per frame
@@ -51,7 +54,7 @@ public class EnemyController : BaseManagedController {
 	{
 		curContact = target;
 		state = Modes.Attack;
-		weapon.Attack(target);
+		weapon.Attack(hull,target);
 	}
 
 	void OnTargetLost()

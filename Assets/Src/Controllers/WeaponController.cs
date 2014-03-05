@@ -18,7 +18,14 @@ public class WeaponController : BaseController {
 	public float fireDelay = 1;
 	public float fireDamage = 100;
 	public GameObject projectilePrefab;
-	public Vector3 GunPosition;
+	public Vector3 RelativeGunPosition;
+	public Vector3 GunPosition{
+		get{
+			return RelativeGunPosition+transform.position;
+		}
+	}
+
+	HullController owner;
 
 	float fireCounter = 0;
 
@@ -31,7 +38,7 @@ public class WeaponController : BaseController {
 	void Update () {
 		if (curContact != null)
 		{
-			curContact.Update(GunPosition + transform.position);
+			curContact.Update(GunPosition);
 
 			if (curContact.IsTargetDestroyed())
 			{
@@ -48,10 +55,11 @@ public class WeaponController : BaseController {
 		}
 	}
 
-	public void Attack(VisualContact target)
+	public void Attack(HullController owner,VisualContact target)
 	{
 		curContact = target;
 		state = Modes.Attack;
+		this.owner = owner;
 	}
 
 	public void Stop()
@@ -62,8 +70,8 @@ public class WeaponController : BaseController {
 	void OnDrawGizmos()
 	{
 		Gizmos.color = Color.red;
-		Gizmos.DrawWireSphere(transform.position+GunPosition,0.1f);
-		Gizmos.DrawLine(transform.position+GunPosition,transform.position+GunPosition+Vector3.forward);
+		Gizmos.DrawWireSphere(GunPosition,0.1f);
+		Gizmos.DrawLine(GunPosition,GunPosition+Vector3.forward);
 	}
 
 	void DoAttack()
@@ -104,6 +112,6 @@ public class WeaponController : BaseController {
 		ProjectileController proj = ((GameObject)Instantiate(projectilePrefab))
 			.GetComponent<ProjectileController>();
 		
-		proj.Fire(transform.position+GunPosition,dir,fireDamage);
+		proj.Fire(owner,GunPosition,dir,fireDamage);
 	}
 }

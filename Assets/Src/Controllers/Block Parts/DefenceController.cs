@@ -19,7 +19,12 @@ public class DefenceController : BaseManagedController {
 
 	public void UnderAttack(HullController victim, Transform attacker)
 	{
-		HullController hull = attacker.GetComponent<HullController>();
+		ProjectileController proj = attacker.GetComponent<ProjectileController>();
+		if(proj==null)
+			return;
+
+
+		HullController hull = proj.Owner;
 		if(currentTarget==hull)
 			return;
 
