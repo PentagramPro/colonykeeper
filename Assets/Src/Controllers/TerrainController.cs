@@ -219,6 +219,7 @@ public class TerrainController : BaseManagedController, IStorable {
 			if(child!=cellContainer.transform)
 			{
 				try{
+
 					Object.DestroyImmediate(child.gameObject);
 				}
 				catch(UnityException e){}
@@ -228,8 +229,18 @@ public class TerrainController : BaseManagedController, IStorable {
 
 
 		M.cameraController.bounds = new Rect(0,0,w*TerrainMeshGenerator.CELL_SIZE,h*TerrainMeshGenerator.CELL_SIZE);
+		MapGen mapGen = new MapGen(M);
 
-		Block[,] pattern = MapGenerator.GenerateBlocksPattern(M, h, w);
+		mapGen.AddSpot(new PlayerSpot(M,w/2,h/2));
+		mapGen.AddSpot(new SentrySpot(M,-1,-1));
+		mapGen.AddSpot(new SentrySpot(M,-1,-1));
+		mapGen.AddSpot(new SentrySpot(M,-1,-1));
+		mapGen.AddSpot(new SentrySpot(M,-1,-1));
+		mapGen.AddSpot(new SentrySpot(M,-1,-1));
+
+
+
+		Block[,] pattern = mapGen.GenerateBlocksPattern(h, w);
 
 		for(int i=0;i<h;i++)
 		{
@@ -246,7 +257,7 @@ public class TerrainController : BaseManagedController, IStorable {
 				c.CellMouseOver+=OnCellHover;
 				c.CellMouseUp+=OnCellClicked;
 				c.BlockProt = pattern[i,j];
-
+/*
 				if(!editMode && i==h/2 && j==w/2)
 				{
 
@@ -277,10 +288,13 @@ public class TerrainController : BaseManagedController, IStorable {
 					M.VehiclesRegistry.Add(veh.GetComponent<VehicleController>());
 					veh.transform.position = c.Position;
 				}
-
+*/
 				//c.Digged=false;
 			}
 		}
+
+		mapGen.GenerateSpots(map, editMode);
+
 
 		int graphW = map.GetLength(1)*5,graphH = map.GetLength(0)*5;
 		Vector3 pos = transform.position+new Vector3((float)map.GetLength(1)/2f,0.2f,(float)map.GetLength(0)/2f);
