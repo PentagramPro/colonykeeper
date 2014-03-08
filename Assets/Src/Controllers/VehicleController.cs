@@ -5,7 +5,7 @@ using Pathfinding;
 public class VehicleController : BaseManagedController, IStorable  {
 	private enum VehicleModes
 	{
-		Idle,Calc,Turn,Follow,Destroyed
+		Idle,Calc,Turn,Follow,Stopping,Destroyed
 	}
 
 	public Manager.Sides Side = Manager.Sides.Player;
@@ -26,7 +26,8 @@ public class VehicleController : BaseManagedController, IStorable  {
 	public delegate void PathWalked();
 	public event PathWalked OnPathWalked;
 
-
+	float distanceToStop = 0;
+	float distanceToStopWalked=0;
 	
 	void Start()
 	{
@@ -37,7 +38,7 @@ public class VehicleController : BaseManagedController, IStorable  {
 	
 	// Update is called once per frame
 	void Update () {
-		if(vehicleState==VehicleModes.Follow || vehicleState==VehicleModes.Turn)
+		if(vehicleState==VehicleModes.Follow || vehicleState==VehicleModes.Turn || vehicleState==VehicleModes.Stopping)
 		{
 			if (path == null) {
 				//We have no path to move after yet
@@ -56,7 +57,7 @@ public class VehicleController : BaseManagedController, IStorable  {
 
 			if(Quaternion.Angle(transform.localRotation,dirRot)>10)
 				vehicleState = VehicleModes.Turn;
-			if(vehicleState==VehicleModes.Follow)
+			if(vehicleState==VehicleModes.Follow || vehicleState==VehicleModes.Stopping)
 			{
 				
 				//Direction to the next waypoint
@@ -69,10 +70,22 @@ public class VehicleController : BaseManagedController, IStorable  {
 				//controller.SimpleMove (dir);
 				//Check if we are close enough to the next waypoint
 				//If we are, proceed to follow the next waypoint
+
+				if(vehicleState==VehicleModes.Stopping)
+				{
+					distanceToStopWalked+=dir.magnitude;
+					if(distanceToStopWalked>distanceToStop)
+					{
+						Stop ();
+					}
+				}
+
 				if (Vector3.Distance (transform.position,path.vectorPath[currentWaypoint]) < 0.3f) {
 					currentWaypoint++;
 					return;
 				}
+
+
 			}
 			else if(vehicleState==VehicleModes.Turn)
 			{
@@ -135,6 +148,13 @@ public class VehicleController : BaseManagedController, IStorable  {
 		vehicleState = VehicleModes.Idle;
 	}
 
+	public void Stop(float distance)
+	{
+		vehicleState = VehicleModes.Stopping;
+		distanceToStopWalked=0;
+		distanceToStop=distance;
+	}
+
 	public void DriveTo(Vector3 dest)
 	{
 		currentDestination = dest;
@@ -173,6 +193,8 @@ public class VehicleController : BaseManagedController, IStorable  {
 		b.Write(transform.position);
 		b.Write(currentDestination);
 		b.WriteEnum(vehicleState);
+		b.Write((float)distanceToStop);
+		b.Write((float)distanceToStopWalked);
 		ComponentsSave(b);
 	}
 	
@@ -187,6 +209,8 @@ public class VehicleController : BaseManagedController, IStorable  {
 
 
 		vehicleState = (VehicleModes)r.ReadEnum(typeof(VehicleModes));
+		distanceToStop = (float)r.ReadDouble();
+		distanceToStopWalked = (float)r.ReadDouble();
 		ComponentsLoad(m,r);
 
 		if(vehicleState!=VehicleModes.Idle)

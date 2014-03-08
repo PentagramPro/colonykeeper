@@ -111,11 +111,11 @@ public class TerrainController : BaseManagedController, IStorable {
 		if (updateList.Count > 0)
 		{
 			foreach(BlockController b in updateList)
-				b.Generate(map,terrGen,false);
+				b.Generate(map,terrGen,false,true);
 			updateList.Clear();
 
-			GraphUpdateObject guo = new GraphUpdateObject(collider.bounds);
-			AstarPath.active.UpdateGraphs(guo);
+			//GraphUpdateObject guo = new GraphUpdateObject(collider.bounds);
+			//AstarPath.active.UpdateGraphs(guo);
 		}
 
 	}
@@ -296,7 +296,7 @@ public class TerrainController : BaseManagedController, IStorable {
 		mapGen.GenerateSpots(map, editMode);
 
 
-		int graphW = map.GetLength(1)*5,graphH = map.GetLength(0)*5;
+		int graphW = map.GetLength(1)*10,graphH = map.GetLength(0)*10;
 		Vector3 pos = transform.position+new Vector3((float)map.GetLength(1)/2f,0.2f,(float)map.GetLength(0)/2f);
 
 		((BoxCollider)collider).size = new Vector3(w,0.2f,h);
@@ -339,7 +339,7 @@ public class TerrainController : BaseManagedController, IStorable {
 		{
 			for(int j=0;j<map.GetLength(1);j++)
 			{
-				map[i,j].Generate(map,terrGen, editMode);
+				map[i,j].Generate(map,terrGen, editMode,false);
 
 			}
 		}

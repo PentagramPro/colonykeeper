@@ -36,6 +36,7 @@ public class PlayerSpot : MapSpot
 
 			PutVehicle(map,x,y,"Drone");
 			PutVehicle(map,x+2,y,"Drone");
+			PutVehicle(map,x+1,y+2,"Defender Drone");
 		}
 	}
 	#endregion

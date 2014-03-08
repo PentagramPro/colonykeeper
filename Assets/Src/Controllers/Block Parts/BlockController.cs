@@ -185,7 +185,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 	}
 
-	public void Generate(BlockController[,] map,TerrainMeshGenerator terrGen,  bool editMode)
+	public void Generate(BlockController[,] map,TerrainMeshGenerator terrGen,  bool editMode,bool updateAstar)
 	{
 		Manager manager = M;
 		
@@ -211,8 +211,12 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 			collider.enabled=false;
 		}
 
-		//if(!editMode)
-		//	AstarPath.active.UpdateGraphs(new GraphUpdateObject(collider.bounds));
+		if(!editMode && updateAstar)
+		{
+			Bounds b = collider.bounds;
+			b.Expand(1);
+			AstarPath.active.UpdateGraphs(new GraphUpdateObject(b));
+		}
 
 		// checking accessibility
 		Accessibility oldAc = IsAccessible;

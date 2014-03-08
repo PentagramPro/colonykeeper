@@ -3,6 +3,10 @@ using System.Collections;
 
 public class HullController : BaseManagedController {
 
+	public delegate void UnderAttack();
+	public event UnderAttack OnUnderAttack;
+
+
 	public bool ReportAttackToManager = false;
 
 	public Vector3 CenterPos;
@@ -39,6 +43,11 @@ public class HullController : BaseManagedController {
 			curHP-=(int)proj.Damage;
 			if(curHP<=0)
 				Destroy(gameObject);
+			else
+			{
+				if(OnUnderAttack!=null)
+					OnUnderAttack();
+			}
 		}
 	}
 

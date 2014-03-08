@@ -7,12 +7,14 @@ using System;
 public class DroneController : BaseManagedController, IWorker, IStorable{
 
 	public VehicleController vehicleController;
+	HullController hull;
+
 	IJob currentJob;
 
 	//////////////////////////////////////////////
 	private enum Modes
 	{
-		Start,Idle,Work,Go,GoUnload,DoUnload,BlockedUnload,GoLoad,DoLoad,BlockedLoad
+		Start,Idle,Runaway,Work,Go,GoUnload,DoUnload,BlockedUnload,GoLoad,DoLoad,BlockedLoad
 	}
 
 
@@ -39,7 +41,10 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 		if(vehicleController==null)
 			throw new UnityException("Vehicle exception must not be null");
 		inventory = GetComponent<IInventory>();
+		hull = GetComponent<HullController>();
+
 		vehicleController.OnPathWalked+=OnPathWalked;
+		hull.OnUnderAttack +=OnUnderAttack;
 
 		M.JobManager.JobAdded+=OnJobAdded;
 		M.BuildingsRegistry.ItemAdded+=OnBuildingAdded;
@@ -142,6 +147,10 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 		{
 			state = Modes.DoLoad;
 		}
+		else if(state == Modes.Runaway)
+		{
+			state = Modes.Idle;
+		}
 			
 		    
 	}
@@ -159,7 +168,14 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 		}
 	}
 
-
+	void OnUnderAttack()
+	{
+		if(state == Modes.Idle)
+		{
+			state = Modes.Runaway;
+			vehicleController.DriveTo(M.defenceController.GetComponent<BuildingController>().Position);
+		}
+	}
 
 	#region IWorker implementation
 	public void SetCallbacks (IJob job)
