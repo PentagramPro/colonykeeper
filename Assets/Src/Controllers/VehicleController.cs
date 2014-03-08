@@ -5,7 +5,7 @@ using Pathfinding;
 public class VehicleController : BaseManagedController, IStorable  {
 	private enum VehicleModes
 	{
-		Idle,Calc,Turn,Follow,Stopping,Destroyed
+		Idle,Calc,Turn,Follow,Destroyed
 	}
 
 	public Manager.Sides Side = Manager.Sides.Player;
@@ -26,6 +26,7 @@ public class VehicleController : BaseManagedController, IStorable  {
 	public delegate void PathWalked();
 	public event PathWalked OnPathWalked;
 
+	bool stopping = false;
 	float distanceToStop = 0;
 	float distanceToStopWalked=0;
 	
@@ -38,7 +39,7 @@ public class VehicleController : BaseManagedController, IStorable  {
 	
 	// Update is called once per frame
 	void Update () {
-		if(vehicleState==VehicleModes.Follow || vehicleState==VehicleModes.Turn || vehicleState==VehicleModes.Stopping)
+		if(vehicleState==VehicleModes.Follow || vehicleState==VehicleModes.Turn)
 		{
 			if (path == null) {
 				//We have no path to move after yet
@@ -47,7 +48,12 @@ public class VehicleController : BaseManagedController, IStorable  {
 			if (currentWaypoint >= path.vectorPath.Count) {
 				vehicleState=VehicleModes.Idle;
 				if(OnPathWalked!=null)
-					OnPathWalked();
+				{
+					if(stopping)
+						Debug.LogWarning("stopping==true while sending OnPathWalked event!");
+					else
+						OnPathWalked();
+				}
 				return;
 			}
 			
@@ -57,7 +63,7 @@ public class VehicleController : BaseManagedController, IStorable  {
 
 			if(Quaternion.Angle(transform.localRotation,dirRot)>10)
 				vehicleState = VehicleModes.Turn;
-			if(vehicleState==VehicleModes.Follow || vehicleState==VehicleModes.Stopping)
+			if(vehicleState==VehicleModes.Follow)
 			{
 				
 				//Direction to the next waypoint
@@ -71,7 +77,7 @@ public class VehicleController : BaseManagedController, IStorable  {
 				//Check if we are close enough to the next waypoint
 				//If we are, proceed to follow the next waypoint
 
-				if(vehicleState==VehicleModes.Stopping)
+				if(stopping)
 				{
 					distanceToStopWalked+=dir.magnitude;
 					if(distanceToStopWalked>distanceToStop)
@@ -80,7 +86,7 @@ public class VehicleController : BaseManagedController, IStorable  {
 					}
 				}
 
-				if (Vector3.Distance (transform.position,path.vectorPath[currentWaypoint]) < 0.3f) {
+				if (Vector3.Distance (transform.position,path.vectorPath[currentWaypoint]) < 0.25f) {
 					currentWaypoint++;
 					return;
 				}
@@ -150,13 +156,19 @@ public class VehicleController : BaseManagedController, IStorable  {
 
 	public void Stop(float distance)
 	{
-		vehicleState = VehicleModes.Stopping;
-		distanceToStopWalked=0;
-		distanceToStop=distance;
+		if(vehicleState==VehicleModes.Follow || vehicleState==VehicleModes.Turn)
+		{
+			stopping = true;
+			distanceToStopWalked=0;
+			distanceToStop=distance;
+		}
+		else
+			Stop ();
 	}
 
 	public void DriveTo(Vector3 dest)
 	{
+		stopping = false;
 		currentDestination = dest;
 		vehicleState = VehicleModes.Calc;
 
@@ -195,6 +207,7 @@ public class VehicleController : BaseManagedController, IStorable  {
 		b.WriteEnum(vehicleState);
 		b.Write((float)distanceToStop);
 		b.Write((float)distanceToStopWalked);
+		b.Write(stopping);
 		ComponentsSave(b);
 	}
 	
@@ -211,6 +224,7 @@ public class VehicleController : BaseManagedController, IStorable  {
 		vehicleState = (VehicleModes)r.ReadEnum(typeof(VehicleModes));
 		distanceToStop = (float)r.ReadDouble();
 		distanceToStopWalked = (float)r.ReadDouble();
+		stopping  = r.ReadBoolean();
 		ComponentsLoad(m,r);
 
 		if(vehicleState!=VehicleModes.Idle)

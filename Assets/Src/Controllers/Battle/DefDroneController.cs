@@ -44,7 +44,7 @@ public class DefDroneController : BaseManagedController {
 			curContact.Update(weapon.GunPosition);
 			if(curContact.IsTargetVisible())
 			{
-				vehicle.Stop(0.1f);
+				vehicle.Stop(0.2f);
 				state = Modes.Attack;
 				weapon.Attack(hull,curContact);
 			}
@@ -76,7 +76,8 @@ public class DefDroneController : BaseManagedController {
 	
 	void OnTargetLost()
 	{
-
+		if(state == Modes.Attack)
+			state = Modes.Intercept;
 	}
 	
 	void OnTargetDestroyed()
