@@ -3,8 +3,8 @@
   <Blocks>
   	<Block Name="Bedrock" MaterialName="Bedrock"></Block>
   	<Block Name="Ground" MaterialName="Ground"></Block>
-  	<Block Name="Iron Ore" MaterialName="IronOre" Contains="Iron Ore" Freq="0.06"></Block>
-  	<Block Name="Ice Ore" MaterialName="IceOre" Contains="Ice" Freq="0.08"></Block>
+  	<Block Name="Iron Ore" MaterialName="IronOre" Contains="Iron Ore" Freq="0.12"></Block>
+  	<Block Name="Ice Ore" MaterialName="IceOre" Contains="Ice" Freq="0.07"></Block>
   </Blocks>
   <Items >
   	<Item Name="Iron Ore" Class="Bulk.Ore"></Item>
@@ -59,10 +59,24 @@
   			<Ingredient Name="Iron Wire" Quantity="200"></Ingredient>
   		</Ingredients>
   	</Building>
+  	<Building Name="Assembler" PrefabName="Assembler">
+  		<Ingredients>
+  			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
+  			<Ingredient Name="Good.Part.Beam.*" Quantity="100"></Ingredient>
+  			<Ingredient Name="Iron Wire" Quantity="200"></Ingredient>
+  		</Ingredients>
+  	</Building>
+  	<Building Name="Vehicle Assembler" PrefabName="Vehicle Assembler">
+  		<Ingredients>
+  			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
+  			<Ingredient Name="Good.Part.Beam.*" Quantity="100"></Ingredient>
+  			<Ingredient Name="Iron Wire" Quantity="200"></Ingredient>
+  		</Ingredients>
+  	</Building>
   </Buildings>
   <Vehicles>
   	<Vehicle Name="Drone" PrefabName="Drone">
-  		<Recipe Device="Factory" Name = "Build Drone">
+  		<Recipe Device="Vehicle Assembler" Name = "Build Drone">
 	  		<Ingredients>
 	  			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
 	  			<Ingredient Name="Servo" Quantity="300"></Ingredient>
@@ -70,7 +84,7 @@
   		</Recipe>
   	</Vehicle>
   	<Vehicle Name="Defender Drone" PrefabName="DefenderDrone">
-  		<Recipe Device="Factory" Name = "Build Defender Drone">
+  		<Recipe Device="Vehicle Assembler" Name = "Build Defender Drone">
 	  		<Ingredients>
 	  			<Ingredient Name="Good.Part.Plate.*" Quantity="200"></Ingredient>
 	  			<Ingredient Name="Servo" Quantity="500"></Ingredient>
@@ -124,6 +138,16 @@
   		</Ingredients>
   		<Results>
   			<Result Name="Water" Quantity="40"></Result>
+  		</Results>
+  	</Recipe>
+  	
+  	<!--       ASSEMBLER RECIPES        -->
+  	<Recipe Device="Assembler" Name = "Assemble servo">
+  		<Ingredients>
+  			<Ingredient Name="Good.Part.Wire.*" Quantity="200"></Ingredient>
+  		</Ingredients>
+  		<Results>
+  			<Result Name="Servo" Quantity="100"></Result>
   		</Results>
   	</Recipe>
   </Recipes>

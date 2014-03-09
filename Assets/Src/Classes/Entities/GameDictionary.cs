@@ -71,6 +71,16 @@ public class GameDictionary  {
 			BlocksByName[b.Name]=b;
 		}
 
+		VehiclesByName.Clear();
+		foreach(Vehicle v in Vehicles)
+		{
+			VehiclesByName.Add(v.Name,v);
+			if(v.Recipe!=null)
+			{
+				v.Recipe.vehicle = v;
+				Recipes.Add(v.Recipe);
+			}
+		}
 
 		BuildingsByName.Clear();
 		foreach(Building b in Buildings)
@@ -90,16 +100,18 @@ public class GameDictionary  {
 		RecipesByName.Clear();
 		foreach (Recipe r in Recipes)
 		{
-			List<Recipe> list = null;
-			RecipesByDevice.TryGetValue(r.Device,out list);
-
-			if(list==null)
+			if(r.Device!=null)
 			{
-				list = new List<Recipe>();
-				RecipesByDevice.Add(r.Device,list);
-			}
-			list.Add(r);
+				List<Recipe> list = null;
+				RecipesByDevice.TryGetValue(r.Device,out list);
 
+				if(list==null)
+				{
+					list = new List<Recipe>();
+					RecipesByDevice.Add(r.Device,list);
+				}
+				list.Add(r);
+			}
 			r.Sort(this);
 
 			RecipesByName.Add(r.Name,r);
@@ -107,11 +119,7 @@ public class GameDictionary  {
 
 
 
-		VehiclesByName.Clear();
-		foreach(Vehicle v in Vehicles)
-		{
-			VehiclesByName.Add(v.Name,v);
-		}
+
 	}
 
 	public static GameDictionary Load(string path)

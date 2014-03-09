@@ -7,7 +7,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using System;
+using UnityEngine;
 
 public class UidContainer : IStorable
 {
@@ -27,21 +27,25 @@ public class UidContainer : IStorable
 	}
 
 	#region IStorable implementation
+	// do not call this
 	public void SaveUid(WriterEx b)
 	{
-	
-	}
-	
-	public void LoadUid(Manager m, ReaderEx r)
-	{
-	
+		throw new UnityException("You should call Save() to store uid. There is a bug in code.");
 	}
 
+	// do not call this
+	public void LoadUid(Manager m, ReaderEx r)
+	{
+		throw new UnityException("You should call Load() to load uid. There is a bug in code.");
+	}
+
+	//call this to save this uid
 	public void Save (WriterEx b)
 	{
 		b.Write(UID);
 	}
 
+	//call this to load uid and add a record to LoadedLinks
 	public void Load (Manager m, ReaderEx r)
 	{
 		int loadeduid = r.ReadInt32();

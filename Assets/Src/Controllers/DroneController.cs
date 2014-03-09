@@ -281,6 +281,7 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 		b.WriteLink(destinationInv);
 		b.Write(maxQuantityToPick);
 		b.WriteEx(itemToPick);
+		b.WriteMagic();
 	}
 
 	public void Load (Manager m, ReaderEx r)
@@ -292,6 +293,7 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 		destinationInv = (IInventory)r.ReadLink(m);
 		maxQuantityToPick = r.ReadInt32();
 		itemToPick = (Item)r.ReadItem(m);
+		r.CheckMagic();
 	}
 
 	#endregion

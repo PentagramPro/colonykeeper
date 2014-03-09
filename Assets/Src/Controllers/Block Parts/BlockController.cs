@@ -280,7 +280,9 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 			M.BuildingsRegistry.Add (this, building);
 		building.OnBuilded();
 
-		GraphUpdateObject guo = new GraphUpdateObject(building.collider.bounds);
+		Bounds b = collider.bounds;
+		b.Expand(1);
+		GraphUpdateObject guo = new GraphUpdateObject(b);
 		AstarPath.active.UpdateGraphs(guo);
 	}
 	void UpdateCellColor(JobManager jm)

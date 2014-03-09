@@ -1,18 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemyController : BaseManagedController {
+public class EnemyController : BaseManagedController, IStorable {
 
 	enum Modes {
 		Inactive,Sentry,Attack,Intercept
 	}
+	//store
 	Modes state = Modes.Inactive;
+	//store and instantiate
+	VisualContact curContact = null;
 
 	public TargeterController targeter;
 	public WeaponController weapon;
 	public VehicleController vehicle;
 
-	VisualContact curContact = null;
+
 
 	HullController hull;
 
@@ -82,4 +85,45 @@ public class EnemyController : BaseManagedController {
 		state = Modes.Sentry;
 		targeter.Search(vehicle.Side);
 	}
+
+	#region IStorable implementation
+	public override void SaveUid (WriterEx b)
+	{
+		
+		if(curContact!=null)
+		{
+			b.Write(true);
+			curContact.SaveUid(b);
+		}
+		else
+			b.Write(false);
+		
+		base.SaveUid (b);
+	}
+	
+	public override void LoadUid (Manager m, ReaderEx r)
+	{
+		if(r.ReadBoolean())
+		{
+			curContact = new VisualContact();
+			curContact.LoadUid(m,r);
+		}
+		base.LoadUid (m, r);
+	}
+	
+	public void Save (WriterEx b)
+	{
+		b.WriteEnum(state);
+		if(curContact!=null)
+			curContact.Save(b);
+	}
+	
+	public void Load (Manager m, ReaderEx r)
+	{
+		state = (Modes)r.ReadEnum(typeof(Modes));
+		if(curContact!=null)
+			curContact.Load(m,r);
+	}
+	
+	#endregion
 }

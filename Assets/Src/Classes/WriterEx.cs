@@ -44,10 +44,17 @@ public class WriterEx : BinaryWriter
 
 	public void WriteEx(Vehicle val)
 	{
+
 		if(val!=null)
+		{
+			Debug.Log("Storing vehicle "+val.Name);
 			Write (val.Name);
+		}
 		else 
+		{
+			Debug.Log("Storing vehicle with null pointer");
 			Write ("");
+		}
 	}
 
 	public void WriteEx(Recipe val)

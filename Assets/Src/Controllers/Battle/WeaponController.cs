@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WeaponController : BaseController {
+public class WeaponController : BaseController, IStorable{
 
 	enum Modes {
 		Idle,Attack
@@ -11,8 +11,13 @@ public class WeaponController : BaseController {
 	public event TargetNotification OnTargetLost;
 	public event TargetNotification OnTargetDestroyed;
 
+	UidContainer uidc;
+	//store
 	Modes state = Modes.Idle;
+	//store link
 	VisualContact curContact;
+	//store
+	float fireCounter = 0;
 
 	public float rotationSpeed = 5;
 	public float fireDelay = 1;
@@ -27,11 +32,11 @@ public class WeaponController : BaseController {
 
 	HullController owner;
 
-	float fireCounter = 0;
+
 
 	// Use this for initialization
 	void Start () {
-	
+		uidc = new UidContainer(this);
 	}
 	
 	// Update is called once per frame
@@ -116,4 +121,39 @@ public class WeaponController : BaseController {
 		
 		proj.Fire(owner,GunPosition,dir,fireDamage);
 	}
+
+	#region IStorable implementation
+
+	public void SaveUid (WriterEx b)
+	{
+		uidc.Save(b);
+	}
+
+	public void LoadUid (Manager m, ReaderEx r)
+	{
+		uidc.Load(m,r);
+	}
+
+	public void Save (WriterEx b)
+	{
+
+		b.WriteEnum(state);
+		b.WriteLink(curContact);
+		b.Write ((double)fireCounter);
+
+	}
+
+	public void Load (Manager m, ReaderEx r)
+	{
+		state = (Modes)r.ReadEnum(typeof(Modes));
+		curContact = (VisualContact)r.ReadLink(m);
+		fireCounter = (float)r.ReadDouble();
+	}
+
+	public int GetUID ()
+	{
+		return uidc.UID;
+	}
+
+	#endregion
 }

@@ -84,8 +84,12 @@ public class MapGen
 	// step 2
 	public void GenerateSpots(BlockController[,] map, bool editMode)
 	{
+
+		Debug.Log("total spots: "+spots.Count);
+
 		GenerateSpotsInternal(map.GetLength(1),map.GetLength(0));
 
+		Debug.Log("total spots left after generation: "+spots.Count);
 	
 		// place spots
 		foreach(MapSpot s in spots)
@@ -135,6 +139,8 @@ public class MapGen
 				toRemove.Add(spot);
 			}
 		}
+
+		Debug.Log("Spots to remove: "+toRemove.Count);
 
 		foreach(MapSpot spot in toRemove)
 			spots.Remove(spot);

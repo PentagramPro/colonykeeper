@@ -42,7 +42,12 @@ public class ReaderEx : BinaryReader
 	public Vehicle ReadVehicle(Manager m)
 	{
 		Vehicle res = null;
-		m.GameD.VehiclesByName.TryGetValue(ReadString(), out res);
+		string name = ReadString();
+		if(!m.GameD.VehiclesByName.TryGetValue(name, out res))
+		{
+			throw new UnityException("Could not read vehicle "+name+". No such name in VehiclesByName!");
+		}
+
 		return res;
 	}
 

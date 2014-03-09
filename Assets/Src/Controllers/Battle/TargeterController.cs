@@ -1,19 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class TargeterController : BaseManagedController {
+public class TargeterController : BaseManagedController, IStorable {
 
 	enum Modes {
 		Idle,Search,Delay
 	}
 	Modes state = Modes.Search;
 
+
 	float delay = 0;
+
+
 	public float Range = 6;
 	public delegate void TargetFoundDelegate(VisualContact contact);
 	public event TargetFoundDelegate OnFound;
 
+
+	// at start()
 	HullController self;
+
+	// temp list, do not save
 	List<HullController> targetsList = new List<HullController>();
 
 	Manager.Sides currentSide;
@@ -81,4 +88,20 @@ public class TargeterController : BaseManagedController {
 			}
 		}
 	}
+
+	#region IStorable implementation
+
+	public void Save (WriterEx b)
+	{
+		b.WriteEnum(state);
+		b.Write((double)delay);
+	}
+
+	public void Load (Manager m, ReaderEx r)
+	{
+		state = (Modes)r.ReadEnum(typeof(Modes));
+		delay = (float)r.ReadDouble();
+	}
+
+	#endregion
 }

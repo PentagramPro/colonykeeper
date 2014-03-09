@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HullController : BaseManagedController {
+public class HullController : BaseManagedController, IStorable {
 
 	public delegate void UnderAttack();
 	public event UnderAttack OnUnderAttack;
@@ -66,4 +66,18 @@ public class HullController : BaseManagedController {
 	void Update () {
 	
 	}
+
+	#region IStorable implementation
+
+	public void Save (WriterEx b)
+	{
+		b.Write(curHP);
+	}
+
+	public void Load (Manager m, ReaderEx r)
+	{
+		curHP = r.ReadInt32();
+	}
+
+	#endregion
 }

@@ -1,22 +1,29 @@
 using UnityEngine;
 using System;
 
-public class VisualContact
+public class VisualContact : IStorable
 {
 	enum Modes{
 		Visible,Lost,Destroyed
 	}
+
+	UidContainer uidc;
+	//store link
 	public HullController Target = null;
+	//store
 	public Vector3 LastPosition;
+	//store
 	Modes state = Modes.Lost;
 
 	public VisualContact ()
 	{
+		uidc = new UidContainer(this);
 	}
 
 	public VisualContact (HullController target)
 	{
 		Target = target;
+		uidc = new UidContainer(this);
 	}
 
 	public void Update(Vector3 weaponPos)
@@ -54,6 +61,33 @@ public class VisualContact
 
 	}
 
+	#region IStorable implementation
+	public void SaveUid (WriterEx b)
+	{
+		uidc.Save(b);
+	}
+	public void LoadUid (Manager m, ReaderEx r)
+	{
+		uidc.Load(m,r);
+	}
+	public void Save (WriterEx b)
+	{
+		b.WriteLink(Target);
+		b.Write (LastPosition);
+		b.WriteEnum(state);
+	}
+	public void Load (Manager m, ReaderEx r)
+	{
+		Target = (HullController)r.ReadLink(m);
+		LastPosition = r.ReadVector3();
+		state = (Modes)r.ReadEnum(typeof(Modes));
+
+	}
+	public int GetUID ()
+	{
+		return uidc.UID;
+	}
+	#endregion
 }
 
 

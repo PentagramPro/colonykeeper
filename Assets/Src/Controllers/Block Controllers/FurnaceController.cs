@@ -20,6 +20,7 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 	public SupplyController supplyController;
 	public UnloadController inputUnloadController, outputUnloadController;
 
+
 	BuildingController building;
 
 	int selectedItem=0;
@@ -91,7 +92,9 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 					{
 
 						targetQuantity--;
-						outputUnloadController.InventoryToUnload.Put(targetRecipe.ResultsLinks[0].ItemType, targetRecipe.ResultsLinks[0].Quantity);
+						outputUnloadController.PutProduction(targetRecipe);
+
+
 					}
 				}
 			}
@@ -267,6 +270,7 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 		b.WriteEnum(state);
 		b.Write((double)productionPoints);
 		b.Write(targetQuantity);
+		if(targetRecipe!=null)
 			targetRecipe.Save(b);
 		
 

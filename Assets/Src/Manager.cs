@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -29,15 +30,18 @@ public class Manager : MonoBehaviour {
 	public JobManager JobManager = new JobManager();
 
 	//has to be stored and loaded
+	[NonSerialized]
 	public DictionaryEx<BlockController,BuildingController> BuildingsRegistry = new DictionaryEx<BlockController, BuildingController>();
 
 	//has to be stored and loaded
+	[NonSerialized]
 	public List<VehicleController> VehiclesRegistry = new List<VehicleController>();
 
 
 	public CameraController cameraController;
 
 	//cache for references to objects. Used during loading of game
+	[NonSerialized]
 	public Dictionary<int, object> LoadedLinks = new Dictionary<int, object>();
 
 	public GUIController GetGUIController()
@@ -112,6 +116,7 @@ public class Manager : MonoBehaviour {
 			}
 
 			JobManager.Save(b);
+			b.WriteMagic();
 
 			foreach(VehicleController v in VehiclesRegistry)
 				v.Save(b);
@@ -168,6 +173,7 @@ public class Manager : MonoBehaviour {
 			}
 
 			JobManager.Load(this,b);
+			b.CheckMagic();
 
 			foreach(VehicleController v in VehiclesRegistry)
 				v.Load(this,b);

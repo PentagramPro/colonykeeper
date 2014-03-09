@@ -38,12 +38,12 @@ public class RecipeInstance : IStorable
 
 	public void SaveUid (WriterEx b)
 	{
-		uidc.SaveUid(b);
+		uidc.Save(b);
 	}
 
 	public void LoadUid (Manager m, ReaderEx r)
 	{
-		uidc.LoadUid(m,r);
+		uidc.Load(m,r);
 	}
 
 	public void Save (WriterEx b)

@@ -27,6 +27,11 @@ public class Recipe
 	public List<Pile> ResultsLinks = new List<Pile>();
 
 
+	// used only for vehicle recipes
+	// points to result of this recipe
+	[XmlIgnore]
+	public Vehicle vehicle;
+
 	[XmlIgnore]
 	public bool IsOneCombination
 	{

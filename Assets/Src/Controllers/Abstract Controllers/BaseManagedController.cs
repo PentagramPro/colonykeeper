@@ -71,12 +71,24 @@ public class BaseManagedController : BaseController {
 	public void ComponentsLoad(Manager m, ReaderEx r)
 	{
 		Component[] components = GetComponents<Component>();
-		foreach(Component c in components)
+		string loaded = "";
+		string curLoading = "";
+		try
 		{
-			if(c is IStorable && c!=this)
+			foreach(Component c in components)
 			{
-				((IStorable)c).Load(m,r);
+				curLoading = c.name;
+				if(c is IStorable && c!=this)
+				{
+					((IStorable)c).Load(m,r);
+					curLoading+=c.name+", ";
+				}
 			}
+		}
+		catch(UnityException e)
+		{
+			Debug.LogError("Error occured while loading "+curLoading+" after loaded "+loaded);
+			throw e;
 		}
 	}
 

@@ -3,11 +3,15 @@ using System.Collections;
 
 public class UnloadController : BaseManagedController,ICustomer, IStorable {
 
+	public enum OperaionModes{
+		OutputItems,OutputVehicles
+	}
 	public IInventory InventoryToUnload;
 	enum Modes {
 		Idle, Unload
 	}
 	Modes state = Modes.Idle;
+	public OperaionModes OperationMode = OperaionModes.OutputItems;
 
 	public delegate void InventoryEvent();
 
@@ -25,7 +29,23 @@ public class UnloadController : BaseManagedController,ICustomer, IStorable {
 			AddJob();
 		}
 	}
-	
+
+
+	public void PutProduction(RecipeInstance r)
+	{
+		switch(OperationMode)
+		{
+		case OperaionModes.OutputItems:
+			InventoryToUnload
+				.Put(r.ResultsLinks[0].ItemType, r.ResultsLinks[0].Quantity);
+			break;
+		case OperaionModes.OutputVehicles:
+			VehicleController res = r.Prototype.vehicle.Instantiate().GetComponent<VehicleController>();
+			M.VehiclesRegistry.Add(res);
+			res.transform.position = transform.position;
+			break;
+		}
+	}
 	void AddJob()
 	{
 		BuildingController bc = GetComponent<BuildingController>();

@@ -205,8 +205,8 @@ public class VehicleController : BaseManagedController, IStorable  {
 		b.Write(transform.position);
 		b.Write(currentDestination);
 		b.WriteEnum(vehicleState);
-		b.Write((float)distanceToStop);
-		b.Write((float)distanceToStopWalked);
+		b.Write((double)distanceToStop);
+		b.Write((double)distanceToStopWalked);
 		b.Write(stopping);
 		ComponentsSave(b);
 	}
