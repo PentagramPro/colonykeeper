@@ -4,7 +4,7 @@ using System.Collections;
 public class EnemyController : BaseManagedController {
 
 	enum Modes {
-		Inactive,Sentry,Attack
+		Inactive,Sentry,Attack,Intercept
 	}
 	Modes state = Modes.Inactive;
 
@@ -31,6 +31,7 @@ public class EnemyController : BaseManagedController {
 		weapon.OnTargetLost+=OnTargetLost;
 		weapon.OnTargetDestroyed += OnTargetDestroyed;
 		hull = GetComponent<HullController>();
+		vehicle.OnPathWalked+=OnPathWalked;
 	}
 	
 	// Update is called once per frame
@@ -47,11 +48,21 @@ public class EnemyController : BaseManagedController {
 			break;
 		case Modes.Attack:
 			break;
+		
 		}
+	}
+
+
+	void OnPathWalked()
+	{
+		if(state==Modes.Intercept)
+			state = Modes.Sentry;
 	}
 
 	void OnFound(VisualContact target)
 	{
+		if(state == Modes.Intercept)
+			vehicle.Stop(0.1f);
 		curContact = target;
 		state = Modes.Attack;
 		weapon.Attack(hull,target);
@@ -59,8 +70,9 @@ public class EnemyController : BaseManagedController {
 
 	void OnTargetLost()
 	{
-		curContact = null;
-		state = Modes.Sentry;
+
+		state = Modes.Intercept;
+		vehicle.DriveTo(curContact.LastPosition);
 		targeter.Search(vehicle.Side);
 	}
 

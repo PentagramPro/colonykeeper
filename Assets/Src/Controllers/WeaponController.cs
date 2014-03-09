@@ -57,6 +57,8 @@ public class WeaponController : BaseController {
 
 	public void Attack(HullController owner,VisualContact target)
 	{
+		Debug.Log("Weapon "+GetHashCode()+" of hull "+owner.GetHashCode()+
+		          " attacks target "+target.GetHashCode()+"(hull = "+target.Target.GetHashCode()+")");
 		curContact = target;
 		state = Modes.Attack;
 		this.owner = owner;
@@ -80,8 +82,8 @@ public class WeaponController : BaseController {
 		if(curContact.IsTargetVisible())
 		{
 			Quaternion dir = Quaternion.LookRotation(target.Center-transform.position);
-			transform.localRotation=
-				Quaternion.RotateTowards(transform.localRotation,dir,rotationSpeed*Time.smoothDeltaTime);
+			transform.rotation=
+				Quaternion.RotateTowards(transform.rotation,dir,rotationSpeed*Time.smoothDeltaTime);
 			fireCounter+=Time.smoothDeltaTime;
 			if(fireCounter>fireDelay)
 			{
