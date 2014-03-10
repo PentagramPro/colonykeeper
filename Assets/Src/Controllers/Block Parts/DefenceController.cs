@@ -27,6 +27,8 @@ public class DefenceController : BaseManagedController {
 		HullController hull = proj.Owner;
 		if(currentTarget==hull)
 			return;
+		if(hull.CurHP<=0)
+			return;
 
 		if(currentTarget==null)
 		{

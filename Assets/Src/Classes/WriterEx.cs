@@ -93,6 +93,11 @@ public class WriterEx : BinaryWriter
 
 	}
 
+	public void Write(DateTime time)
+	{
+		Write ((long)time.Ticks);
+	}
+
 	public void WriteLink(IStorable obj)
 	{
 		if(obj==null)

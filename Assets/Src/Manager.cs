@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Globalization;
 using System.Collections.Generic;
 using System.IO;
 
@@ -11,6 +12,10 @@ public class Manager : MonoBehaviour {
 	public delegate void UpdatedDelegate();
 
 	public TerrainController terrainController;
+
+	public DateTime GameDateTime;
+	Calendar calendar = CultureInfo.InvariantCulture.Calendar;
+	float hourCounter = 0;
 
 	GUIController guiController;
 
@@ -52,6 +57,8 @@ public class Manager : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
+		GameDateTime = new DateTime(2260,2,1);
+
 		if(terrainController==null)
 			throw new UnityException("terrainController must not be null");
 		if(Stat==null)
@@ -60,6 +67,14 @@ public class Manager : MonoBehaviour {
 
 	void Update()
 	{
+
+		hourCounter+=Time.smoothDeltaTime;
+		if(hourCounter>1)
+		{
+			hourCounter--;
+			//calendar.AddMinutes(GameDateTime,1);
+			GameDateTime = GameDateTime.AddMinutes(1);
+		}
 		JobManager.UpdateJobs();
 	}
 
@@ -120,6 +135,10 @@ public class Manager : MonoBehaviour {
 
 			foreach(VehicleController v in VehiclesRegistry)
 				v.Save(b);
+
+			b.Write(GameDateTime);
+
+
 		}
 	}
 
@@ -177,6 +196,8 @@ public class Manager : MonoBehaviour {
 
 			foreach(VehicleController v in VehiclesRegistry)
 				v.Load(this,b);
+
+			GameDateTime = b.ReadDateTime();
 		}
 	}
 }

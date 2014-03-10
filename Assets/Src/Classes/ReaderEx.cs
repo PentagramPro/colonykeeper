@@ -51,6 +51,7 @@ public class ReaderEx : BinaryReader
 		return res;
 	}
 
+
 	public Recipe ReadRecipe(Manager m)
 	{
 		Recipe res = null;
@@ -73,6 +74,11 @@ public class ReaderEx : BinaryReader
 			(float)ReadDouble());
 	}
 
+	public DateTime ReadDateTime()
+	{
+		DateTime res = new DateTime((long)ReadInt64());
+		return res;
+	}
 	public Vector3 ReadVector3()
 	{
 		return new Vector3(
