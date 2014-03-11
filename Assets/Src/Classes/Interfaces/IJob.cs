@@ -60,7 +60,8 @@ public abstract class IJob : IStorable
 
 	public void Cancel()
 	{
-		worker.CancelCurrentJob();
+		if(worker!=null)
+			worker.CancelCurrentJob();
 		customer = null;
 		worker = null;
 	}

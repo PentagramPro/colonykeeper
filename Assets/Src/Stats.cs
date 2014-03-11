@@ -35,7 +35,7 @@ public class Stats : MonoBehaviour {
 	{
 		foreach(Item item in ingredient.Items)
 		{
-			if(Items[item]>=ingredient.Quantity)
+			if(Items.ContainsKey(item) && Items[item]>=ingredient.Quantity)
 				result.Add(item);
 		}
 	}
