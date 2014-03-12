@@ -39,18 +39,10 @@ public class UnloadJob : IJob
 		Item[] items = inventory.GetItemTypes();
 		if(items.GetLength(0)>0)
 		{
-			if(jobManager.M.FindInventoryFor(items[0])==null)
-			{
-				DelayThisJob();
-			}
-			else
-			{
-				int q = inventory.GetItemQuantity(items[0]);
-				worker.Pick(inventory,items[0],q);
-				state = Modes.Unload;
-				worker.Unload();
-			}
-			
+			int q = inventory.GetItemQuantity(items[0]);
+			worker.Pick(inventory,items[0],q);
+			state = Modes.Unload;
+			worker.Unload();		
 		}
 		else
 		{
@@ -76,8 +68,17 @@ public class UnloadJob : IJob
 		switch(state)
 		{
 		case Modes.Start:
+			Item[] items = inventory.GetItemTypes();
+			if(jobManager.M.FindInventoryFor(items[0])==null)
+			{
+				DelayThisJob();
+				state = Modes.Start;
+			}
+			else
+			{
 				worker.DriveTo(buildingPos);
-			state = Modes.Go;
+				state = Modes.Go;
+			}
 			break;
 		}
 	}
