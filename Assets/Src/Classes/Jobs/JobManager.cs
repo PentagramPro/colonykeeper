@@ -14,6 +14,11 @@ public class JobManager : IStorable {
 
 	const float JOB_DELAY = 10;
 
+	public Manager M;
+	public JobManager(Manager m)
+	{
+		M = m;
+	}
 	public void AddJob(IJob j, bool isBlocked)
 	{
 		if(isBlocked)

@@ -83,9 +83,7 @@ public class DigJob : IJob
 
 			break;
 		case BlockController.DigResult.Finished:
-			state = States.Transport;
-			worker.Unload();
-
+			End();
 			break;
 		case BlockController.DigResult.NotFinished:
 			break;

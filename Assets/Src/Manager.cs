@@ -12,6 +12,7 @@ public class Manager : MonoBehaviour {
 	public delegate void UpdatedDelegate();
 
 	public TerrainController terrainController;
+	public IInventory cratePrefab;
 
 	public DateTime GameDateTime;
 	Calendar calendar = CultureInfo.InvariantCulture.Calendar;
@@ -32,7 +33,7 @@ public class Manager : MonoBehaviour {
 
 	//Job manager holds list of jobs
 	// has to be stored and loaded
-	public JobManager JobManager = new JobManager();
+	public JobManager JobManager ;
 
 	//has to be stored and loaded
 	[NonSerialized]
@@ -42,6 +43,8 @@ public class Manager : MonoBehaviour {
 	[NonSerialized]
 	public List<VehicleController> VehiclesRegistry = new List<VehicleController>();
 
+	[NonSerialized]
+	public List<CrateController> CratesRegistry = new List<CrateController>();
 
 	public CameraController cameraController;
 
@@ -58,11 +61,14 @@ public class Manager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		GameDateTime = new DateTime(2260,2,1);
+		JobManager = new JobManager(this);
 
 		if(terrainController==null)
 			throw new UnityException("terrainController must not be null");
 		if(Stat==null)
 			throw new UnityException("Stat must not be null");
+		if(cratePrefab==null)
+			throw new UnityException("Crate prefab must not be null");
 	}
 
 	void Update()
@@ -86,7 +92,35 @@ public class Manager : MonoBehaviour {
 	// 	GameD.Save(path);
 	}
 
+	public IInventory FindInventoryFor(Item itemType)
+	{
+		foreach (BlockController b in BuildingsRegistry.Keys) 
+		{
+			BuildingController building = BuildingsRegistry[b];
+			
+			IInventory i = building.GetComponent<IInventory>();
+			if(i==null)
+				continue;
+			
+			
+			
+			if(i.CanPut(itemType)>0)
+				return i;
+			
+		}
+		return null;
+	}
 
+	public IInventory CreateCrate(Transform pos)
+	{
+		GameObject crate = (GameObject)Instantiate(cratePrefab.gameObject, pos.position, pos.rotation);
+		IInventory crateInv = crate.GetComponent<IInventory>();
+		CrateController crateController = crate.GetComponent<CrateController>();
+
+		CratesRegistry.Add(crateController);
+		return crateInv;
+
+	}
 	public void UnderAttack(HullController victim, Transform attacker)
 	{
 		if(defenceController!=null)

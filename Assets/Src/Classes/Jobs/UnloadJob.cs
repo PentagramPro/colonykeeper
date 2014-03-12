@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using System;
+using UnityEngine;
 
 public class UnloadJob : IJob
 {
@@ -18,17 +19,17 @@ public class UnloadJob : IJob
 
 	Modes state = Modes.Start;
 	IInventory inventory;
-	BuildingController building;
+	Vector3 buildingPos;
 
 	public UnloadJob()
 	{
 	}
 
-	public UnloadJob(JobManager jobManager, ICustomer customer,BuildingController target, IInventory targetInventory) 
+	public UnloadJob(JobManager jobManager, ICustomer customer,Vector3 target, IInventory targetInventory) 
 		: base(jobManager, customer)
 	{
 		inventory = targetInventory;
-		building = target;
+		buildingPos = target;
 	}
 
 	#region implemented abstract members of IJob
@@ -38,10 +39,18 @@ public class UnloadJob : IJob
 		Item[] items = inventory.GetItemTypes();
 		if(items.GetLength(0)>0)
 		{
-			int q = inventory.GetItemQuantity(items[0]);
-			worker.Pick(inventory,items[0],q);
-			state = Modes.Unload;
-			worker.Unload();
+			if(jobManager.M.FindInventoryFor(items[0])==null)
+			{
+				DelayThisJob();
+			}
+			else
+			{
+				int q = inventory.GetItemQuantity(items[0]);
+				worker.Pick(inventory,items[0],q);
+				state = Modes.Unload;
+				worker.Unload();
+			}
+			
 		}
 		else
 		{
@@ -67,7 +76,7 @@ public class UnloadJob : IJob
 		switch(state)
 		{
 		case Modes.Start:
-			worker.DriveTo(building.Position);
+				worker.DriveTo(buildingPos);
 			state = Modes.Go;
 			break;
 		}
@@ -79,7 +88,7 @@ public class UnloadJob : IJob
 	{
 		base.Save (b);
 		b.WriteEnum(state);
-		b.WriteLink(building);
+		b.Write(buildingPos);
 		b.WriteLink(inventory);
 	}
 	
@@ -87,7 +96,7 @@ public class UnloadJob : IJob
 	{
 		base.Load (m, r);
 		state = (Modes)r.ReadEnum(typeof(Modes));
-		building = (BuildingController)r.ReadLink(m);
+		buildingPos = r.ReadVector3();
 		inventory = (IInventory)r.ReadLink(m);
 	}
 }

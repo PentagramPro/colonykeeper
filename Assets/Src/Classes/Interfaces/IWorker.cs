@@ -12,7 +12,7 @@ public interface IWorker  {
 
 	BlockController.DigResult Dig(BlockController block);
 
-	void Unload();
+	bool Unload();
 
 	bool Load(Item itemType, int maxQuantity);
 

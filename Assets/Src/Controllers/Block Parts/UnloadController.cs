@@ -49,10 +49,13 @@ public class UnloadController : BaseManagedController,ICustomer, IStorable {
 	void AddJob()
 	{
 		BuildingController bc = GetComponent<BuildingController>();
-		if(bc == null)
-			throw new UnityException("BlockedInventory should be attached to GameObject with BuildingController attached");
+		Vector3 pos;
+		if (bc == null)
+			pos = transform.position;
+		else
+			pos = bc.Position;
 
-		UnloadJob j = new UnloadJob(M.JobManager,this,bc,InventoryToUnload);
+		UnloadJob j = new UnloadJob(M.JobManager,this,pos,InventoryToUnload);
 		M.JobManager.AddJob(j,false);
 	}
 	

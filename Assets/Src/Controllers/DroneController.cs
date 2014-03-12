@@ -200,8 +200,9 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 		return block.Dig(inventory,(int)(digAmount*Time.smoothDeltaTime));
 	}
 
-	public void Unload ()
+	public bool Unload ()
 	{
+		bool res = true;
 		if(inventory.Quantity==0)
 		{
 			state = Modes.Work;
@@ -211,7 +212,7 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 		{
 			Item[] itemTypes = inventory.GetItemTypes();
 
-			destinationInv = vehicleController.FindInventoryFor(itemTypes[0]);
+			destinationInv = M.FindInventoryFor(itemTypes[0]);
 			if(destinationInv!=null)
 			{
 				state = Modes.GoUnload;
@@ -220,9 +221,10 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 			else
 			{
 				state = Modes.BlockedUnload;
+				res = false;
 			}
 		}
-
+		return res;
 	}
 
 	public bool Load (Item itemType, int maxQuantity)
@@ -247,15 +249,19 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 
 	public void OnJobCompleted ()
 	{
+		if (inventory.Quantity > 0)
+			inventory.DropCrate();
+		
 		state = Modes.Idle;
 		currentJob = M.JobManager.FindJob();
-		if(currentJob!=null)
+		if (currentJob != null)
 		{
-			if(	M.JobManager.AssignJob(currentJob,this))
+			if (M.JobManager.AssignJob(currentJob, this))
 			{
 				state = Modes.Work;
 			}
 		}
+		
 	}
 
 	public void Feed(IInventory inv)

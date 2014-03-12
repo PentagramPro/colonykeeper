@@ -21,6 +21,17 @@ public class IInventory : BaseManagedController, IStorable
 	}
 
 
+	public void DropCrate()
+	{
+		IInventory crate = M.CreateCrate(transform);
+		foreach (Pile p in items.Values)
+		{
+			crate.Put(p);
+		}
+		items.Clear();
+		totalQuantity = 0;
+	}
+
 	public Pile Take (Item itemType, int quantity)
 	{
 		if(quantity<0)
