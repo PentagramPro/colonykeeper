@@ -1,5 +1,5 @@
 using System;
-
+using System.Collections.Generic;
 public abstract class IJob : IStorable
 {
 
@@ -7,7 +7,22 @@ public abstract class IJob : IStorable
 
 	protected JobManager jobManager;
 	protected IWorker worker;
-	protected ICustomer customer;
+
+	protected WeakReference customer;
+	protected ICustomer Customer{
+		get{
+			if(customer==null)
+				return null;
+
+			return customer.Target as ICustomer;
+		}
+		set{
+			if(value == null)
+				customer = null;
+			else
+				customer = new WeakReference(value);
+		}
+	}
 
 	public IJob()
 	{
@@ -15,7 +30,7 @@ public abstract class IJob : IStorable
 	}
 	public IJob(JobManager jobManager, ICustomer customer)
 	{
-		this.customer = customer;
+		Customer = customer;
 		this.jobManager = jobManager;
 		uidc = new UidContainer(this);
 	}
@@ -32,7 +47,8 @@ public abstract class IJob : IStorable
 	protected void Complete()
 	{
 		worker.OnJobCompleted();
-		customer.JobCompleted(this);
+		if(Customer!=null)
+			Customer.JobCompleted(this);
 		jobManager.CompleteJob(this);
 		customer = null;
 		worker = null;
@@ -91,7 +107,7 @@ public abstract class IJob : IStorable
 	public virtual void Save (WriterEx b)
 	{
 		b.WriteLink((IStorable)worker);
-		b.WriteLink((IStorable)customer);
+		b.WriteLink((IStorable)Customer);
 	}
 
 	public virtual void Load (Manager m, ReaderEx r)
@@ -99,7 +115,7 @@ public abstract class IJob : IStorable
 		jobManager = m.JobManager;
 
 		worker = (IWorker)r.ReadLink(m);
-		customer = (ICustomer)r.ReadLink(m);
+		Customer = (ICustomer)r.ReadLink(m);
 	}
 
 	#endregion

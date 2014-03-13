@@ -6,6 +6,8 @@ public class IInventory : BaseManagedController, IStorable
 {
 	public delegate void InventoryEvent();
 
+	public event InventoryEvent ItemRemoved;
+
 	public string ItemClass = "";
 	public int MaxQuantity= 2000;
 	Dictionary<Item, Pile> items = new Dictionary<Item, Pile>();
@@ -46,9 +48,11 @@ public class IInventory : BaseManagedController, IStorable
 		
 		int q = Mathf.Min(quantity,pile.Quantity);		
 		
-		totalQuantity -=q;
+		totalQuantity -= q;
 		if(totalQuantity<0)
 			throw new UnityException("Negative totalQuantity. Some bug in inventory implementation!");
+		if (ItemRemoved != null)
+			ItemRemoved();
 		
 		M.Stat.ChangeItemCount(itemType,-q);
 		if(pile.Quantity==q)

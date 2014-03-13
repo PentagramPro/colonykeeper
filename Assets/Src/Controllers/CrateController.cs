@@ -9,15 +9,27 @@ public class CrateController : BaseManagedController {
 	// Use this for initialization
 	void Start () {
 		if(Unloader==null)
-			throw new UnityException("Unload controller must not be null");
+			throw new UnityException("UnloadController must not be null");
 
 		Unloader.OnFreed += OnFreed;
+		Unloader.InventoryToUnload.ItemRemoved += OnItemRemoved;
 		Unloader.FreeInventory();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	void OnDestroy()
+	{
+		Unloader.OnFreed -= OnFreed;
+		Unloader.InventoryToUnload.ItemRemoved -= OnItemRemoved;
+	}
+	void OnItemRemoved()
+	{
+		if(Unloader.InventoryToUnload.Quantity==0)
+			Destroy(gameObject);
 	}
 
 	void OnFreed()
