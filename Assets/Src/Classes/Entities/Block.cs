@@ -22,6 +22,8 @@ public class Block  {
 	[XmlAttribute("Freq")]
 	public float Freq=1;
 
+	[XmlAttribute("DigSpeed")]
+	public float DigSpeed=-1;
 	[XmlIgnore]
 	public Item ContainsItem;
 }

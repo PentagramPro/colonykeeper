@@ -75,19 +75,26 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 			
 				break;
 			case Modes.DoUnload:
-				destinationInv.Put(
-					inventory,
-					(int)(unloadAmount*Time.smoothDeltaTime),
-					inventory.GetItemTypes()[0]);
-
-				if(inventory.Quantity==0)
 				{
-					state = Modes.Work;
-					currentJob.OnUnloaded();
-				}
-				else if(destinationInv.IsFull())
-				{
-					Unload();
+					Item itemToUnload = inventory.GetItemTypes()[0];
+					destinationInv.Put(
+						inventory,
+						(int)(unloadAmount*Time.smoothDeltaTime),
+						itemToUnload);
+					
+					if(inventory.Quantity==0)
+					{
+						state = Modes.Work;
+						currentJob.OnUnloaded();
+					}
+					else if(destinationInv.IsFull())
+					{
+						Unload();
+					}
+					else if(!destinationInv.CanTake(itemToUnload))
+					{
+						Unload();
+					}
 				}
 				break;
 			case Modes.DoLoad:
@@ -197,7 +204,7 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 
 	public BlockController.DigResult Dig (BlockController block)
 	{
-		return block.Dig(inventory,(int)(digAmount*Time.smoothDeltaTime));
+		return block.Dig(inventory);
 	}
 
 	public bool Unload ()
@@ -220,7 +227,12 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 			}
 			else
 			{
-				state = Modes.BlockedUnload;
+				//state = Modes.BlockedUnload;
+				//res = false;
+
+				inventory.DropCrate();
+				state = Modes.Work;
+				currentJob.OnUnloaded();
 				res = false;
 			}
 		}

@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF8"?>
 <GameDictionary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Blocks>
-  	<Block Name="Bedrock" MaterialName="Bedrock"></Block>
-  	<Block Name="Ground" MaterialName="Ground"></Block>
-  	<Block Name="Iron Ore" MaterialName="IronOre" Contains="Iron Ore" Freq="0.12"></Block>
-  	<Block Name="Ice Ore" MaterialName="IceOre" Contains="Ice" Freq="0.07"></Block>
+  	<Block Name="Bedrock" MaterialName="Bedrock" DigSpeed="-1"></Block>
+  	<Block Name="Ground" MaterialName="Ground" DigSpeed="2"></Block>
+  	<Block Name="Iron Ore" MaterialName="IronOre" Contains="Iron Ore" Freq="0.12" DigSpeed="0.5"></Block>
+  	<Block Name="Ice Ore" MaterialName="IceOre" Contains="Ice" Freq="0.07" DigSpeed="4"></Block>
   </Blocks>
   <Items >
   	<Item Name="Iron Ore" Class="Bulk.Ore"></Item>

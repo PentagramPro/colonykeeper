@@ -24,6 +24,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	Color COLOR_DESIGNATED = new Color(0,0,1,0.5f);
 	Color COLOR_DEFAULT = new Color(0,0,1,1);
 	int amount=1000;
+	float leftover = 0;
 
 	int posI, posJ;
 
@@ -86,8 +87,12 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		digJob=null;
 
 	}
-	public DigResult Dig(IInventory dest, int digAmount)
+	public DigResult Dig(IInventory dest)
 	{
+		float fdigAmount = BlockProt.DigSpeed*Time.smoothDeltaTime*100+leftover;
+		int digAmount = (int)fdigAmount;
+		leftover = fdigAmount-digAmount;
+
 		DigResult res = DigResult.CannotDig;
 
 		if(BlockProt!=null && BlockProt.Breakable)

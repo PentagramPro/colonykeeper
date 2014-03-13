@@ -16,6 +16,9 @@ public class IInventory : BaseManagedController, IStorable
 	public bool BlockInventory = false;
 	public bool AllowSeveralTypes = true;
 
+	// report in and out items to Stats module of Manager
+	public bool ReportStatistic = true;
+
 	public int Quantity{
 		get{
 			return totalQuantity;
@@ -25,6 +28,9 @@ public class IInventory : BaseManagedController, IStorable
 
 	public void DropCrate()
 	{
+		if(Quantity==0)
+			return;
+
 		IInventory crate = M.CreateCrate(transform);
 		foreach (Pile p in items.Values)
 		{
@@ -53,8 +59,9 @@ public class IInventory : BaseManagedController, IStorable
 			throw new UnityException("Negative totalQuantity. Some bug in inventory implementation!");
 		if (ItemRemoved != null)
 			ItemRemoved();
-		
-		M.Stat.ChangeItemCount(itemType,-q);
+
+		if(ReportStatistic)
+			M.Stat.ChangeItemCount(itemType,-q);
 		if(pile.Quantity==q)
 		{
 			Pile res=pile;
@@ -119,7 +126,8 @@ public class IInventory : BaseManagedController, IStorable
 		int toPut = Mathf.Min(quantity,free);
 		totalQuantity+=toPut;
 		pile.Quantity+=toPut;
-		M.Stat.ChangeItemCount(type,toPut);
+		if(ReportStatistic)
+			M.Stat.ChangeItemCount(type,toPut);
 		
 		return Mathf.Max(0,quantity-free);
 	}
@@ -130,7 +138,8 @@ public class IInventory : BaseManagedController, IStorable
 	{
 		foreach(Pile p in items.Values)
 		{
-			M.Stat.ChangeItemCount(p.ItemType,-p.Quantity);
+			if(ReportStatistic)
+				M.Stat.ChangeItemCount(p.ItemType,-p.Quantity);
 		}
 	}
 

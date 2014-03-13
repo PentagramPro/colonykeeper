@@ -20,13 +20,18 @@ public class Manager : MonoBehaviour {
 
 	GUIController guiController;
 
+
 	public Stats Stat;
+
+	[NonSerialized]
+	public Strings S;
 
 	//Object that stores GUI controller
 	public GameObject gui;
 
 	//Game dictionary contains prototypes for blocks and items
 	// loaded from resources
+	[NonSerialized]
 	public GameDictionary GameD;
 
 	public DefenceController defenceController;
@@ -89,6 +94,9 @@ public class Manager : MonoBehaviour {
 		string path = Path.Combine(Application.dataPath, "Resources/gamedictionary.xml");
 		Debug.Log("XML path: "+path);
 		GameD = GameDictionary.Load(path);
+
+		path = Path.Combine(Application.dataPath, "Resources/strings.xml");
+		S = Strings.Load(path);
 	// 	GameD.Save(path);
 	}
 
