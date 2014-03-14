@@ -1,34 +1,42 @@
 using UnityEngine;
+using System;
 
 public abstract class KWindow
 {
 	public enum Results{
 		NoResult, Close, Ok
 	}
-	protected Manager M;
-	public KWindow(Manager manager)
+
+	Rect WindowRect;
+	Action<Results> OnResult;
+	public Manager M;
+	public WindowController WindowController;
+
+	public KWindow(Rect windowRect, Action<Results> onResult)
 	{
-		M = manager;
+		WindowRect = windowRect;
+		OnResult = onResult; 
+
 	}
 
 
 
-	public Results Draw()
+	public void Draw()
 	{
-		Results res;
-
-
-		GUILayout.BeginArea(new Rect(0, 0, Screen.width, Screen.height));
-		res = OnDraw();
+		GUILayout.BeginArea(WindowRect);
+		OnDraw();
 		GUILayout.EndArea();
-
-
-
-		return res;
 	}
 
-	protected abstract Results OnDraw();
-		public abstract void Init();
+	protected void Close(Results result)
+	{
+		if(OnResult!=null)
+			OnResult(result);
+		WindowController.RemoveWindow(this);
+	}
+
+	protected abstract void OnDraw();
+	public abstract void Init();
 }
 
 

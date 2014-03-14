@@ -14,7 +14,7 @@ public class ChooseItemsWindow : KWindow
 	List<Item> itemsCache = new List<Item>();
 	Vector2 infoWindowScroll = new Vector2();
 
-	public ChooseItemsWindow(Manager m) : base(m)
+	public ChooseItemsWindow(Rect windowRect, Action<Results> onResult) : base(windowRect,onResult)
 	{
 	}
 
@@ -23,9 +23,9 @@ public class ChooseItemsWindow : KWindow
 		prepare = true;
 		curItem = 0;
 	}
-	protected override Results OnDraw()
+	protected override void OnDraw()
 	{
-		Results res = Results.NoResult;
+
 		Ingredient ingredient = recipeInstance.Prototype.IngredientsLinks [curItem];
 	
 		if (prepare)
@@ -56,7 +56,7 @@ public class ChooseItemsWindow : KWindow
 		//GUILayout.Button("Build");
 		if (GUILayout.Button("Cancel"))
 		{
-			res = Results.Close;
+			Close(Results.Close);
 			if (recipeCancelCallback != null)
 				recipeCancelCallback();
 		}
@@ -69,7 +69,7 @@ public class ChooseItemsWindow : KWindow
 			curItem++;
 			if (curItem >= recipeInstance.Prototype.IngredientsLinks.Count)
 			{
-				res = Results.Ok;
+				Close (Results.Ok);
 				recipeCallback(recipeInstance);
 			
 			} else
@@ -77,7 +77,7 @@ public class ChooseItemsWindow : KWindow
 				prepare = true;
 			}
 		}
-		return res;
+
 	}
 }
 
