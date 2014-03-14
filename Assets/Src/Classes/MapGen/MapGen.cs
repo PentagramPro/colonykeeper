@@ -56,8 +56,7 @@ public class MapGen
 			}
 		}
 		
-		int iMid = iLen / 2;
-		int jMid = jLen / 2;
+	
 		
 		
 		for (int i=0; i<iLen; i++)

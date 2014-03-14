@@ -15,7 +15,6 @@ public class Manager : MonoBehaviour {
 	public IInventory cratePrefab;
 
 	public DateTime GameDateTime;
-	Calendar calendar = CultureInfo.InvariantCulture.Calendar;
 	float hourCounter = 0;
 
 	GUIController guiController;
@@ -117,6 +116,10 @@ public class Manager : MonoBehaviour {
 			
 		}
 		return null;
+	}
+	public void DisplayMessage(string message)
+	{
+
 	}
 
 	public IInventory CreateCrate(Transform pos)

@@ -13,7 +13,7 @@ public class TerrainController : BaseManagedController, IStorable {
 	BlockController[,] map;
 
 	BlockController lastSelected;
-	bool meshInitializedInEditor = false;
+
 
 	public GameObject cellContainer;
 	public GameObject cellPrefab;
@@ -159,7 +159,7 @@ public class TerrainController : BaseManagedController, IStorable {
 		{
 			if(c.CanBuild())
 			{
-				if(!c.Build(M,pickedObject,M.GetGUIController().recipeInstance))
+				if(!c.Build(M,pickedObject,M.GetGUIController().LastRecipeInstance))
 				{
 					GameObject.DestroyObject(pickedObject);
 					throw new UnityException("Some error while trying to build construction site");
@@ -209,7 +209,7 @@ public class TerrainController : BaseManagedController, IStorable {
 
 		int h = map.GetLength(0);
 		int w = map.GetLength(1);
-		GameObject mainBuilding = null;
+
 		Debug.Log("Generate Map");
 
 		Transform[] children = cellContainer.GetComponentsInChildren<Transform>();
@@ -221,7 +221,7 @@ public class TerrainController : BaseManagedController, IStorable {
 
 					Object.DestroyImmediate(child.gameObject);
 				}
-				catch(UnityException e){}
+				catch(UnityException){}
 			}
 		}
 
