@@ -23,7 +23,7 @@ public class ChooseItemsWindow : KWindow
 		prepare = true;
 		curItem = 0;
 	}
-	public override Results Draw()
+	protected override Results OnDraw()
 	{
 		Results res = Results.NoResult;
 		Ingredient ingredient = recipeInstance.Prototype.IngredientsLinks [curItem];

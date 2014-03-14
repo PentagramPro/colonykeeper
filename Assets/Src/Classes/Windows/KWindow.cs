@@ -11,8 +11,24 @@ public abstract class KWindow
 		M = manager;
 	}
 
-	public abstract Results Draw();
-	public abstract void Init();
+
+
+	public Results Draw()
+	{
+		Results res;
+
+
+		GUILayout.BeginArea(new Rect(0, 0, Screen.width, Screen.height));
+		res = OnDraw();
+		GUILayout.EndArea();
+
+
+
+		return res;
+	}
+
+	protected abstract Results OnDraw();
+		public abstract void Init();
 }
 
 
