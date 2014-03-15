@@ -48,6 +48,15 @@ public abstract class KWindow
 		WindowController.RemoveWindow(this);
 	}
 
+	public Rect FromLocal(Rect rct)
+	{
+		return FromLocal(rct.x,rct.y,rct.width,rct.height);
+	}
+	public Rect FromLocal(float x, float y, float width, float height)
+	{
+		return new Rect(x+WindowRect.x,y+WindowRect.y,width,height);
+	}
+
 	protected void BeginArea(float x, float y, float width, float height)
 	{
 		GUILayout.BeginArea(new Rect(x+WindowRect.x,y+WindowRect.y,width,height));
