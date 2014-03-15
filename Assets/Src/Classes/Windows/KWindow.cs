@@ -9,6 +9,7 @@ public abstract class KWindow
 
 	Rect WindowRect;
 	Action<Results> OnResult;
+	bool show = true;
 	public Manager M;
 	public WindowController WindowController;
 
@@ -19,13 +20,24 @@ public abstract class KWindow
 
 	}
 
-
+	public bool Show
+	{
+		get{
+			return show;
+		}
+		set{
+			show = value;
+		}
+	}
 
 	public void Draw()
 	{
-		GUILayout.BeginArea(WindowRect);
-		OnDraw();
-		GUILayout.EndArea();
+		if(show)
+		{
+			GUILayout.BeginArea(WindowRect);
+			OnDraw();
+			GUILayout.EndArea();
+		}
 	}
 
 	protected void Close(Results result)
