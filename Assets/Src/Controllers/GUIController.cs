@@ -24,6 +24,8 @@ public class GUIController : BaseManagedController {
 	public GUISkin Skin;
 
 	ChooseItemsWindow chooseItemsWnd;
+	LeftPanelWindow leftPanelWnd;
+	BuildingsWindow buildingsWnd;
 
 	Building selectedBuilding;
 
@@ -48,10 +50,34 @@ public class GUIController : BaseManagedController {
 	void Start () {
 		panelWidth = Screen.width *0.25f;
 		mapHeight = Screen.height * 0.25f;
-		toolbarHeight = Screen.height*0.1f;
+
+
+		Rect leftRect = new Rect(0,Screen.height-mapHeight,panelWidth,mapHeight);
 
 		windowRect=new Rect(Screen.width*0.1f,Screen.height*0.1f, Screen.width*0.8f, Screen.height*0.8f);
-		chooseItemsWnd = new ChooseItemsWindow(M);
+		chooseItemsWnd = new ChooseItemsWindow(windowRect,OnItemsChoose);
+		leftPanelWnd = new LeftPanelWindow(leftRect,OnToolBuild,OnToolInfo);
+		buildingsWnd = new BuildingsWindow(leftRect,OnBuildingsChoose);
+	}
+
+	void OnToolBuild()
+	{
+
+	}
+
+	void OnToolInfo()
+	{
+
+	}
+
+	void OnBuildingsChoose(Building building)
+	{
+
+	}
+
+	void OnItemsChoose(KWindow.Results results)
+	{
+
 	}
 
 	public bool GetItemsForRecipe(Recipe recipe, Action<RecipeInstance> callback,  Action cancel )

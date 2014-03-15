@@ -7,7 +7,7 @@ public abstract class KWindow
 		NoResult, Close, Ok
 	}
 
-	Rect WindowRect;
+	protected Rect WindowRect;
 	Action<Results> OnResult;
 	bool show = true;
 	public Manager M;
@@ -45,6 +45,11 @@ public abstract class KWindow
 		if(OnResult!=null)
 			OnResult(result);
 		WindowController.RemoveWindow(this);
+	}
+
+	protected void BeginArea(float x, float y, float width, float height)
+	{
+		GUILayout.BeginArea(new Rect(x+WindowRect.x,y+WindowRect.y,width,height));
 	}
 
 	protected abstract void OnDraw();
