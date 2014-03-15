@@ -19,9 +19,15 @@ public class GUIController : BaseManagedController {
 
 	public event PickedDelegate ItemPicked;
 
-	public GameObject SelectedObject;
+	public GameObject SelectedObject{
+		set{
+			leftPanelWnd.SelectedObject = value;
+		}
+	}
 
-	public GUISkin Skin;
+
+
+	public WindowController WC;
 
 	ChooseItemsWindow chooseItemsWnd;
 	LeftPanelWindow leftPanelWnd;
@@ -36,14 +42,11 @@ public class GUIController : BaseManagedController {
 	}
 
 
-	Vector2 infoWindowScroll = new Vector2();
-
 	Rect windowRect;
 	float panelWidth;
 	float mapHeight;
-	float toolbarHeight;
-	float pad = 10;
-	Vector2 buildingScrollPos = new Vector2();
+
+
 
 
 	// Use this for initialization
@@ -52,17 +55,27 @@ public class GUIController : BaseManagedController {
 		mapHeight = Screen.height * 0.25f;
 
 
-		Rect leftRect = new Rect(0,Screen.height-mapHeight,panelWidth,mapHeight);
+		Rect leftRect = new Rect(0,0,panelWidth,Screen.height - mapHeight);
 
 		windowRect=new Rect(Screen.width*0.1f,Screen.height*0.1f, Screen.width*0.8f, Screen.height*0.8f);
 		chooseItemsWnd = new ChooseItemsWindow(windowRect,OnItemsChoose);
 		leftPanelWnd = new LeftPanelWindow(leftRect,OnToolBuild,OnToolInfo);
 		buildingsWnd = new BuildingsWindow(leftRect,OnBuildingsChoose);
+
+		WC.AddWindow(leftPanelWnd);
+		WC.AddWindow(buildingsWnd);
+
+		buildingsWnd.Show = false;
+
 	}
 
 	void OnToolBuild()
 	{
-
+		if(state==Modes.Idle)
+		{
+			leftPanelWnd.Show = false;
+			buildingsWnd.Show = true;
+		}
 	}
 
 	void OnToolInfo()
@@ -72,7 +85,14 @@ public class GUIController : BaseManagedController {
 
 	void OnBuildingsChoose(Building building)
 	{
+		leftPanelWnd.Show = false;
+		buildingsWnd.Show = false;
 
+		GetItemsForRecipe(building.recipe,(RecipeInstance res)=>{
+			if(ItemPicked!=null)
+				ItemPicked(building, res);
+			state = Modes.BuildPlace;
+		},null);
 	}
 
 	void OnItemsChoose(KWindow.Results results)
@@ -82,10 +102,8 @@ public class GUIController : BaseManagedController {
 
 	public bool GetItemsForRecipe(Recipe recipe, Action<RecipeInstance> callback,  Action cancel )
 	{
-		if(state!=Modes.Idle && state!=Modes.BuildChoose)
+		if(state!=Modes.Idle)
 			return false;
-
-		chooseItemsWnd.Init();
 
 		chooseItemsWnd.recipeCallback=callback;
 		chooseItemsWnd.recipeCancelCallback = cancel;
@@ -94,6 +112,8 @@ public class GUIController : BaseManagedController {
 		chooseItemsWnd.recipeInstance = new RecipeInstance();
 		chooseItemsWnd.recipeInstance.Prototype = recipe;
 		state = Modes.BuildIngredients;
+		WC.AddWindow(chooseItemsWnd);
+
 
 		return true;
 
@@ -101,33 +121,14 @@ public class GUIController : BaseManagedController {
 
 	void OnGUI()
 	{
-		ToolButton toolBtn = ToolButton.None;
-		GUI.skin = Skin;
-
-		//Map and toolbar box
-		GUI.Box(new Rect(0,Screen.height-mapHeight-toolbarHeight,panelWidth,mapHeight+toolbarHeight),"");
-
-		//Left panel rect
-		Rect rct = new Rect(0,0,panelWidth,Screen.height-mapHeight-toolbarHeight);
-
-		//Toolbar rect
-		Rect toolRect = new Rect(
-			0+pad,Screen.height - mapHeight-toolbarHeight+pad,
-			panelWidth-pad*2,toolbarHeight-pad*2);
 
 
-		GUILayout.BeginArea(toolRect);
-		GUILayout.BeginHorizontal();
 
-		if(GUILayout.Button("Build"))
-			toolBtn = ToolButton.Build;
-		
-		if(GUILayout.Button("Info"))
-			toolBtn = ToolButton.Info;
+		//Map  box
+		GUI.Box(new Rect(0,Screen.height-mapHeight,panelWidth,mapHeight),"");
 
-		GUILayout.EndHorizontal();
-		GUILayout.EndArea();
 
+/*
 
 
 		switch(state)
@@ -237,9 +238,9 @@ public class GUIController : BaseManagedController {
 			break;
 		}
 
-		
+		*/
 	}
-
+	/*
 
 	public void OnDrawInfoWindow(int id)
 	{
@@ -258,18 +259,21 @@ public class GUIController : BaseManagedController {
 		GUILayout.EndScrollView();
 		if(GUILayout.Button("Close"))
 			state = Modes.Idle;
-	}
+	}*/
 
 	public void OnPlaced()
 	{
 		if(state==Modes.BuildPlace)
+		{
+			leftPanelWnd.Show=true;
 			state= Modes.Idle;
+		}
 	}
 
 	public void OnDeselect()
 	{
 		if(state==Modes.Idle)
-			SelectedObject = null;
+			leftPanelWnd.SelectedObject = null;
 	}
 	// Update is called once per frame
 	void Update () {

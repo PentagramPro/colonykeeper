@@ -34,6 +34,7 @@ public abstract class KWindow
 	{
 		if(show)
 		{
+			GUI.Box(WindowRect,"");
 			GUILayout.BeginArea(WindowRect);
 			OnDraw();
 			GUILayout.EndArea();

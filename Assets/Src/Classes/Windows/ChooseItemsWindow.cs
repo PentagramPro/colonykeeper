@@ -26,6 +26,8 @@ public class ChooseItemsWindow : KWindow
 	protected override void OnDraw()
 	{
 
+
+
 		Ingredient ingredient = recipeInstance.Prototype.IngredientsLinks [curItem];
 	
 		if (prepare)

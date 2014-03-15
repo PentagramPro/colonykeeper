@@ -23,7 +23,7 @@ public class LeftPanelWindow : KWindow
 
 
 		//selection
-		GUI.Box(WindowRect);
+
 
 		BeginArea(0,0,WindowRect.width,WindowRect.height*0.8f);
 		if(SelectedObject!=null)
@@ -73,7 +73,7 @@ public class LeftPanelWindow : KWindow
 
 	public override void Init ()
 	{
-		throw new System.NotImplementedException ();
+
 	}
 
 	#endregion

@@ -6,18 +6,30 @@ public class WindowController : BaseManagedController {
 
 	List<KWindow> Windows = new List<KWindow>();
 	List<KWindow> windowsToRemove = new List<KWindow>();
+	List<KWindow> windowsToAdd = new List<KWindow>();
 	bool isInCycle = false;
+
+	public GUISkin Skin;
 
 	public void AddWindow(KWindow window)
 	{
+		if(isInCycle)
+			windowsToAdd.Add(window);
+		else
+			AddWindowInternal(window);
+
+	}
+
+	void AddWindowInternal(KWindow window)
+	{
 		if(!Windows.Contains(window))
 		{
-			AddWindow(window);
+			Windows.Add(window);
 			window.M = M;
 			window.WindowController = this;
 			window.Init();
 		}
-
+		
 	}
 
 	public void RemoveWindow(KWindow window)
@@ -30,6 +42,9 @@ public class WindowController : BaseManagedController {
 
 	void OnGUI()
 	{
+		if(Skin!=null)
+			GUI.skin = Skin;
+
 		isInCycle = true;
 		foreach(KWindow w in Windows)
 		{
@@ -37,8 +52,18 @@ public class WindowController : BaseManagedController {
 		}
 		isInCycle = false;
 
-		foreach(KWindow w in windowsToRemove)
-			Windows.Remove(w);
+		if(windowsToRemove.Count>0)
+		{
+			foreach(KWindow w in windowsToRemove)
+				Windows.Remove(w);
+			windowsToRemove.Clear();
+		}
+		if(windowsToAdd.Count>0)
+		{
+			foreach(KWindow w in windowsToAdd)
+				AddWindowInternal(w);
+			windowsToAdd.Clear();
+		}
 	}
 
 	// Use this for initialization
