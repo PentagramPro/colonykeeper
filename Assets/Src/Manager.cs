@@ -119,7 +119,12 @@ public class Manager : MonoBehaviour {
 	}
 	public void DisplayMessage(string message)
 	{
+		GetGUIController().DisplayMessage(message,Vector3.zero,Color.white);
+	}
 
+	public void DisplayMessage(string message, Color color)
+	{
+		GetGUIController().DisplayMessage(message,Vector3.zero,color);
 	}
 
 	public IInventory CreateCrate(Transform pos)

@@ -38,9 +38,7 @@ public class LeftPanelWindow : KWindow
 		}
 		else
 		{
-			string date = string.Format("{0,2}.{1,2}.{2,4} {3,2}:{4,2}",M.GameDateTime.Day,
-			                            M.GameDateTime.Month,M.GameDateTime.Year,
-			                            M.GameDateTime.Hour,M.GameDateTime.Minute);
+			string date = M.GameDateTime.ToString("HH:mm, d MMM yyyy");
 			GUILayout.Label(date);
 			
 			if(GUILayout.Button("Save"))

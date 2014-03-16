@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF8"?>
 <Strings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SimpleStrings>
-  	<String Name="Message.NoStorage">There is no place to unload {0}</String>
+  	<String Name="Message.NoStorage">Cannot unload {0}: no suitable inventory available.</String>
+  	<String Name="Message.Attack">Our vehicle is under attack!</String>
+  	<String Name="Message.ProdComplete">"{0}: production complete."</String>
   </SimpleStrings>
 </Strings>

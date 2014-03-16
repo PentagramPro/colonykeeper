@@ -30,6 +30,8 @@ public class DefenceController : BaseManagedController {
 		if(hull.CurHP<=0)
 			return;
 
+		M.DisplayMessage(M.S["Message.Attack"],Color.red);
+
 		if(currentTarget==null)
 		{
 			currentTarget = hull;

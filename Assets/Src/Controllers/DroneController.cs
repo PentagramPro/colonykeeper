@@ -229,7 +229,7 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 			{
 				//state = Modes.BlockedUnload;
 				//res = false;
-
+				M.DisplayMessage(string.Format(M.S["Message.NoStorage"],itemTypes[0].Name));
 				inventory.DropCrate();
 				state = Modes.Work;
 				currentJob.OnUnloaded();

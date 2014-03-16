@@ -59,6 +59,11 @@ public class GUIController : BaseManagedController {
 
 	}
 
+	public void DisplayMessage(string message, Vector3 pos, Color color)
+	{
+		logWnd.DisplayMessage(message,pos,color);
+	}
+
 	void OnToolBuild()
 	{
 		if(state==Modes.Idle)

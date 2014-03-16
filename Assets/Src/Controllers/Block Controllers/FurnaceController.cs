@@ -77,6 +77,7 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 			}
 			else if(st==SupplyController.SupplyStatus.Complete)
 			{
+				M.DisplayMessage(string.Format(M.S["Message.ProdComplete"],building.Prototype.Name));
 				state = Modes.FreeOut;
 				outputUnloadController.FreeInventory();
 			}
