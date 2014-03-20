@@ -4,7 +4,7 @@ using System.Collections;
 public class WeaponController : BaseController, IStorable{
 
 	enum Modes {
-		Idle,Attack
+		Idle,Attack, OutOfAmmo
 	}
 
 	public delegate void TargetNotification();
@@ -18,10 +18,17 @@ public class WeaponController : BaseController, IStorable{
 	VisualContact curContact;
 	//store
 	float fireCounter = 0;
+	int roundCounter = 1;
+
+	int ammunition = 10;
+	public float fireRoundDelay = 3;
+	public int fireRoundSize = 4;
 
 	public float rotationSpeed = 5;
-	public float fireDelay = 1;
+	public float fireDelay = 0.5f;
 	public float fireDamage = 100;
+
+
 	public GameObject projectilePrefab;
 	public Vector3 RelativeGunPosition;
 	public Vector3 GunPosition{
@@ -90,13 +97,32 @@ public class WeaponController : BaseController, IStorable{
 			transform.rotation=
 				Quaternion.RotateTowards(transform.rotation,dir,rotationSpeed*Time.smoothDeltaTime);
 			fireCounter+=Time.smoothDeltaTime;
-			if(fireCounter>fireDelay)
+
+			if(roundCounter>0)
 			{
-				fireCounter=0;
-				Vector3 gunDir = transform.rotation*Vector3.forward;
-				Physics.Raycast(GunPosition,gunDir);
-				Shoot (gunDir);
+				if(fireCounter>fireDelay)
+				{
+					fireCounter=0;
+					roundCounter++;
+					Vector3 gunDir = transform.rotation*Vector3.forward;
+					Physics.Raycast(GunPosition,gunDir);
+					Shoot (gunDir);
+					if(roundCounter>fireRoundSize)
+					{
+						roundCounter=0;
+					}
+				}
 			}
+			else
+			{
+				if(fireCounter>fireRoundDelay)
+				{
+					roundCounter = 1;
+					fireCounter = fireDelay;
+
+				}
+			}
+
 		}
 		else
 		{
@@ -120,6 +146,9 @@ public class WeaponController : BaseController, IStorable{
 			.GetComponent<ProjectileController>();
 		
 		proj.Fire(owner,GunPosition,dir,fireDamage);
+		ammunition--;
+		if(ammunition<=0)
+			state = Modes.OutOfAmmo;
 	}
 
 	#region IStorable implementation
