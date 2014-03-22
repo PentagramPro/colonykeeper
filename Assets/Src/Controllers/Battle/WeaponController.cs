@@ -106,7 +106,7 @@ public class WeaponController : BaseController, IStorable{
 					roundCounter++;
 					Vector3 gunDir = transform.rotation*Vector3.forward;
 					Physics.Raycast(GunPosition,gunDir);
-					Shoot (gunDir);
+					Shoot (target);
 					if(roundCounter>fireRoundSize)
 					{
 						roundCounter=0;
@@ -136,16 +136,16 @@ public class WeaponController : BaseController, IStorable{
 
 	}
 
-	void Shoot(Vector3 dir)
+	void Shoot(HullController target)
 	{
 
 		
 
 		
-		ProjectileController proj = ((GameObject)Instantiate(projectilePrefab))
+		ProjectileController proj = ((GameObject)Instantiate(projectilePrefab,GunPosition,transform.rotation))
 			.GetComponent<ProjectileController>();
 		
-		proj.Fire(owner,GunPosition,dir,fireDamage);
+		proj.Fire(owner,fireDamage,target);
 		ammunition--;
 		if(ammunition<=0)
 			state = Modes.OutOfAmmo;

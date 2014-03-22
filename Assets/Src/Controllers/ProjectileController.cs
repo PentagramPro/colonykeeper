@@ -1,10 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class ProjectileController : BaseManagedController {
 
-	public float speed = 20;
 	float damage=0;
+	WeakReference target;
+	public HullController Target{
+		get{
+			if(target.IsAlive)
+				return (HullController)target.Target;
+			else return null;
+		}
+
+		set{
+			target = new WeakReference(value);
+		}
+	}
 
 	HullController owner;
 	public HullController Owner{
@@ -27,7 +39,6 @@ public class ProjectileController : BaseManagedController {
 	// Update is called once per frame
 	void Update () {
 
-		transform.Translate(direction*speed*Time.smoothDeltaTime);
 
 	}
 
@@ -36,12 +47,12 @@ public class ProjectileController : BaseManagedController {
 		if(other.tag!="Projectile")
 			Destroy(gameObject);
 	}
-	public void Fire(HullController owner,Vector3 pos, Vector3 dir, float damage)
+	public void Fire(HullController owner,float damage, HullController target)
 	{
 		this.owner = owner;
-		transform.position = pos;
+		Target = target;
 
-		direction = dir.normalized;
+
 		this.damage = damage;
 	}
 }

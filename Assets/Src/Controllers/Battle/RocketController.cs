@@ -1,0 +1,59 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class RocketController : MonoBehaviour {
+
+	ProjectileController proj;
+	enum Modes{
+		Idle,Lift,Fly,End
+	}
+
+	public Vector3 forcePos;
+	public Vector3 ForcePos{
+		get{
+			return transform.localToWorldMatrix.MultiplyVector(forcePos);
+		}
+	}
+
+	Modes state = Modes.Idle;
+
+	float timer = 0;
+
+	void OnDrawGizmos()
+	{
+		Gizmos.DrawWireSphere(transform.position+ForcePos,0.02f);
+	}
+
+	// Use this for initialization
+	void Start () {
+		proj = GetComponent<ProjectileController>();
+		state = Modes.Lift;
+		timer = 0;
+		rigidbody.AddForce(new Vector3(0,Random.Range(100,150),0));
+	}
+	
+	void Update () {
+		switch(state)
+		{
+		case Modes.Lift:
+			
+			if(timer>0.25f)
+				state = Modes.Fly;
+			break;
+		case Modes.Fly:
+			
+			if(timer>2)
+				Destroy(gameObject);
+			break;
+		}
+		timer+=Time.smoothDeltaTime;
+	}
+
+	void FixedUpdate()
+	{
+		Vector3 dir = (proj.Target.transform.position-transform.position).normalized;
+		
+		rigidbody.AddForceAtPosition(dir*16,transform.position+ForcePos);
+		rigidbody.AddForce(Vector3.up*2);
+	}
+}
