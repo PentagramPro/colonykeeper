@@ -29,7 +29,7 @@ public class RocketController : MonoBehaviour {
 		proj = GetComponent<ProjectileController>();
 		state = Modes.Lift;
 		timer = 0;
-		rigidbody.AddForce(new Vector3(0,Random.Range(100,150),0));
+		rigidbody.AddForce(new Vector3(Random.Range(-50,50),Random.Range(200,300),0));
 	}
 	
 	void Update () {
@@ -37,7 +37,7 @@ public class RocketController : MonoBehaviour {
 		{
 		case Modes.Lift:
 			
-			if(timer>0.25f)
+			if(timer>0.6f)
 				state = Modes.Fly;
 			break;
 		case Modes.Fly:
@@ -51,9 +51,12 @@ public class RocketController : MonoBehaviour {
 
 	void FixedUpdate()
 	{
-		Vector3 dir = (proj.Target.transform.position-transform.position).normalized;
-		
-		rigidbody.AddForceAtPosition(dir*16,transform.position+ForcePos);
-		rigidbody.AddForce(Vector3.up*2);
+		if(state==Modes.Fly)
+		{
+			Vector3 dir = (proj.Target.transform.position-transform.position).normalized;
+			
+			rigidbody.AddForceAtPosition(dir*10,ForcePos);
+			//rigidbody.AddForce(Vector3.up*1);
+		}
 	}
 }

@@ -2,19 +2,23 @@
 <GameDictionary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Blocks>
   	<Block Name="Bedrock" MaterialName="Bedrock" DigSpeed="-1"></Block>
-  	<Block Name="Ground" MaterialName="Ground" DigSpeed="2"></Block>
-  	<Block Name="Iron Ore" MaterialName="IronOre" Contains="Iron Ore" Freq="0.12" DigSpeed="0.5"></Block>
+  	<Block Name="Ground" MaterialName="Ground" DigSpeed="5"></Block>
+  	<Block Name="Iron Ore" MaterialName="IronOre" Contains="Iron Ore" Freq="0.12" DigSpeed="2"></Block>
   	<Block Name="Ice Ore" MaterialName="IceOre" Contains="Ice" Freq="0.07" DigSpeed="4"></Block>
+  	<Block Name="Nitrates" MaterialName="Nitrates" Contains="Nitrates" Freq="0.07" DigSpeed="4"></Block>
   </Blocks>
   <Items >
   	<Item Name="Iron Ore" Class="Bulk.Ore"></Item>
   	<Item Name="Ice" Class="Bulk.Ore"></Item>
+  	<Item Name="Nitrates" Class="Bulk.Minerals"></Item>
   	<Item Name="Water" Class="Bulk.Liquid"></Item>
   	<Item Name="Iron Ingot" Class="Good.Ingot"></Item>
   	<Item Name="Iron Plate" Class="Good.Part.Plate"></Item>
   	<Item Name="Iron Beam" Class="Good.Part.Beam"></Item>
   	<Item Name="Iron Wire" Class="Good.Part.Wire"></Item>
   	<Item Name="Servo" Class="Good.Part.Mechanism"></Item>
+  	<Item Name="Rocket Fuel" Class="Good.Chemical.Fuel"></Item>
+  	<Item Name="Missile" Class="Good.Weapon"></Item>
   </Items>
   <StartItems>
   	<Item Name = "Iron Plate" Quantity = "300"></Item>
@@ -71,6 +75,12 @@
   			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
   			<Ingredient Name="Good.Part.Beam.*" Quantity="100"></Ingredient>
   			<Ingredient Name="Iron Wire" Quantity="200"></Ingredient>
+  		</Ingredients>
+  	</Building>
+  	<Building Name="Chemical Reactor" PrefabName="Chemical Reactor">
+  		<Ingredients>
+  			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
+  			<Ingredient Name="Good.Part.Beam.*" Quantity="100"></Ingredient>
   		</Ingredients>
   	</Building>
   </Buildings>
@@ -148,6 +158,25 @@
   		</Ingredients>
   		<Results>
   			<Result Name="Servo" Quantity="100"></Result>
+  		</Results>
+  	</Recipe>
+  	<Recipe Device="Assembler" Name = "Assemble missile">
+  		<Ingredients>
+  			<Ingredient Name="Rocket Fuel" Quantity="100"></Ingredient>
+  			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
+  		</Ingredients>
+  		<Results>
+  			<Result Name="Missile" Quantity="100"></Result>
+  		</Results>
+  	</Recipe>
+  	
+  	<!--       CHEMICAL REACTOR RECIPES        -->
+  	<Recipe Device="Chemical Reactor" Name = "Produce Rocket Fuel">
+  		<Ingredients>
+  			<Ingredient Name="Nitrates" Quantity="200"></Ingredient>
+  		</Ingredients>
+  		<Results>
+  			<Result Name="Rocket Fuel" Quantity="100"></Result>
   		</Results>
   	</Recipe>
   </Recipes>
