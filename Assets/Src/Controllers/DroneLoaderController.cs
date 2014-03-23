@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DroneLoaderController : BaseManagedController {
+public class DroneLoaderController : BaseManagedController, IStorable {
 
 	enum Modes{
 		Idle, GoLoad,DoLoad,BlockedLoad
@@ -14,6 +14,7 @@ public class DroneLoaderController : BaseManagedController {
 	public VehicleController Vehicle;
 	public IInventory Inventory;
 	public int LoadAmount = 500;
+
 	Item itemToPick;
 	Modes state = Modes.Idle;
 	int maxQuantityToPick;
@@ -49,6 +50,15 @@ public class DroneLoaderController : BaseManagedController {
 						OnLoaded();
 					state = Modes.Idle;
 				}
+			}
+			break;
+		case Modes.BlockedLoad:
+			IInventory inv = Vehicle.FindInventoryWith(itemToPick);
+			if(inv!=null)
+			{
+				state = Modes.GoLoad;
+				destinationInv = inv;
+				Vehicle.DriveTo(inv.transform.position);
 			}
 			break;
 		}
@@ -90,4 +100,26 @@ public class DroneLoaderController : BaseManagedController {
 		}
 		return res;
 	}
+
+	#region IStorable implementation
+
+	public void Save (WriterEx b)
+	{
+
+		b.WriteEnum(state);
+		b.WriteLink(destinationInv);
+		b.Write(maxQuantityToPick);
+		b.WriteEx(itemToPick);
+
+	}
+
+	public void Load (Manager m, ReaderEx r)
+	{
+		state = (Modes)r.ReadEnum(typeof(Modes));
+		destinationInv = (IInventory)r.ReadLink(m);
+		maxQuantityToPick = r.ReadInt32();
+		itemToPick = (Item)r.ReadItem(m);
+	}
+
+	#endregion
 }

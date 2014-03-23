@@ -7,6 +7,7 @@ using System;
 public class DroneController : BaseManagedController, IWorker, IStorable{
 
 	public VehicleController vehicleController;
+	public DroneLoaderController loaderController;
 	HullController hull;
 
 	IJob currentJob;
@@ -14,7 +15,7 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 	//////////////////////////////////////////////
 	private enum Modes
 	{
-		Start,Idle,Runaway,Work,Go,GoUnload,DoUnload,BlockedUnload,GoLoad,DoLoad,BlockedLoad
+		Start,Idle,Runaway,Work,Go,GoUnload,DoUnload,BlockedUnload,Load
 	}
 
 
@@ -31,8 +32,8 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 	}
 
 	IInventory destinationInv;
-	int maxQuantityToPick;
-	Item itemToPick;
+
+
 
 	IInventory inventory;
 	// Use this for initialization
@@ -40,11 +41,16 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 
 		if(vehicleController==null)
 			throw new UnityException("Vehicle exception must not be null");
+
+		if(loaderController==null)
+			throw new UnityException("Drone loader controller must not be null");
 		inventory = GetComponent<IInventory>();
 		hull = GetComponent<HullController>();
 
 		vehicleController.OnPathWalked+=OnPathWalked;
 		hull.OnUnderAttack +=OnUnderAttack;
+
+		loaderController.OnLoaded+=OnDroneLoaded;
 
 		M.JobManager.JobAdded+=OnJobAdded;
 		M.BuildingsRegistry.ItemAdded+=OnBuildingAdded;
@@ -97,34 +103,7 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 					}
 				}
 				break;
-			case Modes.DoLoad:
-				int take = maxQuantityToPick -inventory.Quantity;//destinationInv.GetItemQuantity(itemToPick);
-				if(take<=0)
-				{
-					state = Modes.Work;
-					currentJob.OnLoaded();
-				}
-				else
-				{
-					take = (int)Mathf.Min(take,unloadAmount*Time.smoothDeltaTime);
-					int left = inventory.Put(destinationInv.Take(itemToPick,take));
-					if(left>0)
-					{
-						destinationInv.Put(itemToPick,left);
-						currentJob.OnLoaded();
-						state = Modes.Work;
-					}
-				}
-				break;
-			case Modes.BlockedLoad:
-				IInventory inv = vehicleController.FindInventoryWith(itemToPick);
-				if(inv!=null)
-				{
-					state = Modes.GoLoad;
-					destinationInv = inv;
-					DriveTo(inv.transform.position);
-				}
-				break;
+
 			}
 		}
 
@@ -150,10 +129,6 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 		{
 			state = Modes.DoUnload;
 		}
-		else if( state == Modes.GoLoad)
-		{
-			state = Modes.DoLoad;
-		}
 		else if(state == Modes.Runaway)
 		{
 			state = Modes.Idle;
@@ -162,6 +137,14 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 		    
 	}
 
+
+	void OnDroneLoaded()
+	{
+		state = Modes.Work;
+		if(currentJob!=null)
+			currentJob.OnLoaded();
+
+	}
 
 	void OnJobAdded(IJob j)
 	{
@@ -241,22 +224,8 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 
 	public bool Load (Item itemType, int maxQuantity)
 	{
-		bool res = false;
-		IInventory inv = vehicleController.FindInventoryWith(itemType);
-		itemToPick = itemType;
-		maxQuantityToPick = maxQuantity;
-		if(inv!=null)
-		{
-			state = Modes.GoLoad;
-			destinationInv = inv;
-			vehicleController.DriveTo(inv.transform.position);
-			res = true;
-		}
-		else
-		{
-			state = Modes.BlockedLoad;
-		}
-		return res;
+		state = Modes.Load;
+		return loaderController.Load(itemType,maxQuantity);
 	}
 
 	public void OnJobCompleted ()
@@ -293,25 +262,19 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 	public void Save (WriterEx b)
 	{
 		b.WriteMagic();
-		b.WriteEnum(state);
 
+		b.WriteEnum(state);
 		b.WriteLink(currentJob);
 		b.WriteLink(destinationInv);
-		b.Write(maxQuantityToPick);
-		b.WriteEx(itemToPick);
-		b.WriteMagic();
 	}
 
 	public void Load (Manager m, ReaderEx r)
 	{
 		r.CheckMagic();
-		state = (Modes)r.ReadEnum(typeof(Modes));
 
+		state = (Modes)r.ReadEnum(typeof(Modes));
 		currentJob = (IJob)r.ReadLink(m);
 		destinationInv = (IInventory)r.ReadLink(m);
-		maxQuantityToPick = r.ReadInt32();
-		itemToPick = (Item)r.ReadItem(m);
-		r.CheckMagic();
 	}
 
 	#endregion
