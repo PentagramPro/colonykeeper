@@ -10,6 +10,7 @@ public class WeaponController : BaseController, IStorable{
 	public delegate void TargetNotification();
 	public event TargetNotification OnTargetLost;
 	public event TargetNotification OnTargetDestroyed;
+	public event TargetNotification OnOutOfAmmo;
 
 	UidContainer uidc;
 	//store
@@ -136,6 +137,19 @@ public class WeaponController : BaseController, IStorable{
 
 	}
 
+
+	public int Ammunition{
+		get{
+			return ammunition;
+		}
+		set{
+			ammunition = value;
+			if(ammunition>0)
+				state = Modes.Idle;
+		}
+	}
+
+
 	void Shoot(HullController target)
 	{
 
@@ -148,7 +162,11 @@ public class WeaponController : BaseController, IStorable{
 		proj.Fire(owner,fireDamage,target);
 		ammunition--;
 		if(ammunition<=0)
+		{
 			state = Modes.OutOfAmmo;
+			if(OnOutOfAmmo!=null)
+				OnOutOfAmmo();
+		}
 	}
 
 	#region IStorable implementation

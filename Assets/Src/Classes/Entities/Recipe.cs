@@ -70,6 +70,7 @@ public class Recipe
 			if(pxml.Name.EndsWith(".*"))
 			{
 				string cls = pxml.Name.Substring(0,pxml.Name.Length-2);
+				ing.ClassName = cls;
 				foreach(Item i in g.Items.Values)
 				{
 					if(i.IsOfClass(cls))
@@ -78,6 +79,7 @@ public class Recipe
 			}
 			else
 			{
+				ing.ClassName = "";
 				if(!g.Items.ContainsKey(pxml.Name))
 					throw new UnityException("Item with name "+pxml.Name+" was not found while building ingredients for recipe "+Name);
 				ing.Items.Add(g.Items[pxml.Name]);

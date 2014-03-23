@@ -48,6 +48,11 @@ public abstract class KWindow
 		WindowController.RemoveWindow(this);
 	}
 
+	public static Rect ContractRect(Rect src, float amount)
+	{
+		return new Rect(src.x+amount,src.y+amount,src.width-amount*2, src.height-amount*2);
+	}
+	/*
 	public Rect FromLocal(Rect rct)
 	{
 		return FromLocal(rct.x,rct.y,rct.width,rct.height);
@@ -61,7 +66,7 @@ public abstract class KWindow
 	{
 		GUILayout.BeginArea(new Rect(x+WindowRect.x,y+WindowRect.y,width,height));
 	}
-
+*/
 	protected abstract void OnDraw();
 	public abstract void Init();
 }

@@ -81,6 +81,10 @@ public class DroneLoaderController : BaseManagedController, IStorable {
 		}
 	}
 
+	public bool Load (Item itemType)
+	{
+		return Load (itemType,Inventory.MaxQuantity-Inventory.Quantity);
+	}
 	public bool Load (Item itemType, int maxQuantity)
 	{
 		bool res = false;

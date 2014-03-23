@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HullController : BaseManagedController, IStorable {
+public class HullController : BaseManagedController, IStorable, IInteractive {
 
 	public delegate void UnderAttack();
 	public event UnderAttack OnUnderAttack;
@@ -66,6 +66,15 @@ public class HullController : BaseManagedController, IStorable {
 	void Update () {
 	
 	}
+
+	#region IInteractive implementation
+
+	public void OnDrawSelectionGUI ()
+	{
+		GUILayout.Label("HP: "+CurHP+"/"+MaxHP);
+	}
+
+	#endregion
 
 	#region IStorable implementation
 

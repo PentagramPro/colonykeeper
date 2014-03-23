@@ -45,6 +45,7 @@ public class WindowController : BaseManagedController {
 		if(Skin!=null)
 			GUI.skin = Skin;
 
+		GUI.color = Color.white;
 		isInCycle = true;
 		foreach(KWindow w in Windows)
 		{

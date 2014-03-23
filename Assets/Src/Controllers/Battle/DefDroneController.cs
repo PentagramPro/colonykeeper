@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DefDroneController : BaseManagedController, IStorable {
+public class DefDroneController : BaseManagedController, IStorable, IInteractive {
 
 	enum Modes {
-		Inactive,Intercept,Attack
+		Inactive,Intercept,Attack,Reload
 	}
 	//store
 	Modes state = Modes.Inactive;
@@ -15,6 +15,9 @@ public class DefDroneController : BaseManagedController, IStorable {
 	public TargeterController targeter;
 	public WeaponController weapon;
 	public VehicleController vehicle;
+	public DroneLoaderController droneLoader;
+	public IInventory inventory;
+	public string shellName;
 
 	HullController hull;
 
@@ -30,10 +33,17 @@ public class DefDroneController : BaseManagedController, IStorable {
 		
 		if(vehicle==null)
 			throw new UnityException("Vehicle must not be null");
+		if(droneLoader==null)
+			throw new UnityException("Drone Loader must not be null");
+		if(inventory==null)
+			throw new UnityException("Inventory must not be null");
 		
 		targeter.OnFound+=OnFound;
 		weapon.OnTargetLost+=OnTargetLost;
 		weapon.OnTargetDestroyed += OnTargetDestroyed;
+		weapon.OnOutOfAmmo+=OnOutOfAmmo;
+		droneLoader.OnLoaded+=OnLoaded;
+
 		hull = GetComponent<HullController>();
 	}
 	
@@ -58,6 +68,22 @@ public class DefDroneController : BaseManagedController, IStorable {
 			//curContact.Update(weapon.GunPosition+transform.position);
 			break;
 		}
+	}
+
+	void OnOutOfAmmo()
+	{
+		state = Modes.Reload;
+		droneLoader.Load(M.GameD.Items[shellName]);
+	}
+
+	void OnLoaded()
+	{
+		Pile p = inventory.Take(M.GameD.Items[shellName],inventory.Quantity);
+		weapon.Ammunition = p.Quantity/100;
+		if(curContact!=null)
+			state = Modes.Intercept;
+		else
+			state = Modes.Inactive;
 	}
 
 	public void Attack(HullController target)
@@ -90,6 +116,29 @@ public class DefDroneController : BaseManagedController, IStorable {
 		curContact = null;
 		state = Modes.Inactive;
 	}
+
+	#region IInteractive implementation
+
+	public void OnDrawSelectionGUI ()
+	{
+		switch(state)
+		{
+		case Modes.Attack:
+			GUILayout.Label("Attacking!");
+			break;
+		case Modes.Reload:
+			GUILayout.Label("Reloading");
+			break;
+		case Modes.Intercept:
+			GUILayout.Label("Intercepting");
+			break;
+		}
+
+		GUILayout.Label("Ammunition in weapon: "+weapon.Ammunition);
+		GUILayout.Label("Ammunition in inventory: "+inventory.Quantity);
+	}
+
+	#endregion
 
 	#region IStorable implementation
 	public override void SaveUid (WriterEx b)

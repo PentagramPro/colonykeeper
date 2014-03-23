@@ -170,6 +170,13 @@ public class VehicleController : BaseManagedController, IStorable  {
 		}
 	}
 
+	public void OnMouseUpAsButton()
+	{
+		M.GetGUIController().SelectedObject = gameObject;
+		
+		
+	}
+
 	#region IStorable implementation
 	public override void SaveUid (WriterEx b)
 	{

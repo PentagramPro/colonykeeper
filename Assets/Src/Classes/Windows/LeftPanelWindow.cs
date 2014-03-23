@@ -25,7 +25,7 @@ public class LeftPanelWindow : KWindow
 		//selection
 
 
-		BeginArea(0,0,WindowRect.width,WindowRect.height*0.8f);
+		GUILayout.BeginArea(new Rect(0,0,WindowRect.width,WindowRect.height*0.8f));
 		if(SelectedObject!=null)
 		{
 			Component[] items = SelectedObject.GetComponents<Component>();
@@ -54,7 +54,7 @@ public class LeftPanelWindow : KWindow
 		GUILayout.EndArea();
 
 		// toolbar
-		BeginArea(0,WindowRect.height*0.8f,WindowRect.width,WindowRect.height*0.2f);
+		GUILayout.BeginArea(new Rect(0,WindowRect.height*0.8f,WindowRect.width,WindowRect.height*0.2f));
 		GUILayout.BeginHorizontal();
 		
 		if(GUILayout.Button("Build"))
