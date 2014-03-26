@@ -11,6 +11,8 @@ public class WindowController : BaseManagedController {
 
 	public GUISkin Skin;
 
+
+
 	public void AddWindow(KWindow window)
 	{
 		if(isInCycle)

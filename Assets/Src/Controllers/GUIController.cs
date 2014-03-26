@@ -87,7 +87,11 @@ public class GUIController : BaseManagedController {
 			if(ItemPicked!=null)
 				ItemPicked(building, res);
 			state = Modes.BuildPlace;
-		},null);
+		},()=>{
+			state = Modes.Idle;
+			leftPanelWnd.Show = false;
+			buildingsWnd.Show = true;
+		});
 	}
 
 	void OnItemsChoose(KWindow.Results results)

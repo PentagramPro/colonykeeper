@@ -45,17 +45,17 @@ public class ChooseItemsWindow : KWindow
 		Rect rightRect = new Rect(WindowRect.width/2,0,WindowRect.width/2,WindowRect.height);
 
 
-		GUI.DrawTexture(leftRect,SolidTexture.GetTexture(new Color(0.2f,0.2f,0.2f)));
+		//GUI.DrawTexture(leftRect,SolidTexture.GetTexture(new Color(0.2f,0.2f,0.2f)));
 
 		GUILayout.BeginArea(leftRect);
 		LeftPanel();
 		GUILayout.EndArea();
 
 
-		GUI.DrawTexture(rightRect,SolidTexture.GetTexture(Color.gray));
+		//GUI.DrawTexture(rightRect,SolidTexture.GetTexture(Color.gray));
 
 
-		GUILayout.BeginArea(ContractRect(rightRect,10));
+		GUILayout.BeginArea(rightRect);
 		RightPanel(ingredient);
 		GUILayout.EndArea();
 	}
@@ -63,7 +63,10 @@ public class ChooseItemsWindow : KWindow
 	void LeftPanel()
 	{
 
-		GUILayout.Label(recipeInstance.Prototype.Name,GUI.skin.customStyles[0]);
+		GUILayout.Label(recipeInstance.Prototype.Name,skinDarkHeader);
+		GUILayout.Label("This recipe needs following ingredients:");
+
+		int n = 0;
 		foreach(Ingredient i in recipeInstance.Prototype.IngredientsLinks)
 		{
 			string line;
@@ -71,11 +74,10 @@ public class ChooseItemsWindow : KWindow
 				line = i.ClassName;
 			else
 				line = i.Items[0].Name;
-			GUIContent c = new GUIContent();
-			c.text = line;
 
-			c.image = SolidTexture.GetTexture(Color.gray);
-			GUILayout.Label(c);
+
+			GUILayout.Label(line,n==curItem ? skinBrightListItem : skinDarkListItem);
+			n++;
 		}
 
 	}
@@ -84,12 +86,12 @@ public class ChooseItemsWindow : KWindow
 	{
 		Item selected = null;
 
-		GUILayout.Label("Choose item for ingredient #" + (curItem + 1));
-		GUILayout.BeginScrollView(infoWindowScroll);
+		GUILayout.Label("Choose item for ingredient #" + (curItem + 1),skinBrightText);
+		GUILayout.BeginScrollView(infoWindowScroll,skinBrightScroll);
 		
 		foreach (Item item in itemsCache)
 		{
-			if (GUILayout.Button(item.Name))
+			if (GUILayout.Button(item.Name,skinBrightListItem))
 				selected = item;
 		}
 		

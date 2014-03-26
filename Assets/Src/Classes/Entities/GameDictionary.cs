@@ -86,7 +86,7 @@ public class GameDictionary  {
 		foreach(Building b in Buildings)
 		{
 			b.recipe = new Recipe();
-			b.recipe.Name = b.Name+".Recipe";
+			b.recipe.Name = "Build " + b.Name;
 			b.recipe.Device = "";
 
 			b.recipe.Ingredients = b.Ingredients;

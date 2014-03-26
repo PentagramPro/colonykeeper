@@ -11,12 +11,31 @@ public abstract class KWindow
 	Action<Results> OnResult;
 	bool show = true;
 	public Manager M;
-	public WindowController WindowController;
+	WindowController wndController;
+	public WindowController WindowController{
+		get{
+			return wndController;
+		}
+		set{
+			if(wndController!=value)
+			{
+				skinDarkHeader = value.Skin.FindStyle("DarkHeader");
+				skinDarkListItem = value.Skin.FindStyle("DarkListItem");
+				skinBrightListItem = value.Skin.FindStyle("BrightListItem");
+				skinBrightText = value.Skin.FindStyle("BrightText");
+				skinBrightScroll = value.Skin.FindStyle("BrightScroll");
+			}
+			wndController = value;
+		}
+	}
+
+	protected GUIStyle skinBrightListItem, skinDarkHeader, skinDarkListItem, skinBrightText,skinBrightScroll;
 
 	public KWindow(Rect windowRect, Action<Results> onResult)
 	{
 		WindowRect = windowRect;
 		OnResult = onResult; 
+
 
 	}
 
