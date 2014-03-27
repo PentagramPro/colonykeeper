@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RocketController : MonoBehaviour {
+public class RocketController : BaseManagedController, IStorable {
 
 	ProjectileController proj;
 	enum Modes{
@@ -59,4 +59,24 @@ public class RocketController : MonoBehaviour {
 			//rigidbody.AddForce(Vector3.up*1);
 		}
 	}
+
+	#region IStorable implementation
+
+
+	public void Save(WriterEx b)
+	{
+		b.WriteEnum(state);
+		b.Write((double)timer);
+	}
+
+
+	public void Load(Manager m, ReaderEx r)
+	{
+		state = (Modes)r.ReadEnum(typeof(Modes));
+		timer = (float)r.ReadDouble();
+	}
+
+
+	#endregion
+
 }

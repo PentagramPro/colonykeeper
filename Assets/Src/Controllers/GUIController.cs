@@ -23,6 +23,7 @@ public class GUIController : BaseManagedController {
 	ChooseItemsWindow chooseItemsWnd;
 	LeftPanelWindow leftPanelWnd;
 	BuildingsWindow buildingsWnd;
+	InfoWindow infoWnd;
 	LogWindow logWnd;
 
 	public GameObject SelectedObject{
@@ -50,6 +51,7 @@ public class GUIController : BaseManagedController {
 		leftPanelWnd = new LeftPanelWindow(leftRect,OnToolBuild,OnToolInfo);
 		buildingsWnd = new BuildingsWindow(leftRect,OnBuildingsChoose);
 		logWnd = new LogWindow(new Rect(panelWidth,Screen.height-50,Screen.width-panelWidth,50));
+		infoWnd = new InfoWindow(windowRect, OnInfoResult);
 
 		WC.AddWindow(leftPanelWnd);
 		WC.AddWindow(buildingsWnd);
@@ -75,6 +77,11 @@ public class GUIController : BaseManagedController {
 
 	void OnToolInfo()
 	{
+		WC.AddWindow(infoWnd);
+	}
+
+	void OnInfoResult(KWindow.Results res)
+	{
 
 	}
 
@@ -89,8 +96,8 @@ public class GUIController : BaseManagedController {
 			state = Modes.BuildPlace;
 		},()=>{
 			state = Modes.Idle;
-			leftPanelWnd.Show = false;
-			buildingsWnd.Show = true;
+			leftPanelWnd.Show = true;
+			buildingsWnd.Show = false;
 		});
 	}
 

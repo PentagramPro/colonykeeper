@@ -187,7 +187,9 @@ public class WeaponController : BaseController, IStorable{
 		b.WriteEnum(state);
 		b.WriteLink(curContact);
 		b.Write ((double)fireCounter);
-
+		
+		b.Write(roundCounter);
+		b.Write(ammunition);
 	}
 
 	public void Load (Manager m, ReaderEx r)
@@ -195,6 +197,9 @@ public class WeaponController : BaseController, IStorable{
 		state = (Modes)r.ReadEnum(typeof(Modes));
 		curContact = (VisualContact)r.ReadLink(m);
 		fireCounter = (float)r.ReadDouble();
+
+		roundCounter = r.ReadInt32();
+		ammunition = r.ReadInt32();
 	}
 
 	public int GetUID ()
