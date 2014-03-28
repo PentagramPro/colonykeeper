@@ -3,9 +3,9 @@
   <Blocks>
   	<Block Name="Bedrock" MaterialName="Bedrock" DigSpeed="-1"></Block>
   	<Block Name="Ground" MaterialName="Ground" DigSpeed="5"></Block>
-  	<Block Name="Iron Ore" MaterialName="IronOre" Contains="Iron Ore" Freq="0.12" DigSpeed="2"></Block>
-  	<Block Name="Ice Ore" MaterialName="IceOre" Contains="Ice" Freq="0.07" DigSpeed="4"></Block>
-  	<Block Name="Nitrates" MaterialName="Nitrates" Contains="Nitrates" Freq="0.07" DigSpeed="4"></Block>
+  	<Block Name="Iron Ore" MaterialName="IronOre" Contains="Iron Ore" Freq="500" DigSpeed="2"></Block>
+  	<Block Name="Ice Ore" MaterialName="IceOre" Contains="Ice" Freq="200" DigSpeed="4"></Block>
+  	<Block Name="Nitrates" MaterialName="Nitrates" Contains="Nitrates" Freq="400" DigSpeed="4"></Block>
   </Blocks>
   <Items >
   	<Item Name="Iron Ore" Class="Bulk.Ore"></Item>

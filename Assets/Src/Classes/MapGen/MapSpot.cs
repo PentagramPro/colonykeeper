@@ -16,6 +16,16 @@ public abstract class MapSpot
 		}
 	}
 	protected int width,height;
+	public int Width{
+		get{
+			return width;
+		}
+	}
+	public int Height{
+		get{
+			return height;
+		}
+	}
 	protected Manager M;
 	public MapSpot (Manager m,int x, int y)
 	{
@@ -56,7 +66,7 @@ public abstract class MapSpot
 				{
 					curX--;
 					curW++;
-					SetBusy(map,curY,curX,curY+curH,curX);
+
 				}
 			}
 			if(curW==width)
@@ -71,7 +81,7 @@ public abstract class MapSpot
 				if(!blockRight)
 				{
 					curW++;
-					SetBusy(map,curY,curX+curW,curY+curH,curX+curW);
+
 				}
 			}
 			if(curW==width)
@@ -88,7 +98,7 @@ public abstract class MapSpot
 				{
 					curY--;
 					curH++;
-					SetBusy(map,curY,curX,curY,curX+curW);
+
 				}
 			}
 			if(curH==height)
@@ -104,7 +114,7 @@ public abstract class MapSpot
 				if(!blockBottom)
 				{
 					curH++;
-					SetBusy(map,curY+curH,curX,curY+curH,curX+curW);
+
 				}
 			}
 			if(curH==height)
@@ -117,7 +127,12 @@ public abstract class MapSpot
 			{
 				x = curX;
 				y = curY;
-				return curH==height && curW==width;
+				bool res = curH==height && curW==width;
+				if(res)
+				{
+					SetBusy(map,y,x,y+height-1,x+width-1);
+				}
+				return res;
 			}
 		}
 		
@@ -128,7 +143,7 @@ public abstract class MapSpot
 	{
 		for(int i=i1;i<=i2;i++)
 		{
-			for(int j=j1;j<j2;j++)
+			for(int j=j1;j<=j2;j++)
 			{
 				if(map[i,j].busy)
 					return true;
@@ -142,7 +157,7 @@ public abstract class MapSpot
 	{
 		for(int i=i1;i<=i2;i++)
 		{
-			for(int j=j1;j<j2;j++)
+			for(int j=j1;j<=j2;j++)
 			{
 				map[i,j].busy = true;
 			}

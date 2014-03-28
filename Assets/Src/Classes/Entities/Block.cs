@@ -20,7 +20,7 @@ public class Block  {
 	public string Contains;
 
 	[XmlAttribute("Freq")]
-	public float Freq=1;
+	public float Freq=0;
 
 	[XmlAttribute("DigSpeed")]
 	public float DigSpeed=-1;

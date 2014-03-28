@@ -6,6 +6,7 @@ public class DefenceController : BaseManagedController {
 	List<HullController> targets = new List<HullController>();
 	HullController currentTarget = null;
 	List<DefDroneController> currentDefenders = new List<DefDroneController>();
+	public float Range=10;
 
 	// Use this for initialization
 	void Start () {

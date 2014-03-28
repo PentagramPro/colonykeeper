@@ -25,7 +25,7 @@ public class TerrainController : BaseManagedController, IStorable {
 
 	TerrainControllerMode mode = TerrainControllerMode.Idle;
 
-
+	MapGen mapGen;
 
 	TerrainMeshGenerator terrGen = null;
 	Plane lowerPlane;
@@ -192,7 +192,10 @@ public class TerrainController : BaseManagedController, IStorable {
 
 	void OnDrawGizmos()
 	{
-	
+		if(mapGen!=null)
+		{
+			mapGen.DrawDebugGizmos();
+		}
 	}
 
 
@@ -228,7 +231,7 @@ public class TerrainController : BaseManagedController, IStorable {
 
 
 		M.cameraController.bounds = new Rect(0,0,w*TerrainMeshGenerator.CELL_SIZE,h*TerrainMeshGenerator.CELL_SIZE);
-		MapGen mapGen = new MapGen(M);
+		mapGen = new MapGen(M);
 
 		mapGen.AddSpot(new PlayerSpot(M,w/2,h/2));
 		//mapGen.AddSpot(new SentrySpot(M,w/2,h/2+2));
@@ -238,8 +241,6 @@ public class TerrainController : BaseManagedController, IStorable {
 		mapGen.AddSpot(new SentrySpot(M,-1,-1));
 
 
-
-		Block[,] pattern = mapGen.GenerateBlocksPattern(h, w);
 
 		for(int i=0;i<h;i++)
 		{
@@ -255,44 +256,11 @@ public class TerrainController : BaseManagedController, IStorable {
 				c.CellUpdated+=OnCellUpdated;
 				c.CellMouseOver+=OnCellHover;
 				c.CellMouseUp+=OnCellClicked;
-				c.BlockProt = pattern[i,j];
-/*
-				if(!editMode && i==h/2 && j==w/2)
-				{
 
-					mainBuilding = M.GameD.BuildingsByName["Headquarters"].Instantiate();
-
-					c.BuildOn(mainBuilding.GetComponent<BuildingController>());
-					StorageController st = mainBuilding.GetComponent<StorageController>();
-					foreach(PileXML item in M.GameD.StartItemsList)
-					{
-						st.Put(M.GameD.Items[item.Name],item.Quantity);
-					}
-				}
-				if(!editMode  && i==h/2 && (j==w/2-1 || j==w/2+1))
-				{
-					GameObject veh = M.GameD.VehiclesByName["Drone"].Instantiate();
-					M.VehiclesRegistry.Add(veh.GetComponent<VehicleController>());
-					veh.transform.position = c.Position;
-				}
-				if(!editMode  && i==h/2+1 && j==w/2+1)
-				{
-					GameObject veh = M.GameD.VehiclesByName["Defender Drone"].Instantiate();
-					M.VehiclesRegistry.Add(veh.GetComponent<VehicleController>());
-					veh.transform.position = c.Position;
-				}
-				if(!editMode  && i==h/2+1 && j==w/2-1)
-				{
-					GameObject veh = M.GameD.VehiclesByName["Alien Sentry"].Instantiate();
-					M.VehiclesRegistry.Add(veh.GetComponent<VehicleController>());
-					veh.transform.position = c.Position;
-				}
-*/
-				//c.Digged=false;
 			}
 		}
 
-		mapGen.GenerateSpots(map, editMode);
+		mapGen.GenerateMap(map, editMode);
 
 
 		int graphW = map.GetLength(1)*10,graphH = map.GetLength(0)*10;
