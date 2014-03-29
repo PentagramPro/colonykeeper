@@ -17,6 +17,8 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 	public Block BlockProt;
 	public BuildingController cellBuilding;
+	public EffectController dustFX;
+
 
 	// This value is calculated during cell update from following variables:
 	// - BlockProt
@@ -33,7 +35,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	public BlockController[,] Map;
 
 	[NonSerialized]
-	public bool Discovered = false;
+	public bool discovered = false;
 
 	Color COLOR_DESIGNATED = new Color(0,0,1,0.5f);
 	Color COLOR_DEFAULT = new Color(0,0,1,1);
@@ -81,7 +83,18 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 			return BlockProt==null;
 		}
 	}
-	
+
+	public bool Discovered
+	{
+		get{
+			return discovered;
+		}
+		set{
+			if(value==true && discovered==false)
+				Activate();
+			discovered = value;
+		}
+	}
 	// [performance]
 	// vertex indexes used by mesh generator 
 	public int lt,lb,rt,rb;
@@ -147,6 +160,8 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 			digAmount = Math.Min(digAmount,amount);
 
 			amount-=digAmount;
+			if(dustFX!=null)
+				dustFX.Spark(0.1f);
 			if(BlockProt.ContainsItem!=null)
 			{
 				int left = dest.Put(BlockProt.ContainsItem,digAmount);
@@ -372,6 +387,11 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		CannotDig, NotFinished, Finished, DestinationFull
 	}
 
+
+	void Activate()
+	{
+
+	}
 	#region IStorable implementation
 
 
