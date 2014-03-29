@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System;
 
 public class TerrainMeshGenerator : MeshGenerator {
 
@@ -10,8 +10,11 @@ public class TerrainMeshGenerator : MeshGenerator {
 
 	//int[,] pat = new int[3,3];
 
+
 	public BlockController.Accessibility GetAccessibility(int i, int j)
 	{
+		if(map[i,j].Discovered==false)
+			return BlockController.Accessibility.Unknown;
 		if (i < map.GetLength(0) - 1 && map [i + 1, j].Digged)
 			return BlockController.Accessibility.Cliff;
 		if (j < map.GetLength(1) - 1 && map [i, j + 1].Digged)
@@ -109,7 +112,7 @@ public class TerrainMeshGenerator : MeshGenerator {
 		{
 			for(j = jl>0?jl:0;j<=jh;j++)
 			{
-				p[i-il,j-jl] = map[i,j].Digged? 0 : 1;
+				p[i-il,j-jl] = (map[i,j].Digged && map[i,j].Discovered)? 0 : 1;
 			}
 		}
 

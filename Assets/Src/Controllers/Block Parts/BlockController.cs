@@ -6,6 +6,7 @@ using System;
 public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 	public enum Accessibility{
+		Unknown, // this block is undiscovered
 		Enclosed, // closed with blocks from all sides
 		Cliff // has at least one cell without block among neibours
 	}
@@ -16,10 +17,23 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 	public Block BlockProt;
 	public BuildingController cellBuilding;
+
+	// This value is calculated during cell update from following variables:
+	// - BlockProt
+	// - Discovered
+	[NonSerialized]
 	public Accessibility IsAccessible;
+
+
 	public GameObject ConstructionSitePrefab;
 
 	DigJob digJob;
+
+	[NonSerialized]
+	public BlockController[,] Map;
+
+	[NonSerialized]
+	public bool Discovered = false;
 
 	Color COLOR_DESIGNATED = new Color(0,0,1,0.5f);
 	Color COLOR_DEFAULT = new Color(0,0,1,1);
@@ -27,6 +41,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	float leftover = 0;
 
 	int posI, posJ;
+
 
 	static float halfCell = TerrainMeshGenerator.CELL_SIZE/2;
 
@@ -87,6 +102,38 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		digJob=null;
 
 	}
+
+	public void Discover(BlockController.CellHandler OnCellUpdated, int posI, int posJ)
+	{
+		BlockController[,] map = Map;
+
+		map[posI,posJ].Discovered = true;
+		OnCellUpdated(posI,posJ);
+		
+		int imin = Math.Max (posI-1,0);
+		int imax = Math.Min(posI+1,map.GetUpperBound(0));
+		
+		int jmin = Math.Max (posJ-1,0);
+		int jmax = Math.Min(posJ+1,map.GetUpperBound(1));
+		for(int i = imin;i<=imax;i++)
+		{
+			for (int j = jmin;j<=jmax;j++)
+			{
+				if(map[i,j].Discovered)
+					continue;
+				
+				if(map[i,j].Digged==true)
+				{
+					Discover(OnCellUpdated,i,j);
+				}
+				else
+				{
+					map[i,j].Discovered = true;
+					OnCellUpdated(i,j);
+				}
+			}
+		}
+	}
 	public DigResult Dig(IInventory dest)
 	{
 		float fdigAmount = BlockProt.DigSpeed*Time.smoothDeltaTime*100+leftover;
@@ -115,6 +162,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 			{
 
 				BlockProt=null;
+
 				if(CellUpdated!=null)
 				{
 					CellUpdated(posI,posJ);
@@ -128,6 +176,8 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 					CellUpdated(posI-1,posJ+1);
 					CellUpdated(posI+1,posJ-1);
 					CellUpdated(posI+1,posJ+1);
+
+					Discover(CellUpdated,posI,posJ);
 				}
 				digJob=null;
 				res = DigResult.Finished;
@@ -193,7 +243,8 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	public void Generate(BlockController[,] map,TerrainMeshGenerator terrGen,  bool editMode,bool updateAstar)
 	{
 		Manager manager = M;
-		
+
+
 		GetComponent<MeshFilter>().sharedMesh=null;
 		GetComponent<MeshFilter>().mesh=null;
 
@@ -226,7 +277,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		// checking accessibility
 		Accessibility oldAc = IsAccessible;
 		IsAccessible = terrGen.GetAccessibility(posI, posJ);
-		if(digJob!=null && oldAc==Accessibility.Enclosed && IsAccessible==Accessibility.Cliff)
+		if(digJob!=null && oldAc!=Accessibility.Cliff && IsAccessible==Accessibility.Cliff)
 			M.JobManager.UnblockJob(digJob);
 
 		// Setting mesh to component
@@ -302,6 +353,12 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		}
 	}
 
+	void OnDrawGizmos()
+	{
+		Gizmos.color = Color.green;
+		if(Discovered)
+			Gizmos.DrawWireCube(new Vector3(0.5f,0.5f,0.5f)+transform.position, new Vector3(0.3f,0.3f,0.3f));
+	}
 
 
 	Material LoadMaterial(string name)
@@ -328,7 +385,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		b.WriteEx(BlockProt);
 		b.WriteLink(digJob);
 
-
+		b.Write(Discovered);
 	}
 	public void Load (Manager m, ReaderEx r)
 	{
@@ -340,6 +397,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		
 		M.GameD.BlocksByName.TryGetValue(r.ReadString(),out BlockProt);
 		digJob = (DigJob)r.ReadLink(m);
+		Discovered = r.ReadBoolean();
 
 	}
 	#endregion

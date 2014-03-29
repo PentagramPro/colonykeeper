@@ -18,6 +18,7 @@ public class PlayerSpot : MapSpot
 			for(int j=x;j<x+width;j++)
 			{
 				map[i,j].BlockProt = null;
+				map[i,j].Discovered = true;
 			}
 		}
 
