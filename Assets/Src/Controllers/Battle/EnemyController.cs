@@ -35,6 +35,7 @@ public class EnemyController : BaseManagedController, IStorable {
 		weapon.OnTargetDestroyed += OnTargetDestroyed;
 		hull = GetComponent<HullController>();
 		vehicle.OnPathWalked+=OnPathWalked;
+		vehicle.OnActivated+=OnActivated;
 	}
 	
 	// Update is called once per frame
@@ -44,8 +45,6 @@ public class EnemyController : BaseManagedController, IStorable {
 		switch(state)
 		{
 		case Modes.Inactive:
-			state = Modes.Sentry;
-			targeter.Search(vehicle.Side);
 			break;
 		case Modes.Sentry:
 			break;
@@ -53,6 +52,12 @@ public class EnemyController : BaseManagedController, IStorable {
 			break;
 		
 		}
+	}
+
+	void OnActivated()
+	{
+		state = Modes.Sentry;
+		targeter.Search(vehicle.Side);
 	}
 
 

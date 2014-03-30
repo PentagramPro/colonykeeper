@@ -12,6 +12,7 @@ public class TerrainController : BaseManagedController, IStorable {
 
 	BlockController[,] map;
 
+
 	BlockController lastSelected;
 
 
@@ -46,6 +47,12 @@ public class TerrainController : BaseManagedController, IStorable {
 	
 
 
+	}
+
+	public BlockController[,] Map{
+		get{
+			return map;
+		}
 	}
 	// Use this for initialization
 	void Start () {

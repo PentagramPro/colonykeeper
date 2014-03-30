@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using Pathfinding;
 using System;
+
 
 public class BlockController : BaseManagedController, ICustomer, IStorable {
 
@@ -44,6 +45,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 	int posI, posJ;
 
+	public List<VehicleController> ObjectsCache = new List<VehicleController>();
 
 	static float halfCell = TerrainMeshGenerator.CELL_SIZE/2;
 
@@ -390,7 +392,10 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 	void Activate()
 	{
-
+		foreach(VehicleController v in ObjectsCache)
+		{
+			v.Activate();
+		}
 	}
 	#region IStorable implementation
 

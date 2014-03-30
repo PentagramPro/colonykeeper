@@ -3,6 +3,7 @@
   <SimpleStrings>
   	<String Name="Message.NoStorage">Cannot unload {0}: no suitable inventory available.</String>
   	<String Name="Message.Attack">Our vehicle is under attack!</String>
-  	<String Name="Message.ProdComplete">"{0}: production complete."</String>
+  	<String Name="Message.ProdComplete">{0}: production complete.</String>
+  	<String Name="Message.NoAmmo">Defender drone: out of ammunition!</String>
   </SimpleStrings>
 </Strings>

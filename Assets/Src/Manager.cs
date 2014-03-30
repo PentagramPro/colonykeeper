@@ -144,6 +144,28 @@ public class Manager : MonoBehaviour {
 			defenceController.UnderAttack(victim,attacker);
 		}
 	}
+
+	public void PositionChanged(VehicleController vehicle)
+	{
+		Vector3 loc = vehicle.transform.position-terrainController.transform.position;
+		int x = (int)loc.x;
+		int y = (int)loc.z;
+
+		if(vehicle.currentCell.X!=x || vehicle.currentCell.Y!=y)
+		{
+			terrainController.Map[vehicle.currentCell.Y,vehicle.currentCell.X].ObjectsCache.Remove(vehicle);
+			terrainController.Map[y,x].ObjectsCache.Add(vehicle);
+			vehicle.currentCell = new MapPoint(x,y);
+		}
+	}
+
+
+	public void RemoveObjectFromCellCache(VehicleController vehicle)
+	{
+		BlockController cell = terrainController.Map[vehicle.currentCell.Y,vehicle.currentCell.X];
+		cell.ObjectsCache.Remove(vehicle);
+	}
+
 	public void SaveGame()
 	{
 

@@ -72,6 +72,7 @@ public class DefDroneController : BaseManagedController, IStorable, IInteractive
 
 	void OnOutOfAmmo()
 	{
+		M.DisplayMessage(M.S["Message.NoAmmo"]);
 		state = Modes.Reload;
 		droneLoader.Load(M.GameD.Items[shellName]);
 	}

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Pathfinding;
+using System;
 
 public class VehicleController : BaseManagedController, IStorable  {
 	private enum VehicleModes
@@ -26,16 +27,29 @@ public class VehicleController : BaseManagedController, IStorable  {
 	public delegate void PathWalked();
 	public event PathWalked OnPathWalked;
 
+	public delegate void Activated();
+	public event Activated OnActivated;
+
 	bool stopping = false;
 	float distanceToStop = 0;
 	float distanceToStopWalked=0;
-	
+
+	[NonSerialized]
+	public MapPoint currentCell;
+
 	void Start()
 	{
 
 		seeker = GetComponent<Seeker>();
+		M.PositionChanged(this);
+
 	}
 
+	public void Activate()
+	{
+		if(OnActivated!=null)
+			OnActivated();
+	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -73,6 +87,7 @@ public class VehicleController : BaseManagedController, IStorable  {
 				
 				transform.localRotation = dirRot;
 				transform.position+=dir;
+				M.PositionChanged(this);
 				//controller.SimpleMove (dir);
 				//Check if we are close enough to the next waypoint
 				//If we are, proceed to follow the next waypoint
@@ -110,6 +125,7 @@ public class VehicleController : BaseManagedController, IStorable  {
 	{
 		vehicleState = VehicleModes.Destroyed;
 		M.VehiclesRegistry.Remove(this);
+		M.RemoveObjectFromCellCache(this);
 	}
 
 
