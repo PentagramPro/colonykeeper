@@ -4,6 +4,8 @@ using System;
 
 public class ProjectileController : BaseManagedController {
 
+	public EffectController ImpactEffectPrefab;
+
 	float damage=0;
 	WeakReference target;
 	public HullController Target{
@@ -45,7 +47,13 @@ public class ProjectileController : BaseManagedController {
 	void OnTriggerEnter(Collider other)
 	{
 		if(other.tag!="Projectile")
+		{
+			if(ImpactEffectPrefab!=null)
+			{
+				Instantiate(ImpactEffectPrefab,transform.position,transform.rotation);
+			}
 			Destroy(gameObject);
+		}
 	}
 	public void Fire(HullController owner,float damage, HullController target)
 	{

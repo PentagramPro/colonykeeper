@@ -21,6 +21,9 @@ public class WeaponController : BaseController, IStorable{
 	float fireCounter = 0;
 	int roundCounter = 1;
 
+
+	public bool InfiniteAmmo = false;
+
 	int ammunition = 10;
 	public float fireRoundDelay = 3;
 	public int fireRoundSize = 4;
@@ -160,12 +163,15 @@ public class WeaponController : BaseController, IStorable{
 			.GetComponent<ProjectileController>();
 		
 		proj.Fire(owner,fireDamage,target);
-		ammunition--;
-		if(ammunition<=0)
+		if(!InfiniteAmmo)
 		{
-			state = Modes.OutOfAmmo;
-			if(OnOutOfAmmo!=null)
-				OnOutOfAmmo();
+			ammunition--;
+			if(ammunition<=0)
+			{
+				state = Modes.OutOfAmmo;
+				if(OnOutOfAmmo!=null)
+					OnOutOfAmmo();
+			}
 		}
 	}
 
