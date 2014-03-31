@@ -148,6 +148,16 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 
 	#region IInteractive implementation
 
+	public void OnSelected()
+	{
+		
+	}
+	
+	public void OnDeselected()
+	{
+		
+	}
+
 	public void OnDrawSelectionGUI ()
 	{
 

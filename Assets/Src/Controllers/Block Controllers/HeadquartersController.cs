@@ -58,6 +58,15 @@ public class HeadquartersController : BaseManagedController, ICustomer, IStorabl
 	}
 
 	#region IInteractive implementation
+	public void OnSelected()
+	{
+		
+	}
+	
+	public void OnDeselected()
+	{
+		
+	}
 
 	public void OnDrawSelectionGUI ()
 	{

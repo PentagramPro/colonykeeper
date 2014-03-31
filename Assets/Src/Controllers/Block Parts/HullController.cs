@@ -69,6 +69,16 @@ public class HullController : BaseManagedController, IStorable, IInteractive {
 
 	#region IInteractive implementation
 
+	public void OnSelected()
+	{
+		
+	}
+	
+	public void OnDeselected()
+	{
+		
+	}
+
 	public void OnDrawSelectionGUI ()
 	{
 		GUILayout.Label("HP: "+CurHP+"/"+MaxHP);

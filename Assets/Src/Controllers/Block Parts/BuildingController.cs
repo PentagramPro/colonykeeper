@@ -44,6 +44,15 @@ public class BuildingController : BaseManagedController, IStorable, IInteractive
 	}
 
 	#region IInteractive implementation
+	public void OnSelected()
+	{
+		
+	}
+	
+	public void OnDeselected()
+	{
+		
+	}
 
 	public void OnDrawSelectionGUI ()
 	{

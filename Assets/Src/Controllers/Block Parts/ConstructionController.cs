@@ -82,6 +82,15 @@ public class ConstructionController : BaseManagedController, IInteractive, IStor
 	}
 
 	#region IInteractive implementation
+	public void OnSelected()
+	{
+		
+	}
+	
+	public void OnDeselected()
+	{
+		
+	}
 
 	public void OnDrawSelectionGUI ()
 	{

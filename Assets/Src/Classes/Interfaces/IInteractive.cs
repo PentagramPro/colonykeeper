@@ -12,6 +12,9 @@ using System;
 public interface IInteractive
 {
 	void OnDrawSelectionGUI();
+
+	void OnSelected();
+	void OnDeselected();
 }
 
 

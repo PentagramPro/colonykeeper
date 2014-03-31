@@ -120,6 +120,19 @@ public class DefDroneController : BaseManagedController, IStorable, IInteractive
 
 	#region IInteractive implementation
 
+
+	public void OnSelected()
+	{
+
+	}
+
+	public void OnDeselected()
+	{
+
+	}
+
+
+
 	public void OnDrawSelectionGUI ()
 	{
 		switch(state)

@@ -1,16 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class DefenceController : BaseManagedController {
+public class DefenceController : BaseManagedController, IInteractive {
 
 	List<HullController> targets = new List<HullController>();
 	HullController currentTarget = null;
 	List<DefDroneController> currentDefenders = new List<DefDroneController>();
 	public float Range=10;
+	public Projector RangeIndicator;
 
 	// Use this for initialization
 	void Start () {
 		M.defenceController = this;
+		RangeIndicator.orthoGraphicSize = Range;
+		RangeIndicator.enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -80,4 +83,23 @@ public class DefenceController : BaseManagedController {
 			}
 		}
 	}
+
+	#region IInteractive implementation
+
+	public void OnDrawSelectionGUI()
+	{
+
+	}
+
+	public void OnSelected()
+	{
+		RangeIndicator.enabled = true;
+	}
+
+	public void OnDeselected()
+	{
+		RangeIndicator.enabled = false;
+	}
+
+	#endregion
 }

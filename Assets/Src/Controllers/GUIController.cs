@@ -28,7 +28,11 @@ public class GUIController : BaseManagedController {
 
 	public GameObject SelectedObject{
 		set{
+			if(leftPanelWnd.SelectedObject!=null)
+				CallOnDeselected(leftPanelWnd.SelectedObject);
 			leftPanelWnd.SelectedObject = value;
+			if(value!=null)
+				CallOnSelected(value);
 		}
 	}
 
@@ -163,11 +167,35 @@ public class GUIController : BaseManagedController {
 	public void OnDeselect()
 	{
 		if(state==Modes.Idle)
-			leftPanelWnd.SelectedObject = null;
+			SelectedObject = null;
 	}
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	void CallOnSelected(GameObject obj)
+	{
+		Component[] components = obj.GetComponents<Component>();
+		foreach (Component c in components)
+		{
+			if(c is IInteractive)
+			{
+				(c as IInteractive).OnSelected();
+			}
+		}
+	}
+
+	void CallOnDeselected(GameObject obj)
+	{
+		Component[] components = obj.GetComponents<Component>();
+		foreach (Component c in components)
+		{
+			if(c is IInteractive)
+			{
+				(c as IInteractive).OnDeselected();
+			}
+		}
 	}
 
 

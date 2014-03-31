@@ -6,6 +6,16 @@ public class StorageController : IInventory, IInteractive {
 
 	
 	#region IInteractive implementation
+	public void OnSelected()
+	{
+		
+	}
+	
+	public void OnDeselected()
+	{
+		
+	}
+
 	public void OnDrawSelectionGUI()
 	{
 		Item[] it = GetItemTypes();
