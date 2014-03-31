@@ -177,6 +177,7 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 	{
 		currentJob = null;
 		loaderController.Cancel();
+		inventory.DropCrate();
 		state = Modes.Idle;
 	}
 
