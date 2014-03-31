@@ -221,7 +221,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		else
 		{
 			digJob = new DigJob(jm,this,this);
-			jm.AddJob(digJob,IsAccessible==Accessibility.Enclosed);
+			jm.AddJob(digJob,IsAccessible!=Accessibility.Cliff);
 		}
 
 		UpdateCellColor(jm);

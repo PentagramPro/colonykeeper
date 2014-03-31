@@ -5,8 +5,8 @@ public class PlayerSpot : MapSpot
 
 	public PlayerSpot(Manager m,int x, int y) : base(m,x,y)
 	{
-		width=3;
-		height=3;
+		width=5;
+		height=5;
 	}
 
 	#region implemented abstract members of MapSpot
@@ -17,7 +17,8 @@ public class PlayerSpot : MapSpot
 		{
 			for(int j=x;j<x+width;j++)
 			{
-				map[i,j].BlockProt = null;
+				if(i>y && i<y+height-1 && j>x && j<x+width-1)
+					map[i,j].BlockProt = null;
 				map[i,j].Discovered = true;
 			}
 		}
@@ -35,9 +36,9 @@ public class PlayerSpot : MapSpot
 				st.Put(M.GameD.Items[item.Name],item.Quantity);
 			}
 
-			PutVehicle(map,x,y,"Drone");
-			PutVehicle(map,x+2,y,"Drone");
-			PutVehicle(map,x+1,y+2,"Defender Drone");
+			PutVehicle(map,x+1,y+1,"Drone");
+			PutVehicle(map,x+3,y+1,"Drone");
+			PutVehicle(map,x+2,y+3,"Defender Drone");
 		}
 	}
 	#endregion

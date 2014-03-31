@@ -129,11 +129,11 @@ public class TerrainMeshGenerator : MeshGenerator {
 		//int h = map.GetUpperBound(0);
 		//int w = map.GetUpperBound(1);
 
-		
+
 	
 		BlockController c = map[i,j];
 
-		float level = c.Digged?0:CELL_SIZE;
+		float level = (c.Digged && c.Discovered)?0:CELL_SIZE;
 
 
 

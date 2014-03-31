@@ -37,12 +37,10 @@ public class VehicleController : BaseManagedController, IStorable  {
 	[NonSerialized]
 	public MapPoint currentCell;
 
-	public Renderer Cloaker;
+
 
 	void Start()
 	{
-		if(Cloaker!=null)
-			Cloaker.enabled=true;
 		seeker = GetComponent<Seeker>();
 		M.PositionChanged(this);
 
@@ -52,8 +50,6 @@ public class VehicleController : BaseManagedController, IStorable  {
 	{
 		if(OnActivated!=null)
 			OnActivated();
-		if(Cloaker!=null)
-			Cloaker.enabled = false;
 	}
 	
 	// Update is called once per frame
