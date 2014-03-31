@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections.Generic;
 
 public class DefenceController : BaseManagedController, IInteractive {
@@ -8,6 +9,9 @@ public class DefenceController : BaseManagedController, IInteractive {
 	List<DefDroneController> currentDefenders = new List<DefDroneController>();
 	public float Range=10;
 	public Projector RangeIndicator;
+
+	[NonSerialized]
+	public List<RadarController> Radars = new List<RadarController>();
 
 	// Use this for initialization
 	void Start () {
@@ -21,6 +25,18 @@ public class DefenceController : BaseManagedController, IInteractive {
 	
 	}
 
+	bool IsInRange(Vector3 point)
+	{
+		if (Vector3.Distance(transform.position, point) <= Range)
+			return true;
+
+		foreach (RadarController r in Radars)
+		{
+			if(Vector3.Distance(r.transform.position,point)<=r.Range)
+				return true;
+		}
+		return false;
+	}
 	public void UnderAttack(HullController victim, Transform attacker)
 	{
 		ProjectileController proj = attacker.GetComponent<ProjectileController>();
@@ -34,15 +50,24 @@ public class DefenceController : BaseManagedController, IInteractive {
 		if(hull.CurHP<=0)
 			return;
 
-		M.DisplayMessage(M.S["Message.Attack"],Color.red);
-
-		if(currentTarget==null)
+		if (IsInRange(attacker.position))
 		{
-			currentTarget = hull;
-			AttackTarget(hull);
+
+			M.DisplayMessage(M.S ["Message.Attack"], Color.red);
+
+
+
+			if (currentTarget == null)
+			{
+				currentTarget = hull;
+				AttackTarget(hull);
+			}
+			if (!targets.Contains(hull))
+				targets.Add(hull);
+		} else
+		{
+			M.DisplayMessage(M.S ["Message.AttackOutOfRange"], Color.red);
 		}
-		if(!targets.Contains(hull))
-			targets.Add(hull);
 	}
 
 

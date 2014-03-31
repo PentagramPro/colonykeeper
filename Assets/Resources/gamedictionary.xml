@@ -83,6 +83,12 @@
   			<Ingredient Name="Good.Part.Beam.*" Quantity="100"></Ingredient>
   		</Ingredients>
   	</Building>
+  	<Building Name="Radar" PrefabName="Radar">
+  		<Ingredients>
+  			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
+  			<Ingredient Name="Good.Part.Beam.*" Quantity="100"></Ingredient>
+  		</Ingredients>
+  	</Building>
   </Buildings>
   <Vehicles>
   	<Vehicle Name="Drone" PrefabName="Drone">
