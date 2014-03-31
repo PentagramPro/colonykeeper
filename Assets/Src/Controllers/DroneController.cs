@@ -176,6 +176,7 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 	public void CancelCurrentJob ()
 	{
 		currentJob = null;
+		loaderController.Cancel();
 		state = Modes.Idle;
 	}
 

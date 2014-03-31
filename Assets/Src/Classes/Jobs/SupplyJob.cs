@@ -61,6 +61,8 @@ public class SupplyJob : IJob
 			break;
 		}
 	}
+
+
 	#endregion
 
 	public override void Save (WriterEx b)
