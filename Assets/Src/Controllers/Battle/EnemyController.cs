@@ -27,15 +27,17 @@ public class EnemyController : BaseManagedController, IStorable {
 		if(weapon==null)
 			throw new UnityException("Weapon must not be null");
 
-		if(vehicle==null)
-			throw new UnityException("Vehicle must not be null");
+
 
 		targeter.OnFound+=OnFound;
 		weapon.OnTargetLost+=OnTargetLost;
 		weapon.OnTargetDestroyed += OnTargetDestroyed;
 		hull = GetComponent<HullController>();
-		vehicle.OnPathWalked+=OnPathWalked;
-		vehicle.OnActivated+=OnActivated;
+		if (vehicle != null)
+		{
+			vehicle.OnPathWalked += OnPathWalked;
+			vehicle.OnActivated += OnActivated;
+		}
 	}
 	
 	// Update is called once per frame
@@ -69,7 +71,7 @@ public class EnemyController : BaseManagedController, IStorable {
 
 	void OnFound(VisualContact target)
 	{
-		if(state == Modes.Intercept)
+		if(state == Modes.Intercept && vehicle!=null)
 			vehicle.Stop(0.1f);
 		curContact = target;
 		state = Modes.Attack;
@@ -80,7 +82,8 @@ public class EnemyController : BaseManagedController, IStorable {
 	{
 
 		state = Modes.Intercept;
-		vehicle.DriveTo(curContact.LastPosition);
+		if(vehicle!=null)
+			vehicle.DriveTo(curContact.LastPosition);
 		targeter.Search(vehicle.Side);
 	}
 
