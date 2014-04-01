@@ -6,7 +6,7 @@ public class TargeterController : BaseManagedController, IStorable {
 	enum Modes {
 		Idle,Search,Delay
 	}
-	Modes state = Modes.Search;
+	Modes state = Modes.Idle;
 
 
 	float delay = 0;

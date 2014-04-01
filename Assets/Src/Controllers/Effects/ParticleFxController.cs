@@ -1,19 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EffectController : MonoBehaviour {
-	
-	public bool ContinuousMode = true;
+public class ParticleFxController : EffectController {
 
+	public bool ContinuousMode = true;
+	
 	public ParticleSystem Particles;
 	float timer = 0;
 
-
-	// Use this for initialization
-	void Start () {
-
-	}
-	
 	// Update is called once per frame
 	void Update () {
 		if(ContinuousMode)
@@ -30,23 +24,24 @@ public class EffectController : MonoBehaviour {
 			if(!Particles.IsAlive())
 				Destroy(gameObject);
 		}
-
+		
 	}
 
-	public void Spark(float time)
+	public override void Spark(float time)
 	{
 		timer = time;
 		if(!Particles.isPlaying)
 			Particles.Play();
 	}
-
-	public void Play()
+	
+	public override void Play()
 	{
 		Particles.Play();
 	}
-
-	public void Stop()
+	
+	public override void Stop()
 	{
 		Particles.Stop();
 	}
+
 }

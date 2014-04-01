@@ -241,12 +241,18 @@ public class TerrainController : BaseManagedController, IStorable {
 		mapGen = new MapGen(M);
 
 		mapGen.AddSpot(new PlayerSpot(M,w/2,h/2));
-		mapGen.AddSpot(new SentrySpot(M,w/2,h/2+3));
+		//mapGen.AddSpot(new SentrySpot(M,w/2,h/2+3));
 		mapGen.AddSpot(new SentrySpot(M,-1,-1));
 		mapGen.AddSpot(new SentrySpot(M,-1,-1));
 		mapGen.AddSpot(new SentrySpot(M,-1,-1));
 		mapGen.AddSpot(new SentrySpot(M,-1,-1));
 
+		mapGen.AddSpot(new TowerSpot(M,-1,-1));
+		mapGen.AddSpot(new TowerSpot(M,-1,-1));
+		mapGen.AddSpot(new TowerSpot(M,-1,-1));
+
+		mapGen.AddSpot(new EnragerSpot(M,-1,-1));
+		mapGen.AddSpot(new EnragerSpot(M,-1,-1));
 
 
 		for(int i=0;i<h;i++)
