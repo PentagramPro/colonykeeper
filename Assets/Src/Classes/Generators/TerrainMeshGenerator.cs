@@ -64,6 +64,8 @@ public class TerrainMeshGenerator : MeshGenerator {
 		colors.Add(color*(1-pat[0,2]*pat[1,2]*pat[0,1]*pat[1,1]));
 		colors.Add(color*(1-pat[2,0]*pat[1,0]*pat[2,1]*pat[1,1]));
 		colors.Add(color*(1-pat[2,1]*pat[2,2]*pat[1,2]*pat[1,1]));
+
+
 		
 	}
 	void AttachVRect(Vector2 p1, Vector3 p2, float z1, float z2)

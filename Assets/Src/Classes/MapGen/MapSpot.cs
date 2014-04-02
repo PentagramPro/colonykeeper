@@ -1,6 +1,6 @@
 using UnityEngine;
 using System;
-
+using System.Collections.Generic;
 
 public abstract class MapSpot
 {
@@ -161,6 +161,37 @@ public abstract class MapSpot
 			{
 				map[i,j].busy = true;
 			}
+		}
+	}
+
+
+	protected void ArrangeOnBorder(BlockController[,] map, string[] blockNames)
+	{
+		List<BlockController> cells = new List<BlockController>();
+		for (int i =y; i<y+height; i++)
+		{
+			cells.Add(map[i,x]);
+			cells.Add(map[i,x+width-1]);
+		}
+
+		for (int j=x+1; j<x+width-1; j++)
+		{
+			cells.Add(map[y,j]);
+			cells.Add(map[y+height-1,j]);
+		}
+
+		foreach (string name in blockNames)
+		{
+			Block block = null;
+			if(cells.Count==0)
+				break;
+
+			if(!M.GameD.BlocksByName.TryGetValue(name,out block))
+				continue;
+
+			BlockController bc = cells[UnityEngine.Random.Range(0,cells.Count)];
+			bc.BlockProt = block;
+			cells.Remove(bc);
 		}
 	}
 }

@@ -21,9 +21,7 @@ public class SentrySpot : MapSpot
 
 		PutVehicle(map,y+height/2,x+width/2,"Alien Sentry");
 
-		map [y, x + 1].BlockProt = M.GameD.BlocksByName ["Ice Ore"];
-		map [y+4, x + 3].BlockProt = M.GameD.BlocksByName ["Ice Ore"];
-		map [y+3, x].BlockProt = M.GameD.BlocksByName ["Ice Ore"];
+		ArrangeOnBorder(map,new string[] {"Ice Ore","Ice Ore","Iron Ore"});
 
 	}
 	#endregion
@@ -53,6 +51,8 @@ public class TowerSpot : MapSpot
 		PutVehicle(map,y+1,x+2,"Alien Sentry");
 		PutVehicle(map,y+3,x+4,"Alien Sentry");
 
+		ArrangeOnBorder(map,new string[] {"Ice Ore","Ice Ore","Iron Ore"});
+
 	}
 	#endregion
 }
@@ -78,6 +78,7 @@ public class EnragerSpot : MapSpot
 		}
 		
 		PutVehicle(map,y+height/2,x+width/2,"Alien Sentry");
+		ArrangeOnBorder(map,new string[] {"Ice Ore","Ice Ore","Iron Ore", "Iron Ore"});
 	}
 	#endregion
 }
