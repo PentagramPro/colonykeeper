@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class HullController : BaseManagedController, IStorable, IInteractive {
 
-	public delegate void UnderAttack();
+	public delegate void UnderAttack(Transform attacker);
 	public event UnderAttack OnUnderAttack;
 
+	List<IValueModifier> modifiers = new List<IValueModifier>();
 
 	public bool ReportAttackToManager = false;
 
@@ -40,13 +41,18 @@ public class HullController : BaseManagedController, IStorable, IInteractive {
 		{
 			if(ReportAttackToManager)
 				M.UnderAttack(this,other.transform);
-			curHP-=(int)proj.Damage;
+
+			int damage = (int)proj.Damage;
+			foreach(IValueModifier m in modifiers)
+				m.Modify(ref damage);
+			curHP-=damage;
+
 			if(curHP<=0)
 				Destroy(gameObject);
 			else
 			{
 				if(OnUnderAttack!=null)
-					OnUnderAttack();
+					OnUnderAttack(other.transform);
 			}
 		}
 	}
@@ -60,6 +66,12 @@ public class HullController : BaseManagedController, IStorable, IInteractive {
 	// Use this for initialization
 	void Start () {
 		curHP = maxHP;
+		Component[] comps = GetComponents<Component>();
+		foreach(Component c in comps)
+		{
+			if(c is IValueModifier)
+				modifiers.Add(c as IValueModifier);
+		}
 	}
 	
 	// Update is called once per frame

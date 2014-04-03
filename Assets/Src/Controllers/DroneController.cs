@@ -158,7 +158,7 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 		}
 	}
 
-	void OnUnderAttack()
+	void OnUnderAttack(Transform attacker)
 	{
 		if(state == Modes.Idle)
 		{

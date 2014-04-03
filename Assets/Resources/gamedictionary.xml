@@ -107,8 +107,9 @@
 	  		</Ingredients>
   		</Recipe>
   	</Vehicle>
-  	<Vehicle Name="Alien Sentry" PrefabName="Sentry">
-  	</Vehicle>
+  	<Vehicle Name="Alien Sentry" PrefabName="Sentry"></Vehicle>
+  	<Vehicle Name="Alien Sentry Tower" PrefabName="SentryTower"></Vehicle>
+  	<Vehicle Name="Alien Enrager" PrefabName="Enrager"></Vehicle>
   </Vehicles>
   <Recipes>
   	<!--       FURNACE RECIPES             -->
