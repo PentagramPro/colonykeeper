@@ -27,7 +27,7 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 		get{ return state_int;}
 		set{
 			state_int = value;
-			Debug.Log(this.GetHashCode()+": setting state to " + Enum.GetName(typeof(Modes), state));
+			//Debug.Log(this.GetHashCode()+": setting state to " + Enum.GetName(typeof(Modes), state));
 		}
 	}
 

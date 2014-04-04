@@ -38,7 +38,7 @@ public class ShieldGeneratorController : BaseManagedController, IValueModifier {
 
 	void OnUnderAttack(Transform attacker)
 	{
-		if(lastAttacker!=attacker && !turnedOn)
+		if(lastAttacker!=null && lastAttacker!=attacker && !turnedOn)
 			TurnOn();
 		lastAttacker = attacker;
 		counter = Delay;
@@ -60,9 +60,12 @@ public class ShieldGeneratorController : BaseManagedController, IValueModifier {
 
 	public void Modify (ref int val)
 	{
-		val-=(int)Strength;
-		if(val<0)
-			val = 0;
+		if(turnedOn)
+		{
+			val-=(int)Strength;
+			if(val<0)
+				val = 0;
+		}
 	}
 
 	#endregion
