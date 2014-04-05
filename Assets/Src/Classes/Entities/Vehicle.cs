@@ -12,7 +12,7 @@ public class Vehicle
 
 	public Recipe Recipe;
 
-	public GameObject Instantiate()
+	public GameObject Instantiate(Transform parent)
 	{
 		if(string.IsNullOrEmpty(PrefabName))
 			throw new UnityException("Cannot execute Instantiate method for vehicle with empty PrefabName");
@@ -23,6 +23,7 @@ public class Vehicle
 			throw new UnityException("Cannot find prefab with name: "+PrefabName);
 		
 		obj = (GameObject)GameObject.Instantiate(obj);
+		obj.transform.parent = parent;
 		VehicleController vc = obj.GetComponent<VehicleController>();
 		if (vc != null)
 		{

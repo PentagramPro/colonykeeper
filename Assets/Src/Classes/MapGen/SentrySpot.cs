@@ -18,8 +18,8 @@ public class SentrySpot : MapSpot
 				map[i,j].BlockProt = null;
 			}
 		}
-
-		PutVehicle(map,y+height/2,x+width/2,"Alien Sentry");
+		if(!editMode)
+			PutVehicle(map,y+height/2,x+width/2,"Alien Sentry");
 
 		ArrangeOnBorder(map,new string[] {"Ice Ore","Ice Ore","Iron Ore"});
 
@@ -48,8 +48,10 @@ public class TowerSpot : MapSpot
 			}
 		}
 		
-		PutVehicle(map,y+1,x+2,"Alien Sentry Tower");
-		PutVehicle(map,y+3,x+4,"Alien Sentry Tower");
+		if(!editMode){
+			PutVehicle(map,y+1,x+2,"Alien Sentry Tower");
+			PutVehicle(map,y+3,x+4,"Alien Sentry Tower");
+		}
 
 		ArrangeOnBorder(map,new string[] {"Ice Ore","Ice Ore","Iron Ore"});
 
@@ -77,7 +79,9 @@ public class EnragerSpot : MapSpot
 			}
 		}
 		
-		PutVehicle(map,y+height/2,x+width/2,"Alien Enrager");
+		if(!editMode){
+			PutVehicle(map,y+height/2,x+width/2,"Alien Enrager");
+		}
 		ArrangeOnBorder(map,new string[] {"Ice Ore","Ice Ore","Iron Ore", "Iron Ore"});
 	}
 	#endregion

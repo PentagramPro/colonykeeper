@@ -243,7 +243,7 @@ public class TerrainController : BaseManagedController, IStorable {
 
 					Object.DestroyImmediate(child.gameObject);
 				}
-				catch(UnityException){}
+				catch(System.Exception){}
 			}
 		}
 

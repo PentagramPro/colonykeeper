@@ -155,11 +155,16 @@ public class Manager : MonoBehaviour {
 		int x = (int)loc.x;
 		int y = (int)loc.z;
 
-		if(vehicle.currentCell.X!=x || vehicle.currentCell.Y!=y)
+		if( (vehicle.currentCell.X!=x || vehicle.currentCell.Y!=y) && terrainController.Map!=null)
 		{
-			terrainController.Map[vehicle.currentCell.Y,vehicle.currentCell.X].ObjectsCache.Remove(vehicle);
-			terrainController.Map[y,x].ObjectsCache.Add(vehicle);
-			vehicle.currentCell = new MapPoint(x,y);
+
+			BlockController cell = terrainController.Map[vehicle.currentCell.Y,vehicle.currentCell.X];
+			if(cell!=null)
+			{
+				terrainController.Map[vehicle.currentCell.Y,vehicle.currentCell.X].ObjectsCache.Remove(vehicle);
+				terrainController.Map[y,x].ObjectsCache.Add(vehicle);
+				vehicle.currentCell = new MapPoint(x,y);
+			}
 		}
 	}
 
@@ -167,7 +172,8 @@ public class Manager : MonoBehaviour {
 	public void RemoveObjectFromCellCache(VehicleController vehicle)
 	{
 		BlockController cell = terrainController.Map[vehicle.currentCell.Y,vehicle.currentCell.X];
-		cell.ObjectsCache.Remove(vehicle);
+		if(cell!=null)
+			cell.ObjectsCache.Remove(vehicle);
 	}
 
 	public void SaveGame()
@@ -246,7 +252,8 @@ public class Manager : MonoBehaviour {
 			for(int i=0;i<count;i++)
 			{
 				Vehicle vehicleProt = b.ReadVehicle(this);
-				VehicleController vehicleController = vehicleProt.Instantiate().GetComponent<VehicleController>();
+				VehicleController vehicleController = vehicleProt.Instantiate(terrainController.transform)
+					.GetComponent<VehicleController>();
 				vehicleController.LoadUid(this,b);
 				VehiclesRegistry.Add(vehicleController);
 			}
@@ -275,5 +282,14 @@ public class Manager : MonoBehaviour {
 
 			GameDateTime = b.ReadDateTime();
 		}
+	}
+
+	public VehicleController CreateVehicle(string name, Vector3 position)
+	{
+		GameObject veh = GameD.VehiclesByName[name].Instantiate(terrainController.transform);
+		VehicleController vcontroller = veh.GetComponent<VehicleController>();
+		VehiclesRegistry.Add(vcontroller);
+		veh.transform.position = position;
+		return vcontroller;
 	}
 }

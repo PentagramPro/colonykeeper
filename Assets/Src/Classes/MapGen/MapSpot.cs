@@ -39,9 +39,8 @@ public abstract class MapSpot
 
 	protected void PutVehicle(BlockController[,] map, int i, int j,string name)
 	{
-		GameObject veh = M.GameD.VehiclesByName[name].Instantiate();
-		M.VehiclesRegistry.Add(veh.GetComponent<VehicleController>());
-		veh.transform.position = map[i,j].Position;
+		M.CreateVehicle(name,map[i,j].Position);
+		
 	}
 	public bool Grow(MapGen.Cell[,] map, int posI, int posJ)
 	{

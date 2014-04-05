@@ -40,9 +40,7 @@ public class UnloadController : BaseManagedController,ICustomer, IStorable {
 				.Put(r.ResultsLinks[0].ItemType, r.ResultsLinks[0].Quantity);
 			break;
 		case OperaionModes.OutputVehicles:
-			VehicleController res = r.Prototype.vehicle.Instantiate().GetComponent<VehicleController>();
-			M.VehiclesRegistry.Add(res);
-			res.transform.position = transform.position;
+			VehicleController res =  M.CreateVehicle(r.Prototype.vehicle.Name,transform.position);
 			break;
 		}
 	}

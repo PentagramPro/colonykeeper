@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Pathfinding;
 using System;
-
+using TouchScript.Gestures;
 
 public class BlockController : BaseManagedController, ICustomer, IStorable {
 
@@ -67,6 +67,8 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		if (ConstructionSitePrefab == null)
 			throw new UnityException("ConstructionSitePrefab must not be null");
 	
+		TapGesture tap = GetComponent<TapGesture>();
+		tap.StateChanged+=HandleStateChanged;
 	}
 
 
@@ -247,15 +249,18 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 			CellMouseOver(posI,posJ);
 	}
 
-	void OnMouseUpAsButton() 
+	private void HandleStateChanged(object sender, TouchScript.Events.GestureStateChangeEventArgs e)
 	{
-		if(CellMouseUp!=null)
-			CellMouseUp(posI,posJ);
-		M.GetGUIController().SelectedObject = null;
-		if (!Digged)
-			DesignateDigJob();
-
+		if (e.State == Gesture.GestureState.Recognized)
+		{
+			if(CellMouseUp!=null)
+				CellMouseUp(posI,posJ);
+			M.GetGUIController().SelectedObject = null;
+			if (!Digged)
+				DesignateDigJob();
+		}
 	}
+
 
 	public void Generate(BlockController[,] map,TerrainMeshGenerator terrGen,  bool editMode,bool updateAstar)
 	{
