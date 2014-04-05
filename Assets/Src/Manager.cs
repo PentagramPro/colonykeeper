@@ -127,6 +127,10 @@ public class Manager : MonoBehaviour {
 		GetGUIController().DisplayMessage(message,Vector3.zero,color);
 	}
 
+	public void Scroll(Vector2 delta)
+	{
+		cameraController.Scroll(delta);
+	}
 	public IInventory CreateCrate(Transform pos)
 	{
 		GameObject crate = (GameObject)Instantiate(cratePrefab.gameObject, pos.position, pos.rotation);
