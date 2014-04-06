@@ -73,7 +73,7 @@ public class EnemyController : BaseManagedController, IStorable {
 	void OnFound(VisualContact target)
 	{
 		if(state == Modes.Intercept )
-			vehicle.Stop(0.1f);
+			vehicle.Stop();
 		curContact = target;
 		state = Modes.Attack;
 		weapon.Attack(hull,target);

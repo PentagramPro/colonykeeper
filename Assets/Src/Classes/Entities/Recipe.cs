@@ -30,7 +30,7 @@ public class Recipe
 	// used only for vehicle recipes
 	// points to result of this recipe
 	[XmlIgnore]
-	public Vehicle vehicle;
+	public VehicleProt vehicle;
 
 	[XmlIgnore]
 	public bool IsOneCombination

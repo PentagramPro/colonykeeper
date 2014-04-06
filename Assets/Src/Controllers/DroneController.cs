@@ -40,7 +40,7 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 	void Start () {
 
 		if(vehicleController==null)
-			throw new UnityException("Vehicle exception must not be null");
+			throw new UnityException("VehicleProt exception must not be null");
 
 		if(loaderController==null)
 			throw new UnityException("Drone loader controller must not be null");

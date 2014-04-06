@@ -39,9 +39,9 @@ public class ReaderEx : BinaryReader
 		return (Item)res;
 	}
 
-	public Vehicle ReadVehicle(Manager m)
+	public VehicleProt ReadVehicle(Manager m)
 	{
-		Vehicle res = null;
+		VehicleProt res = null;
 		string name = ReadString();
 		if(!m.GameD.VehiclesByName.TryGetValue(name, out res))
 		{

@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using System.Xml.Serialization;
 
-public class Vehicle
+public class VehicleProt
 {
 	[XmlAttribute("Name")]
 	public string Name;

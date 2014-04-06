@@ -9,6 +9,7 @@ public class BuildingController : BaseManagedController, IStorable, IInteractive
 	// Use this for initialization
 	void Start () {
 	
+
 	}
 
 	public void OnMouseUpAsButton()

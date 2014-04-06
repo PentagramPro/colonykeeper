@@ -2,26 +2,26 @@
 using System.Collections;
 using Pathfinding;
 using System;
+using UnitySteer;
 
 public class VehicleController : BaseManagedController, IStorable  {
-	private enum VehicleModes
+	private enum Modes
 	{
-		Idle,Calc,Turn,Follow,Destroyed
+		Idle,Calc,Follow,Destroyed
 	}
 
 	public Manager.Sides Side = Manager.Sides.Player;
 
-	public Vehicle Prototype;
+	[NonSerialized]
+	public VehicleProt Prototype;
 
 	Vector3 currentDestination = Vector3.zero;
 
-	public float speed = 2;
-	public float turnSpeed=140;
-
-	Path path;
+	SteerForPathSimplified steerForPath;
+	AutonomousVehicle avehicle;
 	Seeker seeker;
-	int currentWaypoint;
-	private VehicleModes vehicleState = VehicleModes.Idle;
+
+	private Modes state = Modes.Idle;
 
 
 	public delegate void PathWalked();
@@ -30,9 +30,6 @@ public class VehicleController : BaseManagedController, IStorable  {
 	public delegate void Activated();
 	public event Activated OnActivated;
 
-	bool stopping = false;
-	float distanceToStop = 0;
-	float distanceToStopWalked=0;
 
 	[NonSerialized]
 	public MapPoint currentCell;
@@ -42,8 +39,15 @@ public class VehicleController : BaseManagedController, IStorable  {
 	void Start()
 	{
 		seeker = GetComponent<Seeker>();
-		M.PositionChanged(this);
+		steerForPath = GetComponent<SteerForPathSimplified>();
 
+		avehicle = GetComponent<AutonomousVehicle>();
+		M.PositionChanged(this);
+		if(avehicle!=null)
+			avehicle.CanMove = false;
+		
+		if(steerForPath!=null)
+			steerForPath.OnArrival+=OnArrival;
 	}
 
 	public void Activate()
@@ -54,77 +58,22 @@ public class VehicleController : BaseManagedController, IStorable  {
 	
 	// Update is called once per frame
 	void Update () {
-		if(vehicleState==VehicleModes.Follow || vehicleState==VehicleModes.Turn)
+
+		if(state==Modes.Follow)
 		{
-			if (path == null) {
-				//We have no path to move after yet
-				throw new UnityException("No path!");
-			}
-			if (currentWaypoint >= path.vectorPath.Count) {
-				vehicleState=VehicleModes.Idle;
-				if(OnPathWalked!=null)
-				{
-					if(stopping)
-						Debug.LogWarning("stopping==true while sending OnPathWalked event!");
-					else
-						OnPathWalked();
-				}
-				return;
-			}
-			
-			Vector3 dir = (path.vectorPath[currentWaypoint]-transform.position).normalized;
-			dir.y=0;
-			Quaternion dirRot = Quaternion.LookRotation(dir);
 
-			if(Quaternion.Angle(transform.localRotation,dirRot)>10)
-				vehicleState = VehicleModes.Turn;
-			if(vehicleState==VehicleModes.Follow)
-			{
-				
-				//Direction to the next waypoint
-				
-				dir *= speed * Time.smoothDeltaTime;
-				
-				
-				transform.localRotation = dirRot;
-				transform.position+=dir;
-				M.PositionChanged(this);
-				//controller.SimpleMove (dir);
-				//Check if we are close enough to the next waypoint
-				//If we are, proceed to follow the next waypoint
+			M.PositionChanged(this);
 
-				if(stopping)
-				{
-					distanceToStopWalked+=dir.magnitude;
-					if(distanceToStopWalked>distanceToStop)
-					{
-						Stop ();
-					}
-				}
-
-				if (Vector3.Distance (transform.position,path.vectorPath[currentWaypoint]) < 0.25f) {
-					currentWaypoint++;
-					return;
-				}
-
-
-			}
-			else if(vehicleState==VehicleModes.Turn)
-			{
-				
-				transform.localRotation=Quaternion.RotateTowards(transform.localRotation,dirRot,turnSpeed*Time.smoothDeltaTime);
-				
-				
-				if(transform.localRotation==dirRot)
-					vehicleState=VehicleModes.Follow;
-			}
 		}
+
 	}
 
 
 	void OnDestroy()
 	{
-		vehicleState = VehicleModes.Destroyed;
+		if(avehicle!=null)
+			avehicle.Stop();
+		state = Modes.Destroyed;
 		M.VehiclesRegistry.Remove(this);
 		M.RemoveObjectFromCellCache(this);
 	}
@@ -151,40 +100,44 @@ public class VehicleController : BaseManagedController, IStorable  {
 	}
 	public void Stop()
 	{
-		vehicleState = VehicleModes.Idle;
+		state = Modes.Idle;
+		avehicle.Stop();
 	}
 
-	public void Stop(float distance)
-	{
-		if(vehicleState==VehicleModes.Follow || vehicleState==VehicleModes.Turn)
-		{
-			stopping = true;
-			distanceToStopWalked=0;
-			distanceToStop=distance;
-		}
-		else
-			Stop ();
-	}
+
 
 	public void DriveTo(Vector3 dest)
 	{
-		stopping = false;
+		if(avehicle==null)
+			return;
+		avehicle.CanMove = true;
 		currentDestination = dest;
-		vehicleState = VehicleModes.Calc;
+		state = Modes.Calc;
 
 		seeker.StartPath (transform.position,dest, OnPathComplete);
 	}
 
 	private void OnPathComplete (Path p) {
-		if (vehicleState == VehicleModes.Destroyed || vehicleState == VehicleModes.Idle)
+		if (state == Modes.Destroyed || state == Modes.Idle)
 			return;
 
 		Debug.Log ("Yey, we got a path back. Did it have an error? "+p.error);
 		if (!p.error) {
-			path = p;
-			currentWaypoint=1;
-			vehicleState = VehicleModes.Turn;
+			Vector3Pathway path = new Vector3Pathway(p.vectorPath,1,false);
+			steerForPath.Path = path;
+			state = Modes.Follow;
 		}
+	}
+
+	private void OnArrival(UnitySteer.Helpers.SteeringEvent<Vehicle> sender)
+	{
+		avehicle.Stop ();
+		state = Modes.Idle;
+		if(OnPathWalked!=null)
+		{
+			OnPathWalked();
+		}
+
 	}
 
 	public void OnMouseUpAsButton()
@@ -211,10 +164,7 @@ public class VehicleController : BaseManagedController, IStorable  {
 		b.WriteMagic();
 		b.Write(transform.position);
 		b.Write(currentDestination);
-		b.WriteEnum(vehicleState);
-		b.Write((double)distanceToStop);
-		b.Write((double)distanceToStopWalked);
-		b.Write(stopping);
+		b.WriteEnum(state);
 		ComponentsSave(b);
 	}
 	
@@ -228,15 +178,13 @@ public class VehicleController : BaseManagedController, IStorable  {
 		currentDestination = r.ReadVector3();
 
 
-		vehicleState = (VehicleModes)r.ReadEnum(typeof(VehicleModes));
-		distanceToStop = (float)r.ReadDouble();
-		distanceToStopWalked = (float)r.ReadDouble();
-		stopping  = r.ReadBoolean();
+		state = (Modes)r.ReadEnum(typeof(Modes));
+
 		ComponentsLoad(m,r);
 
-		if(vehicleState!=VehicleModes.Idle)
+		if(state!=Modes.Idle)
 		{
-			vehicleState=VehicleModes.Idle;
+			state=Modes.Idle;
 			DriveTo(currentDestination);
 		}
 	}

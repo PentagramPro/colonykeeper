@@ -42,7 +42,7 @@ public class WriterEx : BinaryWriter
 			Write ("");
 	}
 
-	public void WriteEx(Vehicle val)
+	public void WriteEx(VehicleProt val)
 	{
 
 		if(val!=null)

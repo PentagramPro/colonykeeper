@@ -251,7 +251,7 @@ public class Manager : MonoBehaviour {
 			int count = b.ReadInt32();
 			for(int i=0;i<count;i++)
 			{
-				Vehicle vehicleProt = b.ReadVehicle(this);
+				VehicleProt vehicleProt = b.ReadVehicle(this);
 				VehicleController vehicleController = vehicleProt.Instantiate(terrainController.transform)
 					.GetComponent<VehicleController>();
 				vehicleController.LoadUid(this,b);

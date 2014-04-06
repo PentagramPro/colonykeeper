@@ -59,7 +59,7 @@ public class DefDroneController : BaseManagedController, IStorable, IInteractive
 			curContact.Update(weapon.GunPosition);
 			if(curContact.IsTargetVisible())
 			{
-				vehicle.Stop(0.2f);
+				vehicle.Stop();
 				state = Modes.Attack;
 				weapon.Attack(hull,curContact);
 			}
