@@ -25,7 +25,9 @@ public class SteerForGrid : Steering {
 	
 	[SerializeField]
 	float _probeRadius = 0.1f;
-	
+
+	Vector3 lastWalkableNode, lastUnwalkableNode, lastAvoidance, lastMove;
+
 	// TODO navmesh layer selection -> CustomEditor -> GameObjectUtility.GetNavMeshLayerNames() + Popup
 	#endregion
 	
@@ -116,7 +118,22 @@ public class SteerForGrid : Steering {
 	{ 
 		get { return true; }
 	}
-	
+
+	void OnDrawGizmos()
+	{
+		Gizmos.color = Color.white;
+		Gizmos.DrawWireSphere(lastWalkableNode, 0.3f);
+
+		Gizmos.color = Color.red;
+		Gizmos.DrawWireSphere(lastUnwalkableNode, 0.3f);
+
+		Gizmos.color = Color.white;
+		Gizmos.DrawLine(Vehicle.Position, Vehicle.Position + lastMove);
+
+		Gizmos.color = Color.cyan;
+		Gizmos.DrawLine(Vehicle.Position, Vehicle.Position + lastAvoidance);
+
+	}
 	/// <summary>
 	/// Calculates the force necessary to stay on the navmesh
 	/// </summary>
@@ -149,23 +166,30 @@ public class SteerForGrid : Steering {
 		{
 
 			Vector3 pos = (Vector3)info.node.position;//new Vector3(info.node.position.x/1000,info.node.position.y/1000,info.node.position.z/1000);
+			lastUnwalkableNode = pos;
 			Debug.LogWarning("Unwalkable node in :"+Vector3.Distance(pos,futurePosition));
 
 			NNConstraint nn = new NNConstraint();
 			nn.constrainWalkability = true;
+			nn.constrainDistance=false;
+			nn.constrainTags=false;
 			nn.walkable = true;
 
-			info = g.GetNearest(futurePosition,nn);
+			info = g.GetNearestForce(futurePosition,nn);
 
+			lastWalkableNode = (Vector3)info.node.position;
 
 			Vector3 avoidance = ((Vector3)info.node.position)-Vehicle.Position;
 
 			Vector3 moveDirection = Vehicle.Velocity.normalized;
 
-
+			avoidance=OpenSteerUtility.perpendicularComponent(avoidance, moveDirection);
 			avoidance.Normalize();
 
 			avoidance *= Vehicle.MaxForce * _avoidanceForceFactor;
+			lastAvoidance = avoidance;
+			lastMove = moveDirection;
+
 			return avoidance;
 
 		}
