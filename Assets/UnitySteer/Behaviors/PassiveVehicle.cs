@@ -60,7 +60,7 @@ public class PassiveVehicle : Vehicle {
 	{
 		if (!CanMove) 
 		{
-			Velocity = Vector3.zero;
+
 		}
 	}
 

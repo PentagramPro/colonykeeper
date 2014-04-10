@@ -248,7 +248,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 			CellMouseOver(posI,posJ);
 	}
 
-	void OnTap()
+	protected override void OnTap()
 	{
 	
 			if(CellMouseUp!=null)
@@ -256,7 +256,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 			M.GetGUIController().SelectedObject = null;
 			if (!Digged)
 				DesignateDigJob();
-
+		base.OnTap();
 	}
 
 
