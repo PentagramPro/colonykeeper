@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Pathfinding;
 using System;
-using TouchScript.Gestures;
+
 
 public class BlockController : BaseManagedController, ICustomer, IStorable {
 
@@ -67,8 +67,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		if (ConstructionSitePrefab == null)
 			throw new UnityException("ConstructionSitePrefab must not be null");
 	
-		TapGesture tap = GetComponent<TapGesture>();
-		tap.StateChanged+=HandleStateChanged;
+
 	}
 
 
@@ -249,16 +248,15 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 			CellMouseOver(posI,posJ);
 	}
 
-	private void HandleStateChanged(object sender, TouchScript.Events.GestureStateChangeEventArgs e)
+	void OnTap()
 	{
-		if (e.State == Gesture.GestureState.Recognized)
-		{
+	
 			if(CellMouseUp!=null)
 				CellMouseUp(posI,posJ);
 			M.GetGUIController().SelectedObject = null;
 			if (!Digged)
 				DesignateDigJob();
-		}
+
 	}
 
 

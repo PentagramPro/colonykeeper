@@ -15,7 +15,7 @@ public class SteerForGrid : Steering {
 	float _avoidanceForceFactor = 0.75f;
 
 	[SerializeField]
-	float _minTimeToCollision = 2;
+	float _minTimeToCollision = 0.1f;
 	
 	[SerializeField]
 	bool _offMeshCheckingEnabled = true;

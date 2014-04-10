@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
 using System.IO;
-using TouchScript.Gestures;
+
 
 enum TerrainControllerMode
 {
@@ -33,7 +33,7 @@ public class TerrainController : BaseManagedController, IStorable {
 	Plane lowerPlane;
 
 	List<BlockController> updateList = new List<BlockController>();
-	PanGesture panGesture;
+
 
 	public void Init()
 	{
@@ -66,17 +66,14 @@ public class TerrainController : BaseManagedController, IStorable {
 
 		lowerPlane = new Plane(Vector3.up, transform.position);
 
-		panGesture = GetComponent<PanGesture>();
-		panGesture.StateChanged+=HandleStateChanged;
+
 	}
 
-	private void HandleStateChanged(object sender, TouchScript.Events.GestureStateChangeEventArgs e)
+	private void OnPan(Vector2 prevPos, Vector2 pos)
 	{
-		if(e.State==Gesture.GestureState.Changed)
-		{
-			M.Scroll(panGesture.PreviousScreenPosition-panGesture.ScreenPosition);
-			//panGesture.ScreenPosition
-		}
+
+		M.Scroll(pos-prevPos);
+
 	}
 
 	public void PrepareTerrain(int mapX, int mapY, bool editMode)
