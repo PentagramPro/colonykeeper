@@ -47,34 +47,9 @@ public class BaseManagedController : BaseController {
 	
 	}
 
-	protected float panDistance = 10;
-	protected float curPanDistance = 0;
-	void OnMouseDown()
-	{
-		curPanDistance = 0;
-	}
 
-	void OnMouseDrag()
-	{
 
-		Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
-		curPanDistance += touchDeltaPosition.sqrMagnitude;
-		if (curPanDistance > panDistance)
-		{
-			M.Scroll(touchDeltaPosition);
-		}
-	}
 
-	void OnMouseUp()
-	{
-		if (curPanDistance < panDistance)
-			OnTap();
-	}
-
-	virtual protected void OnTap()
-	{
-
-	}
 
 	public virtual void SaveUid(WriterEx b)
 	{

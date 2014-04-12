@@ -48,6 +48,8 @@ public class VehicleController : BaseManagedController, IStorable  {
 		
 		if(steerForPath!=null)
 			steerForPath.OnArrival+=OnArrival;
+
+		GetComponent<TapController>().OnTap+=OnTap;
 	}
 
 	public void Activate()
@@ -140,7 +142,7 @@ public class VehicleController : BaseManagedController, IStorable  {
 
 	}
 
-	public void OnMouseUpAsButton()
+	void OnTap()
 	{
 		M.GetGUIController().SelectedObject = gameObject;
 		

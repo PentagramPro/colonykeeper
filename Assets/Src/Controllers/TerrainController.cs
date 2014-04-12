@@ -69,12 +69,7 @@ public class TerrainController : BaseManagedController, IStorable {
 
 	}
 
-	private void OnPan(Vector2 prevPos, Vector2 pos)
-	{
 
-		M.Scroll(pos-prevPos);
-
-	}
 
 	public void PrepareTerrain(int mapX, int mapY, bool editMode)
 	{

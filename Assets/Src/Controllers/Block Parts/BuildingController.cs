@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(TapController))]
 public class BuildingController : BaseManagedController, IStorable, IInteractive{
 
 	public Building Prototype = null;
@@ -9,10 +10,10 @@ public class BuildingController : BaseManagedController, IStorable, IInteractive
 	// Use this for initialization
 	void Start () {
 	
-
+		GetComponent<TapController>().OnTap+=OnTap;
 	}
 
-	public void OnMouseUpAsButton()
+	void OnTap()
 	{
 		M.GetGUIController().SelectedObject = gameObject;
 			

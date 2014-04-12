@@ -25,6 +25,7 @@ public class CameraController : BaseController {
 	public void Scroll(Vector2 delta)
 	{
 
+
 		transform.position+=new Vector3(delta.x,0,delta.y)*ScrollFactor;
 	}
 	// Update is called once per frame

@@ -67,7 +67,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		if (ConstructionSitePrefab == null)
 			throw new UnityException("ConstructionSitePrefab must not be null");
 	
-
+		GetComponent<TapController>().OnTap+=OnTap;
 	}
 
 
@@ -248,7 +248,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 			CellMouseOver(posI,posJ);
 	}
 
-	protected override void OnTap()
+	void OnTap()
 	{
 	
 			if(CellMouseUp!=null)
@@ -256,7 +256,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 			M.GetGUIController().SelectedObject = null;
 			if (!Digged)
 				DesignateDigJob();
-		base.OnTap();
+	
 	}
 
 
