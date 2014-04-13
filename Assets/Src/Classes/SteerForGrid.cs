@@ -121,6 +121,7 @@ public class SteerForGrid : Steering {
 
 	void OnDrawGizmos()
 	{
+		/*
 		Gizmos.color = Color.white;
 		Gizmos.DrawWireSphere(lastWalkableNode, 0.3f);
 
@@ -131,7 +132,7 @@ public class SteerForGrid : Steering {
 		Gizmos.DrawLine(Vehicle.Position, Vehicle.Position + lastMove);
 
 		Gizmos.color = Color.cyan;
-		Gizmos.DrawLine(Vehicle.Position, Vehicle.Position + lastAvoidance);
+		Gizmos.DrawLine(Vehicle.Position, Vehicle.Position + lastAvoidance);*/
 
 	}
 	/// <summary>

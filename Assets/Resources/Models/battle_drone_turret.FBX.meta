@@ -1,65 +1,23 @@
 fileFormatVersion: 2
-guid: 1683a6a6f6943584bbd296198d91e862
+guid: 4f3f80150b186c246ae709c2ebaa0626
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
-    100000: base_hull
-    100002: base_left_roll
-    100004: base_left_side
-    100006: base_right_roll
-    100008: base_right_side
-    100010: //RootNode
-    100012: Box001
-    100014: Box002
-    100016: Box003
-    100018: Box004
-    100020: Pyramid001
-    100022: turret
-    400000: base_hull
-    400002: base_left_roll
-    400004: base_left_side
-    400006: base_right_roll
-    400008: base_right_side
-    400010: //RootNode
-    400012: Box001
-    400014: Box002
-    400016: Box003
-    400018: Box004
-    400020: Pyramid001
-    400022: turret
-    2300000: base_hull
-    2300002: base_left_roll
-    2300004: base_left_side
-    2300006: base_right_roll
-    2300008: base_right_side
-    2300010: Box001
-    2300012: Box002
-    2300014: Box003
-    2300016: Box004
-    2300018: Pyramid001
-    2300020: turret
-    3300000: base_hull
-    3300002: base_left_roll
-    3300004: base_left_side
-    3300006: base_right_roll
-    3300008: base_right_side
-    3300010: Box001
-    3300012: Box002
-    3300014: Box003
-    3300016: Box004
-    3300018: Pyramid001
-    3300020: turret
-    4300000: base_hull
-    4300002: base_left_roll
-    4300004: base_left_side
-    4300006: base_right_roll
-    4300008: base_right_side
-    4300010: Box001
-    4300012: Box002
-    4300014: Box003
-    4300016: Pyramid001
-    4300018: Box004
-    4300020: turret
+    100000: //RootNode
+    100002: launcher_1
+    100004: launcher_2
+    400000: //RootNode
+    400002: launcher_1
+    400004: launcher_2
+    2300000: //RootNode
+    2300002: launcher_1
+    2300004: launcher_2
+    3300000: //RootNode
+    3300002: launcher_1
+    3300004: launcher_2
+    4300000: turret
+    4300002: launcher_2
+    4300004: launcher_1
     9500000: //RootNode
   materials:
     importMaterials: 1
