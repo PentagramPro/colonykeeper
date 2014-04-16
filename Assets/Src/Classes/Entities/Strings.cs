@@ -27,13 +27,13 @@ public class Strings
 		}
 	}
 
-	public static Strings Load(string path)
+	public static Strings Load(string text)
 	{
 		var serializer = new XmlSerializer(typeof(Strings));
 		Strings res;
 		try
 		{
-			using(var stream = new FileStream(path, FileMode.Open))	
+			using(var stream = new StringReader(text))	
 			{
 				res =  serializer.Deserialize(stream) as Strings;	
 			}

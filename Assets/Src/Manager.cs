@@ -33,6 +33,10 @@ public class Manager : MonoBehaviour {
 	[NonSerialized]
 	public GameDictionary GameD;
 
+	
+	public TextAsset dataFile;
+	public TextAsset stringsFile;
+
 	public DefenceController defenceController;
 
 	//Job manager holds list of jobs
@@ -90,12 +94,13 @@ public class Manager : MonoBehaviour {
 
 	public void LoadResources()
 	{
-		string path = Path.Combine(Application.dataPath, "Resources/gamedictionary.xml");
-		Debug.Log("XML path: "+path);
-		GameD = GameDictionary.Load(path);
+		//string path = Path.Combine(Application.dataPath, "Resources/gamedictionary.xml");
+		//Debug.Log("XML path: "+path);
+		GameD = GameDictionary.Load(dataFile.text);
 
-		path = Path.Combine(Application.dataPath, "Resources/strings.xml");
-		S = Strings.Load(path);
+		//dataFile.
+		//path = Path.Combine(Application.dataPath, "Resources/strings.xml");
+		S = Strings.Load(stringsFile.text);
 	// 	GameD.Save(path);
 	}
 

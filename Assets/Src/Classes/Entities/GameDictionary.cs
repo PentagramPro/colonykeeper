@@ -44,6 +44,8 @@ public class GameDictionary  {
 	[XmlIgnore] 
 	public Dictionary<string, Building> BuildingsByName = new Dictionary<string, Building>();
 
+
+
 	public void Save(string path)
 	{
 		var serializer = new XmlSerializer(typeof(GameDictionary));
@@ -122,14 +124,15 @@ public class GameDictionary  {
 
 	}
 
-	public static GameDictionary Load(string path)
+	public static GameDictionary Load(string text)
 	{
 		var serializer = new XmlSerializer(typeof(GameDictionary));
 		GameDictionary res;
 		try
 		{
-			using(var stream = new FileStream(path, FileMode.Open))	
+			using(var stream = new StringReader(text))	
 			{
+
 				res =  serializer.Deserialize(stream) as GameDictionary;	
 			}
 		}

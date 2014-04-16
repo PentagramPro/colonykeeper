@@ -5,10 +5,12 @@
   	<Block Name="Ground" MaterialName="Ground" DigSpeed="5"></Block>
   	<Block Name="Iron Ore" MaterialName="IronOre" Contains="Iron Ore" Freq="100" DigSpeed="2"></Block>
   	<Block Name="Ice Ore" MaterialName="IceOre" Contains="Ice" Freq="5" DigSpeed="4"></Block>
+  	<Block Name="Copper Ore" MaterialName="CopperOre" Contains="Copper Ore" Freq="5" DigSpeed="2"></Block>
   	<Block Name="Nitrates" MaterialName="Nitrates" Contains="Nitrates" Freq="80" DigSpeed="4"></Block>
   </Blocks>
   <Items >
   	<Item Name="Iron Ore" Class="Bulk.Ore"></Item>
+  	<Item Name="Copper Ore" Class="Bulk.Ore"></Item>
   	<Item Name="Ice" Class="Bulk.Ore"></Item>
   	<Item Name="Nitrates" Class="Bulk.Minerals"></Item>
   	<Item Name="Water" Class="Bulk.Liquid"></Item>
@@ -16,6 +18,7 @@
   	<Item Name="Iron Plate" Class="Good.Part.Plate"></Item>
   	<Item Name="Iron Beam" Class="Good.Part.Beam"></Item>
   	<Item Name="Iron Wire" Class="Good.Part.Wire"></Item>
+  	<Item Name="Copper Wire" Class="Good.Part.Wire"></Item>
   	<Item Name="Servo" Class="Good.Part.Mechanism"></Item>
   	<Item Name="Rocket Fuel" Class="Good.Chemical.Fuel"></Item>
   	<Item Name="Missile" Class="Good.Weapon"></Item>
@@ -33,41 +36,35 @@
   	<Building Name="Silo" PrefabName="Silo">
   		<Ingredients>
   			<Ingredient Name="Good.Part.Plate.*" Quantity="100" Color="1"></Ingredient>
-  			<Ingredient Name="Good.Part.Beam.*" Quantity="100"></Ingredient>
   		</Ingredients>
   	</Building>
   	<Building Name="Storage" PrefabName="Storage">
   		<Ingredients>
   			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
-  			<Ingredient Name="Good.Part.Beam.*" Quantity="100"></Ingredient>
   		</Ingredients>
   	</Building>
   	<Building Name="Furnace" PrefabName="Furnace">
   		<Ingredients>
   			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
   			<Ingredient Name="Good.Part.Beam.*" Quantity="100"></Ingredient>
-  			<Ingredient Name="Good.Part.Wire.*" Quantity="100"></Ingredient>
   		</Ingredients>
   	</Building>
   	<Building Name="Mill" PrefabName="Mill">
   		<Ingredients>
   			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
   			<Ingredient Name="Good.Part.Beam.*" Quantity="100"></Ingredient>
-  			<Ingredient Name="Good.Part.Wire.*" Quantity="100"></Ingredient>
   		</Ingredients>
   	</Building>
   	<Building Name="Still" PrefabName="Still">
   		<Ingredients>
   			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
-  			<Ingredient Name="Good.Part.Beam.*" Quantity="100"></Ingredient>
-  			<Ingredient Name="Iron Wire" Quantity="200"></Ingredient>
+  			<Ingredient Name="Copper Wire" Quantity="100"></Ingredient>
   		</Ingredients>
   	</Building>
   	<Building Name="Assembler" PrefabName="Assembler">
   		<Ingredients>
   			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
-  			<Ingredient Name="Good.Part.Beam.*" Quantity="100"></Ingredient>
-  			<Ingredient Name="Iron Wire" Quantity="200"></Ingredient>
+  			<Ingredient Name="Copper Wire" Quantity="100"></Ingredient>
   		</Ingredients>
   	</Building>
   	<Building Name="Vehicle Assembler" PrefabName="Vehicle Assembler">
