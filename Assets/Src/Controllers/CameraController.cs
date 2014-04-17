@@ -4,11 +4,16 @@ using System.Collections;
 public class CameraController : BaseController {
 	public Vector3 targetPosition = new Vector3();
 	public Rect bounds = new Rect();
-	public float ScrollFactor = 0.3f;
+	float ScrollFactor = 0.3f;
 //	float dragSpeed=5;
 	// Use this for initialization
 	void Start () {
 	
+		ScrollFactor = Mathf.Abs(
+			(Camera.main.ScreenToWorldPoint(new Vector3(0,0,transform.position.y))
+		                -Camera.main.ScreenToWorldPoint(new Vector3(1,0,transform.position.y))).x
+			);
+
 	}
 
 	void OnDrawGizmos()
