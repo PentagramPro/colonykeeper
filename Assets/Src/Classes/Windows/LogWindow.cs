@@ -12,8 +12,8 @@ public class LogWindow : KWindow
 		public string message;
 		public Color color;
 	}
-	float collapsedSize = 50f;
-	float fullSize = 400f;
+
+	Rect rectCollapsed, rectExpanded;
 	bool collapsed = true;
 
 	List<LogRecord> logHistory = new List<LogRecord>();
@@ -21,26 +21,26 @@ public class LogWindow : KWindow
 
 	Vector2 scroll;
 
-	public LogWindow(Rect windowRect) : base(windowRect,null)
+	public LogWindow(Rect windowRectCollapsed, Rect windowRectExpanded) : base(windowRectCollapsed,null)
 	{
+		rectCollapsed = windowRectCollapsed;
+		rectExpanded = windowRectExpanded;
 	}
 
 	#region implemented abstract members of KWindow
 
 	protected override void OnDraw ()
 	{
-		if(GUI.Button(new Rect(WindowRect.width*0.9f,0,WindowRect.width*0.1f,collapsedSize),"O"))
+		if(GUI.Button(new Rect(WindowRect.width*0.9f,0,WindowRect.width*0.1f,rectCollapsed.height),"O"))
 		{
 			if(collapsed)
 			{
-				WindowRect.y=Screen.height-fullSize;
-				WindowRect.height=fullSize;
+				WindowRect=rectExpanded;
 				//scroll.y = 1000;
 			}
 			else
 			{
-				WindowRect.y=Screen.height-collapsedSize;
-				WindowRect.height=collapsedSize;
+				WindowRect=rectCollapsed;
 			}
 			collapsed = !collapsed;
 		}

@@ -45,16 +45,18 @@ public class GUIController : BaseManagedController {
 
 	// Use this for initialization
 	void Start () {
-		panelWidth = Screen.width *0.25f;
-		mapHeight = Screen.height * 0.25f;
+		panelWidth = WC.NWidth *0.25f;
+		mapHeight = WC.NHeight * 0.25f;
 		
-		Rect leftRect = new Rect(0,0,panelWidth,Screen.height - mapHeight);
-		Rect windowRect=new Rect(Screen.width*0.1f,Screen.height*0.1f, Screen.width*0.8f, Screen.height*0.8f);
+		Rect leftRect = new Rect(0,0,panelWidth,WC.NHeight - mapHeight);
+		Rect windowRect=new Rect(WC.NWidth*0.1f,WC.NHeight*0.1f, WC.NWidth*0.8f, WC.NHeight*0.8f);
 
 		chooseItemsWnd = new ChooseItemsWindow(windowRect,OnItemsChoose);
 		leftPanelWnd = new LeftPanelWindow(leftRect,OnToolBuild,OnToolInfo);
 		buildingsWnd = new BuildingsWindow(leftRect,OnBuildingsChoose);
-		logWnd = new LogWindow(new Rect(panelWidth,Screen.height-50,Screen.width-panelWidth,50));
+		logWnd = new LogWindow(new Rect(panelWidth,WC.NHeight-50,WC.NWidth-panelWidth,50), // Collapsed rect
+		                       new Rect(panelWidth,WC.NHeight-400,WC.NWidth-panelWidth,400) // Expanded rect
+		                       );
 		infoWnd = new InfoWindow(windowRect, OnInfoResult);
 
 		WC.AddWindow(leftPanelWnd);
@@ -131,8 +133,9 @@ public class GUIController : BaseManagedController {
 
 	void OnGUI()
 	{
+		GUI.matrix = Matrix4x4.TRS (new Vector3(0, 0, 0), Quaternion.identity, WC.TransformVector);
 		//Map  box
-		GUI.Box(new Rect(0,Screen.height-mapHeight,panelWidth,mapHeight),"");
+		GUI.Box(new Rect(0,WC.NHeight-mapHeight,panelWidth,mapHeight),"");
 	}
 	/*
 

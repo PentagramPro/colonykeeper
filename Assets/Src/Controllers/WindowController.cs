@@ -4,6 +4,24 @@ using System;
 
 public class WindowController : BaseManagedController {
 
+
+	float native_width = 1200;
+	float native_height  = 800;
+	Vector3 transform_vector;
+
+	public float NWidth
+	{
+		get{ return native_width;}
+	}
+	public float NHeight
+	{
+		get{ return native_height;}
+	}
+	public Vector3 TransformVector
+	{
+		get{ return transform_vector;}
+	}
+
 	List<KWindow> Windows = new List<KWindow>();
 	List<KWindow> windowsToRemove = new List<KWindow>();
 	List<KWindow> windowsToAdd = new List<KWindow>();
@@ -44,6 +62,10 @@ public class WindowController : BaseManagedController {
 
 	void OnGUI()
 	{
+
+		GUI.matrix = Matrix4x4.TRS (new Vector3(0, 0, 0), Quaternion.identity, transform_vector);
+
+
 		if(Skin!=null)
 			GUI.skin = Skin;
 
@@ -71,7 +93,9 @@ public class WindowController : BaseManagedController {
 
 	// Use this for initialization
 	void Start () {
-	
+		float rx  = Screen.width / native_width;
+		float ry  = Screen.height / native_height;
+		transform_vector = new Vector3(rx, ry, 1);
 	}
 	
 	// Update is called once per frame
