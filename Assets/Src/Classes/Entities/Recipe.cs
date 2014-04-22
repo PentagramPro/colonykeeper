@@ -93,7 +93,10 @@ public class Recipe
 		
 		foreach(PileXML pxml in Results)
 		{
-			ResultsLinks.Add(new Pile(g.Items[pxml.Name],pxml.Quantity));
+			if(g.Items.ContainsKey(pxml.Name))
+				ResultsLinks.Add(new Pile(g.Items[pxml.Name],pxml.Quantity));
+			else 
+				throw new UnityException("Item with name "+pxml.Name+" wasn`t found in dictionary  while sorting recipe results. Recipe name is "+Name);
 		}
 	}
 

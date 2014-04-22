@@ -25,6 +25,9 @@ public class Manager : MonoBehaviour {
 	[NonSerialized]
 	public Strings S;
 
+	[NonSerialized]
+	public Settings settings = new Settings();
+
 	//Object that stores GUI controller
 	public GameObject gui;
 
@@ -33,7 +36,8 @@ public class Manager : MonoBehaviour {
 	[NonSerialized]
 	public GameDictionary GameD;
 
-	
+
+
 	public TextAsset dataFile;
 	public TextAsset stringsFile;
 

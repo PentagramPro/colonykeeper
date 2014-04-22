@@ -6,33 +6,40 @@
   	<Block Name="Iron Ore" MaterialName="IronOre" Contains="Iron Ore" Freq="100" DigSpeed="2"></Block>
   	<Block Name="Ice Ore" MaterialName="IceOre" Contains="Ice" Freq="5" DigSpeed="4"></Block>
   	<Block Name="Copper Ore" MaterialName="CopperOre" Contains="Copper Ore" Freq="5" DigSpeed="2"></Block>
+  	<Block Name="Cobalt Ore" MaterialName="CobaltOre" Contains="Copper Ore" Freq="0" DigSpeed="2"></Block>
   	<Block Name="Nitrates" MaterialName="Nitrates" Contains="Nitrates" Freq="80" DigSpeed="4"></Block>
   </Blocks>
   <Items >
   	<Item Name="Iron Ore" Class="Bulk.Ore"></Item>
   	<Item Name="Copper Ore" Class="Bulk.Ore"></Item>
+  	<Item Name="Cobalt Ore" Class="Bulk.Ore"></Item>
   	<Item Name="Ice" Class="Bulk.Ore"></Item>
   	<Item Name="Nitrates" Class="Bulk.Minerals"></Item>
   	<Item Name="Water" Class="Bulk.Liquid"></Item>
   	<Item Name="Iron Ingot" Class="Good.Ingot"></Item>
-  	<Item Name="Iron Plate" Class="Good.Part.Plate"></Item>
-  	<Item Name="Iron Beam" Class="Good.Part.Beam"></Item>
+  	<Item Name="Copper Ingot" Class="Good.Ingot"></Item>
+  	<Item Name="Cobalt Ingot" Class="Good.Ingot"></Item>
+  	<Item Name="Plate" Class="Good.Part.Plate"></Item>
+  	<Item Name="Beam" Class="Good.Part.Beam"></Item>
   	<Item Name="Iron Wire" Class="Good.Part.Wire"></Item>
   	<Item Name="Copper Wire" Class="Good.Part.Wire"></Item>
+  	<Item Name="Cobalt Wire" Class="Good.Part.Wire"></Item>
   	<Item Name="Servo" Class="Good.Part.Mechanism"></Item>
   	<Item Name="Rocket Fuel" Class="Good.Chemical.Fuel"></Item>
   	<Item Name="Missile" Class="Good.Weapon"></Item>
   </Items>
   <StartItems>
-  	<Item Name = "Iron Plate" Quantity = "300"></Item>
-  	<Item Name = "Iron Beam" Quantity = "300"></Item>
+  	<Item Name = "Plate" Quantity = "300"></Item>
+  	<Item Name = "Beam" Quantity = "300"></Item>
   	<Item Name = "Iron Wire" Quantity = "300"></Item>
   </StartItems>
   <Buildings>
+    <!--    Hidden    -->
   	<Building Name="Headquarters" PrefabName="Headquarters" Hide="true">
   	</Building>
   	<Building Name="Construction Site" PrefabName="ConstructionSite" Hide="true">
   	</Building>
+  	<!--   Tier 1     -->
   	<Building Name="Silo" PrefabName="Silo">
   		<Ingredients>
   			<Ingredient Name="Good.Part.Plate.*" Quantity="100" Color="1"></Ingredient>
@@ -55,6 +62,13 @@
   			<Ingredient Name="Good.Part.Beam.*" Quantity="100"></Ingredient>
   		</Ingredients>
   	</Building>
+  	<Building Name="Tower" PrefabName="DefTower">
+  		<Ingredients>
+  			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
+  			<Ingredient Name="Good.Part.Wire.*" Quantity="100"></Ingredient>
+  		</Ingredients>
+  	</Building>
+  	<!--   Tier 2     -->
   	<Building Name="Still" PrefabName="Still">
   		<Ingredients>
   			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
@@ -67,23 +81,23 @@
   			<Ingredient Name="Copper Wire" Quantity="100"></Ingredient>
   		</Ingredients>
   	</Building>
-  	<Building Name="Vehicle Assembler" PrefabName="Vehicle Assembler">
-  		<Ingredients>
-  			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
-  			<Ingredient Name="Good.Part.Beam.*" Quantity="100"></Ingredient>
-  			<Ingredient Name="Iron Wire" Quantity="200"></Ingredient>
-  		</Ingredients>
-  	</Building>
   	<Building Name="Chemical Reactor" PrefabName="Chemical Reactor">
   		<Ingredients>
   			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
-  			<Ingredient Name="Good.Part.Beam.*" Quantity="100"></Ingredient>
+  			<Ingredient Name="Copper Wire" Quantity="100"></Ingredient>
   		</Ingredients>
   	</Building>
+  	<Building Name="Vehicle Assembler" PrefabName="Vehicle Assembler">
+  		<Ingredients>
+  			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
+  			<Ingredient Name="Servo" Quantity="100"></Ingredient>
+  		</Ingredients>
+  	</Building>
+  	<!--   Tier 3     -->
   	<Building Name="Radar" PrefabName="Radar">
   		<Ingredients>
   			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
-  			<Ingredient Name="Good.Part.Beam.*" Quantity="100"></Ingredient>
+  			<Ingredient Name="Cobalt Wire" Quantity="100"></Ingredient>
   		</Ingredients>
   	</Building>
   </Buildings>
@@ -118,22 +132,38 @@
   			<Result Name="Iron Ingot" Quantity="100"></Result>
   		</Results>
   	</Recipe>
-  	
-  	<!--       MILL RECIPES             -->
-  	<Recipe Device="Mill" Name = "Roll iron plate">
+  	<Recipe Device="Furnace" Name = "Smelt Copper Ore">
   		<Ingredients>
-  			<Ingredient Name="Iron Ingot" Quantity="200"></Ingredient>
+  			<Ingredient Name="Copper Ore" Quantity="200"></Ingredient>
   		</Ingredients>
   		<Results>
-  			<Result Name="Iron Plate" Quantity="100"></Result>
+  			<Result Name="Copper Ingot" Quantity="100"></Result>
   		</Results>
   	</Recipe>
-  	<Recipe Device="Mill" Name = "Roll iron beam">
+  	<Recipe Device="Furnace" Name = "Smelt Cobalt Ore">
   		<Ingredients>
-  			<Ingredient Name="Iron Ingot" Quantity="100"></Ingredient>
+  			<Ingredient Name="Cobalt Ore" Quantity="200"></Ingredient>
   		</Ingredients>
   		<Results>
-  			<Result Name="Iron Beam" Quantity="100"></Result>
+  			<Result Name="Cobalt Ingot" Quantity="100"></Result>
+  		</Results>
+  	</Recipe>
+  	
+  	<!--       MILL RECIPES             -->
+  	<Recipe Device="Mill" Name = "Roll plate">
+  		<Ingredients>
+  			<Ingredient Name="Good.Ingot.*" Quantity="200"></Ingredient>
+  		</Ingredients>
+  		<Results>
+  			<Result Name="Plate" Quantity="100"></Result>
+  		</Results>
+  	</Recipe>
+  	<Recipe Device="Mill" Name = "Roll beam">
+  		<Ingredients>
+  			<Ingredient Name="Good.Ingot.*" Quantity="100"></Ingredient>
+  		</Ingredients>
+  		<Results>
+  			<Result Name="Beam" Quantity="100"></Result>
   		</Results>
   	</Recipe>
   	<Recipe Device="Mill" Name = "Roll iron wire">
@@ -142,6 +172,22 @@
   		</Ingredients>
   		<Results>
   			<Result Name="Iron Wire" Quantity="100"></Result>
+  		</Results>
+  	</Recipe>
+  	<Recipe Device="Mill" Name = "Roll copper wire">
+  		<Ingredients>
+  			<Ingredient Name="Copper Ingot" Quantity="100"></Ingredient>
+  		</Ingredients>
+  		<Results>
+  			<Result Name="Copper Wire" Quantity="100"></Result>
+  		</Results>
+  	</Recipe>
+  	<Recipe Device="Mill" Name = "Roll cobalt wire">
+  		<Ingredients>
+  			<Ingredient Name="Cobalt Ingot" Quantity="100"></Ingredient>
+  		</Ingredients>
+  		<Results>
+  			<Result Name="Cobalt Wire" Quantity="100"></Result>
   		</Results>
   	</Recipe>
   	

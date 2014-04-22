@@ -10,6 +10,9 @@ public class TerrainMeshGenerator : MeshGenerator {
 
 	//int[,] pat = new int[3,3];
 
+	public TerrainMeshGenerator(Manager m) : base(m)
+	{
+	}
 
 	public BlockController.Accessibility GetAccessibility(int i, int j)
 	{
@@ -25,10 +28,7 @@ public class TerrainMeshGenerator : MeshGenerator {
 			return BlockController.Accessibility.Cliff;
 		return BlockController.Accessibility.Enclosed;
 	}
-	public TerrainMeshGenerator()
-	{
 
-	}
 	void AttachHRect(Vector2 p1, Vector2 p2, float z, int[,] pat)
 	{
 		int idx = vertices.Count;
@@ -59,11 +59,12 @@ public class TerrainMeshGenerator : MeshGenerator {
 		float colorBase = z==0?0.4f:1;
 		Color color = new Color(colorBase,colorBase,colorBase);
 
+		int turnOnFog = M.settings.FogOfWar?1:0;
 
-		colors.Add(color*(1-pat[0,0]*pat[1,0]*pat[0,1]*pat[1,1]));
-		colors.Add(color*(1-pat[0,2]*pat[1,2]*pat[0,1]*pat[1,1]));
-		colors.Add(color*(1-pat[2,0]*pat[1,0]*pat[2,1]*pat[1,1]));
-		colors.Add(color*(1-pat[2,1]*pat[2,2]*pat[1,2]*pat[1,1]));
+		colors.Add(color*(1-pat[0,0]*pat[1,0]*pat[0,1]*pat[1,1]*turnOnFog));
+		colors.Add(color*(1-pat[0,2]*pat[1,2]*pat[0,1]*pat[1,1]*turnOnFog));
+		colors.Add(color*(1-pat[2,0]*pat[1,0]*pat[2,1]*pat[1,1]*turnOnFog));
+		colors.Add(color*(1-pat[2,1]*pat[2,2]*pat[1,2]*pat[1,1]*turnOnFog));
 
 
 		
@@ -135,7 +136,7 @@ public class TerrainMeshGenerator : MeshGenerator {
 	
 		BlockController c = map[i,j];
 
-		float level = (c.Digged && c.Discovered)?0:CELL_SIZE;
+		float level = (c.Digged && (c.Discovered || !M.settings.FogOfWar))?0:CELL_SIZE;
 
 
 

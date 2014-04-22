@@ -21,7 +21,7 @@ public class SentrySpot : MapSpot
 		if(!editMode)
 			PutVehicle(map,y+height/2,x+width/2,"Alien Sentry");
 
-		ArrangeOnBorder(map,new string[] {"Ice Ore","Ice Ore","Iron Ore"});
+		ArrangeOnBorder(map,new string[] {"Ice Ore","Ice Ore","Iron Ore", "Copper Ore","Copper Ore"});
 
 	}
 	#endregion
@@ -53,7 +53,7 @@ public class TowerSpot : MapSpot
 			PutVehicle(map,y+3,x+4,"Alien Sentry Tower");
 		}
 
-		ArrangeOnBorder(map,new string[] {"Ice Ore","Ice Ore","Iron Ore"});
+		ArrangeOnBorder(map,new string[] {"Ice Ore","Ice Ore","Ice Ore","Iron Ore","Cobalt Ore"});
 
 	}
 	#endregion
@@ -82,7 +82,7 @@ public class EnragerSpot : MapSpot
 		if(!editMode){
 			PutVehicle(map,y+height/2,x+width/2,"Alien Enrager");
 		}
-		ArrangeOnBorder(map,new string[] {"Ice Ore","Ice Ore","Iron Ore", "Iron Ore"});
+		ArrangeOnBorder(map,new string[] {"Ice Ore","Ice Ore","Iron Ore", "Cobalt Ore"});
 	}
 	#endregion
 }

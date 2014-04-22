@@ -9,6 +9,11 @@ public abstract class MeshGenerator {
 	protected List<Vector2> uvs2 = new List<Vector2>();
 	protected List<Color> colors = new List<Color>();
 
+	protected Manager M;
+	public MeshGenerator(Manager m)
+	{
+		M = m;
+	}
 
 	protected void AddVertex(float x, float y, float z)
 	{

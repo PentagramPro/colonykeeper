@@ -44,7 +44,7 @@ public class TerrainController : BaseManagedController, IStorable {
 		M.LoadResources();
 		if(terrGen==null)
 		{
-			terrGen = new TerrainMeshGenerator();
+			terrGen = new TerrainMeshGenerator(M);
 		}
 	
 
