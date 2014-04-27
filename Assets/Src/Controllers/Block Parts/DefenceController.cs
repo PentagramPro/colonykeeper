@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
+using TickedPriorityQueue;
 
 public class DefenceController : BaseManagedController, IInteractive {
 
@@ -9,6 +10,11 @@ public class DefenceController : BaseManagedController, IInteractive {
 	List<DefDroneController> currentDefenders = new List<DefDroneController>();
 	public float Range=10;
 	public Projector RangeIndicator;
+	public RadarMarkerController RadarMarkerPrefab;
+
+	TickedObject tickedObject;
+	Dictionary<Transform,RadarMarkerController> markers = new Dictionary<Transform, RadarMarkerController>();
+	Dictionary<Transform,RadarMarkerController> markersCache = new Dictionary<Transform, RadarMarkerController>();
 
 	[NonSerialized]
 	public List<RadarController> Radars = new List<RadarController>();
@@ -18,6 +24,13 @@ public class DefenceController : BaseManagedController, IInteractive {
 		M.defenceController = this;
 		RangeIndicator.orthoGraphicSize = Range;
 		RangeIndicator.enabled = false;
+
+		if(RadarMarkerPrefab==null)
+			throw new UnityException("RadarMarkerPrefab must not be null");
+
+		tickedObject = new TickedObject(OnUpdateRadar);
+		tickedObject.TickLength = 1;
+		UnityTickedQueue.Instance.Add(tickedObject);
 	}
 	
 	// Update is called once per frame
@@ -37,6 +50,46 @@ public class DefenceController : BaseManagedController, IInteractive {
 		}
 		return false;
 	}
+
+	void OnUpdateRadar(object obj)
+	{
+		Collider[] colliders = Physics.OverlapSphere(transform.position,Range,1<<10);
+		foreach(Collider c in colliders)
+		{
+			VehicleController v = c.GetComponent<VehicleController>();
+			if(v==null || v.Side==Manager.Sides.Player)
+				continue;
+
+			if(markers.ContainsKey(v.transform))
+			{
+				markersCache.Add(v.transform,markers[v.transform]);
+				markers.Remove(v.transform);
+			}
+			else
+			{
+				GameObject obj2 = (GameObject)GameObject.Instantiate(RadarMarkerPrefab.gameObject);
+				RadarMarkerController rm = obj2
+					.GetComponent<RadarMarkerController>();
+				markersCache.Add(v.transform,rm);
+				rm.SetTarget(v.transform);
+			}
+
+
+		}
+
+		if(markers.Count>0)
+		{
+			foreach(RadarMarkerController rm in markers.Values)
+			{
+				Destroy(rm.gameObject);
+			}
+			markers.Clear();
+		}
+		var temp = markers;
+		markers = markersCache;
+		markersCache = temp;
+	}
+
 	public void UnderAttack(HullController victim, Transform attacker)
 	{
 		ProjectileController proj = attacker.GetComponent<ProjectileController>();
