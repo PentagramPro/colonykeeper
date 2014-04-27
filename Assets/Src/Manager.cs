@@ -164,15 +164,15 @@ public class Manager : MonoBehaviour {
 		int x = (int)loc.x;
 		int y = (int)loc.z;
 
-		if( (vehicle.currentCell.X!=x || vehicle.currentCell.Y!=y) && terrainController.Map!=null)
+		if( (vehicle.Hull.currentCell.X!=x || vehicle.Hull.currentCell.Y!=y) && terrainController.Map!=null)
 		{
 
-			BlockController cell = terrainController.Map[vehicle.currentCell.Y,vehicle.currentCell.X];
+			BlockController cell = terrainController.Map[vehicle.Hull.currentCell.Y,vehicle.Hull.currentCell.X];
 			if(cell!=null)
 			{
-				terrainController.Map[vehicle.currentCell.Y,vehicle.currentCell.X].ObjectsCache.Remove(vehicle);
+				terrainController.Map[vehicle.Hull.currentCell.Y,vehicle.Hull.currentCell.X].ObjectsCache.Remove(vehicle);
 				terrainController.Map[y,x].ObjectsCache.Add(vehicle);
-				vehicle.currentCell = new MapPoint(x,y);
+				vehicle.Hull.currentCell = new MapPoint(x,y);
 			}
 		}
 	}
@@ -180,7 +180,7 @@ public class Manager : MonoBehaviour {
 
 	public void RemoveObjectFromCellCache(VehicleController vehicle)
 	{
-		BlockController cell = terrainController.Map[vehicle.currentCell.Y,vehicle.currentCell.X];
+		BlockController cell = terrainController.Map[vehicle.Hull.currentCell.Y,vehicle.Hull.currentCell.X];
 		if(cell!=null)
 			cell.ObjectsCache.Remove(vehicle);
 	}

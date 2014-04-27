@@ -3,7 +3,7 @@ using System.Collections;
 
 public class RadarMarkerController : MonoBehaviour {
 
-	Transform target;
+	HullController target;
 
 	// Use this for initialization
 	void Start () {
@@ -14,11 +14,11 @@ public class RadarMarkerController : MonoBehaviour {
 	void Update () {
 		if(target!=null)
 		{
-			transform.position = new Vector3(target.position.x,1.2f,target.position.z);
+			transform.position = new Vector3(target.CenterPos.x,1.2f,target.CenterPos.z);
 		}
 	}
 
-	public void SetTarget(Transform t)
+	public void SetTarget(HullController t)
 	{
 		target = t;
 	}

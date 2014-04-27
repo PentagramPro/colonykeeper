@@ -60,7 +60,7 @@ public class EnemyController : BaseManagedController, IStorable {
 	void OnActivated()
 	{
 		state = Modes.Sentry;
-		targeter.Search(vehicle.Side);
+		targeter.Search(vehicle.Hull.Side);
 	}
 
 
@@ -85,14 +85,14 @@ public class EnemyController : BaseManagedController, IStorable {
 		state = Modes.Intercept;
 		if(Move)
 			vehicle.DriveTo(curContact.LastPosition);
-		targeter.Search(vehicle.Side);
+		targeter.Search(vehicle.Hull.Side);
 	}
 
 	void OnTargetDestroyed()
 	{
 		curContact = null;
 		state = Modes.Sentry;
-		targeter.Search(vehicle.Side);
+		targeter.Search(vehicle.Hull.Side);
 	}
 
 	#region IStorable implementation

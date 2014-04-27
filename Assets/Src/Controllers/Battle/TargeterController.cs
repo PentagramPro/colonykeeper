@@ -78,7 +78,7 @@ public class TargeterController : BaseManagedController, IStorable {
 	{
 		foreach(VehicleController veh in M.VehiclesRegistry)
 		{
-			if(veh.Side!=currentSide)
+			if(veh.Hull.Side!=currentSide)
 			{
 				HullController hull = veh.GetComponent<HullController>();
 				if(hull!=null && Vector3.Distance(transform.position,hull.transform.position)<Range)

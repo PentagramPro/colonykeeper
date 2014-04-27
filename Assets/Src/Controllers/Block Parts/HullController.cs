@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections.Generic;
 
 public class HullController : BaseManagedController, IStorable, IInteractive {
@@ -9,6 +10,11 @@ public class HullController : BaseManagedController, IStorable, IInteractive {
 	List<IValueModifier> modifiers = new List<IValueModifier>();
 
 	public bool ReportAttackToManager = false;
+
+	public Manager.Sides Side = Manager.Sides.Player;
+	
+	[NonSerialized]
+	public MapPoint currentCell;
 
 	public Vector3 CenterPos;
 	public Vector3 Center

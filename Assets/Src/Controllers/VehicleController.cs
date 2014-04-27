@@ -4,13 +4,17 @@ using Pathfinding;
 using System;
 using UnitySteer;
 
+[RequireComponent(typeof(HullController))]
 public class VehicleController : BaseManagedController, IStorable  {
 	private enum Modes
 	{
 		Idle,Calc,Follow,Destroyed
 	}
 
-	public Manager.Sides Side = Manager.Sides.Player;
+	HullController hull;
+	public HullController Hull{
+		get{return hull;}
+	}
 
 	[NonSerialized]
 	public VehicleProt Prototype;
@@ -31,9 +35,6 @@ public class VehicleController : BaseManagedController, IStorable  {
 	public event Activated OnActivated;
 
 
-	[NonSerialized]
-	public MapPoint currentCell;
-
 
 
 	void Start()
@@ -42,6 +43,8 @@ public class VehicleController : BaseManagedController, IStorable  {
 		steerForPath = GetComponent<SteerForPathSimplified>();
 
 		avehicle = GetComponent<AutonomousVehicle>();
+		hull = GetComponent<HullController>();
+
 		M.PositionChanged(this);
 		if(avehicle!=null)
 			avehicle.CanMove = false;

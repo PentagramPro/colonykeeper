@@ -57,7 +57,7 @@ public class DefenceController : BaseManagedController, IInteractive {
 		foreach(Collider c in colliders)
 		{
 			VehicleController v = c.GetComponent<VehicleController>();
-			if(v==null || v.Side==Manager.Sides.Player)
+			if(v==null || v.Hull.Side==Manager.Sides.Player)
 				continue;
 
 			if(markers.ContainsKey(v.transform))
@@ -71,7 +71,7 @@ public class DefenceController : BaseManagedController, IInteractive {
 				RadarMarkerController rm = obj2
 					.GetComponent<RadarMarkerController>();
 				markersCache.Add(v.transform,rm);
-				rm.SetTarget(v.transform);
+				rm.SetTarget(v.Hull);
 			}
 
 
@@ -129,7 +129,7 @@ public class DefenceController : BaseManagedController, IInteractive {
 		currentDefenders.Clear();
 		foreach(VehicleController v in M.VehiclesRegistry)
 		{
-			if(v.Side!=Manager.Sides.Player)
+			if(v.Hull.Side!=Manager.Sides.Player)
 				continue;
 			DefDroneController d = v.GetComponent<DefDroneController>();
 			if(d!=null)
