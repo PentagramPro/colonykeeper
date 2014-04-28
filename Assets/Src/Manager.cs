@@ -158,6 +158,10 @@ public class Manager : MonoBehaviour {
 		}
 	}
 
+	public bool IsCellDiscovered(MapPoint point)
+	{
+		return terrainController.Map[point.Y,point.X].Discovered;
+	}
 	public void PositionChanged(VehicleController vehicle)
 	{
 		Vector3 loc = vehicle.transform.position-terrainController.transform.position;
