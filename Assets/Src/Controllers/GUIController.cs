@@ -11,7 +11,17 @@ public class GUIController : BaseManagedController {
 	}
 	float mapHeight;
 	float panelWidth;
-	private Modes state = Modes.Idle;
+	private Modes _state = Modes.Idle;
+
+	private Modes state{
+		get{
+			return _state;
+		}
+		set{
+			_state = value;
+			LF.Info("GUI state is "+Enum.GetName(typeof(Modes),value));
+		}
+	}
 
 	public delegate void PickedDelegate(Building pickedBuilding, RecipeInstance recipe);
 
@@ -28,6 +38,8 @@ public class GUIController : BaseManagedController {
 
 	public GameObject SelectedObject{
 		set{
+			if(value!=null)
+				LF.Info("SelectedObject is set to "+value.name);
 			if(leftPanelWnd.SelectedObject!=null)
 				CallOnDeselected(leftPanelWnd.SelectedObject);
 			leftPanelWnd.SelectedObject = value;
@@ -45,6 +57,7 @@ public class GUIController : BaseManagedController {
 
 	// Use this for initialization
 	void Start () {
+		LF.Info("============ GUI Start procedure ============");
 		panelWidth = WC.NWidth *0.25f;
 		mapHeight = WC.NHeight * 0.25f;
 		
@@ -76,6 +89,7 @@ public class GUIController : BaseManagedController {
 	{
 		if(state==Modes.Idle)
 		{
+			LF.Info("OnToolBuild");
 			leftPanelWnd.Show = false;
 			buildingsWnd.Show = true;
 		}
@@ -84,6 +98,7 @@ public class GUIController : BaseManagedController {
 	void OnToolInfo()
 	{
 		WC.AddWindow(infoWnd);
+		LF.Info("OnToolInfo");
 	}
 
 	void OnInfoResult(KWindow.Results res)
@@ -96,6 +111,7 @@ public class GUIController : BaseManagedController {
 		leftPanelWnd.Show = false;
 		buildingsWnd.Show = false;
 
+		LF.Info("OnBuildingsChoose");
 		GetItemsForRecipe(building.recipe,(RecipeInstance res)=>{
 			if(ItemPicked!=null)
 				ItemPicked(building, res);
@@ -162,6 +178,7 @@ public class GUIController : BaseManagedController {
 	{
 		if(state==Modes.BuildPlace)
 		{
+			LF.Info("OnPlaced");
 			leftPanelWnd.Show=true;
 			state= Modes.Idle;
 		}
@@ -170,7 +187,10 @@ public class GUIController : BaseManagedController {
 	public void OnDeselect()
 	{
 		if(state==Modes.Idle)
+		{
 			SelectedObject = null;
+			LF.Info("OnDeselect");
+		}
 	}
 	// Update is called once per frame
 	void Update () {
