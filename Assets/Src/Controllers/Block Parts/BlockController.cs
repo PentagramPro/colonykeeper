@@ -18,7 +18,8 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 	public Block BlockProt;
 	public BuildingController cellBuilding;
-	public EffectController dustFX;
+	public EffectController dustFXPrefab;
+	EffectController dustFX;
 
 
 	// This value is calculated during cell update from following variables:
@@ -163,8 +164,14 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 			digAmount = Math.Min(digAmount,amount);
 
 			amount-=digAmount;
-			if(dustFX!=null)
-				dustFX.Spark(0.1f);
+			if(dustFX==null)
+			{
+				GameObject obj = (GameObject)GameObject.Instantiate(dustFXPrefab.gameObject);
+				dustFX = (EffectController)obj.GetComponent<ParticleFxController>();
+				dustFX.transform.parent = transform;
+				dustFX.transform.localPosition = new Vector3(0.5f,0.3f,0.5f);
+			}
+			dustFX.Spark(0.1f);
 			if(BlockProt.ContainsItem!=null)
 			{
 				int left = dest.Put(BlockProt.ContainsItem,digAmount);
