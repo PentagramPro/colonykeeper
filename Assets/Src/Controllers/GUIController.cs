@@ -7,7 +7,7 @@ public class GUIController : BaseManagedController {
 
 	//List<Block> blocks = new List<Block>();
 	enum Modes {
-		Idle, BuildChoose, BuildIngredients, BuildPlace, Info
+		Idle, BuildChoose, BuildIngredients, BuildPlace, Info, Ingredients
 	}
 	float mapHeight;
 	float panelWidth;
@@ -112,25 +112,32 @@ public class GUIController : BaseManagedController {
 		buildingsWnd.Show = false;
 
 		LF.Info("OnBuildingsChoose");
+		state = Modes.BuildIngredients;
+
 		GetItemsForRecipe(building.recipe,(RecipeInstance res)=>{
 			if(ItemPicked!=null)
 				ItemPicked(building, res);
 			state = Modes.BuildPlace;
 		},()=>{
-			state = Modes.Idle;
-			leftPanelWnd.Show = true;
-			buildingsWnd.Show = false;
+
 		});
 	}
 
 	void OnItemsChoose(KWindow.Results results)
 	{
-
+		if(results==KWindow.Results.Close || state == Modes.Ingredients)
+		{
+			state = Modes.Idle;
+			leftPanelWnd.Show = true;
+			buildingsWnd.Show = false;
+		}
 	}
 
 	public bool GetItemsForRecipe(Recipe recipe, Action<RecipeInstance> callback,  Action cancel )
 	{
-		if(state!=Modes.Idle)
+		if(state==Modes.Idle)
+			state = Modes.Ingredients;
+		else if(state!=Modes.BuildIngredients)
 			return false;
 
 		chooseItemsWnd.recipeCallback=callback;
@@ -139,7 +146,7 @@ public class GUIController : BaseManagedController {
 
 		chooseItemsWnd.recipeInstance = new RecipeInstance();
 		chooseItemsWnd.recipeInstance.Prototype = recipe;
-		state = Modes.BuildIngredients;
+
 		WC.AddWindow(chooseItemsWnd);
 
 
