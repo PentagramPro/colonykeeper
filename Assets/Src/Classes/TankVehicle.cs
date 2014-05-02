@@ -42,8 +42,17 @@ public class TankVehicle : TickedVehicle
 	#region Speed-related methods
 	public override void UpdateOrientationVelocity(Vector3 velocity)
 	{
-		Speed = velocity.magnitude;
-		OrientationVelocity = Mathf.Approximately(_speed, 0) ? Transform.forward : velocity / _speed;
+		OrientationVelocity = Mathf.Approximately(_speed, 0) ? Transform.forward : velocity.normalized;
+
+		if(Vector3.Angle(Transform.forward, OrientationVelocity)>45)
+		{
+			Speed = velocity.magnitude/10;
+		}
+		else
+		{
+			Speed = velocity.magnitude;
+		}
+
 	}
 	
 	protected override Vector3 CalculatePositionDelta(float deltaTime)

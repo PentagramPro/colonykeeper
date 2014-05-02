@@ -13,3 +13,18 @@
 [INFO] OnDeselect
 [INFO] ============ GUI Start procedure ============
 [INFO] OnDeselect
+[INFO] ============ GUI Start procedure ============
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] ============ GUI Start procedure ============
+[INFO] OnDeselect
+[INFO] ============ GUI Start procedure ============
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
