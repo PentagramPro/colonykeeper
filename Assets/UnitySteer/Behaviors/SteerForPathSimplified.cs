@@ -75,6 +75,7 @@ public class SteerForPathSimplified : Steering
 		{ 
 			_path = value;
 			DistanceAlongPath = 0;
+			ReportedArrival = false;
 		}
 	}
 	#endregion

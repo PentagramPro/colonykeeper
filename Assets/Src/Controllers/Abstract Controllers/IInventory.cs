@@ -228,6 +228,7 @@ public class IInventory : BaseManagedController, IStorable
 			p.Load(m,r);
 			items.Add(p.ItemType,p);
 			totalQuantity+=p.Quantity;
+			m.Stat.ChangeItemCount(p.ItemType,p.Quantity);
 		}
 	}
 	#endregion

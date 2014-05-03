@@ -44,7 +44,7 @@ public class TankVehicle : TickedVehicle
 	{
 		OrientationVelocity = Mathf.Approximately(_speed, 0) ? Transform.forward : velocity.normalized;
 
-		if(Vector3.Angle(Transform.forward, OrientationVelocity)>45)
+		if(Vector3.Angle(Transform.forward, OrientationVelocity)>90)
 		{
 			Speed = velocity.magnitude/10;
 		}

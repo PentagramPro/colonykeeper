@@ -28,3 +28,795 @@
 [INFO] OnDeselect
 [INFO] OnDeselect
 [INFO] OnDeselect
+[INFO] ============ GUI Start procedure ============
+[INFO] OnDeselect
+[INFO] ============ GUI Start procedure ============
+[INFO] ============ GUI Start procedure ============
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is Idle
+[INFO] SelectedObject is set to Headquarters(Clone)
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is Idle
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Headquarters(Clone)
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is Idle
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] ============ GUI Start procedure ============
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] ============ GUI Start procedure ============
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] ============ GUI Start procedure ============
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is Idle
+[INFO] OnDeselect
+[INFO] ============ GUI Start procedure ============
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is BuildPlace
+[INFO] OnPlaced
+[INFO] GUI state is Idle
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is BuildPlace
+[INFO] OnPlaced
+[INFO] GUI state is Idle
+[INFO] ============ GUI Start procedure ============
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is BuildPlace
+[INFO] OnPlaced
+[INFO] GUI state is Idle
+[INFO] OnDeselect
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is Idle
+[INFO] OnDeselect
+[INFO] ============ GUI Start procedure ============
+[INFO] OnDeselect
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is Idle
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is Idle
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is Idle
+[INFO] OnToolInfo
+[INFO] ============ GUI Start procedure ============
+[INFO] OnToolInfo
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is Idle
+[INFO] OnDeselect
+[INFO] ============ GUI Start procedure ============
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is BuildPlace
+[INFO] OnPlaced
+[INFO] GUI state is Idle
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is BuildPlace
+[INFO] OnPlaced
+[INFO] GUI state is Idle
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] ============ GUI Start procedure ============
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Silo(Clone)
+[INFO] SelectedObject is set to Furnace(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Furnace(Clone)
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Furnace(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Silo(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Furnace(Clone)
+[INFO] SelectedObject is set to Furnace(Clone)
+[INFO] SelectedObject is set to Silo(Clone)
+[INFO] SelectedObject is set to Furnace(Clone)
+[INFO] SelectedObject is set to Headquarters(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Furnace(Clone)
+[INFO] SelectedObject is set to Drone(Clone)
+[INFO] SelectedObject is set to Drone(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Furnace(Clone)
+[INFO] OnDeselect
+[INFO] ============ GUI Start procedure ============
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Furnace(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] ============ GUI Start procedure ============
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is BuildPlace
+[INFO] OnPlaced
+[INFO] GUI state is Idle
+[INFO] OnDeselect
+[INFO] SelectedObject is set to ConstructionSite(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Silo(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Headquarters(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Headquarters(Clone)
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Silo(Clone)
+[INFO] SelectedObject is set to Headquarters(Clone)
+[INFO] SelectedObject is set to Silo(Clone)
+[INFO] OnDeselect
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is Idle
+[INFO] OnDeselect
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is BuildPlace
+[INFO] OnPlaced
+[INFO] GUI state is Idle
+[INFO] SelectedObject is set to ConstructionSite(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] ============ GUI Start procedure ============
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Headquarters(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Sentry(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is BuildPlace
+[INFO] OnPlaced
+[INFO] GUI state is Idle
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Silo(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Silo(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is BuildPlace
+[INFO] OnPlaced
+[INFO] GUI state is Idle
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to ConstructionSite(Clone)
+[INFO] SelectedObject is set to Furnace(Clone)
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Furnace(Clone)
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Headquarters(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is BuildPlace
+[INFO] OnPlaced
+[INFO] GUI state is Idle
+[INFO] SelectedObject is set to Headquarters(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Mill(Clone)
+[INFO] SelectedObject is set to Headquarters(Clone)
+[INFO] SelectedObject is set to Mill(Clone)
+[INFO] SelectedObject is set to Headquarters(Clone)
+[INFO] SelectedObject is set to Mill(Clone)
+[INFO] GUI state is Ingredients
+[INFO] GUI state is Idle
+[INFO] SelectedObject is set to Furnace(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is BuildPlace
+[INFO] OnPlaced
+[INFO] GUI state is Idle
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to ConstructionSite(Clone)
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Headquarters(Clone)
+[INFO] SelectedObject is set to Mill(Clone)
+[INFO] OnDeselect
+[INFO] ============ GUI Start procedure ============
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is BuildPlace
+[INFO] SelectedObject is set to Headquarters(Clone)
+[INFO] SelectedObject is set to Headquarters(Clone)
+[INFO] OnPlaced
+[INFO] GUI state is Idle
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Crate(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to ConstructionSite(Clone)
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Silo(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Silo(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is BuildPlace
+[INFO] OnPlaced
+[INFO] GUI state is Idle
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is BuildPlace
+[INFO] OnPlaced
+[INFO] GUI state is Idle
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Furnace(Clone)
+[INFO] SelectedObject is set to Furnace(Clone)
+[INFO] SelectedObject is set to Mill(Clone)
+[INFO] GUI state is Ingredients
+[INFO] GUI state is Idle
+[INFO] SelectedObject is set to Headquarters(Clone)
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Headquarters(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is BuildPlace
+[INFO] OnPlaced
+[INFO] GUI state is Idle
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Headquarters(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is BuildPlace
+[INFO] OnPlaced
+[INFO] GUI state is Idle
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Silo(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Headquarters(Clone)
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Furnace(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Headquarters(Clone)
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Mill(Clone)
+[INFO] GUI state is Ingredients
+[INFO] GUI state is Idle
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Silo(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is BuildPlace
+[INFO] OnPlaced
+[INFO] GUI state is Idle
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Silo(Clone)
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Silo(Clone)
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Furnace(Clone)
+[INFO] SelectedObject is set to Mill(Clone)
+[INFO] SelectedObject is set to Headquarters(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Silo(Clone)
+[INFO] OnDeselect
+[INFO] OnToolBuild
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Mill(Clone)
+[INFO] SelectedObject is set to Mill(Clone)
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is Idle
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Mill(Clone)
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Mill(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Headquarters(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Silo(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Mill(Clone)
+[INFO] GUI state is Ingredients
+[INFO] GUI state is Idle
+[INFO] SelectedObject is set to Furnace(Clone)
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Mill(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Furnace(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is BuildPlace
+[INFO] OnPlaced
+[INFO] GUI state is Idle
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Headquarters(Clone)
+[INFO] SelectedObject is set to Mill(Clone)
+[INFO] GUI state is Ingredients
+[INFO] GUI state is Idle
+[INFO] GUI state is Ingredients
+[INFO] GUI state is Idle
+[INFO] SelectedObject is set to Headquarters(Clone)
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is Idle
+[INFO] SelectedObject is set to Mill(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Storage(Clone)
+[INFO] SelectedObject is set to Silo(Clone)
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Headquarters(Clone)
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Storage(Clone)
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Headquarters(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Headquarters(Clone)
+[INFO] SelectedObject is set to Mill(Clone)
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Mill(Clone)
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Storage(Clone)
+[INFO] SelectedObject is set to Furnace(Clone)
+[INFO] OnDeselect
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is BuildPlace
+[INFO] OnPlaced
+[INFO] GUI state is Idle
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Assembler(Clone)
+[INFO] GUI state is Ingredients
+[INFO] GUI state is Idle
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect

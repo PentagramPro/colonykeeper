@@ -181,12 +181,13 @@ public class SteerForGrid : Steering {
 			lastWalkableNode = (Vector3)info.node.position;
 
 			Vector3 avoidance = ((Vector3)info.node.position)-Vehicle.Position;
+			avoidance = avoidance.normalized;
 
 			Vector3 moveDirection = Vehicle.Velocity.normalized;
-
+			/*
 			avoidance=OpenSteerUtility.perpendicularComponent(avoidance, moveDirection);
 			avoidance.Normalize();
-
+			*/
 			avoidance *= Vehicle.MaxForce * _avoidanceForceFactor;
 			lastAvoidance = avoidance;
 			lastMove = moveDirection;

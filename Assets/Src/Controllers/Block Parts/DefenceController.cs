@@ -57,7 +57,7 @@ public class DefenceController : BaseManagedController, IInteractive {
 		foreach(Collider c in colliders)
 		{
 			VehicleController v = c.GetComponent<VehicleController>();
-			if(v==null || v.Hull.Side==Manager.Sides.Player)
+			if(v==null || v.Hull==null || v.Hull.Side==Manager.Sides.Player)
 				continue;
 
 			if(markers.ContainsKey(v.transform))
@@ -160,6 +160,17 @@ public class DefenceController : BaseManagedController, IInteractive {
 				AttackTarget(currentTarget);
 			}
 		}
+	}
+
+	void OnDestroy()
+	{
+		UnityTickedQueue.Instance.Remove(tickedObject);
+		foreach(RadarMarkerController rm in markers.Values)
+		{
+			if(rm.gameObject!=null)
+				GameObject.Destroy(rm.gameObject);
+		}
+		markers.Clear();
 	}
 
 	#region IInteractive implementation
