@@ -58,10 +58,10 @@ public class TargeterController : BaseManagedController, IStorable {
 			{
 				RaycastHit hit;
 
-				if(hull==null)
+				if(hull==null || hull==self)
 					continue;
 
-				Vector3 point1, point2, dir = hull.Center-self.Center;
+				Vector3 point1, point2, dir = hull.Center-TargetingPoint;
 
 				if(CheckRay(TargetingPoint,dir,hull.transform))
 				{

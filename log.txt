@@ -914,3 +914,18 @@
 [INFO] ============ GUI Start procedure ============
 [INFO] OnDeselect
 [INFO] OnDeselect
+[INFO] ============ GUI Start procedure ============
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] ============ GUI Start procedure ============
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] ============ GUI Start procedure ============
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] ============ GUI Start procedure ============
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to DefenderDrone(Clone)
