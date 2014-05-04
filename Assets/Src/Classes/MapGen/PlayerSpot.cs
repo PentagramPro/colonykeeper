@@ -39,6 +39,8 @@ public class PlayerSpot : MapSpot
 			PutVehicle(map,x+1,y+1,"Drone");
 			PutVehicle(map,x+3,y+1,"Drone");
 			PutVehicle(map,x+2,y+3,"Defender Drone");
+
+			ArrangeOnBorder(map,new string[] {"Iron Ore", "Iron Ore","Copper Ore"});
 		}
 	}
 	#endregion

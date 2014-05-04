@@ -22,7 +22,7 @@ public class VehicleController : BaseManagedController, IStorable  {
 	Vector3 currentDestination = Vector3.zero;
 
 	SteerForPathSimplified steerForPath;
-	TankVehicle avehicle;
+	public TickedVehicle avehicle;
 	Seeker seeker;
 
 	private Modes state = Modes.Idle;
@@ -42,7 +42,7 @@ public class VehicleController : BaseManagedController, IStorable  {
 		seeker = GetComponent<Seeker>();
 		steerForPath = GetComponent<SteerForPathSimplified>();
 
-		avehicle = GetComponent<TankVehicle>();
+
 		hull = GetComponent<HullController>();
 
 		M.PositionChanged(this);
@@ -106,7 +106,8 @@ public class VehicleController : BaseManagedController, IStorable  {
 	public void Stop()
 	{
 		state = Modes.Idle;
-		avehicle.Stop();
+		if(avehicle!=null)
+			avehicle.Stop();
 	}
 
 

@@ -820,3 +820,60 @@
 [INFO] OnDeselect
 [INFO] OnDeselect
 [INFO] OnDeselect
+[INFO] ============ GUI Start procedure ============
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is BuildPlace
+[INFO] OnPlaced
+[INFO] GUI state is Idle
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is BuildPlace
+[INFO] OnPlaced
+[INFO] GUI state is Idle
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Sentry(Clone)
+[INFO] ============ GUI Start procedure ============
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] ============ GUI Start procedure ============
+[INFO] OnDeselect
+[INFO] OnToolBuild
+[INFO] OnBuildingsChoose
+[INFO] GUI state is BuildIngredients
+[INFO] GUI state is BuildPlace
+[INFO] OnPlaced
+[INFO] GUI state is Idle
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Silo(Clone)
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] ============ GUI Start procedure ============
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] ============ GUI Start procedure ============
+[INFO] OnDeselect
+[INFO] OnDeselect
+[INFO] SelectedObject is set to Sentry(Clone)

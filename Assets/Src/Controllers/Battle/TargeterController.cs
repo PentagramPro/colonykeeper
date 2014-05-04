@@ -1,21 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using TickedPriorityQueue;
 
 public class TargeterController : BaseManagedController, IStorable {
 
 	enum Modes {
-		Idle,Search,Delay
+		Idle,Search
 	}
 	Modes state = Modes.Idle;
-
-
-	float delay = 0;
-
 
 	public float Range = 6;
 	public delegate void TargetFoundDelegate(VisualContact contact);
 	public event TargetFoundDelegate OnFound;
 
+	TickedObject tickedObject;
 
 	// at start()
 	HullController self;
@@ -27,6 +25,11 @@ public class TargeterController : BaseManagedController, IStorable {
 	// Use this for initialization
 	void Start () {
 		self = GetComponent<HullController>();
+
+		tickedObject = new TickedObject(OnUpdateTargets);
+		tickedObject.TickLength = 1f;
+
+		UnityTickedQueue.Instance.Add(tickedObject);
 	}
 	
 	// Update is called once per frame
@@ -34,12 +37,14 @@ public class TargeterController : BaseManagedController, IStorable {
 	
 		if(state==Modes.Search)
 		{
-			targetsList.Clear();
-			ClosestTargets();
 
 			foreach(HullController hull in targetsList)
 			{
 				RaycastHit hit;
+
+				if(hull==null)
+					continue;
+
 				if(Physics.Raycast(self.Center,hull.Center-self.Center,out hit,Range))
 				{
 					if(hit.transform!=hull.transform)
@@ -52,19 +57,22 @@ public class TargeterController : BaseManagedController, IStorable {
 				}
 			}
 
-			if(state==Modes.Search)
-			{
-				delay=0;
-				state = Modes.Delay;
-			}
+
 		}
-		else if(state==Modes.Delay)
+
+	}
+
+	private void OnUpdateTargets(object obj)
+	{
+		targetsList.Clear();
+		Collider[] colliders = Physics.OverlapSphere(transform.position,Range);
+		foreach(Collider c in colliders)
 		{
-			delay+=Time.deltaTime;
-			if(delay>1)
-			{
-				state = Modes.Search;
-			}
+			HullController hull = c.GetComponent<HullController>();
+			if(hull==null || hull.Side==currentSide)
+				continue;
+
+			targetsList.Add(hull);
 		}
 	}
 
@@ -74,19 +82,12 @@ public class TargeterController : BaseManagedController, IStorable {
 		state = Modes.Search;
 	}
 
-	void ClosestTargets()
+
+
+
+	void OnDestroy()
 	{
-		foreach(VehicleController veh in M.VehiclesRegistry)
-		{
-			if(veh.Hull.Side!=currentSide)
-			{
-				HullController hull = veh.GetComponent<HullController>();
-				if(hull!=null && Vector3.Distance(transform.position,hull.transform.position)<Range)
-				{
-					targetsList.Add(hull);
-				}
-			}
-		}
+		UnityTickedQueue.Instance.Remove(tickedObject);
 	}
 
 	#region IStorable implementation
@@ -94,13 +95,11 @@ public class TargeterController : BaseManagedController, IStorable {
 	public void Save (WriterEx b)
 	{
 		b.WriteEnum(state);
-		b.Write((double)delay);
 	}
 
 	public void Load (Manager m, ReaderEx r)
 	{
 		state = (Modes)r.ReadEnum(typeof(Modes));
-		delay = (float)r.ReadDouble();
 	}
 
 	#endregion
