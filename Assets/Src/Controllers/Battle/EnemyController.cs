@@ -32,6 +32,8 @@ public class EnemyController : BaseManagedController, IStorable {
 			throw new UnityException("Vehicle must not be null");
 
 		targeter.OnFound+=OnFound;
+		targeter.LocalTargetingPoint = weapon.transform.position+weapon.RelativeGunPosition-transform.position;
+
 		weapon.OnTargetLost+=OnTargetLost;
 		weapon.OnTargetDestroyed += OnTargetDestroyed;
 		hull = GetComponent<HullController>();

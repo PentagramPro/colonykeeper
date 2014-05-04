@@ -167,7 +167,7 @@ public class DefenceController : BaseManagedController, IInteractive {
 		UnityTickedQueue.Instance.Remove(tickedObject);
 		foreach(RadarMarkerController rm in markers.Values)
 		{
-			if(rm.gameObject!=null)
+			if(rm!=null)
 				GameObject.Destroy(rm.gameObject);
 		}
 		markers.Clear();
