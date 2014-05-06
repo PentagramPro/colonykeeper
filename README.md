@@ -1,5 +1,5 @@
-colonykeeper
-============
+# ColonyKeeper
+
 
 This is a strategy game made on Unity 3D engine. It is somewhat close to Dungeon Keeper and/or Dwarf Fortress. This game is intended to be played on desctop and tablet computers.
 
