@@ -24,11 +24,11 @@ public class LF
 
 	private static void Write(string type, string line)
 	{
-		using(StreamWriter writer =new StreamWriter("log.txt",true))
+		/*using(StreamWriter writer =new StreamWriter("log.txt",true))
 		{
 			writer.WriteLine("["+type+"] "+line);
 			writer.Flush();
-		}
+		}*/
 	}
 }
 

@@ -3,6 +3,7 @@ using System;
 using System.Globalization;
 using System.Collections.Generic;
 using System.IO;
+using TickedPriorityQueue;
 
 public class Manager : MonoBehaviour {
 
@@ -96,6 +97,10 @@ public class Manager : MonoBehaviour {
 		JobManager.UpdateJobs();
 	}
 
+	void OnDestroy()
+	{
+
+	}
 	public void LoadResources()
 	{
 		//string path = Path.Combine(Application.dataPath, "Resources/gamedictionary.xml");
