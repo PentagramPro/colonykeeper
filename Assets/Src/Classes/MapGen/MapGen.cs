@@ -53,7 +53,7 @@ public class MapGen
 	}
 
 
-	public void GenerateMap(BlockController[,] map, bool editMode)
+	public void GenerateMap(Map map, bool editMode)
 	{
 		////////////////////
 		// preparing block lists

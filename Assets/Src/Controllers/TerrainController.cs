@@ -11,7 +11,7 @@ enum TerrainControllerMode
 }
 public class TerrainController : BaseManagedController, IStorable {
 
-	BlockController[,] map;
+	Map map;
 
 
 	BlockController lastSelected;
@@ -51,7 +51,7 @@ public class TerrainController : BaseManagedController, IStorable {
 
 	}
 
-	public BlockController[,] Map{
+	public Map[,] Map{
 		get{
 			return map;
 		}
@@ -75,7 +75,7 @@ public class TerrainController : BaseManagedController, IStorable {
 	{
 		MapX = mapX;
 		MapY = mapY;
-		map = new BlockController[MapX,MapY];
+		map = new Map(MapY,MapX);
 
 
 		GenerateMap(editMode);
@@ -221,8 +221,8 @@ public class TerrainController : BaseManagedController, IStorable {
 	void GenerateMap(bool editMode)
 	{
 
-		int h = map.GetLength(0);
-		int w = map.GetLength(1);
+		int h = map.Height;
+		int w = map.Width;
 
 		Debug.Log("Generate Map");
 
