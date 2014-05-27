@@ -7,6 +7,14 @@ public class Map
 	VertexBlock[,] mapVertexes;
 	public class VertexBlock{
 
+		public VertexBlock()
+		{
+			for(int i=0;i<points.GetLength(0);i++)
+				for(int j=0;j<points.GetLength(1);j++)
+					for(int k=0;k<points.GetLength(2);k++)
+						points[i,j,k] = Random.insideUnitSphere*0.1f;
+
+		}
 		// i, j, h
 		public Vector3[,,] points = new Vector3[3,3,4];
 	}
@@ -16,14 +24,15 @@ public class Map
 		map = new BlockController[sizeI,sizeJ];
 		mapVertexes = new VertexBlock[sizeI+1,sizeJ+1];
 
-		for(int i=0;i<sizeI;i++)
+		for(int i=0;i<sizeI+1;i++)
 		{
-			for(int j=0;j<sizeJ;j++)
+			for(int j=0;j<sizeJ+1;j++)
 			{
-				// init
+				mapVertexes[i,j] = new VertexBlock();
 			}
 		}
 	}
+
 
 	public BlockController this [int i, int j] 
 	{
@@ -44,6 +53,10 @@ public class Map
 		get{return map.GetLength(0);}
 	}
 
+	public Vector3 GetVertex(int mapI, int mapJ,int i, int j, int k)
+	{
+		return mapVertexes[mapI,mapJ].points[i,j,k];
+	}
 
 }
 

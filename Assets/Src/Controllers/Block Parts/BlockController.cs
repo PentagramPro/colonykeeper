@@ -34,7 +34,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	DigJob digJob;
 
 	[NonSerialized]
-	public BlockController[,] Map;
+	public Map Map;
 
 	[NonSerialized]
 	public bool discovered = false;
@@ -52,7 +52,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 
 
-	public void InitCell(int i, int j, BlockController[,] map)
+	public void InitCell(int i, int j, Map map)
 	{
 
 		posI=i;
@@ -122,16 +122,16 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 	public void Discover(BlockController.CellHandler OnCellUpdated, int posI, int posJ)
 	{
-		BlockController[,] map = Map;
+		Map map = Map;
 
 		map[posI,posJ].Discovered = true;
 		OnCellUpdated(posI,posJ);
 		
 		int imin = Math.Max (posI-1,0);
-		int imax = Math.Min(posI+1,map.GetUpperBound(0));
+		int imax = Math.Min(posI+1,map.Height-1);
 		
 		int jmin = Math.Max (posJ-1,0);
-		int jmax = Math.Min(posJ+1,map.GetUpperBound(1));
+		int jmax = Math.Min(posJ+1,map.Width-1);
 		for(int i = imin;i<=imax;i++)
 		{
 			for (int j = jmin;j<=jmax;j++)
@@ -267,7 +267,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	}
 
 
-	public void Generate(BlockController[,] map,TerrainMeshGenerator terrGen,  bool editMode,bool updateAstar)
+	public void Generate(Map map,TerrainMeshGenerator terrGen,  bool editMode,bool updateAstar)
 	{
 		Manager manager = M;
 

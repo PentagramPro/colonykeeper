@@ -37,5 +37,5 @@ public abstract class MeshGenerator {
 		uvs2.Clear();
 		colors.Clear();
 	}
-	public abstract Mesh Generate(BlockController[,] map,int i, int j);
+	public abstract Mesh Generate(Map map,int i, int j);
 }

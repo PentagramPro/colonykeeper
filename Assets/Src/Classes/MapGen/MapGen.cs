@@ -62,11 +62,11 @@ public class MapGen
 		Debug.Log("total blocks to place: "+blocksToPlace.Count+", filler types: "+fillers.Count);
 
 		// filling map
-		for(int i=0;i<map.GetLength(0);i++)
+		for(int i=0;i<map.Height;i++)
 		{
-			for(int j=0;j<map.GetLength(1);j++)
+			for(int j=0;j<map.Width;j++)
 			{
-				if(i==0 || j==0 || i==map.GetUpperBound(0) || j==map.GetUpperBound(1))
+				if(i==0 || j==0 || i==map.Height-1 || j==map.Width-1)
 				{
 					map[i,j].BlockProt = M.GameD.Blocks[0];
 					continue;
@@ -81,7 +81,7 @@ public class MapGen
 		// placing spots
 		Debug.Log("total spots: "+spots.Count);
 
-		Cell[,] cellMap = GenerateSpotsInternal(map.GetLength(1),map.GetLength(0));
+		Cell[,] cellMap = GenerateSpotsInternal(map.Width,map.Height);
 
 		Debug.Log("total spots left after generation: "+spots.Count);
 	

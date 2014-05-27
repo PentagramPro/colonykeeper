@@ -51,7 +51,7 @@ public class TerrainController : BaseManagedController, IStorable {
 
 	}
 
-	public Map[,] Map{
+	public Map Map{
 		get{
 			return map;
 		}
@@ -104,7 +104,7 @@ public class TerrainController : BaseManagedController, IStorable {
 			
 			int i = (int)(hitPoint.z/TerrainMeshGenerator.CELL_SIZE);
 			int j = (int)(hitPoint.x/TerrainMeshGenerator.CELL_SIZE);
-			if(i>=0 && j>=0 && i<map.GetLength(0) && j<map.GetLength(1))
+			if(i>=0 && j>=0 && i<map.Height && j<map.Width)
 			{
 				iRes=i;jRes=j;
 				return true;
@@ -190,13 +190,13 @@ public class TerrainController : BaseManagedController, IStorable {
 
 	bool IsUpperVertex(int i, int j)
 	{
-		if(i==0||j==0||i==map.GetUpperBound(0)||j==map.GetUpperBound(1))
+		if(i==0||j==0||i==map.Height-1||j==map.Width-1)
 			return true;
 		return !map[i-1,j-1].Digged;
 	}
 	bool IsLowerVertex(int i, int j)
 	{
-		if(i==0||j==0||i==map.GetUpperBound(0)||j==map.GetUpperBound(1))
+		if(i==0||j==0||i==map.Height-1||j==map.Width-1)
 			return false;
 		return map[i-1,j-1].Digged;
 	}
@@ -282,8 +282,8 @@ public class TerrainController : BaseManagedController, IStorable {
 		mapGen.GenerateMap(map, editMode);
 
 
-		int graphW = map.GetLength(1)*10,graphH = map.GetLength(0)*10;
-		Vector3 pos = transform.position+new Vector3((float)map.GetLength(1)/2f,0.2f,(float)map.GetLength(0)/2f);
+		int graphW = map.Width*10,graphH = map.Height*10;
+		Vector3 pos = transform.position+new Vector3((float)map.Width/2f,0.2f,(float)map.Height/2f);
 
 		((BoxCollider)collider).size = new Vector3(w,0.2f,h);
 		((BoxCollider)collider).center = new Vector3(pos.x,-0.1f,pos.z);
@@ -321,9 +321,9 @@ public class TerrainController : BaseManagedController, IStorable {
 
 		Debug.Log("Generate Mesh");
 
-		for(int i=0;i<map.GetLength(0);i++)
+		for(int i=0;i<map.Height;i++)
 		{
-			for(int j=0;j<map.GetLength(1);j++)
+			for(int j=0;j<map.Width;j++)
 			{
 				map[i,j].Generate(map,terrGen, editMode,false);
 
@@ -349,9 +349,9 @@ public class TerrainController : BaseManagedController, IStorable {
 	public override void SaveUid (WriterEx b)
 	{
 		base.SaveUid (b);
-		for(int i=0;i<map.GetLength(0);i++)
+		for(int i=0;i<map.Height;i++)
 		{
-			for(int j=0;j<map.GetLength(1);j++)
+			for(int j=0;j<map.Width;j++)
 			{
 				map[i,j].SaveUid(b);
 			}
@@ -361,9 +361,9 @@ public class TerrainController : BaseManagedController, IStorable {
 	public override void LoadUid (Manager m, ReaderEx r)
 	{
 		base.LoadUid (m, r);
-		for(int i=0;i<map.GetLength(0);i++)
+		for(int i=0;i<map.Height;i++)
 		{
-			for(int j=0;j<map.GetLength(1);j++)
+			for(int j=0;j<map.Width;j++)
 			{
 				
 				map[i,j].LoadUid(m,r);
@@ -372,9 +372,9 @@ public class TerrainController : BaseManagedController, IStorable {
 	}
 	public void Save (WriterEx b)
 	{
-		for(int i=0;i<map.GetLength(0);i++)
+		for(int i=0;i<map.Height;i++)
 		{
-			for(int j=0;j<map.GetLength(1);j++)
+			for(int j=0;j<map.Width;j++)
 			{
 				map[i,j].Save(b);
 			}
@@ -382,9 +382,9 @@ public class TerrainController : BaseManagedController, IStorable {
 	}
 	public void Load (Manager m, ReaderEx r)
 	{
-		for(int i=0;i<map.GetLength(0);i++)
+		for(int i=0;i<map.Height;i++)
 		{
-			for(int j=0;j<map.GetLength(1);j++)
+			for(int j=0;j<map.Width;j++)
 			{
 
 				map[i,j].Load(m,r);

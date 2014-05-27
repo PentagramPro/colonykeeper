@@ -10,7 +10,7 @@ public class PlayerSpot : MapSpot
 	}
 
 	#region implemented abstract members of MapSpot
-	public override void Generate (BlockController[,] map, bool editMode)
+	public override void Generate (Map map, bool editMode)
 	{
 	
 		for(int i=y;i<y+height;i++)

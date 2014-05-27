@@ -9,7 +9,7 @@ public class SentrySpot : MapSpot
 
 
 	#region implemented abstract members of MapSpot
-	public override void Generate (BlockController[,] map, bool editMode)
+	public override void Generate (Map map, bool editMode)
 	{
 		for(int i=y+1;i<y+4;i++)
 		{
@@ -38,7 +38,7 @@ public class TowerSpot : MapSpot
 	
 	
 	#region implemented abstract members of MapSpot
-	public override void Generate (BlockController[,] map, bool editMode)
+	public override void Generate (Map map, bool editMode)
 	{
 		for(int i=y+1;i<y+4;i++)
 		{
@@ -69,7 +69,7 @@ public class EnragerSpot : MapSpot
 	
 	
 	#region implemented abstract members of MapSpot
-	public override void Generate (BlockController[,] map, bool editMode)
+	public override void Generate (Map map, bool editMode)
 	{
 		for(int i=y+1;i<y+4;i++)
 		{

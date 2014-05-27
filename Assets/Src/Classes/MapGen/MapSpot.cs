@@ -34,10 +34,10 @@ public abstract class MapSpot
 		M=m;
 	}
 
-	public abstract void Generate(BlockController[,] map, bool editMode);
+	public abstract void Generate(Map map, bool editMode);
 
 
-	protected void PutVehicle(BlockController[,] map, int i, int j,string name)
+	protected void PutVehicle(Map map, int i, int j,string name)
 	{
 		M.CreateVehicle(name,map[i,j].Position);
 		
@@ -164,7 +164,7 @@ public abstract class MapSpot
 	}
 
 
-	protected void ArrangeOnBorder(BlockController[,] map, string[] blockNames)
+	protected void ArrangeOnBorder(Map map, string[] blockNames)
 	{
 		List<BlockController> cells = new List<BlockController>();
 		for (int i =y; i<y+height; i++)

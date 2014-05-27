@@ -6,7 +6,7 @@ public class TerrainMeshGenerator : MeshGenerator {
 
 	public const float CELL_SIZE = 1;
 	public static Color AMBIENT_LIGHT = new Color(0.2f,0.2f,0.2f);
-	protected BlockController[,] map;
+	protected Map map;
 
 	//int[,] pat = new int[3,3];
 
@@ -18,9 +18,9 @@ public class TerrainMeshGenerator : MeshGenerator {
 	{
 		if(map[i,j].Discovered==false)
 			return BlockController.Accessibility.Unknown;
-		if (i < map.GetLength(0) - 1 && map [i + 1, j].Digged)
+		if (i < map.Height - 1 && map [i + 1, j].Digged)
 			return BlockController.Accessibility.Cliff;
-		if (j < map.GetLength(1) - 1 && map [i, j + 1].Digged)
+		if (j < map.Width - 1 && map [i, j + 1].Digged)
 			return BlockController.Accessibility.Cliff;
 		if (i > 0 && map [i - 1, j].Digged)
 			return BlockController.Accessibility.Cliff;
@@ -103,8 +103,8 @@ public class TerrainMeshGenerator : MeshGenerator {
 	{
 		int[,] p = new int[,] {{1,1,1},{1,1,1},{1,1,1}};
 
-		int h = map.GetUpperBound(0);
-		int w = map.GetUpperBound(1);
+		int h = map.Height-1;
+		int w = map.Width-1;
 
 
 		int il = i-1;
@@ -121,7 +121,7 @@ public class TerrainMeshGenerator : MeshGenerator {
 
 		return p;
 	}
-	public override Mesh Generate (BlockController[,] map,int i, int j)
+	public override Mesh Generate (Map map,int i, int j)
 	{
 		Mesh mesh = new Mesh();
 		
