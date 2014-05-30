@@ -121,7 +121,7 @@ public class TerrainMeshGenerator : MeshGenerator {
 
 		return p;
 	}
-	public override Mesh Generate (Map map,int i, int j)
+	public Mesh Generate (Map map,int i, int j)
 	{
 		Mesh mesh = new Mesh();
 		

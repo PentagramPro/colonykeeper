@@ -37,5 +37,14 @@ public abstract class MeshGenerator {
 		uvs2.Clear();
 		colors.Clear();
 	}
-	public abstract Mesh Generate(Map map,int i, int j);
+
+	public void Append(MeshGenerator source)
+	{
+		vertices.AddRange(source.vertices);
+		triangles.AddRange(source.triangles);
+		uvs.AddRange(source.uvs);
+		uvs2.AddRange(source.uvs2);
+		colors.AddRange(source.colors);
+	}
+	//public abstract Mesh Generate(Map map,int i, int j);
 }
