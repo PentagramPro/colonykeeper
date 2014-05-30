@@ -6,7 +6,7 @@ public class PanelGenerator : MeshGenerator{
 	int segments=3;
 
 	public enum Type{
-		Near,Far,Right,Left,Top
+		Near,Far,Right,Left,Top, Bottom
 	}
 
 	private Color Col(float v)
@@ -14,8 +14,7 @@ public class PanelGenerator : MeshGenerator{
 		return new Color(v,v,v);
 	}
 
-	public PanelGenerator(Manager m, int segments, Type orientation, float lb,float lhor, float lvert, float l3) :
-		base(m)
+	public PanelGenerator(int segments, Type orientation, float lb,float lhor, float lvert, float l3) 
 	{
 		if(segments<2)
 			throw new UnityException("segments parameter should be equal or greater than 2");
@@ -41,6 +40,10 @@ public class PanelGenerator : MeshGenerator{
 			break;
 		case Type.Top:
 			GenerateGrid(new Vector3(0,1,0), new Vector3(0,0,1),new Vector3(1,0,0),
+			             Col (lb),Col(lhor),Col (lvert),Col (l3));
+			break;
+		case Type.Bottom:
+			GenerateGrid(new Vector3(0,0,0), new Vector3(0,0,1),new Vector3(1,0,0),
 			             Col (lb),Col(lhor),Col (lvert),Col (l3));
 			break;
 		}

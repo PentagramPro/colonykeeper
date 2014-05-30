@@ -7,11 +7,13 @@ public class TerrainMeshGenerator : MeshGenerator {
 	public const float CELL_SIZE = 1;
 	public static Color AMBIENT_LIGHT = new Color(0.2f,0.2f,0.2f);
 	protected Map map;
-
+	Manager M;
 	//int[,] pat = new int[3,3];
+	int segments = 3;
 
-	public TerrainMeshGenerator(Manager m) : base(m)
+	public TerrainMeshGenerator(Manager m) 
 	{
+		M=m;
 	}
 
 	public BlockController.Accessibility GetAccessibility(int i, int j)
@@ -146,56 +148,35 @@ public class TerrainMeshGenerator : MeshGenerator {
 		
 		if(pat[1,1]==1)
 		{
+			Append(new PanelGenerator(segments,PanelGenerator.Type.Top,1,1,1,1));
 			if(pat[1,0]==0)
 			{
-				AttachVRect(
-					new Vector2(	0, CELL_SIZE),
-					new Vector2(	0, 0),
-
-					CELL_SIZE,0);
-
-
+				Append(new PanelGenerator(segments,PanelGenerator.Type.Left,1,1,1,1));
 			}
 			
 			if(pat[0,1]==0)
 			{
-				AttachVRect(
-							new Vector2(	0,0),
-				            new Vector2(	CELL_SIZE, 0),
-							
-				            CELL_SIZE,0);
+				Append(new PanelGenerator(segments,PanelGenerator.Type.Near,1,1,1,1));
 
 			}
 			
 			if(pat[1,2]==0)
 			{
-				AttachVRect(
-					new Vector2(	CELL_SIZE, 0),
-					new Vector2(	CELL_SIZE, CELL_SIZE),
-
-					CELL_SIZE,0);
+				Append(new PanelGenerator(segments,PanelGenerator.Type.Right,1,1,1,1));
 
 			}
 			
 			if(pat[2,1]==0)
 			{
-				AttachVRect(
-					new Vector2(	CELL_SIZE, CELL_SIZE),
-					new Vector2(	0, CELL_SIZE),
-
-					CELL_SIZE,0);
+				Append(new PanelGenerator(segments,PanelGenerator.Type.Far,1,1,1,1));
 
 			}
-
-
+		}
+		else
+		{
+			Append(new PanelGenerator(segments,PanelGenerator.Type.Bottom,1,1,1,1));
 		}
 
-
-		AttachHRect(new Vector2(	0, 0),
-		            new Vector2(	CELL_SIZE, CELL_SIZE),level,
-		            pat);
-	
-		
 		mesh.vertices = vertices.ToArray();
 		mesh.triangles = triangles.ToArray();
 		mesh.uv = uvs.ToArray();
