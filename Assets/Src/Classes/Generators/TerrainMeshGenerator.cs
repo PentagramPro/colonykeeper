@@ -145,36 +145,37 @@ public class TerrainMeshGenerator : MeshGenerator {
 
 		int[,] pat = PreparePattern(i,j);
 
-		
+		float tone = 0.4f;
 		if(pat[1,1]==1)
 		{
+
 			Append(new PanelGenerator(segments,PanelGenerator.Type.Top,1,1,1,1));
 			if(pat[1,0]==0)
 			{
-				Append(new PanelGenerator(segments,PanelGenerator.Type.Left,1,1,1,1));
+				Append(new PanelGenerator(segments,PanelGenerator.Type.Left,tone,1,tone,1));
 			}
-			
+
 			if(pat[0,1]==0)
 			{
-				Append(new PanelGenerator(segments,PanelGenerator.Type.Near,1,1,1,1));
+				Append(new PanelGenerator(segments,PanelGenerator.Type.Near,tone,tone,1,1));
 
 			}
 			
 			if(pat[1,2]==0)
 			{
-				Append(new PanelGenerator(segments,PanelGenerator.Type.Right,1,1,1,1));
+				Append(new PanelGenerator(segments,PanelGenerator.Type.Right,tone,tone,1,1));
 
 			}
 			
 			if(pat[2,1]==0)
 			{
-				Append(new PanelGenerator(segments,PanelGenerator.Type.Far,1,1,1,1));
+				Append(new PanelGenerator(segments,PanelGenerator.Type.Far,tone,1,tone,1));
 
 			}
 		}
 		else
 		{
-			Append(new PanelGenerator(segments,PanelGenerator.Type.Bottom,1,1,1,1));
+			Append(new PanelGenerator(segments,PanelGenerator.Type.Bottom,tone,tone,tone,tone));
 		}
 
 		mesh.vertices = vertices.ToArray();

@@ -37,8 +37,11 @@ public abstract class MeshGenerator {
 
 	public void Append(MeshGenerator source)
 	{
+		int shift = vertices.Count;
 		vertices.AddRange(source.vertices);
-		triangles.AddRange(source.triangles);
+		foreach(int v in source.triangles)
+			triangles.Add(v+shift);
+
 		uvs.AddRange(source.uvs);
 		uvs2.AddRange(source.uvs2);
 		colors.AddRange(source.colors);
