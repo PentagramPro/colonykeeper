@@ -38,27 +38,27 @@ public class PanelGenerator : MeshGenerator{
 		switch(orientation)
 		{
 		case Type.Left:
-			GenerateGrid(new Vector3(0,0,0),new Vector3(0,0,1), new Vector3(0,1,0),
-			             Col (lb),Col(lhor),Col (lvert),Col (l3));
+			//GenerateGridEven(new IntVector3(0,0,0),new IntVector3(0,0,1), new IntVector3(0,1,0),
+			//             Col (lb),Col(lhor),Col (lvert),Col (l3));
 			break;
 		case Type.Right:
-			GenerateGrid(new Vector3(1,0,0), new Vector3(0,1,0),new Vector3(0,0,1),
+			GenerateGridEven(new IntVector3(1,0,0), new IntVector3(0,1,0),new IntVector3(0,0,1),
 			             Col (lb),Col(lhor),Col (lvert),Col (l3));
 			break;
 		case Type.Far:
-			GenerateGrid(new Vector3(0,0,1),new Vector3(1,0,0), new Vector3(0,1,0),
+			GenerateGridEven(new IntVector3(0,0,1),new IntVector3(1,0,0), new IntVector3(0,1,0),
 			             Col (lb),Col(lhor),Col (lvert),Col (l3));
 			break;
 		case Type.Near:
-			GenerateGrid(new Vector3(0,0,0),new Vector3(0,1,0), new Vector3(1,0,0),
-			             Col (lb),Col(lhor),Col (lvert),Col (l3));
+			//GenerateGridEven(new IntVector3(0,0,0),new IntVector3(0,1,0), new IntVector3(1,0,0),
+			 //            Col (lb),Col(lhor),Col (lvert),Col (l3));
 			break;
 		case Type.Top:
-			GenerateGrid(new Vector3(0,1,0), new Vector3(0,0,1),new Vector3(1,0,0),
+			GenerateGridEven(new IntVector3(0,settings.Segments+1,0), new IntVector3(0,0,1),new IntVector3(1,0,0),
 			             Col (lb),Col(lhor),Col (lvert),Col (l3));
 			break;
 		case Type.Bottom:
-			GenerateGrid(new Vector3(0,0,0), new Vector3(0,0,1),new Vector3(1,0,0),
+			GenerateGridEven(new IntVector3(0,0,0), new IntVector3(0,0,1),new IntVector3(1,0,0),
 			             Col (lb),Col(lhor),Col (lvert),Col (l3));
 			break;
 		}
