@@ -146,36 +146,41 @@ public class TerrainMeshGenerator : MeshGenerator {
 		int[,] pat = PreparePattern(i,j);
 
 		float tone = 0.4f;
+		PanelGenerator.PanelSettings psettings = new PanelGenerator.PanelSettings(null,0,0,segments);
 		if(pat[1,1]==1)
 		{
 
-			Append(new PanelGenerator(segments,PanelGenerator.Type.Top,1,1,1,1));
+			Append(new PanelGenerator(psettings,PanelGenerator.Type.Top,
+			                          1-pat[0,0]*pat[1,0]*pat[0,1],
+			                          1-pat[0,2]*pat[1,2]*pat[0,1],
+			                          1-pat[2,0]*pat[1,0]*pat[2,1],
+			                          1-pat[2,1]*pat[2,2]*pat[1,2]));
 			if(pat[1,0]==0)
 			{
-				Append(new PanelGenerator(segments,PanelGenerator.Type.Left,tone,1,tone,1));
+				Append(new PanelGenerator(psettings,PanelGenerator.Type.Left,tone,1,tone,1));
 			}
 
 			if(pat[0,1]==0)
 			{
-				Append(new PanelGenerator(segments,PanelGenerator.Type.Near,tone,tone,1,1));
+				Append(new PanelGenerator(psettings,PanelGenerator.Type.Near,tone,tone,1,1));
 
 			}
 			
 			if(pat[1,2]==0)
 			{
-				Append(new PanelGenerator(segments,PanelGenerator.Type.Right,tone,tone,1,1));
+				Append(new PanelGenerator(psettings,PanelGenerator.Type.Right,tone,tone,1,1));
 
 			}
 			
 			if(pat[2,1]==0)
 			{
-				Append(new PanelGenerator(segments,PanelGenerator.Type.Far,tone,1,tone,1));
+				Append(new PanelGenerator(psettings,PanelGenerator.Type.Far,tone,1,tone,1));
 
 			}
 		}
 		else
 		{
-			Append(new PanelGenerator(segments,PanelGenerator.Type.Bottom,tone,tone,tone,tone));
+			Append(new PanelGenerator(psettings,PanelGenerator.Type.Bottom,tone,tone,tone,tone));
 		}
 
 		mesh.vertices = vertices.ToArray();
