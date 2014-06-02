@@ -9,7 +9,7 @@ public class TerrainMeshGenerator : MeshGenerator {
 	protected Map map;
 	Manager M;
 	//int[,] pat = new int[3,3];
-	int segments = 3;
+
 
 	public TerrainMeshGenerator(Manager m) 
 	{
@@ -139,22 +139,22 @@ public class TerrainMeshGenerator : MeshGenerator {
 		BlockController c = map[i,j];
 
 		float level = (c.Digged && (c.Discovered || !M.settings.FogOfWar))?0:CELL_SIZE;
-
+		int turnOnFog = M.settings.FogOfWar?1:0;
 
 
 
 		int[,] pat = PreparePattern(i,j);
 
 		float tone = 0.4f;
-		PanelGenerator.PanelSettings psettings = new PanelGenerator.PanelSettings(map.MapVertexes,new IntVector3(j,0,i),map.Segments);
+		PanelGenerator.PanelSettings psettings = new PanelGenerator.PanelSettings(map.MapVertexes,new IntVector3(j*map.Segments,0,i*map.Segments),map.Segments);
 		if(pat[1,1]==1)
 		{
 
 			Append(new PanelGenerator(psettings,PanelGenerator.Type.Top,
-			                          1-pat[0,0]*pat[1,0]*pat[0,1],
-			                          1-pat[0,2]*pat[1,2]*pat[0,1],
-			                          1-pat[2,0]*pat[1,0]*pat[2,1],
-			                          1-pat[2,1]*pat[2,2]*pat[1,2]));
+			                          1-pat[0,0]*pat[1,0]*pat[0,1]*turnOnFog,
+			                          1-pat[0,2]*pat[1,2]*pat[0,1]*turnOnFog,
+			                          1-pat[2,0]*pat[1,0]*pat[2,1]*turnOnFog,
+			                          1-pat[2,1]*pat[2,2]*pat[1,2]*turnOnFog));
 			if(pat[1,0]==0)
 			{
 				Append(new PanelGenerator(psettings,PanelGenerator.Type.Left,tone,1,tone,1));

@@ -259,15 +259,15 @@ public class TerrainController : BaseManagedController, IStorable {
 		mapGen.AddSpot(new EnragerSpot(M,-1,-1));
 
 
-		for(int i=0;i<h;i++)
+		for(int x=0;x<w;x++)
 		{
-			for(int j=0;j<w;j++)
+			for(int z=0;z<h;z++)
 			{
 				GameObject cellObj = (GameObject)Instantiate(cellPrefab);
-				map[i,j] = cellObj.GetComponent<BlockController>();
-				BlockController c = map[i,j];
+				map[x,z] = cellObj.GetComponent<BlockController>();
+				BlockController c = map[x,z];
 				c.transform.parent = cellContainer.transform;
-				c.InitCell(i,j,map);
+				c.InitCell(x,z,map);
 
 
 				c.CellUpdated+=OnCellUpdated;
@@ -321,11 +321,11 @@ public class TerrainController : BaseManagedController, IStorable {
 
 		Debug.Log("Generate Mesh");
 
-		for(int i=0;i<map.Height;i++)
+		for(int x=0;x<map.Width;x++)
 		{
-			for(int j=0;j<map.Width;j++)
+			for(int z=0;z<map.Height;z++)
 			{
-				map[i,j].Generate(map,terrGen, editMode,false);
+				map[x,z].Generate(map,terrGen, editMode,false);
 
 			}
 		}

@@ -8,11 +8,11 @@ public class MapGen
 	List<Cell> suitableCells = new List<Cell>();
 	public class Cell{
 		public bool busy = false;
-		public int i, j;
-		public Cell(int i, int j)
+		public int x, z;
+		public Cell(int x, int z)
 		{
-			this.i=i;
-			this.j=j;
+			this.x=x;
+			this.z=z;
 		}
 	}
 	Manager M;
@@ -62,17 +62,17 @@ public class MapGen
 		Debug.Log("total blocks to place: "+blocksToPlace.Count+", filler types: "+fillers.Count);
 
 		// filling map
-		for(int i=0;i<map.Height;i++)
+		for(int x=0;x<map.Width;x++)
 		{
-			for(int j=0;j<map.Width;j++)
+			for(int z=0;z<map.Width;z++)
 			{
-				if(i==0 || j==0 || i==map.Height-1 || j==map.Width-1)
+				if(x==0 || z==0 || z==map.Height-1 || x==map.Width-1)
 				{
-					map[i,j].BlockProt = M.GameD.Blocks[0];
+					map[x,z].BlockProt = M.GameD.Blocks[0];
 					continue;
 				}
 
-				map[i,j].BlockProt = fillers[UnityEngine.Random.Range(0,fillers.Count-1)];
+				map[x,z].BlockProt = fillers[UnityEngine.Random.Range(0,fillers.Count-1)];
 			}
 		}
 
@@ -103,7 +103,7 @@ public class MapGen
 		foreach(Block b in blocksToPlace)
 		{
 			Cell c = cells[UnityEngine.Random.Range(0, cells.Count-1)];
-			map[c.i,c.j].BlockProt = b;
+			map[c.x,c.z].BlockProt = b;
 			cells.Remove(c);
 		}
 
@@ -112,18 +112,18 @@ public class MapGen
 	Cell[,] PrepareMap(int width, int height)
 	{
 		Cell[,] map = new Cell[height,width];
-		for(int i=0;i<height;i++)
-			for(int j=0;j<width;j++)
-				map[i,j] = new Cell(i,j);
-		for(int i=0;i<height;i++)
+		for(int z=0;z<height;z++)
+			for(int x=0;x<width;x++)
+				map[x,z] = new Cell(x,z);
+		for(int x=0;x<width;x++)
 		{
-			map[i,0].busy = true;
-			map[i,width-1].busy = true;
+			map[x,0].busy = true;
+			map[x,height-1].busy = true;
 		}
-		for(int j=0;j<width;j++)
+		for(int z=0;z<height;z++)
 		{
-			map[0,j].busy = true;
-			map[height-1,j].busy = true;
+			map[0,z].busy = true;
+			map[width-1,z].busy = true;
 		}
 		return map;
 	}
@@ -141,7 +141,7 @@ public class MapGen
 			bool spotSet = false;
 			if(spot.X>=0 && spot.Y>=0)
 			{
-				spotSet = spot.Grow(map,spot.Y,spot.X);
+				spotSet = spot.Grow(map,spot.X,spot.Y);
 			}
 			else
 			{
@@ -149,7 +149,7 @@ public class MapGen
 				if(cells.Count>0)
 				{
 					Cell c = cells[UnityEngine.Random.Range(0,cells.Count-1)];
-					spotSet = spot.Grow(map,c.i,c.j);
+					spotSet = spot.Grow(map,c.x,c.z);
 				}
 			}
 
@@ -174,12 +174,12 @@ public class MapGen
 	List<Cell> GetSuitableCells(Cell[,] map,int width, int height)
 	{
 		List<Cell> res = new List<Cell>();
-		for(int i=0;i<map.GetLength(0)-height+1;i++)
+		for(int x=0;x<map.GetLength(0)-width+1;x++)
 		{
-			for(int j=0;j<map.GetLength(1)-width+1;j++)
+			for(int z=0;z<map.GetLength(1)-height+1;z++)
 			{
-				if(!MapSpot.CheckIfBusy(map,i,j,i+height-1,j+width-1))
-					res.Add(map[i,j]);
+				if(!MapSpot.CheckIfBusy(map,x,z,x+width-1,z+height-1))
+					res.Add(map[x,z]);
 			}
 		}
 		return res;
@@ -191,7 +191,7 @@ public class MapGen
 		foreach(Cell c in suitableCells)
 		{
 			Gizmos.color = Color.blue;
-			Gizmos.DrawWireCube(new Vector3(c.j+0.5f,0.5f,c.i+0.5f),new Vector3(0.9f,1.1f,0.9f));
+			Gizmos.DrawWireCube(new Vector3(c.x+0.5f,0.5f,c.z+0.5f),new Vector3(0.9f,1.1f,0.9f));
 		}
 	}
 }

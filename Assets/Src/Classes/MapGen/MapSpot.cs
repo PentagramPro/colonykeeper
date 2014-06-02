@@ -4,15 +4,15 @@ using System.Collections.Generic;
 
 public abstract class MapSpot
 {
-	protected int x,y;
+	protected int x,z;
 	public int X{
 		get{
 			return x;
 		}
 	}
-	public int Y{
+	public int Z{
 		get{
-			return y;
+			return z;
 		}
 	}
 	protected int width,height;
@@ -27,24 +27,24 @@ public abstract class MapSpot
 		}
 	}
 	protected Manager M;
-	public MapSpot (Manager m,int x, int y)
+	public MapSpot (Manager m,int x, int z)
 	{
 		this.x=x;
-		this.y=y;
+		this.z=z;
 		M=m;
 	}
 
 	public abstract void Generate(Map map, bool editMode);
 
 
-	protected void PutVehicle(Map map, int i, int j,string name)
+	protected void PutVehicle(Map map, int x, int z,string name)
 	{
-		M.CreateVehicle(name,map[i,j].Position);
+		M.CreateVehicle(name,map[x,z].Position);
 		
 	}
-	public bool Grow(MapGen.Cell[,] map, int posI, int posJ)
+	public bool Grow(MapGen.Cell[,] map, int posX, int posZ)
 	{
-		int curX = posJ, curY = posI;
+		int curX = posX, curY = posZ;
 		int curH = 1,curW = 1;
 
 		bool blockLeft = false;
