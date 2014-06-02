@@ -4,33 +4,31 @@ using UnityEngine;
 public class Map
 {
 	BlockController[,] map;
-	VertexBlock[,] mapVertexes;
-	public class VertexBlock{
-
-		public VertexBlock()
-		{
-			for(int i=0;i<points.GetLength(0);i++)
-				for(int j=0;j<points.GetLength(1);j++)
-					for(int k=0;k<points.GetLength(2);k++)
-						points[i,j,k] = Random.insideUnitSphere*0.1f;
-
+	Vector3[,,] mapVertexes;
+	int segments;
+	public int Segments{
+		get{
+			return segments;
 		}
-		// i, j, h
-		public Vector3[,,] points = new Vector3[3,3,4];
+	}
+	public Vector3[,,] MapVertexes
+	{
+		get{
+			return mapVertexes;
+		}
 	}
 
-	public Map(int sizeI, int sizeJ)
+	public Map(int sizeI, int sizeJ, int segments)
 	{
+		this.segments = segments;
 		map = new BlockController[sizeI,sizeJ];
-		mapVertexes = new VertexBlock[sizeI+1,sizeJ+1];
 
-		for(int i=0;i<sizeI+1;i++)
-		{
-			for(int j=0;j<sizeJ+1;j++)
-			{
-				mapVertexes[i,j] = new VertexBlock();
-			}
-		}
+		mapVertexes = new Vector3[sizeJ * (segments + 1), segments + 1, sizeI * (segments + 1)];
+		for (int i=0; i<mapVertexes.GetLength(0); i++)
+			for (int j=0; j<mapVertexes.GetLength(1); j++)
+				for (int k=0; k<mapVertexes.GetLength(2); k++)
+					//mapVertexes [i, j, k] = Random.insideUnitSphere * 0.1f;
+					mapVertexes [i, j, k] = new Vector3((i%5==0 && j%5==0)? 0.1f : 0, 0, 0);
 	}
 
 
@@ -53,9 +51,9 @@ public class Map
 		get{return map.GetLength(0);}
 	}
 
-	public Vector3 GetVertex(int mapI, int mapJ,int i, int j, int k)
+	public Vector3 GetVertex(IntVector3 pos)
 	{
-		return mapVertexes[mapI,mapJ].points[i,j,k];
+		return mapVertexes[pos.X,pos.Y,pos.Z];
 	}
 
 }

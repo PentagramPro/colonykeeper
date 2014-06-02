@@ -75,7 +75,7 @@ public class TerrainController : BaseManagedController, IStorable {
 	{
 		MapX = mapX;
 		MapY = mapY;
-		map = new Map(MapY,MapX);
+		map = new Map(MapY,MapX,3);
 
 
 		GenerateMap(editMode);

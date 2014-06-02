@@ -7,13 +7,13 @@ public class PanelGenerator : MeshGenerator{
 
 	public class PanelSettings{
 		public Vector3[,,] Grid;
-		public int BaseI,BaseJ;
+		public IntVector3 Base;
 		public int Segments;
-		public PanelSettings (Vector3[,,] grid, int baseI, int baseJ, int segments)
+		public PanelSettings (Vector3[,,] grid, IntVector3 Base, int segments)
 		{
 			this.Grid = grid;
-			this.BaseI = baseI;
-			this.BaseJ = baseJ;
+			this.Base = Base;
+
 			this.Segments = segments;
 		}
 
@@ -38,23 +38,23 @@ public class PanelGenerator : MeshGenerator{
 		switch(orientation)
 		{
 		case Type.Left:
-			//GenerateGridEven(new IntVector3(0,0,0),new IntVector3(0,0,1), new IntVector3(0,1,0),
-			//             Col (lb),Col(lhor),Col (lvert),Col (l3));
+			GenerateGridEven(new IntVector3(0,0,0),new IntVector3(0,0,1), new IntVector3(0,1,0),
+			             Col (lb),Col(lhor),Col (lvert),Col (l3));
 			break;
 		case Type.Right:
-			GenerateGridEven(new IntVector3(1,0,0), new IntVector3(0,1,0),new IntVector3(0,0,1),
+			GenerateGridEven(new IntVector3(settings.Segments,0,0), new IntVector3(0,1,0),new IntVector3(0,0,1),
 			             Col (lb),Col(lhor),Col (lvert),Col (l3));
 			break;
 		case Type.Far:
-			GenerateGridEven(new IntVector3(0,0,1),new IntVector3(1,0,0), new IntVector3(0,1,0),
+			GenerateGridEven(new IntVector3(0,0,settings.Segments),new IntVector3(1,0,0), new IntVector3(0,1,0),
 			             Col (lb),Col(lhor),Col (lvert),Col (l3));
 			break;
 		case Type.Near:
-			//GenerateGridEven(new IntVector3(0,0,0),new IntVector3(0,1,0), new IntVector3(1,0,0),
-			 //            Col (lb),Col(lhor),Col (lvert),Col (l3));
+			GenerateGridEven(new IntVector3(0,0,0),new IntVector3(0,1,0), new IntVector3(1,0,0),
+			             Col (lb),Col(lhor),Col (lvert),Col (l3));
 			break;
 		case Type.Top:
-			GenerateGridEven(new IntVector3(0,settings.Segments+1,0), new IntVector3(0,0,1),new IntVector3(1,0,0),
+			GenerateGridEven(new IntVector3(0,settings.Segments,0), new IntVector3(0,0,1),new IntVector3(1,0,0),
 			             Col (lb),Col(lhor),Col (lvert),Col (l3));
 			break;
 		case Type.Bottom:
@@ -76,7 +76,8 @@ public class PanelGenerator : MeshGenerator{
 				float dy = y/(float)settings.Segments;
 
 				IntVector3 pos = b+hor*y+vert*x;
-				vertices.Add((pos-b)*delta);
+				IntVector3 globalPos = new IntVector3(pos.X+settings.Base.X,pos.Y,pos.Z+settings.Base.Z);
+				vertices.Add(pos*delta+settings.Grid[globalPos.X,globalPos.Y,globalPos.Z]);
 
 				AddUV(dx*0.5f,dy,dx,dy);
 				
