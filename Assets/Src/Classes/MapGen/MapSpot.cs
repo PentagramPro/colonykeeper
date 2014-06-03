@@ -44,7 +44,7 @@ public abstract class MapSpot
 	}
 	public bool Grow(MapGen.Cell[,] map, int posX, int posZ)
 	{
-		int curX = posX, curY = posZ;
+		int curX = posX, curZ = posZ;
 		int curH = 1,curW = 1;
 
 		bool blockLeft = false;
@@ -56,7 +56,7 @@ public abstract class MapSpot
 		{
 			if(!blockLeft)
 			{
-				if(CheckIfBusy(map,curY,curX-1,curY+curH,curX-1))
+				if(CheckIfBusy(map,curX-1,curZ,curX-1,curZ+curH))
 				{
 					blockLeft = true;
 				}
@@ -72,7 +72,7 @@ public abstract class MapSpot
 				blockLeft=blockRight=true;
 			if(!blockRight)
 			{
-				if(CheckIfBusy(map,curY,curX+curW+1,curY+curH,curX+curW+1))
+				if(CheckIfBusy(map,curX+curW+1,curZ,curX+curW+1,curZ+curH))
 				{
 					blockRight = true;
 				}
@@ -88,14 +88,14 @@ public abstract class MapSpot
 
 			if(!blockTop)
 			{
-				if(CheckIfBusy(map,curY-1,curX,curY-1,curX+curW))
+				if(CheckIfBusy(map,curX,curZ-1,curX+curW,curZ-1))
 				{
 					blockTop = true;
 				}
 				
 				if(!blockTop)
 				{
-					curY--;
+					curZ--;
 					curH++;
 
 				}
@@ -105,7 +105,7 @@ public abstract class MapSpot
 
 			if(!blockBottom)
 			{
-				if(CheckIfBusy(map,curY+curH+1,curX,curY+curH+1,curX+curW))
+				if(CheckIfBusy(map,curX,curZ+curH+1,curX+curW,curZ+curH+1))
 				{
 					blockBottom = true;
 				}
@@ -125,11 +125,11 @@ public abstract class MapSpot
 			if(blockTop && blockBottom && blockLeft && blockRight)
 			{
 				x = curX;
-				y = curY;
+				z = curZ;
 				bool res = curH==height && curW==width;
 				if(res)
 				{
-					SetBusy(map,y,x,y+height-1,x+width-1);
+					SetBusy(map,x,z,x+width-1,z+height-1);
 				}
 				return res;
 			}
@@ -138,13 +138,13 @@ public abstract class MapSpot
 		
 	}
 
-	public static bool CheckIfBusy(MapGen.Cell[,] map, int i1, int j1, int i2, int j2)
+	public static bool CheckIfBusy(MapGen.Cell[,] map, int x1, int z1, int x2, int z2)
 	{
-		for(int i=i1;i<=i2;i++)
+		for(int x=x1;x<=x2;x++)
 		{
-			for(int j=j1;j<=j2;j++)
+			for(int z=z1;z<=z2;z++)
 			{
-				if(map[i,j].busy)
+				if(map[x,z].busy)
 					return true;
 			}
 		}
@@ -152,13 +152,13 @@ public abstract class MapSpot
 	}
 
 
-	public static void SetBusy(MapGen.Cell[,] map, int i1, int j1, int i2, int j2)
+	public static void SetBusy(MapGen.Cell[,] map, int x1, int z1, int x2, int z2)
 	{
-		for(int i=i1;i<=i2;i++)
+		for(int x=x1;x<=x2;x++)
 		{
-			for(int j=j1;j<=j2;j++)
+			for(int z=z1;z<=z2;z++)
 			{
-				map[i,j].busy = true;
+				map[x,z].busy = true;
 			}
 		}
 	}
@@ -167,16 +167,16 @@ public abstract class MapSpot
 	protected void ArrangeOnBorder(Map map, string[] blockNames)
 	{
 		List<BlockController> cells = new List<BlockController>();
-		for (int i =y; i<y+height; i++)
+		for (int i =x; i<x+width; i++)
 		{
-			cells.Add(map[i,x]);
-			cells.Add(map[i,x+width-1]);
+			cells.Add(map[i,z]);
+			cells.Add(map[i,z+height-1]);
 		}
 
-		for (int j=x+1; j<x+width-1; j++)
+		for (int j=z+1; j<z+height-1; j++)
 		{
-			cells.Add(map[y,j]);
-			cells.Add(map[y+height-1,j]);
+			cells.Add(map[x,j]);
+			cells.Add(map[x+width-1,j]);
 		}
 
 		foreach (string name in blockNames)

@@ -44,7 +44,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	int amount=1000;
 	float leftover = 0;
 
-	int posI, posJ;
+	int posX, posZ;
 
 	public List<VehicleController> ObjectsCache = new List<VehicleController>();
 
@@ -52,13 +52,13 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 
 
-	public void InitCell(int i, int j, Map map)
+	public void InitCell(int x, int z, Map map)
 	{
 
-		posI=i;
-		posJ=j;
+		posX=x;
+		posZ=z;
 
-		transform.localPosition = new Vector3(TerrainMeshGenerator.CELL_SIZE*j,0,TerrainMeshGenerator.CELL_SIZE*i);
+		transform.localPosition = new Vector3(TerrainMeshGenerator.CELL_SIZE*x,0,TerrainMeshGenerator.CELL_SIZE*z);
 		((BoxCollider)collider).center = new Vector3(halfCell,halfCell,halfCell);
 		//cellObj.collider.isTrigger=false;
 	}
@@ -190,19 +190,19 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 				if(CellUpdated!=null)
 				{
-					CellUpdated(posI,posJ);
+					CellUpdated(posX,posZ);
 
-					CellUpdated(posI-1,posJ);
-					CellUpdated(posI+1,posJ);
-					CellUpdated(posI,posJ-1);
-					CellUpdated(posI,posJ+1);
+					CellUpdated(posX-1,posZ);
+					CellUpdated(posX+1,posZ);
+					CellUpdated(posX,posZ-1);
+					CellUpdated(posX,posZ+1);
 
-					CellUpdated(posI-1,posJ-1);
-					CellUpdated(posI-1,posJ+1);
-					CellUpdated(posI+1,posJ-1);
-					CellUpdated(posI+1,posJ+1);
+					CellUpdated(posX-1,posZ-1);
+					CellUpdated(posX-1,posZ+1);
+					CellUpdated(posX+1,posZ-1);
+					CellUpdated(posX+1,posZ+1);
 
-					Discover(CellUpdated,posI,posJ);
+					Discover(CellUpdated,posX,posZ);
 				}
 				digJob=null;
 				res = DigResult.Finished;
@@ -252,14 +252,14 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	void OnMouseOver() 
 	{
 		if(CellMouseOver!=null)
-			CellMouseOver(posI,posJ);
+			CellMouseOver(posX,posZ);
 	}
 
 	void OnTap()
 	{
 	
 			if(CellMouseUp!=null)
-				CellMouseUp(posI,posJ);
+				CellMouseUp(posX,posZ);
 			M.GetGUIController().SelectedObject = null;
 			if (!Digged)
 				DesignateDigJob();
@@ -276,7 +276,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		GetComponent<MeshFilter>().mesh=null;
 
 		// Creating mesh
-		Mesh mesh = terrGen.Generate(map,posI,posJ);
+		Mesh mesh = terrGen.Generate(map,posX,posZ);
 
 		// Checking cell block
 		if(BlockProt!=null)
@@ -303,7 +303,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 		// checking accessibility
 		Accessibility oldAc = IsAccessible;
-		IsAccessible = terrGen.GetAccessibility(posI, posJ);
+		IsAccessible = terrGen.GetAccessibility(posX, posZ);
 		if(digJob!=null && oldAc!=Accessibility.Cliff && IsAccessible==Accessibility.Cliff)
 			M.JobManager.UnblockJob(digJob);
 

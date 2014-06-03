@@ -16,17 +16,17 @@ public class TerrainMeshGenerator : MeshGenerator {
 		M=m;
 	}
 
-	public BlockController.Accessibility GetAccessibility(int i, int j)
+	public BlockController.Accessibility GetAccessibility(int x, int z)
 	{
-		if(map[i,j].Discovered==false)
+		if(map[x,z].Discovered==false)
 			return BlockController.Accessibility.Unknown;
-		if (i < map.Height - 1 && map [i + 1, j].Digged)
+		if (x < map.Width - 1 && map [x + 1, z].Digged)
 			return BlockController.Accessibility.Cliff;
-		if (j < map.Width - 1 && map [i, j + 1].Digged)
+		if (z < map.Height - 1 && map [x, z + 1].Digged)
 			return BlockController.Accessibility.Cliff;
-		if (i > 0 && map [i - 1, j].Digged)
+		if (x > 0 && map [x - 1, z].Digged)
 			return BlockController.Accessibility.Cliff;
-		if (j > 0 && map [i, j - 1].Digged)
+		if (z > 0 && map [x, z - 1].Digged)
 			return BlockController.Accessibility.Cliff;
 		return BlockController.Accessibility.Enclosed;
 	}
@@ -101,7 +101,7 @@ public class TerrainMeshGenerator : MeshGenerator {
 		
 	}
 
-	int[,] PreparePattern(int i, int j)
+	int[,] PreparePattern(int x, int z)
 	{
 		int[,] p = new int[,] {{1,1,1},{1,1,1},{1,1,1}};
 
@@ -109,21 +109,21 @@ public class TerrainMeshGenerator : MeshGenerator {
 		int w = map.Width-1;
 
 
-		int il = i-1;
-		int jl = j-1;
-		int ih = i<h?i+1: h;
-		int jh = j<w?j+1: w;
-		for(i = il>0?il:0;i<=ih;i++)
+		int xl = x-1;
+		int zl = z-1;
+		int xh = x<w?x+1: w;
+		int zh = z<h?z+1: h;
+		for(x = xl>0?xl:0;x<=xh;x++)
 		{
-			for(j = jl>0?jl:0;j<=jh;j++)
+			for(z = zl>0?zl:0;z<=zh;z++)
 			{
-				p[i-il,j-jl] = (map[i,j].Digged && map[i,j].Discovered)? 0 : 1;
+				p[x-xl,z-zl] = (map[x,z].Digged && map[x,z].Discovered)? 0 : 1;
 			}
 		}
 
 		return p;
 	}
-	public Mesh Generate (Map map,int i, int j)
+	public Mesh Generate (Map map,int x, int z)
 	{
 		Mesh mesh = new Mesh();
 		
@@ -136,17 +136,17 @@ public class TerrainMeshGenerator : MeshGenerator {
 
 
 	
-		BlockController c = map[i,j];
+		BlockController c = map[x,z];
 
 		float level = (c.Digged && (c.Discovered || !M.settings.FogOfWar))?0:CELL_SIZE;
 		int turnOnFog = M.settings.FogOfWar?1:0;
 
 
 
-		int[,] pat = PreparePattern(i,j);
+		int[,] pat = PreparePattern(x,z);
 
 		float tone = 0.4f;
-		PanelGenerator.PanelSettings psettings = new PanelGenerator.PanelSettings(map.MapVertexes,new IntVector3(j*map.Segments,0,i*map.Segments),map.Segments);
+		PanelGenerator.PanelSettings psettings = new PanelGenerator.PanelSettings(map.MapVertexes,new IntVector3(x*map.Segments,0,z*map.Segments),map.Segments);
 		if(pat[1,1]==1)
 		{
 

@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerSpot : MapSpot
 {
 
-	public PlayerSpot(Manager m,int x, int y) : base(m,x,y)
+	public PlayerSpot(Manager m,int x, int z) : base(m,x,z)
 	{
 		width=5;
 		height=5;
@@ -13,17 +13,17 @@ public class PlayerSpot : MapSpot
 	public override void Generate (Map map, bool editMode)
 	{
 	
-		for(int i=y;i<y+height;i++)
+		for(int i=x;i<x+width;i++)
 		{
-			for(int j=x;j<x+width;j++)
+			for(int j=z;j<z+height;j++)
 			{
-				if(i>y && i<y+height-1 && j>x && j<x+width-1)
+				if(i>x && i<x+width-1 && j>z && j<z+height-1)
 					map[i,j].BlockProt = null;
 				map[i,j].Discovered = true;
 			}
 		}
 
-		BlockController c = map[y+height/2,x+width/2];
+		BlockController c = map[x+width/2,z+height/2];
 
 		if(!editMode)
 		{
@@ -36,9 +36,9 @@ public class PlayerSpot : MapSpot
 				st.Put(M.GameD.Items[item.Name],item.Quantity);
 			}
 
-			PutVehicle(map,x+1,y+1,"Drone");
-			PutVehicle(map,x+3,y+1,"Drone");
-			PutVehicle(map,x+2,y+3,"Defender Drone");
+			PutVehicle(map,x+1,z+1,"Drone");
+			PutVehicle(map,x+3,z+1,"Drone");
+			PutVehicle(map,x+2,z+3,"Defender Drone");
 
 			ArrangeOnBorder(map,new string[] {"Iron Ore", "Iron Ore","Copper Ore"});
 		}

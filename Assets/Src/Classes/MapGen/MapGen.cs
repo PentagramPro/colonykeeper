@@ -64,7 +64,7 @@ public class MapGen
 		// filling map
 		for(int x=0;x<map.Width;x++)
 		{
-			for(int z=0;z<map.Width;z++)
+			for(int z=0;z<map.Height;z++)
 			{
 				if(x==0 || z==0 || z==map.Height-1 || x==map.Width-1)
 				{
@@ -111,7 +111,7 @@ public class MapGen
 
 	Cell[,] PrepareMap(int width, int height)
 	{
-		Cell[,] map = new Cell[height,width];
+		Cell[,] map = new Cell[width,height];
 		for(int z=0;z<height;z++)
 			for(int x=0;x<width;x++)
 				map[x,z] = new Cell(x,z);
@@ -139,9 +139,9 @@ public class MapGen
 		foreach(MapSpot spot in spots)
 		{
 			bool spotSet = false;
-			if(spot.X>=0 && spot.Y>=0)
+			if(spot.X>=0 && spot.Z>=0)
 			{
-				spotSet = spot.Grow(map,spot.X,spot.Y);
+				spotSet = spot.Grow(map,spot.X,spot.Z);
 			}
 			else
 			{

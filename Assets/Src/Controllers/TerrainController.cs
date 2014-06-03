@@ -23,7 +23,7 @@ public class TerrainController : BaseManagedController, IStorable {
 	public GameObject pickedObject;
 
 	[HideInInspector]
-	public int MapX=10,MapY=10;
+	public int MapX=10,MapZ=10;
 
 	TerrainControllerMode mode = TerrainControllerMode.Idle;
 
@@ -62,7 +62,7 @@ public class TerrainController : BaseManagedController, IStorable {
 
 		M.GetGUIController().ItemPicked+=OnItemPicked;
 
-		PrepareTerrain(MapX,MapY,false);
+		PrepareTerrain(MapX,MapZ,false);
 
 		lowerPlane = new Plane(Vector3.up, transform.position);
 
@@ -71,11 +71,11 @@ public class TerrainController : BaseManagedController, IStorable {
 
 
 
-	public void PrepareTerrain(int mapX, int mapY, bool editMode)
+	public void PrepareTerrain(int mapX, int mapZ, bool editMode)
 	{
 		MapX = mapX;
-		MapY = mapY;
-		map = new Map(MapY,MapX,3);
+		MapZ = mapZ;
+		map = new Map(MapX,MapZ,3);
 
 
 		GenerateMap(editMode);
@@ -153,19 +153,19 @@ public class TerrainController : BaseManagedController, IStorable {
 
 	}
 
-	void OnCellHover(int i, int j)
+	void OnCellHover(int x, int z)
 	{
 		if(mode==TerrainControllerMode.Picked)
 		{
-			float cx = (j+0.5f)*TerrainMeshGenerator.CELL_SIZE;
-			float cy = (i+0.5f)*TerrainMeshGenerator.CELL_SIZE;
+			float cx = (x+0.5f)*TerrainMeshGenerator.CELL_SIZE;
+			float cz = (z+0.5f)*TerrainMeshGenerator.CELL_SIZE;
 
-			pickedObject.transform.localPosition = new Vector3(cx,0,cy);
+			pickedObject.transform.localPosition = new Vector3(cx,0,cz);
 		}
 	}
-	void OnCellClicked(int i, int j)
+	void OnCellClicked(int x, int z)
 	{
-		BlockController c=map[i,j];
+		BlockController c=map[x,z];
 		if(mode==TerrainControllerMode.Picked)
 		{
 			if(c.CanBuild())

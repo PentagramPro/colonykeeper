@@ -21,17 +21,17 @@ public class TerrainEditor : Editor {
 		else if(tc.MapX>200)
 			tc.MapX=200;
 
-		tc.MapY = EditorGUILayout.IntField("Size of map, Y:",tc.MapY);
-		if(tc.MapY<10)
-			tc.MapY=10;
-		else if(tc.MapY>200)
-			tc.MapY=200;
+		tc.MapZ = EditorGUILayout.IntField("Size of map, Z:",tc.MapZ);
+		if(tc.MapZ<10)
+			tc.MapZ=10;
+		else if(tc.MapZ>200)
+			tc.MapZ=200;
 
 
 		if(GUILayout.Button("Generate!"))
 		{
 			tc.Init();
-			tc.PrepareTerrain(tc.MapX,tc.MapY,true);
+			tc.PrepareTerrain(tc.MapX,tc.MapZ,true);
 		}
 	}
 }

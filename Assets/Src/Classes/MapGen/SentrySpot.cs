@@ -1,7 +1,7 @@
 
 public class SentrySpot : MapSpot
 {
-	public SentrySpot (Manager m,int x, int y) : base(m,x,y)
+	public SentrySpot (Manager m,int x, int z) : base(m,x,z)
 	{
 		width = 5;
 		height = 5;
@@ -11,15 +11,15 @@ public class SentrySpot : MapSpot
 	#region implemented abstract members of MapSpot
 	public override void Generate (Map map, bool editMode)
 	{
-		for(int i=y+1;i<y+4;i++)
+		for(int i=x+1;i<x+4;i++)
 		{
-			for(int j=x+1;j<x+4;j++)
+			for(int j=z+1;j<z+4;j++)
 			{
 				map[i,j].BlockProt = null;
 			}
 		}
 		if(!editMode)
-			PutVehicle(map,y+height/2,x+width/2,"Alien Sentry");
+			PutVehicle(map,x+width/2,z+height/2,"Alien Sentry");
 
 		ArrangeOnBorder(map,new string[] {"Ice Ore","Ice Ore","Iron Ore", "Copper Ore","Copper Ore"});
 
@@ -30,27 +30,27 @@ public class SentrySpot : MapSpot
 
 public class TowerSpot : MapSpot
 {
-	public TowerSpot (Manager m,int x, int y) : base(m,x,y)
+	public TowerSpot (Manager m,int x, int z) : base(m,x,z)
 	{
 		width = 7;
 		height = 5;
 	}
-	
+
 	
 	#region implemented abstract members of MapSpot
 	public override void Generate (Map map, bool editMode)
 	{
-		for(int i=y+1;i<y+4;i++)
+		for(int i=x+1;i<x+4;i++)
 		{
-			for(int j=x+1;j<x+6;j++)
+			for(int j=z+1;j<z+6;j++)
 			{
 				map[i,j].BlockProt = null;
 			}
 		}
 		
 		if(!editMode){
-			PutVehicle(map,y+1,x+2,"Alien Sentry Tower");
-			PutVehicle(map,y+3,x+4,"Alien Sentry Tower");
+			PutVehicle(map,x+1,z+2,"Alien Sentry Tower");
+			PutVehicle(map,x+3,z+4,"Alien Sentry Tower");
 		}
 
 		ArrangeOnBorder(map,new string[] {"Ice Ore","Ice Ore","Ice Ore","Iron Ore","Cobalt Ore"});
@@ -61,7 +61,7 @@ public class TowerSpot : MapSpot
 
 public class EnragerSpot : MapSpot
 {
-	public EnragerSpot (Manager m,int x, int y) : base(m,x,y)
+	public EnragerSpot (Manager m,int x, int z) : base(m,x,z)
 	{
 		width = 5;
 		height = 5;
@@ -71,16 +71,16 @@ public class EnragerSpot : MapSpot
 	#region implemented abstract members of MapSpot
 	public override void Generate (Map map, bool editMode)
 	{
-		for(int i=y+1;i<y+4;i++)
+		for(int i=x+1;i<x+4;i++)
 		{
-			for(int j=x+1;j<x+4;j++)
+			for(int j=z+1;j<z+4;j++)
 			{
 				map[i,j].BlockProt = null;
 			}
 		}
 		
 		if(!editMode){
-			PutVehicle(map,y+height/2,x+width/2,"Alien Enrager");
+			PutVehicle(map,x+width/2,z+height/2,"Alien Enrager");
 		}
 		ArrangeOnBorder(map,new string[] {"Ice Ore","Ice Ore","Iron Ore", "Cobalt Ore"});
 	}
