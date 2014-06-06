@@ -1,7 +1,7 @@
 
 public struct MapPoint
 {
-	int x, y;
+	int x, z;
 	public int X{
 		get{
 			return x;
@@ -10,19 +10,19 @@ public struct MapPoint
 			x=value;
 		}
 	}
-	public int Y{
+	public int Z{
 		get{
-			return y;
+			return z;
 		}
 		set{
-			y=value;
+			z=value;
 		}
 	}
 
-	public MapPoint (int x, int y)
+	public MapPoint (int x, int z)
 	{
 		this.x=x;
-		this.y=y;
+		this.z=z;
 	}
 }
 

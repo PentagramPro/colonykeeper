@@ -146,33 +146,34 @@ public class TerrainMeshGenerator : MeshGenerator {
 		int[,] pat = PreparePattern(x,z);
 
 		float tone = 0.4f;
+		float dark = 0.12f;
 		PanelGenerator.PanelSettings psettings = new PanelGenerator.PanelSettings(map.MapVertexes,new IntVector3(x*map.Segments,0,z*map.Segments),map.Segments);
 		if(pat[1,1]==1)
 		{
 
 			Append(new PanelGenerator(psettings,PanelGenerator.Type.Top,
-			                          1-pat[0,0]*pat[1,0]*pat[0,1]*turnOnFog,
-			                          1-pat[0,2]*pat[1,2]*pat[0,1]*turnOnFog,
-			                          1-pat[2,0]*pat[1,0]*pat[2,1]*turnOnFog,
-			                          1-pat[2,1]*pat[2,2]*pat[1,2]*turnOnFog));
-			if(pat[1,0]==0)
+			                          1-pat[0,0]*pat[0,1]*pat[1,0]*turnOnFog,
+			                          1-pat[2,0]*pat[2,1]*pat[1,0]*turnOnFog,
+			                          1-pat[0,2]*pat[0,1]*pat[1,2]*turnOnFog,
+			                          1-pat[1,2]*pat[2,2]*pat[2,1]*turnOnFog));
+			if(pat[0,1]==0)
 			{
 				Append(new PanelGenerator(psettings,PanelGenerator.Type.Left,tone,1,tone,1));
 			}
 
-			if(pat[0,1]==0)
+			if(pat[1,0]==0)
 			{
 				Append(new PanelGenerator(psettings,PanelGenerator.Type.Near,tone,tone,1,1));
 
 			}
 			
-			if(pat[1,2]==0)
+			if(pat[2,1]==0)
 			{
 				Append(new PanelGenerator(psettings,PanelGenerator.Type.Right,tone,tone,1,1));
 
 			}
 			
-			if(pat[2,1]==0)
+			if(pat[1,2]==0)
 			{
 				Append(new PanelGenerator(psettings,PanelGenerator.Type.Far,tone,1,tone,1));
 
@@ -189,7 +190,7 @@ public class TerrainMeshGenerator : MeshGenerator {
 		mesh.uv2 = uvs2.ToArray();
 		mesh.colors = colors.ToArray();
 		mesh.RecalculateNormals();
-		
+
 
 		
 	

@@ -1,7 +1,7 @@
 
 public class Settings
 {
-	public bool FogOfWar = false;
+	public bool FogOfWar = true;
 }
 
 

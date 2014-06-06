@@ -165,23 +165,23 @@ public class Manager : MonoBehaviour {
 
 	public bool IsCellDiscovered(MapPoint point)
 	{
-		return terrainController.Map[point.Y,point.X].Discovered;
+		return terrainController.Map[point.X,point.Z].Discovered;
 	}
 	public void PositionChanged(VehicleController vehicle)
 	{
 		Vector3 loc = vehicle.transform.position-terrainController.transform.position;
 		int x = (int)loc.x;
-		int y = (int)loc.z;
+		int z = (int)loc.z;
 
-		if( (vehicle.Hull.currentCell.X!=x || vehicle.Hull.currentCell.Y!=y) && terrainController.Map!=null)
+		if( (vehicle.Hull.currentCell.X!=x || vehicle.Hull.currentCell.Z!=z) && terrainController.Map!=null)
 		{
 
-			BlockController cell = terrainController.Map[vehicle.Hull.currentCell.Y,vehicle.Hull.currentCell.X];
+			BlockController cell = terrainController.Map[vehicle.Hull.currentCell.X,vehicle.Hull.currentCell.Z];
 			if(cell!=null)
 			{
-				terrainController.Map[vehicle.Hull.currentCell.Y,vehicle.Hull.currentCell.X].ObjectsCache.Remove(vehicle);
-				terrainController.Map[y,x].ObjectsCache.Add(vehicle);
-				vehicle.Hull.currentCell = new MapPoint(x,y);
+				terrainController.Map[vehicle.Hull.currentCell.X,vehicle.Hull.currentCell.Z].ObjectsCache.Remove(vehicle);
+				terrainController.Map[x,z].ObjectsCache.Add(vehicle);
+				vehicle.Hull.currentCell = new MapPoint(x,z);
 			}
 		}
 	}
@@ -189,7 +189,7 @@ public class Manager : MonoBehaviour {
 
 	public void RemoveObjectFromCellCache(VehicleController vehicle)
 	{
-		BlockController cell = terrainController.Map[vehicle.Hull.currentCell.Y,vehicle.Hull.currentCell.X];
+		BlockController cell = terrainController.Map[vehicle.Hull.currentCell.X,vehicle.Hull.currentCell.Z];
 		if(cell!=null)
 			cell.ObjectsCache.Remove(vehicle);
 	}

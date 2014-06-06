@@ -22,7 +22,7 @@ Shader "Custom/Ground"
 			  // Bind "Color", Color 
 			//} 
 	        ColorMaterial AmbientAndDiffuse
-	        Lighting Off
+	        Lighting On
 	        
 	        SetTexture [_MainTex] {
 	        	
