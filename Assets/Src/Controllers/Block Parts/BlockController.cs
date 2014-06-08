@@ -11,7 +11,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		Enclosed, // closed with blocks from all sides
 		Cliff // has at least one cell without block among neibours
 	}
-	public delegate void CellHandler(int i, int j);
+	public delegate void CellHandler(int x, int z);
 	public event CellHandler CellUpdated;
 	public event CellHandler CellMouseOver;
 	public event CellHandler CellMouseUp;
@@ -44,7 +44,16 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	int amount=1000;
 	float leftover = 0;
 
-	int posX, posZ;
+	MapPoint mapPos;
+
+	public MapPoint MapPos{
+		get
+		{
+			return mapPos;
+		}
+	}
+
+	//int posX, posZ;
 
 	public List<VehicleController> ObjectsCache = new List<VehicleController>();
 
@@ -55,8 +64,8 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	public void InitCell(int x, int z, Map map)
 	{
 
-		posX=x;
-		posZ=z;
+		mapPos.X=x;
+		mapPos.Z=z;
 
 		transform.localPosition = new Vector3(TerrainMeshGenerator.CELL_SIZE*x,0,TerrainMeshGenerator.CELL_SIZE*z);
 		((BoxCollider)collider).center = new Vector3(halfCell,halfCell,halfCell);
@@ -151,6 +160,24 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 			}
 		}
 	}
+
+	private void UpdateAdjacentCells()
+	{
+		if(CellUpdated!=null)
+		{
+			CellUpdated(mapPos.X,mapPos.Z);
+			
+			CellUpdated(mapPos.X-1,mapPos.Z);
+			CellUpdated(mapPos.X+1,mapPos.Z);
+			CellUpdated(mapPos.X,mapPos.Z-1);
+			CellUpdated(mapPos.X,mapPos.Z+1);
+			
+			CellUpdated(mapPos.X-1,mapPos.Z-1);
+			CellUpdated(mapPos.X-1,mapPos.Z+1);
+			CellUpdated(mapPos.X+1,mapPos.Z-1);
+			CellUpdated(mapPos.X+1,mapPos.Z+1);
+		}
+	}
 	public DigResult Dig(IInventory dest)
 	{
 		float fdigAmount = BlockProt.DigSpeed*Time.smoothDeltaTime*100+leftover;
@@ -188,21 +215,13 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 				BlockProt=null;
 
+				UpdateAdjacentCells();
+
 				if(CellUpdated!=null)
 				{
-					CellUpdated(posX,posZ);
 
-					CellUpdated(posX-1,posZ);
-					CellUpdated(posX+1,posZ);
-					CellUpdated(posX,posZ-1);
-					CellUpdated(posX,posZ+1);
 
-					CellUpdated(posX-1,posZ-1);
-					CellUpdated(posX-1,posZ+1);
-					CellUpdated(posX+1,posZ-1);
-					CellUpdated(posX+1,posZ+1);
-
-					Discover(CellUpdated,posX,posZ);
+					Discover(CellUpdated,mapPos.X,mapPos.Z);
 				}
 				digJob=null;
 				res = DigResult.Finished;
@@ -252,14 +271,14 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	void OnMouseOver() 
 	{
 		if(CellMouseOver!=null)
-			CellMouseOver(posX,posZ);
+			CellMouseOver(mapPos.X,mapPos.Z);
 	}
 
 	void OnTap()
 	{
 	
 			if(CellMouseUp!=null)
-				CellMouseUp(posX,posZ);
+				CellMouseUp(mapPos.X,mapPos.Z);
 			M.GetGUIController().SelectedObject = null;
 			if (!Digged)
 				DesignateDigJob();
@@ -276,7 +295,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		GetComponent<MeshFilter>().mesh=null;
 
 		// Creating mesh
-		Mesh mesh = terrGen.Generate(map,posX,posZ);
+		Mesh mesh = terrGen.Generate(map,mapPos.X,mapPos.Z);
 
 		// Checking cell block
 		if(BlockProt!=null)
@@ -303,7 +322,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 		// checking accessibility
 		Accessibility oldAc = IsAccessible;
-		IsAccessible = terrGen.GetAccessibility(posX, posZ);
+		IsAccessible = terrGen.GetAccessibility(mapPos.X, mapPos.Z);
 		if(digJob!=null && oldAc!=Accessibility.Cliff && IsAccessible==Accessibility.Cliff)
 			M.JobManager.UnblockJob(digJob);
 
@@ -361,12 +380,14 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		cellBuilding = building;
 		if(M!=null && M.BuildingsRegistry!=null)
 			M.BuildingsRegistry.Add (this, building);
-		building.OnBuilded();
+		building.OnBuilded(this);
 
 		Bounds b = collider.bounds;
 		b.Expand(1);
 		GraphUpdateObject guo = new GraphUpdateObject(b);
 		AstarPath.active.UpdateGraphs(guo);
+
+		UpdateAdjacentCells();
 	}
 	void UpdateCellColor(JobManager jm)
 	{

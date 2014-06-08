@@ -103,7 +103,7 @@ public class IInventory : BaseManagedController, IStorable
 
 	// returns, how many items left (couldn`t be moved to
 	// this inventory)
-	public int Put (Item type, int quantity)
+	public virtual int Put (Item type, int quantity)
 	{
 		if(!type.IsOfClass(ItemClass))
 			return quantity;

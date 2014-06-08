@@ -147,7 +147,7 @@ public class TerrainMeshGenerator : MeshGenerator {
 
 		float tone = 0.4f;
 		float dark = 0.12f;
-		PanelGenerator.PanelSettings psettings = new PanelGenerator.PanelSettings(map.MapVertexes,new IntVector3(x*map.Segments,0,z*map.Segments),map.Segments);
+		PanelGenerator.PanelSettings psettings = new PanelGenerator.PanelSettings(map,new IntVector3(x*map.Segments,0,z*map.Segments),map.Segments);
 		if(pat[1,1]==1)
 		{
 

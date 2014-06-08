@@ -5,6 +5,8 @@ using System.Collections;
 public class BuildingController : BaseManagedController, IStorable, IInteractive{
 
 	public Building Prototype = null;
+	public BlockController nativeBlock = null;
+
 	public Manager.Sides Side = Manager.Sides.Player;
 	float halfCell = TerrainMeshGenerator.CELL_SIZE/2;
 	// Use this for initialization
@@ -34,9 +36,18 @@ public class BuildingController : BaseManagedController, IStorable, IInteractive
 		}
 	}
 
-	public void OnBuilded()
+	public void OnBuilded(BlockController blockController)
 	{
 		collider.enabled = true;
+		nativeBlock = blockController;
+
+		M.terrainController.Map.SetLight(nativeBlock.MapPos,true);
+	}
+
+	void OnDestroy()
+	{
+		if(nativeBlock!=null)
+			M.terrainController.Map.SetLight(nativeBlock.MapPos,false);
 	}
 
 
@@ -79,11 +90,13 @@ public class BuildingController : BaseManagedController, IStorable, IInteractive
 	public void Save (WriterEx b)
 	{
 		ComponentsSave(b);
+		b.WriteLink(nativeBlock);
 	}
 
 	public void Load (Manager m, ReaderEx r)
 	{
 		ComponentsLoad(m,r);
+		nativeBlock = (BlockController)r.ReadLink(m);
 	}
 
 	#endregion

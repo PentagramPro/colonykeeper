@@ -40,6 +40,16 @@ public class Map
 					//mapVertexes [i, j, k] = new Vector3((i%9==0 )? 0.1f : 0, 0, 0);
 	}
 
+	public BlockController this [MapPoint pos] 
+	{
+		get{
+			return map[pos.X,pos.Z];
+		}
+		
+		set{
+			map[pos.X,pos.Z]=value;
+		}
+	}
 
 	public BlockController this [int x, int z] 
 	{
@@ -69,12 +79,45 @@ public class Map
 
 	public bool IsLit(int x, int z)
 	{
-		return lights[x,z];
+		if(x>0 && z>0 && x<lights.GetLength(0) && z<lights.GetLength(1))
+			return lights[x,z];
+
+		return false;
 	}
 
-	public bool SetLight(int x, int z, bool val)
+	public void SetLight(MapPoint pos, bool val)
 	{
-		lights[x,z]=val;
+		lights[pos.X,pos.Z]=val;
+	}
+
+	public float GetLightAmount(IntVector3 pos)
+	{
+		int cx = pos.X/segments;
+		int cz = pos.Z/segments;
+
+
+
+		if(IsLit(cx,cz))
+			return 1.0f;
+
+		List<Vector2> lights = new List<Vector2>();
+		for(int x=cx-1;x<=cx+1;x++)
+		{
+			for(int z=cz-1;z<=cz+1;z++)
+			{
+				if(IsLit(x,z))
+					lights.Add(new Vector2(x+0.5f,z+0.5f));
+			}
+		}
+
+		float res = 0;
+		foreach(Vector2 l in lights)
+		{
+			Vector2 dir = new Vector2(pos.X/(float)segments-l.x,pos.Z/(float)segments-l.y);
+			res+=1/(dir.sqrMagnitude*2);
+		}
+
+		return res;
 	}
 }
 

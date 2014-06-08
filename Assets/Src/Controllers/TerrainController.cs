@@ -90,11 +90,11 @@ public class TerrainController : BaseManagedController, IStorable {
 		pickedObject.transform.position = new Vector3(0,0,0);
 	}
 
-	bool DetectCellUnderMouse(out int iRes, out int jRes)
+	bool DetectCellUnderMouse(out int xRes, out int zRes)
 	{
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		float distance;
-		iRes=jRes=-1;
+		xRes=zRes=-1;
 		
 
 		if (lowerPlane.Raycast(ray,out distance))
@@ -102,11 +102,11 @@ public class TerrainController : BaseManagedController, IStorable {
 			
 			Vector3 hitPoint = ray.GetPoint(distance)-transform.position;
 			
-			int i = (int)(hitPoint.z/TerrainMeshGenerator.CELL_SIZE);
-			int j = (int)(hitPoint.x/TerrainMeshGenerator.CELL_SIZE);
-			if(i>=0 && j>=0 && i<map.Height && j<map.Width)
+			int x = (int)(hitPoint.x/TerrainMeshGenerator.CELL_SIZE);
+			int z = (int)(hitPoint.z/TerrainMeshGenerator.CELL_SIZE);
+			if(x>=0 && z>=0 && z<map.Height && x<map.Width)
 			{
-				iRes=i;jRes=j;
+				xRes=x;zRes=z;
 				return true;
 			}
 		}
@@ -139,17 +139,17 @@ public class TerrainController : BaseManagedController, IStorable {
 			Destroy(pickedObject);
 			pickedObject=null;
 		}
-		int i,j;
-		if(DetectCellUnderMouse(out i, out j))
-			OnCellHover(i,j);
+		int x,z;
+		if(DetectCellUnderMouse(out x, out z))
+			OnCellHover(x,z);
 	}
 
 	void OnMouseUp()
 	{
 
-		int i,j;
-		if(DetectCellUnderMouse(out i, out j))
-			OnCellClicked(i,j);
+		int x,z;
+		if(DetectCellUnderMouse(out x, out z))
+			OnCellClicked(x,z);
 
 	}
 
@@ -210,9 +210,9 @@ public class TerrainController : BaseManagedController, IStorable {
 	}
 
 
-	void OnCellUpdated(int i, int j)
+	void OnCellUpdated(int x, int z)
 	{
-		updateList.Add(map [i, j]);
+		updateList.Add(map [z, x]);
 
 	}
 

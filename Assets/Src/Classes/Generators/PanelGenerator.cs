@@ -6,12 +6,12 @@ public class PanelGenerator : MeshGenerator{
 
 
 	public class PanelSettings{
-		public Vector3[,,] Grid;
+		public Map map;
 		public IntVector3 Base;
 		public int Segments;
-		public PanelSettings (Vector3[,,] grid, IntVector3 Base, int segments)
+		public PanelSettings (Map map, IntVector3 Base, int segments)
 		{
-			this.Grid = grid;
+			this.map = map;
 			this.Base = Base;
 
 			this.Segments = segments;
@@ -77,7 +77,7 @@ public class PanelGenerator : MeshGenerator{
 
 				IntVector3 pos = b+hor*y+vert*x;
 				IntVector3 globalPos = new IntVector3(pos.X+settings.Base.X,pos.Y,pos.Z+settings.Base.Z);
-				vertices.Add(pos*delta+settings.Grid[globalPos.X,globalPos.Y,globalPos.Z]);
+				vertices.Add(pos*delta+settings.map.MapVertexes[globalPos.X,globalPos.Y,globalPos.Z]);
 
 				AddUV(dx*0.5f,dy,dx,dy);
 				
@@ -85,6 +85,8 @@ public class PanelGenerator : MeshGenerator{
 				Color cr = dy*c3+(1-dy)*chor;
 				
 				Color col = cr*dx+(1-dx)*cl;
+				col*=0.2f+settings.map.GetLightAmount(globalPos)*1.5f;
+
 				colors.Add(col);
 
 				if(x>0 && y<settings.Segments)
