@@ -5,7 +5,7 @@ public class Map
 {
 	BlockController[,] map;
 	Vector3[,,] mapVertexes;
-	bool[,] lights;
+	int[,] lights;
 
 	int segments;
 	public int Segments{
@@ -24,7 +24,7 @@ public class Map
 	{
 		this.segments = segments;
 		map = new BlockController[sizeX,sizeZ];
-		lights = new bool[sizeX,sizeZ];
+		lights = new int[sizeX,sizeZ];
 
 		mapVertexes = new Vector3[sizeX * (segments + 1), segments + 1, sizeZ * (segments + 1)];
 		for (int i=0; i<mapVertexes.GetLength(0); i++)
@@ -36,7 +36,7 @@ public class Map
 
 		for(int i=0;i<lights.GetLength(0);i++)
 			for(int j=0;j<lights.GetLength(1);j++)
-				lights[i,j]=false;
+				lights[i,j]=0;
 					//mapVertexes [i, j, k] = new Vector3((i%9==0 )? 0.1f : 0, 0, 0);
 	}
 
@@ -80,14 +80,14 @@ public class Map
 	public bool IsLit(int x, int z)
 	{
 		if(x>0 && z>0 && x<lights.GetLength(0) && z<lights.GetLength(1))
-			return lights[x,z];
+			return lights[x,z]>0;
 
 		return false;
 	}
 
 	public void SetLight(MapPoint pos, bool val)
 	{
-		lights[pos.X,pos.Z]=val;
+		lights[pos.X,pos.Z]+=val?1:-1;
 	}
 
 	public float GetLightAmount(IntVector3 pos)

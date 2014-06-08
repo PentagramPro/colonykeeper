@@ -212,7 +212,7 @@ public class TerrainController : BaseManagedController, IStorable {
 
 	void OnCellUpdated(int x, int z)
 	{
-		updateList.Add(map [z, x]);
+		updateList.Add(map [x, z]);
 
 	}
 
