@@ -45,6 +45,8 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	float leftover = 0;
 
 	MapPoint mapPos;
+	int lightCounter=0;
+
 
 	public MapPoint MapPos{
 		get
@@ -165,17 +167,15 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	{
 		if(CellUpdated!=null)
 		{
-			CellUpdated(mapPos.X,mapPos.Z);
+			int xl = Math.Max(mapPos.X-2,0);
+			int zl = Math.Max(mapPos.Z-2,0);
+			int xh = Math.Min(mapPos.X+1,Map.Width-1);
+			int zh = Math.Min(mapPos.Z+1,Map.Height-1);
+			for(int x=xl;x<=xh;x++)
+				for(int z=zl;z<=zh;z++)
+					CellUpdated(x,z);
 			
-			CellUpdated(mapPos.X-1,mapPos.Z);
-			CellUpdated(mapPos.X+1,mapPos.Z);
-			CellUpdated(mapPos.X,mapPos.Z-1);
-			CellUpdated(mapPos.X,mapPos.Z+1);
-			
-			CellUpdated(mapPos.X-1,mapPos.Z-1);
-			CellUpdated(mapPos.X-1,mapPos.Z+1);
-			CellUpdated(mapPos.X+1,mapPos.Z-1);
-			CellUpdated(mapPos.X+1,mapPos.Z+1);
+
 		}
 	}
 	public DigResult Dig(IInventory dest)
@@ -258,6 +258,18 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	public void SetLight(bool turnOn)
+	{
+		lightCounter += turnOn ? 1 : -1;
+		if (lightCounter < 0)
+			lightCounter = 0;
+	}
+
+	public bool IsLit()
+	{
+		return lightCounter > 0;
 	}
 
 	public void OnSelected()

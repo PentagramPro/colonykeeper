@@ -100,20 +100,20 @@ public class Map
 		if(IsLit(cx,cz))
 			return 1.0f;
 
-		List<Vector2> lights = new List<Vector2>();
+		List<Vector3> lights = new List<Vector3>();
 		for(int x=cx-1;x<=cx+1;x++)
 		{
 			for(int z=cz-1;z<=cz+1;z++)
 			{
 				if(IsLit(x,z))
-					lights.Add(new Vector2(x+0.5f,z+0.5f));
+					lights.Add(new Vector3(x+0.5f,0,z+0.5f));
 			}
 		}
 
 		float res = 0;
-		foreach(Vector2 l in lights)
+		foreach(Vector3 l in lights)
 		{
-			Vector2 dir = new Vector2(pos.X/(float)segments-l.x,pos.Z/(float)segments-l.y);
+			Vector3 dir = new Vector3(pos.X/(float)segments-l.x,pos.Y/(float)segments-l.y,pos.Z/(float)segments-l.z);
 			res+=1/(dir.sqrMagnitude*2);
 		}
 
