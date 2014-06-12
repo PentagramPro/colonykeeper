@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Map
 {
 	BlockController[,] map;
 	Vector3[,,] mapVertexes;
-	int[,] lights;
+
 
 	int segments;
 	public int Segments{
@@ -24,7 +25,7 @@ public class Map
 	{
 		this.segments = segments;
 		map = new BlockController[sizeX,sizeZ];
-		lights = new int[sizeX,sizeZ];
+
 
 		mapVertexes = new Vector3[sizeX * (segments + 1), segments + 1, sizeZ * (segments + 1)];
 		for (int i=0; i<mapVertexes.GetLength(0); i++)
@@ -34,12 +35,27 @@ public class Map
 					                                    Random.Range(-0.03f,0.03f),
 					                                    Random.Range(-0.1f,0.1f));
 
-		for(int i=0;i<lights.GetLength(0);i++)
-			for(int j=0;j<lights.GetLength(1);j++)
-				lights[i,j]=0;
+	
 					//mapVertexes [i, j, k] = new Vector3((i%9==0 )? 0.1f : 0, 0, 0);
 	}
 
+
+	public void EnumerateCells(int xMin, int zMin, int xMax, int zMax, System.Action<int,int> method)
+	{
+		xMin = System.Math.Max(0,xMin);
+		zMin = System.Math.Max(0,zMin);
+
+		xMax = System.Math.Min(xMax, map.GetUpperBound(0));
+		zMax = System.Math.Min(zMax, map.GetUpperBound(1));
+
+		for(int x=xMin;x<=xMax;x++)
+		{
+			for(int z=zMin;z<=zMax;z++)
+			{
+				method(x,z);
+			}
+		}
+	}
 	public BlockController this [MapPoint pos] 
 	{
 		get{
@@ -77,47 +93,47 @@ public class Map
 		return mapVertexes[pos.X,pos.Y,pos.Z];
 	}
 
-	public bool IsLit(int x, int z)
+	public float GetLightAmount(Vector3 pos)
 	{
-		if(x>0 && z>0 && x<lights.GetLength(0) && z<lights.GetLength(1))
-			return lights[x,z]>0;
-
-		return false;
+		int cx = (int)pos.x;
+		int cz = (int)pos.z;
+		
+		if(cx>=map.GetLength(0) || cz>=map.GetLength(1))
+			return 0;
+		
+		float res = 0;
+		foreach(StaticLight l in map[cx,cz].GetStaticLightsCache())
+		{
+			Vector3 dir = pos-l.GlobalPosition;
+			
+			res+=1/(dir.sqrMagnitude*l.Falloff);
+		}
+		
+		
+		return res;
 	}
 
-	public void SetLight(MapPoint pos, bool val)
-	{
-		lights[pos.X,pos.Z]+=val?1:-1;
-	}
 
 	public float GetLightAmount(IntVector3 pos)
 	{
+		return GetLightAmount(pos/(float)segments);
+		/*
 		int cx = pos.X/segments;
 		int cz = pos.Z/segments;
 
-
-
-		if(IsLit(cx,cz))
-			return 1.0f;
-
-		List<Vector3> lights = new List<Vector3>();
-		for(int x=cx-1;x<=cx+1;x++)
-		{
-			for(int z=cz-1;z<=cz+1;z++)
-			{
-				if(IsLit(x,z))
-					lights.Add(new Vector3(x+0.5f,0,z+0.5f));
-			}
-		}
+		if(cx>=map.GetLength(0) || cz>=map.GetLength(1))
+			return 0;
 
 		float res = 0;
-		foreach(Vector3 l in lights)
+		foreach(StaticLight l in map[cx,cz].GetStaticLightsCache())
 		{
-			Vector3 dir = new Vector3(pos.X/(float)segments-l.x,pos.Y/(float)segments-l.y,pos.Z/(float)segments-l.z);
+			Vector3 dir = pos/(float)segments-l.GlobalPosition;
+
 			res+=1/(dir.sqrMagnitude*2);
 		}
 
-		return res;
+
+		return res;*/
 	}
 }
 

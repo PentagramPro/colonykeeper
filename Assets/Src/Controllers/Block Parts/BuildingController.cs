@@ -41,13 +41,15 @@ public class BuildingController : BaseManagedController, IStorable, IInteractive
 		collider.enabled = true;
 		nativeBlock = blockController;
 
-		M.terrainController.Map.SetLight(nativeBlock.MapPos,true);
+		blockController.AddLight(new StaticLight(this,new Vector3(0f,0,0f),Color.white));
+
+
 	}
 
 	void OnDestroy()
 	{
 		if(nativeBlock!=null)
-			M.terrainController.Map.SetLight(nativeBlock.MapPos,false);
+			nativeBlock.RemoveAllLights(this);
 	}
 
 

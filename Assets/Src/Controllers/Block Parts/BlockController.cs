@@ -45,7 +45,8 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	float leftover = 0;
 
 	MapPoint mapPos;
-	int lightCounter=0;
+	List<StaticLight> StaticLights = new List<StaticLight>();
+	List<StaticLight> StaticLightsCache = new List<StaticLight>();
 
 
 	public MapPoint MapPos{
@@ -65,6 +66,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 	public void InitCell(int x, int z, Map map)
 	{
+		Map = map;
 
 		mapPos.X=x;
 		mapPos.Z=z;
@@ -260,16 +262,34 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	
 	}
 
-	public void SetLight(bool turnOn)
+	public void AddLight(StaticLight light)
 	{
-		lightCounter += turnOn ? 1 : -1;
-		if (lightCounter < 0)
-			lightCounter = 0;
+		StaticLights.Add(light);
 	}
 
-	public bool IsLit()
+	public void RemoveAllLights(Component owner)
 	{
-		return lightCounter > 0;
+		List<StaticLight> remove = new List<StaticLight>();
+		foreach(StaticLight l in StaticLights)
+		{
+			if(l.Owner==owner)
+				remove.Add(l);
+		}
+
+		foreach(StaticLight l in remove)
+		{
+			StaticLights.Remove(l);
+		}
+	}
+
+	public List<StaticLight> GetStaticLightsCache()
+	{
+		return StaticLightsCache;
+	}
+
+	public List<StaticLight> GetStaticLigths()
+	{
+		return StaticLights;
 	}
 
 	public void OnSelected()
@@ -297,17 +317,30 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	
 	}
 
+	public void BuildLightCache()
+	{
+		//building light cache
+		StaticLightsCache.Clear();
 
-	public void Generate(Map map,TerrainMeshGenerator terrGen,  bool editMode,bool updateAstar)
+		Map.EnumerateCells(mapPos.X-1,mapPos.Z-1,mapPos.X+1,mapPos.Z+1, (int x,int z)=>{
+			foreach(StaticLight l in Map[x,z].GetStaticLigths())
+			{
+				StaticLightsCache.Add(l);
+			}
+		});
+	}
+
+	public void Generate(TerrainMeshGenerator terrGen,  bool editMode,bool updateAstar)
 	{
 		Manager manager = M;
+
 
 
 		GetComponent<MeshFilter>().sharedMesh=null;
 		GetComponent<MeshFilter>().mesh=null;
 
 		// Creating mesh
-		Mesh mesh = terrGen.Generate(map,mapPos.X,mapPos.Z);
+		Mesh mesh = terrGen.Generate(Map,mapPos.X,mapPos.Z);
 
 		// Checking cell block
 		if(BlockProt!=null)
@@ -418,6 +451,11 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		Gizmos.color = Color.green;
 		if(Discovered)
 			Gizmos.DrawWireCube(new Vector3(0.5f,0.5f,0.5f)+transform.position, new Vector3(0.3f,0.3f,0.3f));
+		foreach(StaticLight l in StaticLights)
+		{
+			Gizmos.color = Color.yellow;
+			Gizmos.DrawWireSphere(l.GlobalPosition,0.15f);
+		}
 	}
 
 

@@ -33,6 +33,7 @@ Shader "Custom/Ground"
 	        SetTexture [_MainTex] {
 	        	constantColor [_Color]
 	        	Combine previous lerp(constant) constant
+	        	//Combine previous * constant DOUBLE, previous * constant
 	        }
 	        //SetTexture [_OreTex] {
 	        //	Combine texture * previous

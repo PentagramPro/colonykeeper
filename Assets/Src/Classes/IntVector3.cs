@@ -41,6 +41,11 @@ public struct IntVector3
 		return new Vector3(v.x*k,v.y*k,v.z*k);
 	}
 
+	public static Vector3 operator/(IntVector3 v, float k)
+	{
+		return new Vector3(v.x/k,v.y/k,v.z/k);
+	}
+
 	public static IntVector3 operator-(IntVector3 v1, IntVector3 v2)
 	{
 		return new IntVector3(v1.x-v2.x,v1.y-v2.y,v1.z-v2.z);

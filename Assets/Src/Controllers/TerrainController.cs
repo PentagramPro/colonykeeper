@@ -121,7 +121,9 @@ public class TerrainController : BaseManagedController, IStorable {
 		if (updateList.Count > 0)
 		{
 			foreach(BlockController b in updateList)
-				b.Generate(map,terrGen,false,true);
+				b.BuildLightCache();
+			foreach(BlockController b in updateList)
+				b.Generate(terrGen,false,true);
 			updateList.Clear();
 
 			//GraphUpdateObject guo = new GraphUpdateObject(collider.bounds);
@@ -274,7 +276,7 @@ public class TerrainController : BaseManagedController, IStorable {
 				c.CellMouseOver+=OnCellHover;
 				c.CellMouseUp+=OnCellClicked;
 
-				c.Map = map;
+
 
 			}
 		}
@@ -319,13 +321,22 @@ public class TerrainController : BaseManagedController, IStorable {
 	void GenerateMesh(bool editMode)
 	{
 
+		for(int x=0;x<map.Width;x++)
+		{
+			for(int z=0;z<map.Height;z++)
+			{
+				map[x,z].BuildLightCache();
+				
+			}
+		}
+
 		Debug.Log("Generate Mesh");
 
 		for(int x=0;x<map.Width;x++)
 		{
 			for(int z=0;z<map.Height;z++)
 			{
-				map[x,z].Generate(map,terrGen, editMode,false);
+				map[x,z].Generate(terrGen, editMode,false);
 
 			}
 		}
