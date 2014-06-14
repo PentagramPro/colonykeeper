@@ -150,7 +150,7 @@ public class VehicleController : BaseManagedController, IStorable  {
 	{
 		M.GetGUIController().SelectedObject = gameObject;
 		
-		
+
 	}
 
 	#region IStorable implementation

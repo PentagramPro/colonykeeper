@@ -3,9 +3,15 @@ using System.Collections;
 
 public class FloatingTextController : MonoBehaviour {
 
-	Vector3 velocity = new Vector3(0,0.1f,0);
+	public delegate void FloatingTextDelegate();
+	public event FloatingTextDelegate OnDestroyed;
+
+	Vector3 velocity = new Vector3(0,0.01f,0);
 	float alpha = 1.0f;
-	float duration = 1.5f;
+	public float Duration = 3.5f;
+
+	public bool Glide = true;
+
 
 	static GameObject prefab;
 	// Use this for initialization
@@ -17,16 +23,31 @@ public class FloatingTextController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (alpha>0){
-			transform.position += velocity*Time.deltaTime;
-			alpha -= Time.deltaTime/duration;
+			if(Glide)
+				transform.position += velocity*Time.deltaTime;
+			alpha -= Time.deltaTime/Duration;
+
 			Color c = guiText.material.color;
 			guiText.material.color = new Color(c.r,c.g,c.b,alpha);
 		} else {
+			if(OnDestroyed!=null)
+				OnDestroyed();
 			Destroy(gameObject); // text vanished - destroy itself
 		}
 	}
 
-	public static void SpawnText(string text, Vector3 pos)
+	public void RefreshText(string text)
+	{
+		alpha=1;
+		guiText.text=text;
+	}
+
+	public static FloatingTextController SpawnText(string text, Vector3 pos)
+	{
+		return SpawnText(text,pos,true,3.5f);
+	}
+
+	public static FloatingTextController SpawnText(string text, Vector3 pos, bool glide, float duration)
 	{
 
 		if(prefab==null)
@@ -36,9 +57,19 @@ public class FloatingTextController : MonoBehaviour {
 			if(prefab==null)
 				throw new UnityException("Cannot find prefab for floating text!");
 		}
-		Transform obj = ((GameObject)GameObject.Instantiate(prefab,pos,Quaternion.identity))
-			.GetComponent<Transform>();
 
+		Vector3 locPos = Camera.main.WorldToScreenPoint(pos);
+		locPos = new Vector3(locPos.x/Camera.main.pixelWidth, locPos.y/Camera.main.pixelHeight, locPos.z);
+
+		FloatingTextController obj = ((GameObject)GameObject.Instantiate(prefab,locPos,Quaternion.identity))
+			.GetComponent<FloatingTextController>();
+
+		obj.guiText.alignment = TextAlignment.Center;
 		obj.guiText.text = text;
+		obj.Glide=glide;
+		obj.Duration = duration;
+
+
+		return obj;
 	}
 }

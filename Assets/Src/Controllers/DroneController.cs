@@ -33,7 +33,7 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 
 	IInventory destinationInv;
 
-
+	FloatingTextController floatingText;
 
 	IInventory inventory;
 	// Use this for initialization
@@ -64,6 +64,10 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 			currentJob.Cancel();
 	}
 
+	void OnFloatingTextDestroyed()
+	{
+		floatingText = null;
+	}
 	
 	// Update is called once per frame
 	void Update ()
@@ -189,7 +193,19 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 
 	public BlockController.DigResult Dig (BlockController block)
 	{
-		return block.Dig(inventory);
+		int delta = inventory.Quantity;
+		BlockController.DigResult res =  block.Dig(inventory);
+		delta=inventory.Quantity-delta;
+		if(delta>0)
+		{
+			string line = string.Format("+{0:0.00} {1}", inventory.Quantity/100.0f,inventory.GetItemTypes()[0].Name);
+			if(floatingText==null)
+				floatingText = FloatingTextController.SpawnText(line,hull.Center,false,1.5f);
+
+			floatingText.RefreshText(line);
+
+		}
+		return res;
 	}
 
 	public bool Unload ()
