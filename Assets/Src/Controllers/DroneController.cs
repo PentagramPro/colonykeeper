@@ -33,7 +33,7 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 
 	IInventory destinationInv;
 
-	FloatingTextController floatingText;
+	FloatingTextController digText;
 
 	IInventory inventory;
 	// Use this for initialization
@@ -66,7 +66,7 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 
 	void OnFloatingTextDestroyed()
 	{
-		floatingText = null;
+		digText = null;
 	}
 	
 	// Update is called once per frame
@@ -92,18 +92,25 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 						(int)(unloadAmount*Time.smoothDeltaTime),
 						itemToUnload);
 					
+					string line = string.Format("{0:0.00} {1}", inventory.Quantity/100.0f,itemToUnload.Name);
+					FloatingTextController.LastingText(this,hull.Center,line);
+
 					if(inventory.Quantity==0)
 					{
+						FloatingTextController.ResetText(this);
 						state = Modes.Work;
 						currentJob.OnUnloaded();
 					}
 					else if(destinationInv.IsFull())
 					{
+						FloatingTextController.ResetText(this);
 						Unload();
 					}
 					else if(!destinationInv.CanTake(itemToUnload))
 					{
+						FloatingTextController.ResetText(this);
 						Unload();
+						
 					}
 				}
 				break;
@@ -199,12 +206,12 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 		if(delta>0)
 		{
 			string line = string.Format("+{0:0.00} {1}", inventory.Quantity/100.0f,inventory.GetItemTypes()[0].Name);
-			if(floatingText==null)
-				floatingText = FloatingTextController.SpawnText(line,hull.Center,false,1.5f);
-
-			floatingText.RefreshText(line);
+			FloatingTextController.LastingText(this,hull.Center,line);
 
 		}
+		if(res!=BlockController.DigResult.NotFinished)
+			FloatingTextController.ResetText(this);
+
 		return res;
 	}
 

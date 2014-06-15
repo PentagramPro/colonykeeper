@@ -1,16 +1,17 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class FloatingTextController : MonoBehaviour {
 
-	public delegate void FloatingTextDelegate();
-	public event FloatingTextDelegate OnDestroyed;
+
 
 	Vector3 velocity = new Vector3(0,0.01f,0);
 	float alpha = 1.0f;
 	public float Duration = 3.5f;
 
 	public bool Glide = true;
+	public static Dictionary<Component, FloatingTextController> lastingTexts 
+		= new Dictionary<Component, FloatingTextController>();
 
 
 	static GameObject prefab;
@@ -30,16 +31,43 @@ public class FloatingTextController : MonoBehaviour {
 			Color c = guiText.material.color;
 			guiText.material.color = new Color(c.r,c.g,c.b,alpha);
 		} else {
-			if(OnDestroyed!=null)
-				OnDestroyed();
+			Component owner = null;
+			foreach(Component o in lastingTexts.Keys)
+			{
+				if(lastingTexts[o]==this)
+				{
+					owner=o;
+					break;
+				}
+			}
+			if(owner!=null)
+				lastingTexts.Remove(owner);
 			Destroy(gameObject); // text vanished - destroy itself
 		}
 	}
 
-	public void RefreshText(string text)
+	public static void LastingText(Component owner, Vector3 pos, string line)
 	{
-		alpha=1;
-		guiText.text=text;
+		FloatingTextController ftc = null;
+		if(!lastingTexts.ContainsKey(owner))
+		{
+			ftc = SpawnText(line,pos,false,1.5f);
+			lastingTexts.Add(owner,ftc);
+		}
+		else
+		{
+			ftc = lastingTexts[owner];
+			ftc.alpha = 1;
+			ftc.guiText.text=line;
+		}
+
+
+	}
+
+	public static void ResetText(Component owner)
+	{
+		lastingTexts.Remove(owner);
+
 	}
 
 	public static FloatingTextController SpawnText(string text, Vector3 pos)

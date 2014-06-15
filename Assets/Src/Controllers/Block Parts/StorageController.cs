@@ -16,14 +16,7 @@ public class StorageController : IInventory, IInteractive {
 		
 	}
 
-	public override int Put (Item type, int quantity)
-	{
-		int left = base.Put (type, quantity);
-		
-		if(ShowNotifications && left<quantity)
-			FloatingTextController.SpawnText("+"+(quantity/100).ToString("n2")+" "+type.Name, transform.position);
-		return left;
-	}
+
 
 	public void OnDrawSelectionGUI()
 	{
