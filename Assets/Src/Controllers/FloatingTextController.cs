@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class FloatingTextController : MonoBehaviour {
+public class FloatingTextController : BaseManagedController {
 
 
 
@@ -13,11 +13,13 @@ public class FloatingTextController : MonoBehaviour {
 	public static Dictionary<Component, FloatingTextController> lastingTexts 
 		= new Dictionary<Component, FloatingTextController>();
 
+	public Vector3 Position;
 
 	static GameObject prefab;
 	// Use this for initialization
 	void Start () {
 		alpha = 1;
+
 
 	}
 	
@@ -25,11 +27,12 @@ public class FloatingTextController : MonoBehaviour {
 	void Update () {
 		if (alpha>0){
 			if(Glide)
-				transform.position += velocity*Time.deltaTime;
+				Position += velocity*Time.deltaTime;
 			alpha -= Time.deltaTime/Duration;
 
 			Color c = guiText.material.color;
 			guiText.material.color = new Color(c.r,c.g,c.b,alpha);
+			transform.position = CalcLocalPos(Position);
 		} else {
 			Component owner = null;
 			foreach(Component o in lastingTexts.Keys)
@@ -44,6 +47,11 @@ public class FloatingTextController : MonoBehaviour {
 				lastingTexts.Remove(owner);
 			Destroy(gameObject); // text vanished - destroy itself
 		}
+	}
+
+	public void OnDestroy()
+	{
+
 	}
 
 	public static void LastingText(Component owner, Vector3 pos, string line)
@@ -64,6 +72,8 @@ public class FloatingTextController : MonoBehaviour {
 
 	}
 
+
+
 	public static void ResetText(Component owner)
 	{
 		lastingTexts.Remove(owner);
@@ -73,6 +83,13 @@ public class FloatingTextController : MonoBehaviour {
 	public static FloatingTextController SpawnText(string text, Vector3 pos)
 	{
 		return SpawnText(text,pos,true,3.5f);
+	}
+
+	private static Vector3 CalcLocalPos(Vector3 pos)
+	{
+		Vector3 locPos = Camera.main.WorldToScreenPoint(pos);
+		locPos = new Vector3(locPos.x/Camera.main.pixelWidth, locPos.y/Camera.main.pixelHeight, locPos.z);
+		return locPos;
 	}
 
 	public static FloatingTextController SpawnText(string text, Vector3 pos, bool glide, float duration)
@@ -86,8 +103,7 @@ public class FloatingTextController : MonoBehaviour {
 				throw new UnityException("Cannot find prefab for floating text!");
 		}
 
-		Vector3 locPos = Camera.main.WorldToScreenPoint(pos);
-		locPos = new Vector3(locPos.x/Camera.main.pixelWidth, locPos.y/Camera.main.pixelHeight, locPos.z);
+		Vector3 locPos = CalcLocalPos(pos);
 
 		FloatingTextController obj = ((GameObject)GameObject.Instantiate(prefab,locPos,Quaternion.identity))
 			.GetComponent<FloatingTextController>();
@@ -96,7 +112,7 @@ public class FloatingTextController : MonoBehaviour {
 		obj.guiText.text = text;
 		obj.Glide=glide;
 		obj.Duration = duration;
-
+		obj.Position = pos;
 
 		return obj;
 	}
