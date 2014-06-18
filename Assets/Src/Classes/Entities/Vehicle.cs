@@ -27,7 +27,8 @@ public class VehicleProt
 		VehicleController vc = obj.GetComponent<VehicleController>();
 		if (vc != null)
 		{
-			vc.Prototype = this;
+			//vc.Prototype = this;
+			vc.Name = Name;
 		}
 		return obj;
 	}

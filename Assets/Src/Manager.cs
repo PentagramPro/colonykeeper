@@ -208,7 +208,7 @@ public class Manager : MonoBehaviour {
 			b.Write(VehiclesRegistry.Count);
 			foreach(VehicleController d in VehiclesRegistry)
 			{
-				b.WriteEx(d.Prototype);
+				//b.WriteEx(d.Prototype);
 				d.SaveUid(b);
 			}
 

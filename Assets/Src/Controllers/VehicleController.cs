@@ -16,8 +16,14 @@ public class VehicleController : BaseManagedController, IStorable  {
 		get{return hull;}
 	}
 
-	[NonSerialized]
-	public VehicleProt Prototype;
+	public string Name;
+	public string LocalName
+	{
+		get
+		{
+			return Name;
+		}
+	}
 
 	Vector3 currentDestination = Vector3.zero;
 
