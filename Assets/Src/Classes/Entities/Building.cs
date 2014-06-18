@@ -11,7 +11,7 @@ public class Building
 		if(string.IsNullOrEmpty(PrefabName))
 			throw new UnityException("Cannot execute Instantiate method for Block with empty PrefabName");
 		
-		GameObject obj = Resources.Load<GameObject>("Prefabs/Blocks/"+PrefabName);
+		GameObject obj = Resources.Load<GameObject>("Prefabs/Buildings/"+PrefabName);
 
 		if(obj==null)
 			throw new UnityException("Cannot find prefab with name: "+PrefabName);

@@ -31,7 +31,7 @@ public class TerrainEditor : Editor {
 		if(GUILayout.Button("Generate!"))
 		{
 			tc.Init();
-			tc.PrepareTerrain(tc.MapX,tc.MapZ,true);
+			tc.PrepareTerrain(tc.MapX,tc.MapZ);
 		}
 	}
 }

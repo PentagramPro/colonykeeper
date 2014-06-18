@@ -1,14 +1,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[System.Serializable]
 public class Map
 {
+	//these variables are used to properly create map object after serialization
+	[SerializeField]
+	int width;
+	[SerializeField]
+	int height;
+
 	BlockController[,] map;
 	Vector3[,,] mapVertexes;
 
-
+	[SerializeField]
 	int segments;
+
 	public int Segments{
 		get{
 			return segments;
@@ -20,14 +27,29 @@ public class Map
 			return mapVertexes;
 		}
 	}
+	public Map()
+	{
+
+	}
 
 	public Map(int sizeX, int sizeZ, int segments)
 	{
 		this.segments = segments;
-		map = new BlockController[sizeX,sizeZ];
+		width = sizeX;
+		height = sizeZ;
 
+		Restore();
 
-		mapVertexes = new Vector3[sizeX * (segments + 1), segments + 1, sizeZ * (segments + 1)];
+	
+					//mapVertexes [i, j, k] = new Vector3((i%9==0 )? 0.1f : 0, 0, 0);
+	}
+
+	public void Restore()
+	{
+		map = new BlockController[width,height];
+		
+		
+		mapVertexes = new Vector3[width * (segments + 1), segments + 1, height * (segments + 1)];
 		for (int i=0; i<mapVertexes.GetLength(0); i++)
 			for (int j=0; j<mapVertexes.GetLength(1); j++)
 				for (int k=0; k<mapVertexes.GetLength(2); k++)
@@ -35,8 +57,6 @@ public class Map
 					                                    Random.Range(-0.03f,0.03f),
 					                                    Random.Range(-0.1f,0.1f));
 
-	
-					//mapVertexes [i, j, k] = new Vector3((i%9==0 )? 0.1f : 0, 0, 0);
 	}
 
 

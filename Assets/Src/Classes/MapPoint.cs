@@ -1,6 +1,9 @@
+using UnityEngine;
 
+[System.Serializable]
 public struct MapPoint
 {
+	[SerializeField]
 	int x, z;
 	public int X{
 		get{

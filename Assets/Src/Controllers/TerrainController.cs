@@ -11,6 +11,7 @@ enum TerrainControllerMode
 }
 public class TerrainController : BaseManagedController, IStorable {
 
+	[SerializeField]
 	Map map;
 
 
@@ -19,7 +20,7 @@ public class TerrainController : BaseManagedController, IStorable {
 
 	public GameObject cellContainer;
 	public GameObject cellPrefab;
-	public GameObject fogOfWar;
+
 	public GameObject pickedObject;
 
 	[HideInInspector]
@@ -62,24 +63,33 @@ public class TerrainController : BaseManagedController, IStorable {
 
 		M.GetGUIController().ItemPicked+=OnItemPicked;
 
-		PrepareTerrain(MapX,MapZ,false);
+		//PrepareTerrain(MapX,MapZ,false);
 
 		lowerPlane = new Plane(Vector3.up, transform.position);
 
 
 	}
-
-
-
-	public void PrepareTerrain(int mapX, int mapZ, bool editMode)
+	override void Awake ()
 	{
+		base.Awake ();
+		if(map!=null)
+			map.Restore();
+	}
+
+
+	public void PrepareTerrain(int mapX, int mapZ)
+	{
+
+	
 		MapX = mapX;
 		MapZ = mapZ;
+
 		map = new Map(MapX,MapZ,3);
 
+		GenerateMap(false);
+		GenerateMesh(false);
 
-		GenerateMap(editMode);
-		GenerateMesh(editMode);
+
 	}
 
 	void OnItemPicked(Building selected, RecipeInstance recipe)
@@ -269,7 +279,7 @@ public class TerrainController : BaseManagedController, IStorable {
 				map[x,z] = cellObj.GetComponent<BlockController>();
 				BlockController c = map[x,z];
 				c.transform.parent = cellContainer.transform;
-				c.InitCell(x,z,map);
+				c.InitCell(x,z,this);
 
 
 				c.CellUpdated+=OnCellUpdated;

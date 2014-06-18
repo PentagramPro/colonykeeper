@@ -33,10 +33,18 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 	DigJob digJob;
 
-	[NonSerialized]
-	public Map Map;
+	[SerializeField]
+	TerrainController terrainController;
 
-	[NonSerialized]
+	public Map Map
+	{
+		get
+		{
+			return terrainController.Map;
+		}
+	}
+
+
 	public bool discovered = false;
 
 	Color COLOR_DESIGNATED = new Color(0,0,1,0.5f);
@@ -44,7 +52,9 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	int amount=1000;
 	float leftover = 0;
 
+	[SerializeField]
 	MapPoint mapPos;
+
 	List<StaticLight> StaticLights = new List<StaticLight>();
 	List<StaticLight> StaticLightsCache = new List<StaticLight>();
 
@@ -64,9 +74,9 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 
 
-	public void InitCell(int x, int z, Map map)
+	public void InitCell(int x, int z, TerrainController tcon)
 	{
-		Map = map;
+		terrainController = tcon;
 
 		mapPos.X=x;
 		mapPos.Z=z;
@@ -74,6 +84,12 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		transform.localPosition = new Vector3(TerrainMeshGenerator.CELL_SIZE*x,0,TerrainMeshGenerator.CELL_SIZE*z);
 		((BoxCollider)collider).center = new Vector3(halfCell,halfCell,halfCell);
 		//cellObj.collider.isTrigger=false;
+	}
+
+
+	void OnEnable()
+	{
+		terrainController.Map[mapPos] = this;
 	}
 
 	// Use this for initialization
