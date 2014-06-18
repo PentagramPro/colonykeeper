@@ -7,15 +7,15 @@ public class ConstructionController : BaseManagedController, IInteractive, IStor
 	}
 
 	Modes state = Modes.Start;
-	Building targetBuilding;
+
 	RecipeInstance recipeInstance;
-	GameObject targetGameObject;
+	BuildingController targetBuilding;
 	public BlockController ParentBlock;
 
-	public GameObject TargetGameObject{
+	public BuildingController TargetGameObject{
 		set{
-			targetGameObject = value;
-			value.SetActive(false);
+			targetBuilding = value;
+			value.gameObject.SetActive(false);
 		}
 	}
 	float productionPoints;
@@ -60,8 +60,8 @@ public class ConstructionController : BaseManagedController, IInteractive, IStor
 				state = Modes.End;
 
 				M.BuildingsRegistry.Remove(ParentBlock);
-				targetGameObject.SetActive(true);
-				ParentBlock.BuildOn(targetGameObject.GetComponent<BuildingController>());
+				targetBuilding.gameObject.SetActive(true);
+				ParentBlock.BuildOn(targetBuilding);
 
 				GameObject.Destroy(transform.gameObject);
 			}
@@ -69,9 +69,8 @@ public class ConstructionController : BaseManagedController, IInteractive, IStor
 		}
 	}
 
-	public void Construct(Building building, RecipeInstance recipe)
-	{
-		targetBuilding = building;
+	public void Construct(RecipeInstance recipe)
+	{;
 		state = Modes.Prebuild;
 		recipeInstance = recipe;
 		
@@ -137,7 +136,7 @@ public class ConstructionController : BaseManagedController, IInteractive, IStor
 	public void Save (WriterEx b)
 	{
 		b.WriteEnum(state);
-		b.WriteEx(targetBuilding);
+		//b.WriteEx(targetBuilding);
 		b.WriteLink(ParentBlock);
 		b.Write((double)productionPoints);
 		recipeInstance.Save(b);
@@ -147,16 +146,16 @@ public class ConstructionController : BaseManagedController, IInteractive, IStor
 
 	public void Load (Manager m, ReaderEx r)
 	{
-		if(targetGameObject!=null)
-			GameObject.Destroy(targetGameObject);
+		//if(targetGameObject!=null)
+		//	GameObject.Destroy(targetGameObject);
 		state = (Modes)r.ReadEnum(typeof(Modes));
-		targetBuilding = r.ReadBuilding(m);
+		//targetBuilding = r.ReadBuilding(m);
 		ParentBlock = (BlockController)r.ReadLink(m);
 		productionPoints = (float)r.ReadDouble();
 		recipeInstance.Load(m,r);
 
-		targetGameObject = targetBuilding.Instantiate();
-		targetGameObject.SetActive(false);
+		//targetGameObject = targetBuilding.Instantiate();
+		//targetGameObject.SetActive(false);
 	}
 
 	#endregion

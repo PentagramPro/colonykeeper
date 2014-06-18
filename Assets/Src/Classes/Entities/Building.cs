@@ -20,7 +20,7 @@ public class Building
 		BuildingController bc = obj.GetComponent<BuildingController>();
 		if (bc != null)
 		{
-			bc.Prototype = this;
+			bc.Name = Name;
 		}
 		return obj;
 	}

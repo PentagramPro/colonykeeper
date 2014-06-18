@@ -77,7 +77,7 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 			}
 			else if(st==SupplyController.SupplyStatus.Complete)
 			{
-				M.DisplayMessage(string.Format(M.S["Message.ProdComplete"],building.Prototype.Name));
+				M.DisplayMessage(string.Format(M.S["Message.ProdComplete"],building.LocalName));
 				state = Modes.FreeOut;
 				outputUnloadController.FreeInventory();
 			}
@@ -163,7 +163,7 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 
 		if (craftableRecipes == null || nameCache==null)
 		{
-			craftableRecipes = M.GameD.RecipesByDevice[building.Prototype.Name];
+			craftableRecipes = M.GameD.RecipesByDevice[building.LocalName];
 			nameCache = new string[craftableRecipes.Count];
 			int i=0;
 			foreach(Recipe r in craftableRecipes)

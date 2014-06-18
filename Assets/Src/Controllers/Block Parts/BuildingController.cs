@@ -4,7 +4,15 @@ using System.Collections;
 [RequireComponent(typeof(TapController))]
 public class BuildingController : BaseManagedController, IStorable, IInteractive{
 
-	public Building Prototype = null;
+	public string Name;
+	public string LocalName
+	{
+		get
+		{
+			return Name;
+		}
+	}
+
 	public BlockController nativeBlock = null;
 
 	public Manager.Sides Side = Manager.Sides.Player;
@@ -71,7 +79,7 @@ public class BuildingController : BaseManagedController, IStorable, IInteractive
 
 	public void OnDrawSelectionGUI ()
 	{
-		GUILayout.Label(Prototype.Name);
+		GUILayout.Label(LocalName);
 		GUILayout.Space(10);
 	}
 

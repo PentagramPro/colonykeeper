@@ -405,8 +405,8 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		if(conBC==null || conC==null || resBC==null)
 			return false;
 				
-		conC.TargetGameObject = building;
-		conC.Construct(resBC.Prototype,recipe);
+		conC.TargetGameObject = resBC;
+		conC.Construct(recipe);
 
 		conC.ParentBlock = this;
 

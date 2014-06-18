@@ -222,7 +222,7 @@ public class Manager : MonoBehaviour {
 
 
 				b.Write(bc.GetUID());
-				b.Write(savingBuilding.Prototype.Name);
+				b.Write(savingBuilding.LocalName);
 				savingBuilding.SaveUid(b);
 
 				savingBuilding.Save(b);
