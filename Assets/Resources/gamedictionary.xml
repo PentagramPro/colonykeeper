@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="UTF8"?>
 <GameDictionary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Blocks>
-  	<Block Name="Bedrock" MaterialName="Bedrock" DigSpeed="-1"></Block>
-  	<Block Name="Ground" MaterialName="Ground" DigSpeed="5"></Block>
-  	<Block Name="Iron Ore" MaterialName="IronOre" Contains="Iron Ore" Freq="100" DigSpeed="2"></Block>
-  	<Block Name="Ice Ore" MaterialName="IceOre" Contains="Ice" Freq="5" DigSpeed="4"></Block>
-  	<Block Name="Copper Ore" MaterialName="CopperOre" Contains="Copper Ore" Freq="5" DigSpeed="2"></Block>
-  	<Block Name="Cobalt Ore" MaterialName="CobaltOre" Contains="Copper Ore" Freq="0" DigSpeed="2"></Block>
-  	<Block Name="Nitrates" MaterialName="Nitrates" Contains="Nitrates" Freq="80" DigSpeed="4"></Block>
+  	<Block Name="Bedrock" PrefabName="Bedrock" DigSpeed="-1"></Block>
+  	<Block Name="Ground" PrefabName="Ground" DigSpeed="5"></Block>
+  	<Block Name="Iron Ore" PrefabName="IronOre" Contains="Iron Ore" Freq="100" DigSpeed="2"></Block>
+  	<Block Name="Ice Ore" PrefabName="IceOre" Contains="Ice" Freq="5" DigSpeed="4"></Block>
+  	<Block Name="Copper Ore" PrefabName="CopperOre" Contains="Copper Ore" Freq="5" DigSpeed="2"></Block>
+  	<Block Name="Cobalt Ore" PrefabName="CobaltOre" Contains="Copper Ore" Freq="0" DigSpeed="2"></Block>
+  	<Block Name="Nitrates" PrefabName="Nitrates" Contains="Nitrates" Freq="80" DigSpeed="4"></Block>
   </Blocks>
   <Items >
   	<Item Name="Iron Ore" Class="Bulk.Ore"></Item>

@@ -4,19 +4,12 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.Collections.Generic;
 
-public class Building 
+public class Building : ObjectPrototype
 {
-	public GameObject Instantiate()
+	public override GameObject Instantiate()
 	{
-		if(string.IsNullOrEmpty(PrefabName))
-			throw new UnityException("Cannot execute Instantiate method for Block with empty PrefabName");
-		
-		GameObject obj = Resources.Load<GameObject>("Prefabs/Buildings/"+PrefabName);
 
-		if(obj==null)
-			throw new UnityException("Cannot find prefab with name: "+PrefabName);
-
-		obj = (GameObject)GameObject.Instantiate(obj);
+		GameObject obj = base.Instantiate();
 		BuildingController bc = obj.GetComponent<BuildingController>();
 		if (bc != null)
 		{
@@ -26,11 +19,6 @@ public class Building
 	}
 
 
-	[XmlAttribute("Name")]
-	public string Name;
-
-	[XmlAttribute("PrefabName")]
-	public string PrefabName;
 
 	[XmlArray("Ingredients"),XmlArrayItem("Ingredient")]
 	public List<PileXML> Ingredients = new List<PileXML>();

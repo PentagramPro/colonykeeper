@@ -6,6 +6,8 @@ using System;
 
 public class BlockController : BaseManagedController, ICustomer, IStorable {
 
+
+
 	public enum Accessibility{
 		Unknown, // this block is undiscovered
 		Enclosed, // closed with blocks from all sides
@@ -16,7 +18,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	public event CellHandler CellMouseOver;
 	public event CellHandler CellMouseUp;
 
-	public Block BlockProt;
+	//public Block BlockProt;
 	public BuildingController cellBuilding;
 	public EffectController dustFXPrefab;
 	EffectController dustFX;
@@ -45,6 +47,10 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	}
 
 
+
+	public string Name;
+
+	public bool Breakable = true;
 	public bool discovered = false;
 
 	Color COLOR_DESIGNATED = new Color(0,0,1,0.5f);
@@ -84,6 +90,20 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		transform.localPosition = new Vector3(TerrainMeshGenerator.CELL_SIZE*x,0,TerrainMeshGenerator.CELL_SIZE*z);
 		((BoxCollider)collider).center = new Vector3(halfCell,halfCell,halfCell);
 		//cellObj.collider.isTrigger=false;
+	}
+
+	public Block BlockProt
+	{
+		get
+		{
+			Block res = null;
+			M.GameD.BlocksByName.TryGetValue(Name,out res);
+			return res;
+		}
+		set
+		{
+			Name = value.Name;
+		}
 	}
 
 
@@ -134,7 +154,9 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 	public Item Contains{
 		get{
-			return BlockProt.ContainsItem;
+			if(string.IsNullOrEmpty(BlockProt.Contains))
+				return null;
+			return M.GameD.Items[BlockProt.Contains];
 		}
 	}
 

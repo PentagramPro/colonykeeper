@@ -72,7 +72,7 @@ public class MapGen
 					continue;
 				}
 
-				map[x,z].BlockProt = fillers[UnityEngine.Random.Range(0,fillers.Count-1)];
+				map[x,z].BlockProt =fillers[UnityEngine.Random.Range(0,fillers.Count-1)];
 			}
 		}
 

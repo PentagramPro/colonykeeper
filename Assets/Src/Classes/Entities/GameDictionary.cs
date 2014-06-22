@@ -68,8 +68,6 @@ public class GameDictionary  {
 		BlocksByName.Clear();
 		foreach(Block b in Blocks)
 		{
-			if(b.Contains!=null)
-				b.ContainsItem = Items[b.Contains];
 			BlocksByName[b.Name]=b;
 		}
 
@@ -141,7 +139,6 @@ public class GameDictionary  {
 			res =  new GameDictionary();
 		}
 		res.Sort();
-		res.Blocks[0].Breakable=false;
 		return res;
 	}
 }

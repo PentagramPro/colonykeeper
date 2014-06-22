@@ -69,7 +69,7 @@ public class TerrainController : BaseManagedController, IStorable {
 
 
 	}
-	override void Awake ()
+	override protected void Awake ()
 	{
 		base.Awake ();
 		if(map!=null)

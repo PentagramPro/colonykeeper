@@ -24,7 +24,7 @@ public class BaseManagedController : BaseController {
 		if(managerController==null)
 			managerController = manager.GetComponent<Manager>();
 	}
-	virtual void Awake()
+	virtual protected void Awake()
 	{
 		uidc = new UidContainer(this);
 		PrepareManager();

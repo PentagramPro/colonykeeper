@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
 
-public class Block  {
+public class Block : ObjectPrototype {
+
+	public override GameObject Instantiate()
+	{
+		
+		GameObject obj = base.Instantiate();
+		BlockController bc = obj.GetComponent<BlockController>();
+		if (bc != null)
+		{
+			bc.BlockProt = this;
+		}
+		return obj;
+	}
 
 
-
-	[XmlAttribute("Name")]
-	public string Name;
-
-	[XmlAttribute("MaterialName")]
-	public string MaterialName;
-
-	[XmlIgnore]
-	public bool Breakable=true;
+	public bool Breakable = true;
 
 	[XmlAttribute("Contains")]
 	public string Contains;
@@ -24,6 +28,4 @@ public class Block  {
 
 	[XmlAttribute("DigSpeed")]
 	public float DigSpeed=-1;
-	[XmlIgnore]
-	public Item ContainsItem;
 }
