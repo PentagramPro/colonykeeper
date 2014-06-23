@@ -82,6 +82,9 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 	public void InitCell(int x, int z, TerrainController tcon)
 	{
+		//because we call it from editor
+		PrepareManager();
+
 		terrainController = tcon;
 
 		mapPos.X=x;
@@ -102,14 +105,17 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		}
 		set
 		{
-			Name = value.Name;
+			if(value!=null)
+				Name = value.Name;
+			else
+				Name = "";
 		}
 	}
 
 
 	void OnEnable()
 	{
-		terrainController.Map[mapPos] = this;
+		M.terrainController.Map[mapPos] = this;
 	}
 
 	// Use this for initialization
@@ -152,11 +158,11 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	// vertex indexes used by mesh generator 
 	public int lt,lb,rt,rb;
 
-	public Item Contains{
+	public Item ContainedItem{
 		get{
-			if(string.IsNullOrEmpty(BlockProt.Contains))
+			if(!BlockProt.HasItem)
 				return null;
-			return M.GameD.Items[BlockProt.Contains];
+			return M.GameD.Items[BlockProt.StoredItem];
 		}
 	}
 
@@ -239,9 +245,9 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 				dustFX.transform.localPosition = new Vector3(0.5f,0.3f,0.5f);
 			}
 			dustFX.Spark(0.1f);
-			if(BlockProt.ContainsItem!=null)
+			if(BlockProt.HasItem)
 			{
-				int left = dest.Put(BlockProt.ContainsItem,digAmount);
+				int left = dest.Put(ContainedItem,digAmount);
 				if(left>0)
 				{
 					res = DigResult.DestinationFull;
@@ -387,7 +393,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 			collider.enabled=true;
 
 
-			Material mat = LoadMaterial(BlockProt.MaterialName);
+			Material mat = LoadMaterial(BlockProt.PrefabName);
 			if(mat!=null)
 				renderer.material = mat;
 		}
@@ -539,7 +545,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 		amount = r.ReadInt32();
 		
-		M.GameD.BlocksByName.TryGetValue(r.ReadString(),out BlockProt);
+		//M.GameD.BlocksByName.TryGetValue(r.ReadString(),out BlockProt);
 		digJob = (DigJob)r.ReadLink(m);
 		Discovered = r.ReadBoolean();
 

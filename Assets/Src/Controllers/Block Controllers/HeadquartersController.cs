@@ -26,6 +26,12 @@ public class HeadquartersController : BaseManagedController, ICustomer, IStorabl
 		if(!M.GameD.Items.ContainsKey(waterItemName))
 			throw new UnityException(waterItemName+" not found in items dictionary!");
 
+
+		foreach(PileXML item in M.GameD.StartItemsList)
+		{
+			ColonyInventory.Put(M.GameD.Items[item.Name],item.Quantity);
+		}
+
 		waterItem = M.GameD.Items [waterItemName];
 		ColonyInventory.Put(waterItem,initialWater);
 	}

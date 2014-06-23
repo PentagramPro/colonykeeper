@@ -30,11 +30,7 @@ public class PlayerSpot : MapSpot
 			GameObject mainBuilding = M.GameD.BuildingsByName["Headquarters"].Instantiate();
 			
 			c.BuildOn(mainBuilding.GetComponent<BuildingController>());
-			StorageController st = mainBuilding.GetComponent<StorageController>();
-			foreach(PileXML item in M.GameD.StartItemsList)
-			{
-				st.Put(M.GameD.Items[item.Name],item.Quantity);
-			}
+
 
 			PutVehicle(map,x+1,z+1,"Drone");
 			PutVehicle(map,x+3,z+1,"Drone");

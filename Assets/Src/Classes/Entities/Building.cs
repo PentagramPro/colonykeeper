@@ -9,7 +9,7 @@ public class Building : ObjectPrototype
 	public override GameObject Instantiate()
 	{
 
-		GameObject obj = base.Instantiate();
+		GameObject obj = base.Instantiate("Buildings",PrefabName);
 		BuildingController bc = obj.GetComponent<BuildingController>();
 		if (bc != null)
 		{

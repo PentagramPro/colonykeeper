@@ -57,6 +57,16 @@ public class TerrainController : BaseManagedController, IStorable {
 			return map;
 		}
 	}
+
+	public Vector3 CenterOfMap
+	{
+		get
+		{
+			return transform.position+new Vector3((float)map.Width/2f,0,(float)map.Height/2f);
+		}
+	}
+
+
 	// Use this for initialization
 	void Start () {
 		Init();
@@ -67,6 +77,7 @@ public class TerrainController : BaseManagedController, IStorable {
 
 		lowerPlane = new Plane(Vector3.up, transform.position);
 
+		InitAstar();
 
 	}
 	override protected void Awake ()
@@ -87,7 +98,7 @@ public class TerrainController : BaseManagedController, IStorable {
 		map = new Map(MapX,MapZ,3);
 
 		GenerateMap(false);
-		GenerateMesh(false);
+		GenerateMesh(true);
 
 
 	}
@@ -200,6 +211,12 @@ public class TerrainController : BaseManagedController, IStorable {
 		}
 	}
 
+	void OnCellUpdated(int x, int z)
+	{
+		updateList.Add(map [x, z]);
+		
+	}
+
 	bool IsUpperVertex(int i, int j)
 	{
 		if(i==0||j==0||i==map.Height-1||j==map.Width-1)
@@ -222,11 +239,8 @@ public class TerrainController : BaseManagedController, IStorable {
 	}
 
 
-	void OnCellUpdated(int x, int z)
-	{
-		updateList.Add(map [x, z]);
 
-	}
+
 
 
 
@@ -294,27 +308,33 @@ public class TerrainController : BaseManagedController, IStorable {
 		mapGen.GenerateMap(map, editMode);
 
 
-		int graphW = map.Width*10,graphH = map.Height*10;
-		Vector3 pos = transform.position+new Vector3((float)map.Width/2f,0.2f,(float)map.Height/2f);
-
 		((BoxCollider)collider).size = new Vector3(w,0.2f,h);
-		((BoxCollider)collider).center = new Vector3(pos.x,-0.1f,pos.z);
-		if(!editMode)	
-		{
-			AstarPath.active.astarData.gridGraph.width=graphW;
-				
-			AstarPath.active.astarData.gridGraph.depth=graphH;
-				
+		((BoxCollider)collider).center = new Vector3(CenterOfMap.x,-0.1f,CenterOfMap.z);
 
-			AstarPath.active.astarData.gridGraph.center= pos;
-			
-			AstarPath.active.astarData.gridGraph.UpdateSizeFromWidthDepth ();
-
-
-		}
 		//map[1,1].Digged=true;
 	}
 
+
+	void InitAstar()
+	{
+		int graphW = map.Width*10,graphH = map.Height*10;
+		Vector3 pos = transform.position+new Vector3((float)map.Width/2f,0.2f,(float)map.Height/2f);
+		
+		((BoxCollider)collider).size = new Vector3(Map.Width,0.2f,Map.Height);
+		((BoxCollider)collider).center = new Vector3(CenterOfMap.x,-0.1f,CenterOfMap.z);
+
+		AstarPath.active.astarData.gridGraph.width=graphW;
+		
+		AstarPath.active.astarData.gridGraph.depth=graphH;
+		
+		
+		AstarPath.active.astarData.gridGraph.center= pos;
+		
+		AstarPath.active.astarData.gridGraph.UpdateSizeFromWidthDepth ();
+		
+			
+
+	}
 	void OnDestroy () 
 	{
 		Debug.Log("OnDestroy");
