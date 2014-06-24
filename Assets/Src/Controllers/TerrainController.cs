@@ -87,6 +87,11 @@ public class TerrainController : BaseManagedController, IStorable {
 		if(map!=null)
 			map.Restore();
 		Init();
+		BlockController[] blocks = cellContainer.GetComponentsInChildren<BlockController>();
+		foreach(BlockController b in blocks)
+		{
+			map[b.MapPos] = b;
+		}
 	}
 
 

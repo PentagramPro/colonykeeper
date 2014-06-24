@@ -113,10 +113,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	}
 
 
-	void OnEnable()
-	{
-		M.terrainController.Map[mapPos] = this;
-	}
+
 
 	// Use this for initialization
 	void Start () {
