@@ -67,9 +67,10 @@ public class TerrainController : BaseManagedController, IStorable {
 	}
 
 
+
 	// Use this for initialization
 	void Start () {
-		Init();
+
 
 		M.GetGUIController().ItemPicked+=OnItemPicked;
 
@@ -85,6 +86,7 @@ public class TerrainController : BaseManagedController, IStorable {
 		base.Awake ();
 		if(map!=null)
 			map.Restore();
+		Init();
 	}
 
 

@@ -71,10 +71,15 @@ public class Manager : MonoBehaviour {
 			guiController = gui.GetComponent<GUIController>();
 		return guiController;
 	}
+
+	void Awake()
+	{
+		JobManager = new JobManager(this);
+	}
 	// Use this for initialization
 	void Start () {
 		GameDateTime = new DateTime(2260,2,1);
-		JobManager = new JobManager(this);
+
 
 		if(terrainController==null)
 			throw new UnityException("terrainController must not be null");
@@ -180,6 +185,7 @@ public class Manager : MonoBehaviour {
 			if(cell!=null)
 			{
 				terrainController.Map[vehicle.Hull.currentCell.X,vehicle.Hull.currentCell.Z].ObjectsCache.Remove(vehicle);
+				BlockController test = terrainController.Map[x,z];
 				terrainController.Map[x,z].ObjectsCache.Add(vehicle);
 				vehicle.Hull.currentCell = new MapPoint(x,z);
 			}

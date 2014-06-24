@@ -16,6 +16,8 @@ public class Map
 	[SerializeField]
 	int segments;
 
+
+
 	public int Segments{
 		get{
 			return segments;

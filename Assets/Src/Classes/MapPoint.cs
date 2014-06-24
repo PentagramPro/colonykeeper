@@ -1,31 +1,20 @@
 using UnityEngine;
+using System;
 
-[System.Serializable]
-public struct MapPoint
+[Serializable]
+public class MapPoint
 {
-	[SerializeField]
-	int x, z;
-	public int X{
-		get{
-			return x;
-		}
-		set{
-			x=value;
-		}
-	}
-	public int Z{
-		get{
-			return z;
-		}
-		set{
-			z=value;
-		}
-	}
+	public int X;
+	public int Z;
 
+	public MapPoint()
+	{
+		X = 0;Z = 0;
+	}
 	public MapPoint (int x, int z)
 	{
-		this.x=x;
-		this.z=z;
+		this.X=x;
+		this.Z=z;
 	}
 }
 

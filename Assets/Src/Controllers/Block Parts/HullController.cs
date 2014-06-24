@@ -13,7 +13,7 @@ public class HullController : BaseManagedController, IStorable, IInteractive {
 
 	public Manager.Sides Side = Manager.Sides.Player;
 	
-	[NonSerialized]
+	[HideInInspector]
 	public MapPoint currentCell;
 
 	public Vector3 CenterPos;
