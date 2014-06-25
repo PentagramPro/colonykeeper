@@ -183,7 +183,7 @@ public class TerrainController : BaseManagedController, IStorable {
 
 	}
 
-	void OnCellHover(int x, int z)
+	public void OnCellHover(int x, int z)
 	{
 		if(mode==TerrainControllerMode.Picked)
 		{
@@ -193,7 +193,7 @@ public class TerrainController : BaseManagedController, IStorable {
 			pickedObject.transform.localPosition = new Vector3(cx,0,cz);
 		}
 	}
-	void OnCellClicked(int x, int z)
+	public void OnCellClicked(int x, int z)
 	{
 		BlockController c=map[x,z];
 		if(mode==TerrainControllerMode.Picked)
@@ -218,7 +218,7 @@ public class TerrainController : BaseManagedController, IStorable {
 		}
 	}
 
-	void OnCellUpdated(int x, int z)
+	public void OnCellUpdated(int x, int z)
 	{
 		updateList.Add(map [x, z]);
 		
@@ -301,14 +301,6 @@ public class TerrainController : BaseManagedController, IStorable {
 				BlockController c = map[x,z];
 				c.transform.parent = cellContainer.transform;
 				c.InitCell(x,z,this);
-
-
-				c.CellUpdated+=OnCellUpdated;
-				c.CellMouseOver+=OnCellHover;
-				c.CellMouseUp+=OnCellClicked;
-
-
-
 			}
 		}
 
@@ -346,14 +338,14 @@ public class TerrainController : BaseManagedController, IStorable {
 	}
 	void OnDestroy () 
 	{
-		Debug.Log("OnDestroy");
+		/*Debug.Log("OnDestroy");
 		foreach(Transform children in cellContainer.transform)
 		{
 			
 
 			DestroyImmediate(children.gameObject);
 			
-		}
+		}*/
 	}
 
 

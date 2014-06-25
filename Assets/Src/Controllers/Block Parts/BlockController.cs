@@ -13,10 +13,8 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		Enclosed, // closed with blocks from all sides
 		Cliff // has at least one cell without block among neibours
 	}
-	public delegate void CellHandler(int x, int z);
-	public event CellHandler CellUpdated;
-	public event CellHandler CellMouseOver;
-	public event CellHandler CellMouseUp;
+
+
 
 	//public Block BlockProt;
 	public BuildingController cellBuilding;
@@ -61,6 +59,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	[SerializeField]
 	MapPoint mapPos;
 
+	[SerializeField]
 	List<StaticLight> StaticLights = new List<StaticLight>();
 	List<StaticLight> StaticLightsCache = new List<StaticLight>();
 
@@ -121,6 +120,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 			throw new UnityException("ConstructionSitePrefab must not be null");
 	
 		GetComponent<TapController>().OnTap+=OnTap;
+		terrainController.OnCellUpdated(MapPos.X,MapPos.Z);
 	}
 
 
@@ -174,12 +174,12 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 	}
 
-	public void Discover(BlockController.CellHandler OnCellUpdated, int posI, int posJ)
+	public void Discover(int posI, int posJ)
 	{
 		Map map = Map;
 
 		map[posI,posJ].Discovered = true;
-		OnCellUpdated(posI,posJ);
+		terrainController.OnCellUpdated(posI,posJ);
 		
 		int imin = Math.Max (posI-1,0);
 		int imax = Math.Min(posI+1,map.Height-1);
@@ -195,12 +195,12 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 				
 				if(map[i,j].Digged==true)
 				{
-					Discover(OnCellUpdated,i,j);
+					Discover(i,j);
 				}
 				else
 				{
 					map[i,j].Discovered = true;
-					OnCellUpdated(i,j);
+					terrainController.OnCellUpdated(i,j);
 				}
 			}
 		}
@@ -208,18 +208,17 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 	private void UpdateAdjacentCells()
 	{
-		if(CellUpdated!=null)
-		{
-			int xl = Math.Max(mapPos.X-2,0);
-			int zl = Math.Max(mapPos.Z-2,0);
-			int xh = Math.Min(mapPos.X+1,Map.Width-1);
-			int zh = Math.Min(mapPos.Z+1,Map.Height-1);
-			for(int x=xl;x<=xh;x++)
-				for(int z=zl;z<=zh;z++)
-					CellUpdated(x,z);
+
+		int xl = Math.Max(mapPos.X-2,0);
+		int zl = Math.Max(mapPos.Z-2,0);
+		int xh = Math.Min(mapPos.X+1,Map.Width-1);
+		int zh = Math.Min(mapPos.Z+1,Map.Height-1);
+		for(int x=xl;x<=xh;x++)
+			for(int z=zl;z<=zh;z++)
+				terrainController.OnCellUpdated(x,z);
 			
 
-		}
+
 	}
 	public DigResult Dig(IInventory dest)
 	{
@@ -260,12 +259,10 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 				UpdateAdjacentCells();
 
-				if(CellUpdated!=null)
-				{
 
 
-					Discover(CellUpdated,mapPos.X,mapPos.Z);
-				}
+				Discover(mapPos.X,mapPos.Z);
+
 				digJob=null;
 				res = DigResult.Finished;
 			}
@@ -343,15 +340,15 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 	void OnMouseOver() 
 	{
-		if(CellMouseOver!=null)
-			CellMouseOver(mapPos.X,mapPos.Z);
+
+			terrainController.OnCellHover(mapPos.X,mapPos.Z);
 	}
 
 	void OnTap()
 	{
 	
-			if(CellMouseUp!=null)
-				CellMouseUp(mapPos.X,mapPos.Z);
+			
+			terrainController.OnCellClicked(mapPos.X,mapPos.Z);
 			M.GetGUIController().SelectedObject = null;
 			if (!Digged)
 				DesignateDigJob();
