@@ -27,7 +27,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	// This value is calculated during cell update from following variables:
 	// - BlockProt
 	// - Discovered
-	[NonSerialized]
+	[HideInInspector]
 	public Accessibility IsAccessible;
 
 

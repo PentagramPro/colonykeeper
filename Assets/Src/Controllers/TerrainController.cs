@@ -338,6 +338,8 @@ public class TerrainController : BaseManagedController, IStorable {
 		AstarPath.active.astarData.gridGraph.center= pos;
 		
 		AstarPath.active.astarData.gridGraph.UpdateSizeFromWidthDepth ();
+
+		AstarPath.active.Scan();
 		
 			
 
