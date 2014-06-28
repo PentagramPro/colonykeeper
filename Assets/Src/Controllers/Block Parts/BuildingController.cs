@@ -13,6 +13,9 @@ public class BuildingController : BaseManagedController, IStorable, IInteractive
 		}
 	}
 
+	[HideInInspector]
+	public bool ToRegistryOnStart = false;
+
 	public BlockController nativeBlock = null;
 
 	public Manager.Sides Side = Manager.Sides.Player;
@@ -21,6 +24,11 @@ public class BuildingController : BaseManagedController, IStorable, IInteractive
 	void Start () {
 	
 		GetComponent<TapController>().OnTap+=OnTap;
+
+		if(ToRegistryOnStart && nativeBlock!=null)
+		{
+			M.BuildingsRegistry.Add(nativeBlock,this);
+		}
 	}
 
 	void OnTap()

@@ -29,7 +29,7 @@ public class PlayerSpot : MapSpot
 		{
 			GameObject mainBuilding = M.GameD.BuildingsByName["Headquarters"].Instantiate();
 			
-			c.BuildOn(mainBuilding.GetComponent<BuildingController>());
+			c.BuildImmediate(mainBuilding.GetComponent<BuildingController>());
 
 
 			PutVehicle(map,x+1,z+1,"Drone");

@@ -3,7 +3,8 @@ using System.Collections;
 
 public class HeadquartersController : BaseManagedController, ICustomer, IStorable, IInteractive {
 
-	public IInventory ColonyInventory;
+	public IInventory ColonyWaterInventory;
+	public IInventory ColonyStorageInventory;
 
 	public string waterItemName;
 	public float waterConsumption=0.04f;
@@ -11,13 +12,15 @@ public class HeadquartersController : BaseManagedController, ICustomer, IStorabl
 
 	public int initialWater = 200;
 
+	private BuildingController buildingController;
+
 	Item waterItem;
 	SupplyJob waterSupply;
 	// Use this for initialization
 	void Start () {
 		M.cameraController.ShowPoint(transform.position);
 
-		if(ColonyInventory==null)
+		if(ColonyWaterInventory==null)
 			throw new UnityException("ColonyInventory must not be null");
 
 		if(string.IsNullOrEmpty(waterItemName))
@@ -29,11 +32,14 @@ public class HeadquartersController : BaseManagedController, ICustomer, IStorabl
 
 		foreach(PileXML item in M.GameD.StartItemsList)
 		{
-			ColonyInventory.Put(M.GameD.Items[item.Name],item.Quantity);
+			ColonyStorageInventory.Put(M.GameD.Items[item.Name],item.Quantity);
 		}
 
 		waterItem = M.GameD.Items [waterItemName];
-		ColonyInventory.Put(waterItem,initialWater);
+		ColonyWaterInventory.Put(waterItem,initialWater);
+
+		buildingController = GetComponent<BuildingController>();
+		//M.BuildingsRegistry.Add(buildingController.nativeBlock,buildingController);
 	}
 	
 	// Update is called once per frame
@@ -47,16 +53,16 @@ public class HeadquartersController : BaseManagedController, ICustomer, IStorabl
 			waterConsumptionPoints=0;
 		}
 
-		int has = ColonyInventory.GetItemQuantity(waterItem);
+		int has = ColonyWaterInventory.GetItemQuantity(waterItem);
 		if (has > 0)
 		{
 			if (has < 100 && waterSupply == null)
 			{
-				waterSupply = new SupplyJob(M.JobManager, this, GetComponent<BuildingController>(), ColonyInventory, waterItem, 100);
+				waterSupply = new SupplyJob(M.JobManager, this, GetComponent<BuildingController>(), ColonyWaterInventory, waterItem, 100);
 				M.JobManager.AddJob(waterSupply, false);
 			}
 			if(take>0)
-				ColonyInventory.Take(waterItem, take);
+				ColonyWaterInventory.Take(waterItem, take);
 		} else
 		{
 
@@ -77,7 +83,7 @@ public class HeadquartersController : BaseManagedController, ICustomer, IStorabl
 	public void OnDrawSelectionGUI ()
 	{
 		GUILayout.Space(10);
-		GUILayout.Label("Water left: "+ColonyInventory.GetItemQuantity(waterItem));
+		GUILayout.Label("Water left: "+ColonyWaterInventory.GetItemQuantity(waterItem));
 		GUILayout.Label("Water request: "+waterConsumptionPoints.ToString("n2"));
 	}
 

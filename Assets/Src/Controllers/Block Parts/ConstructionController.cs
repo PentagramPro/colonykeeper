@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class ConstructionController : BaseManagedController, IInteractive, IStorable {
@@ -61,7 +61,7 @@ public class ConstructionController : BaseManagedController, IInteractive, IStor
 
 				M.BuildingsRegistry.Remove(ParentBlock);
 				targetBuilding.gameObject.SetActive(true);
-				ParentBlock.BuildOn(targetBuilding);
+				ParentBlock.BuildImmediate(targetBuilding);
 
 				GameObject.Destroy(transform.gameObject);
 			}

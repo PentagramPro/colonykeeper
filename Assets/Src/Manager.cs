@@ -50,7 +50,7 @@ public class Manager : MonoBehaviour {
 
 	//has to be stored and loaded
 	[NonSerialized]
-	public DictionaryEx<BlockController,BuildingController> BuildingsRegistry = new DictionaryEx<BlockController, BuildingController>();
+	public DictionaryEx<BlockController,BuildingController> BuildingsRegistry = null;
 
 	//has to be stored and loaded
 	[NonSerialized]
@@ -75,6 +75,7 @@ public class Manager : MonoBehaviour {
 	void Awake()
 	{
 		JobManager = new JobManager(this);
+		BuildingsRegistry = new DictionaryEx<BlockController, BuildingController>();
 	}
 	// Use this for initialization
 	void Start () {
@@ -290,7 +291,7 @@ public class Manager : MonoBehaviour {
 				BlockController bc = (BlockController)LoadedLinks[b.ReadInt32()];
 				Building building = GameD.BuildingsByName [b.ReadString()];
 				BuildingController loadedBuilding = building.Instantiate().GetComponent<BuildingController>();
-				bc.BuildOn(loadedBuilding);
+				bc.BuildImmediate(loadedBuilding);
 
 
 				loadedBuilding.LoadUid(this,b);

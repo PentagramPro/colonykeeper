@@ -451,18 +451,24 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 
 
-		BuildOn(conBC);
+		BuildImmediate(conBC);
 
 		return true;
 	}
 
-	public void  BuildOn(BuildingController building)
+	public void  BuildImmediate(BuildingController building)
 	{
 		building.transform.parent = transform;
 		building.transform.localPosition=new Vector3(halfCell,0,halfCell);
 		cellBuilding = building;
 		if(M!=null && M.BuildingsRegistry!=null)
+		{
 			M.BuildingsRegistry.Add (this, building);
+		}
+		else
+		{
+			building.ToRegistryOnStart = true;
+		}
 		building.OnBuilded(this);
 
 		Bounds b = collider.bounds;
