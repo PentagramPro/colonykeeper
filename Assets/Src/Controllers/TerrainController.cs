@@ -26,11 +26,21 @@ public class TerrainController : BaseManagedController, IStorable {
 	[HideInInspector]
 	public int MapX=10,MapZ=10;
 
+	[System.NonSerialized]
+	public Vector3 markerPosition;
+
 	TerrainControllerMode mode = TerrainControllerMode.Idle;
 
 	MapGen mapGen;
 
 	TerrainMeshGenerator terrGen = null;
+	public TerrainMeshGenerator TerrGen
+	{
+		get
+		{
+			return terrGen;
+		}
+	}
 	Plane lowerPlane;
 
 	List<BlockController> updateList = new List<BlockController>();
@@ -110,6 +120,13 @@ public class TerrainController : BaseManagedController, IStorable {
 
 	}
 
+	public GameDictionary GameD
+	{
+		get
+		{
+			return M.GameD;
+		}
+	}
 	void OnItemPicked(Building selected, RecipeInstance recipe)
 	{
 		mode = TerrainControllerMode.Picked;
@@ -237,13 +254,18 @@ public class TerrainController : BaseManagedController, IStorable {
 		return map[i-1,j-1].Digged;
 	}
 
-	void OnDrawGizmos()
+	void OnDrawGizmosSelected()
 	{
 		if(mapGen!=null)
 		{
 			mapGen.DrawDebugGizmos();
 		}
+
+		Gizmos.color = Color.red;    
+		Gizmos.DrawWireCube(markerPosition, new Vector3(1,1, 1) * 1.1f);
 	}
+
+
 
 
 
