@@ -174,37 +174,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 	}
 
-	public void Discover(int posI, int posJ)
-	{
-		Map map = Map;
 
-		map[posI,posJ].Discovered = true;
-		terrainController.OnCellUpdated(posI,posJ);
-		
-		int imin = Math.Max (posI-1,0);
-		int imax = Math.Min(posI+1,map.Height-1);
-		
-		int jmin = Math.Max (posJ-1,0);
-		int jmax = Math.Min(posJ+1,map.Width-1);
-		for(int i = imin;i<=imax;i++)
-		{
-			for (int j = jmin;j<=jmax;j++)
-			{
-				if(map[i,j].Discovered)
-					continue;
-				
-				if(map[i,j].Digged==true)
-				{
-					Discover(i,j);
-				}
-				else
-				{
-					map[i,j].Discovered = true;
-					terrainController.OnCellUpdated(i,j);
-				}
-			}
-		}
-	}
 
 	private void UpdateAdjacentCells()
 	{
@@ -261,7 +231,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 
 
-				Discover(mapPos.X,mapPos.Z);
+				terrainController.Discover(mapPos.X,mapPos.Z);
 
 				digJob=null;
 				res = DigResult.Finished;

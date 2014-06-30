@@ -9,6 +9,7 @@ public class PanelGenerator : MeshGenerator{
 		public Map map;
 		public IntVector3 Base;
 		public int Segments;
+		public float LightMultiplier = 1;
 		public PanelSettings (Map map, IntVector3 Base, int segments)
 		{
 			this.map = map;
@@ -86,6 +87,7 @@ public class PanelGenerator : MeshGenerator{
 				
 				Color col = cr*dx+(1-dx)*cl;
 				col*=0.2f+settings.map.GetLightAmount(globalPos)*1.5f;
+				col*=settings.LightMultiplier;
 
 				colors.Add(col);
 

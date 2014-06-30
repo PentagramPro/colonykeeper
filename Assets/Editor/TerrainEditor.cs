@@ -33,7 +33,7 @@ public class TerrainEditor : Editor {
 		if(GUILayout.Button("Generate!"))
 		{
 			tc.Init();
-			tc.PrepareTerrain(tc.MapX,tc.MapZ);
+			tc.CreateRandomMap(tc.MapX,tc.MapZ);
 		}
 
 		if(GUILayout.Button(edit? "Disable editor": "Enable editor"))
@@ -41,7 +41,11 @@ public class TerrainEditor : Editor {
 			edit = !edit;
 			if(edit)
 			{
-				tc.Init();
+				tc.PrepareMapForEditor();
+			}
+			else
+			{
+				tc.PrepareMapAfterEditor();
 			}
 		}
 
@@ -50,6 +54,8 @@ public class TerrainEditor : Editor {
 			GUILayout.Label("Blocks");
 
 			scrollBlocks = EditorGUILayout.BeginScrollView(scrollBlocks);
+			if(GUILayout.Button("<Clear>"))
+				selectedBlock = "";
 			foreach(Block b in	tc.GameD.Blocks)
 			{
 				if(GUILayout.Button(b.Name))
@@ -69,6 +75,8 @@ public class TerrainEditor : Editor {
 	/// </summary>
 	private void OnSceneGUI()
 	{
+		if(!edit)
+			return;
 		TerrainController tc = (TerrainController) target;
 
 		// if UpdateHitPosition return true we should update the scene views so that the marker will update in real time
@@ -87,17 +95,27 @@ public class TerrainEditor : Editor {
 		if (this.IsMouseOnLayer())
 		{
 			// if mouse down or mouse drag event occurred
-			if (current.type == EventType.MouseDown || current.type == EventType.MouseDrag)
+			if (current.type == EventType.MouseDown || 
+			    current.type == EventType.MouseDrag || 
+			    current.type==EventType.MouseUp)
 			{
-				if (current.button == 0)
+				if (current.button == 1)
 				{
 					MapPoint mp = GetTilePositionFromMouseLocation();
+					BlockController bc = tc.Map[mp];
 					// if left mouse button is pressed then we draw blocks
-					tc.Map[mp].BlockProt = tc.GameD.BlocksByName[selectedBlock];
-					tc.Map[mp].Generate(tc.TerrGen,true,false);
+					if(selectedBlock.Length>0)
+						bc.BlockProt = tc.GameD.BlocksByName[selectedBlock];
+					else
+					{
+						bc.BlockProt = null;
+						tc.Discover(mp.X,mp.Z);
+					}
+					bc.Generate(tc.TerrGen,true,false);
 					current.Use();
 				}
 			}
+
 		}
 
 
@@ -206,3 +224,4 @@ public class TerrainEditor : Editor {
 		return pos;
 	}
 }
+

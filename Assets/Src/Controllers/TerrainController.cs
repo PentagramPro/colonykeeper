@@ -103,9 +103,38 @@ public class TerrainController : BaseManagedController, IStorable {
 			map[b.MapPos] = b;
 		}
 	}
+	public void PrepareMapForEditor()
+	{
+		if(map==null)
+			map = new Map(MapX,MapZ,3);
+		else
+			map.Restore();
+		Init();
+		BlockController[] blocks = cellContainer.GetComponentsInChildren<BlockController>();
+		foreach(BlockController b in blocks)
+		{
+			map[b.MapPos] = b;
+			b.PrepareManager();
+		}
+		M.settings.FogOfWar=false;
+		foreach(BlockController b in blocks)
+		{
+			b.BuildLightCache();
+			b.Generate(terrGen,true,false);
+		}
+	}
 
+	public void PrepareMapAfterEditor()
+	{
+		M.settings.FogOfWar=true;
+		BlockController[] blocks = cellContainer.GetComponentsInChildren<BlockController>();
+		foreach(BlockController b in blocks)
+		{
+			b.Generate(terrGen,true,false);
+		}
+	}
 
-	public void PrepareTerrain(int mapX, int mapZ)
+	public void CreateRandomMap(int mapX, int mapZ)
 	{
 
 	
@@ -265,8 +294,70 @@ public class TerrainController : BaseManagedController, IStorable {
 		Gizmos.DrawWireCube(markerPosition, new Vector3(1,1, 1) * 1.1f);
 	}
 
+	public void ForceDiscover(int posI, int posJ, List<BlockController> discovered)
+	{
+		if(discovered==null)
+			discovered = new List<BlockController>();
 
+		map[posI,posJ].Discovered = true;
+		discovered.Add(map[posI,posJ]);
+		OnCellUpdated(posI,posJ);
 
+		int imin = System.Math.Max (posI-1,0);
+		int imax = System.Math.Min(posI+1,map.Height-1);
+		
+		int jmin = System.Math.Max (posJ-1,0);
+		int jmax = System.Math.Min(posJ+1,map.Width-1);
+		for(int i = imin;i<=imax;i++)
+		{
+			for (int j = jmin;j<=jmax;j++)
+			{
+				if(discovered.Contains(map[i,j]))
+					continue;
+				
+				if(map[i,j].Digged==true)
+				{
+					ForceDiscover(i,j,discovered);
+				}
+				else
+				{
+					map[i,j].Discovered = true;
+					OnCellUpdated(i,j);
+				}
+			}
+		}
+	}
+	public void Discover(int posI, int posJ)
+	{
+
+		
+		map[posI,posJ].Discovered = true;
+		OnCellUpdated(posI,posJ);
+		
+		int imin = System.Math.Max (posI-1,0);
+		int imax = System.Math.Min(posI+1,map.Height-1);
+		
+		int jmin = System.Math.Max (posJ-1,0);
+		int jmax = System.Math.Min(posJ+1,map.Width-1);
+		for(int i = imin;i<=imax;i++)
+		{
+			for (int j = jmin;j<=jmax;j++)
+			{
+				if(map[i,j].Discovered)
+					continue;
+				
+				if(map[i,j].Digged==true)
+				{
+					Discover(i,j);
+				}
+				else
+				{
+					map[i,j].Discovered = true;
+					OnCellUpdated(i,j);
+				}
+			}
+		}
+	}
 
 
 

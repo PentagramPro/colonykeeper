@@ -117,7 +117,7 @@ public class TerrainMeshGenerator : MeshGenerator {
 		{
 			for(z = zl>0?zl:0;z<=zh;z++)
 			{
-				p[x-xl,z-zl] = (map[x,z].Digged && map[x,z].Discovered)? 0 : 1;
+				p[x-xl,z-zl] = (map[x,z].Digged && (map[x,z].Discovered || !M.settings.FogOfWar))? 0 : 1;
 			}
 		}
 
@@ -145,9 +145,12 @@ public class TerrainMeshGenerator : MeshGenerator {
 
 		int[,] pat = PreparePattern(x,z);
 
-		float tone = 0.4f;
-		float dark = 0.12f;
-		PanelGenerator.PanelSettings psettings = new PanelGenerator.PanelSettings(map,new IntVector3(x*map.Segments,0,z*map.Segments),map.Segments);
+		float tone =  0.4f ;
+//		float dark = 0.12f;
+		PanelGenerator.PanelSettings psettings = new PanelGenerator.PanelSettings(
+			map,new IntVector3(x*map.Segments,0,z*map.Segments),map.Segments);
+		if(!M.settings.FogOfWar)
+			psettings.LightMultiplier=4;
 		if(pat[1,1]==1)
 		{
 
