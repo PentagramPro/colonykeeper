@@ -118,7 +118,7 @@ public class GameDictionary  {
 		}
 
 
-
+		Blocks[0].Breakable=false;
 
 	}
 

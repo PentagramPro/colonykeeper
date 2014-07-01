@@ -5,8 +5,14 @@ using System.Collections;
 [CustomEditor(typeof(TerrainController))]
 public class TerrainEditor : Editor {
 
-	Vector2 scrollBlocks;
-	string selectedBlock = "";
+	enum SelType
+	{
+		Block,Building
+	}
+
+	string selItem = "";
+	SelType selType = SelType.Block;
+	bool setDiscover=false;
 
 	private Vector3 mouseHitPos;
 	bool edit = false;
@@ -30,10 +36,23 @@ public class TerrainEditor : Editor {
 
 
 
-		if(GUILayout.Button("Generate!"))
+		if(GUILayout.Button("Generate!")
+		   &&
+		   EditorUtility.DisplayDialog("Map generator","This will clear current map. Are you sure?","Yes", "Cancel"))
 		{
+
 			tc.Init();
 			tc.CreateRandomMap(tc.MapX,tc.MapZ);
+
+		}
+
+		if(GUILayout.Button("Fill map!")
+		   &&
+		   EditorUtility.DisplayDialog("Map generator","This will clear current map. Are you sure?","Yes","Cancel"))
+
+		{
+			tc.Init();
+			tc.CreateFilledMap(tc.MapX,tc.MapZ,"Ground");
 		}
 
 		if(GUILayout.Button(edit? "Disable editor": "Enable editor"))
@@ -53,17 +72,53 @@ public class TerrainEditor : Editor {
 		{
 			GUILayout.Label("Blocks");
 
-			scrollBlocks = EditorGUILayout.BeginScrollView(scrollBlocks);
-			if(GUILayout.Button("<Clear>"))
-				selectedBlock = "";
+			//scrollBlocks = EditorGUILayout.BeginScrollView(scrollBlocks);
+			if(GUILayout.Button("<Clear, Discovered>"))
+			{
+				selItem = "";
+				setDiscover = true;
+				selType= SelType.Block;
+			}
+
+			if(GUILayout.Button("<Clear, Undiscovered>"))
+			{
+				selItem = "";
+				setDiscover = false;
+				selType= SelType.Block;
+			}
+
 			foreach(Block b in	tc.GameD.Blocks)
 			{
 				if(GUILayout.Button(b.Name))
-					selectedBlock = b.Name;
+				{
+					selItem = b.Name;
+					selType= SelType.Block;
+				}
 			}
-			EditorGUILayout.EndScrollView();
-			EditorGUILayout.EndFadeGroup();
+			//EditorGUILayout.EndScrollView();
 
+
+
+			GUILayout.Label("Buildings");
+			
+			//scrollBlocks = EditorGUILayout.BeginScrollView(scrollBlocks);
+			if(GUILayout.Button("<Clear>"))
+			{
+				selType= SelType.Building;
+			}
+			
+
+			
+			foreach(Building b in	tc.GameD.Buildings)
+			{
+				if(GUILayout.Button(b.Name))
+				{
+					selItem = b.Name;
+					selType= SelType.Building;
+				}
+			}
+			//EditorGUILayout.EndScrollView();
+			//EditorGUILayout.EndFadeGroup();
 
 		}
 
@@ -102,16 +157,15 @@ public class TerrainEditor : Editor {
 				if (current.button == 1)
 				{
 					MapPoint mp = GetTilePositionFromMouseLocation();
-					BlockController bc = tc.Map[mp];
-					// if left mouse button is pressed then we draw blocks
-					if(selectedBlock.Length>0)
-						bc.BlockProt = tc.GameD.BlocksByName[selectedBlock];
-					else
+					switch(selType)
 					{
-						bc.BlockProt = null;
-						tc.Discover(mp.X,mp.Z);
+					case SelType.Block:
+						PlaceBlock(tc,mp);
+						break;
+					case SelType.Building:
+						PlaceBuilding(tc,mp);
+						break;
 					}
-					bc.Generate(tc.TerrGen,true,false);
 					current.Use();
 				}
 			}
@@ -127,6 +181,40 @@ public class TerrainEditor : Editor {
 		*/
 	}
 
+	void PlaceBlock(TerrainController tc, MapPoint mp)
+	{
+
+		BlockController bc = tc.Map[mp];
+		// if left mouse button is pressed then we draw blocks
+		if(selItem.Length>0)
+			bc.BlockProt = tc.GameD.BlocksByName[selItem];
+		else
+		{
+			bc.BlockProt = null;
+			if(setDiscover)
+				tc.Discover(mp.X,mp.Z);
+		}
+		bc.Generate(tc.TerrGen,true,false);
+	}
+	
+	void PlaceBuilding(TerrainController tc,MapPoint mp)
+	{
+		BlockController bc = tc.Map[mp];
+		if(selItem.Length>0)
+		{
+			if(bc.BlockProt!=null || bc.cellBuilding!=null)
+			{
+				Debug.LogWarning("Cannot build here!");
+				return;
+			}
+			Building building = tc.GameD.BuildingsByName[selItem];
+			BuildingController buildingController = building.Instantiate().GetComponent<BuildingController>();
+
+			bc.BuildImmediate(buildingController);
+			bc.BuildLightCache();
+			bc.Generate(tc.TerrGen,true,false);
+		}
+	}
 
 	/// <summary>
 	/// Recalculates the position of the marker based on the location of the mouse pointer.

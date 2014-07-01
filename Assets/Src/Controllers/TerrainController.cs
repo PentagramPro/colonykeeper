@@ -134,6 +134,51 @@ public class TerrainController : BaseManagedController, IStorable {
 		}
 	}
 
+	public void CreateFilledMap(int mapX, int mapZ,string block)
+	{
+		MapX = mapX;
+		MapZ = mapZ;
+		
+		map = new Map(MapX,MapZ,3);
+
+		
+		ClearEverything();
+				
+		
+		M.cameraController.bounds = new Rect(0,0,MapX,MapZ);
+
+		Block unbreakable = null;
+		foreach(Block b in M.GameD.Blocks)
+		{
+			if(b.Breakable)
+				continue;
+			unbreakable = b;
+			break;
+		}
+		
+		for(int x=0;x<MapX;x++)
+		{
+			for(int z=0;z<MapZ;z++)
+			{
+				GameObject cellObj = (GameObject)Instantiate(cellPrefab);
+				map[x,z] = cellObj.GetComponent<BlockController>();
+				BlockController c = map[x,z];
+				c.transform.parent = cellContainer.transform;
+				c.InitCell(x,z,this);
+				if(x==0 || z==0 || x==MapX-1 || z==MapZ-1)
+					c.BlockProt = unbreakable;
+				else
+					c.BlockProt = M.GameD.BlocksByName[block];
+			}
+		}
+		
+
+		
+		((BoxCollider)collider).size = new Vector3(MapX,0.2f,MapZ);
+		((BoxCollider)collider).center = new Vector3(CenterOfMap.x,-0.1f,CenterOfMap.z);
+		GenerateMesh(true);
+	}
+
 	public void CreateRandomMap(int mapX, int mapZ)
 	{
 
@@ -362,7 +407,21 @@ public class TerrainController : BaseManagedController, IStorable {
 
 
 
-
+	void ClearEverything()
+	{
+		Transform[] children = GetComponentsInChildren<Transform>();
+		foreach(Transform child in children)
+		{
+			if(child!=cellContainer.transform && child!=transform)
+			{
+				try{
+					
+					Object.DestroyImmediate(child.gameObject);
+				}
+				catch(System.Exception){}
+			}
+		}
+	}
 
 	void GenerateMap(bool editMode)
 	{
@@ -372,18 +431,7 @@ public class TerrainController : BaseManagedController, IStorable {
 
 		Debug.Log("Generate Map");
 
-		Transform[] children = cellContainer.GetComponentsInChildren<Transform>();
-		foreach(Transform child in children)
-		{
-			if(child!=cellContainer.transform)
-			{
-				try{
-
-					Object.DestroyImmediate(child.gameObject);
-				}
-				catch(System.Exception){}
-			}
-		}
+		ClearEverything();
 
 
 
