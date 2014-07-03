@@ -416,6 +416,7 @@ public class TerrainController : BaseManagedController, IStorable {
 
 	void ClearEverything()
 	{
+		M.VehiclesRegistry.Clear();
 		Transform[] children = GetComponentsInChildren<Transform>();
 		foreach(Transform child in children)
 		{

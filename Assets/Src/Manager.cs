@@ -313,7 +313,7 @@ public class Manager : MonoBehaviour {
 	{
 		GameObject veh = GameD.VehiclesByName[name].Instantiate(terrainController.transform);
 		VehicleController vcontroller = veh.GetComponent<VehicleController>();
-		VehiclesRegistry.Add(vcontroller);
+		//VehiclesRegistry.Add(vcontroller);
 		veh.transform.position = position;
 		return vcontroller;
 	}

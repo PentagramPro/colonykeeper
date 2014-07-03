@@ -7,7 +7,7 @@ public class TerrainEditor : Editor {
 
 	enum SelType
 	{
-		Block,Building
+		Block,Building,Vehicle
 	}
 
 	string selItem = "";
@@ -121,6 +121,27 @@ public class TerrainEditor : Editor {
 			//EditorGUILayout.EndScrollView();
 			//EditorGUILayout.EndFadeGroup();
 
+			GUILayout.Label("Vehicles");
+			
+			//scrollBlocks = EditorGUILayout.BeginScrollView(scrollBlocks);
+			if(GUILayout.Button("<Clear>"))
+			{
+				selType= SelType.Building;
+				selItem = "";
+			}
+			
+			
+			
+			foreach(VehicleProt b in	tc.GameD.Vehicles)
+			{
+				if(GUILayout.Button(b.Name))
+				{
+					selItem = b.Name;
+					selType= SelType.Vehicle;
+				}
+			}
+			//EditorGUILayout.EndScrollView();
+			//EditorGUILayout.EndFadeGroup();
 		}
 
 	}
@@ -155,7 +176,8 @@ public class TerrainEditor : Editor {
 			    current.type == EventType.MouseDrag || 
 			    current.type==EventType.MouseUp)
 			{
-				if (current.button == 1)
+				if (current.button == 1 &&
+				    (current.type==EventType.MouseUp || selType==SelType.Block))
 				{
 					MapPoint mp = GetTilePositionFromMouseLocation();
 					switch(selType)
@@ -165,6 +187,9 @@ public class TerrainEditor : Editor {
 						break;
 					case SelType.Building:
 						PlaceBuilding(tc,mp);
+						break;
+					case SelType.Vehicle:
+						PlaceVehicle(tc,mp);
 						break;
 					}
 					current.Use();
@@ -218,6 +243,23 @@ public class TerrainEditor : Editor {
 		else
 		{
 			bc.RemoveBuildingImmediate();
+		}
+	}
+
+	void PlaceVehicle(TerrainController tc,MapPoint mp)
+	{
+		BlockController bc = tc.Map[mp];
+		if(selItem.Length>0)
+		{
+			if(bc.BlockProt!=null || bc.cellBuilding!=null)
+			{
+				Debug.LogWarning("Cannot place vehicle here!");
+				return;
+			}
+
+			tc.M.CreateVehicle(selItem,mouseHitPos);
+
+
 		}
 	}
 

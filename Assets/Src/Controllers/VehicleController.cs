@@ -59,6 +59,8 @@ public class VehicleController : BaseManagedController, IStorable  {
 			steerForPath.OnArrival+=OnArrival;
 
 		GetComponent<TapController>().OnTap+=OnTap;
+		if(!M.VehiclesRegistry.Contains(this))
+			M.VehiclesRegistry.Add(this);
 	}
 
 	public void Activate()
