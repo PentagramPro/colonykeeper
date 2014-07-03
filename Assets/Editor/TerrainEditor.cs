@@ -105,6 +105,7 @@ public class TerrainEditor : Editor {
 			if(GUILayout.Button("<Clear>"))
 			{
 				selType= SelType.Building;
+				selItem = "";
 			}
 			
 
@@ -213,6 +214,10 @@ public class TerrainEditor : Editor {
 			bc.BuildImmediate(buildingController);
 			bc.BuildLightCache();
 			bc.Generate(tc.TerrGen,true,false);
+		}
+		else
+		{
+			bc.RemoveBuildingImmediate();
 		}
 	}
 

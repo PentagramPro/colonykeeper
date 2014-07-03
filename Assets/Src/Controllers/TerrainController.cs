@@ -120,6 +120,9 @@ public class TerrainController : BaseManagedController, IStorable {
 		foreach(BlockController b in blocks)
 		{
 			b.BuildLightCache();
+		}
+		foreach(BlockController b in blocks)
+		{
 			b.Generate(terrGen,true,false);
 		}
 	}
@@ -128,6 +131,10 @@ public class TerrainController : BaseManagedController, IStorable {
 	{
 		M.settings.FogOfWar=true;
 		BlockController[] blocks = cellContainer.GetComponentsInChildren<BlockController>();
+		foreach(BlockController b in blocks)
+		{
+			b.BuildLightCache();
+		}
 		foreach(BlockController b in blocks)
 		{
 			b.Generate(terrGen,true,false);

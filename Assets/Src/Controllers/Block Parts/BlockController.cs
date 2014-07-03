@@ -288,6 +288,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		{
 			StaticLights.Remove(l);
 		}
+
 	}
 
 	public List<StaticLight> GetStaticLightsCache()
@@ -424,6 +425,22 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		BuildImmediate(conBC);
 
 		return true;
+	}
+
+	public void RemoveBuildingImmediate()
+	{
+		if(cellBuilding==null)
+			return;
+		RemoveAllLights(cellBuilding);
+		DestroyImmediate(cellBuilding.gameObject);
+		cellBuilding = null;
+
+		Bounds b = collider.bounds;
+		b.Expand(1);
+		GraphUpdateObject guo = new GraphUpdateObject(b);
+		AstarPath.active.UpdateGraphs(guo);
+
+		UpdateAdjacentCells();
 	}
 
 	public void  BuildImmediate(BuildingController building)
