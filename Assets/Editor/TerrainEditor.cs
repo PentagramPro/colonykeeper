@@ -26,12 +26,12 @@ public class TerrainEditor : Editor {
 		TerrainController tc = (TerrainController) target;
 
 
-		tc.MapX = EditorGUILayout.IntField("Size of map, X:",tc.MapX);
+		//tc.MapX = EditorGUILayout.IntField("Size of map, X:",tc.MapX);
 		tc.MapX = Mathf.Clamp(tc.MapX,10,200);
 
 
 
-		tc.MapZ = EditorGUILayout.IntField("Size of map, Z:",tc.MapZ);
+		//tc.MapZ = EditorGUILayout.IntField("Size of map, Z:",tc.MapZ);
 		tc.MapZ = Mathf.Clamp(tc.MapZ,10,200);
 
 

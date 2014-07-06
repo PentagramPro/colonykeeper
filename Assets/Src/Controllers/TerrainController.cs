@@ -23,7 +23,7 @@ public class TerrainController : BaseManagedController, IStorable {
 
 	public GameObject pickedObject;
 
-	[HideInInspector]
+	//[HideInInspector]
 	public int MapX=10,MapZ=10;
 
 	[System.NonSerialized]
@@ -94,8 +94,7 @@ public class TerrainController : BaseManagedController, IStorable {
 	override protected void Awake ()
 	{
 		base.Awake ();
-		if(map!=null)
-			map.Restore();
+		map = new Map(MapX,MapZ,3);
 		Init();
 		BlockController[] blocks = cellContainer.GetComponentsInChildren<BlockController>();
 		foreach(BlockController b in blocks)
@@ -108,7 +107,10 @@ public class TerrainController : BaseManagedController, IStorable {
 		if(map==null)
 			map = new Map(MapX,MapZ,3);
 		else
+		{
+
 			map.Restore();
+		}
 		Init();
 		BlockController[] blocks = cellContainer.GetComponentsInChildren<BlockController>();
 		foreach(BlockController b in blocks)

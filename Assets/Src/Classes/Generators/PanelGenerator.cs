@@ -86,7 +86,9 @@ public class PanelGenerator : MeshGenerator{
 				Color cr = dy*c3+(1-dy)*chor;
 				
 				Color col = cr*dx+(1-dx)*cl;
-				col*=0.2f+settings.map.GetLightAmount(globalPos)*1.5f;
+				Color lightColor = settings.map.GetLightAmount(globalPos);
+				col*=new Color(0.2f,0.2f,0.2f)+lightColor*1.5f;
+				//col+=lightColor;
 				col*=settings.LightMultiplier;
 
 				colors.Add(col);

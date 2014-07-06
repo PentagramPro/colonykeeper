@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(TapController))]
 public class BuildingController : BaseManagedController, IStorable, IInteractive{
@@ -18,6 +18,8 @@ public class BuildingController : BaseManagedController, IStorable, IInteractive
 
 	public BlockController nativeBlock = null;
 
+	private List<StaticLight> staticLights = null;
+
 	public Manager.Sides Side = Manager.Sides.Player;
 	float halfCell = TerrainMeshGenerator.CELL_SIZE/2;
 	// Use this for initialization
@@ -28,6 +30,23 @@ public class BuildingController : BaseManagedController, IStorable, IInteractive
 		if(ToRegistryOnStart && nativeBlock!=null)
 		{
 			M.BuildingsRegistry.Add(nativeBlock,this);
+		}
+
+		PrepareLights();
+	}
+
+	void PrepareLights()
+	{
+		if(staticLights==null)
+		{
+			staticLights = new List<StaticLight>();
+			var lights = GetComponentsInChildren<StaticLightController>() as StaticLightController[];
+			foreach(StaticLightController l in lights)
+			{
+				StaticLight light = new StaticLight(this,l.transform.position-transform.position,l.Color);
+				light.Falloff = l.Falloff;
+				staticLights.Add(light);
+			}
 		}
 	}
 
@@ -57,7 +76,11 @@ public class BuildingController : BaseManagedController, IStorable, IInteractive
 		collider.enabled = true;
 		nativeBlock = blockController;
 
-		blockController.AddLight(new StaticLight(this,new Vector3(0f,0,0f),Color.white));
+
+		PrepareLights();
+
+		foreach(StaticLight l in staticLights)
+			blockController.AddLight(l);
 
 
 	}
