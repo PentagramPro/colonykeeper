@@ -65,6 +65,16 @@ public class PanelGenerator : MeshGenerator{
 		}
 	}
 
+    Color ClampLight(Vector3 light)
+    {
+        float k = 2f;
+        return new Color(
+            1-k/(light.x+k),
+            1-k/(light.y+k),
+            1-k/(light.z+k)
+            );
+    }
+
 	private void GenerateGridEven(IntVector3 b, IntVector3 hor, IntVector3 vert,
 	                              Color cb,Color chor, Color cvert, Color c3)
 	{
@@ -86,8 +96,8 @@ public class PanelGenerator : MeshGenerator{
 				Color cr = dy*c3+(1-dy)*chor;
 				
 				Color col = cr*dx+(1-dx)*cl;
-				Color lightColor = settings.map.GetLightAmount(globalPos);
-				col*=new Color(0.2f,0.2f,0.2f)+lightColor*1.5f;
+				Vector3 lightColor = settings.map.GetLightAmount(globalPos)+new Vector3(col.r,col.g,col.b);
+                col = ClampLight(lightColor);//new Color(0.2f,0.2f,0.2f)+lightColor*1.5f;
 				//col+=lightColor;
 				col*=settings.LightMultiplier;
 

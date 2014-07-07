@@ -45,6 +45,7 @@ public class BuildingController : BaseManagedController, IStorable, IInteractive
 			{
 				StaticLight light = new StaticLight(this,l.transform.position-transform.position,l.Color);
 				light.Falloff = l.Falloff;
+                light.Multiplier = l.Multiplier;
 				staticLights.Add(light);
 			}
 		}

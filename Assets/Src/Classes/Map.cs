@@ -115,20 +115,25 @@ public class Map
 		return mapVertexes[pos.X,pos.Y,pos.Z];
 	}
 
-	public Color GetLightAmount(Vector3 pos)
+    public Vector3 GetLightAmount(Vector3 pos)
 	{
 		int cx = (int)pos.x;
 		int cz = (int)pos.z;
 		
 		if(cx>=map.GetLength(0) || cz>=map.GetLength(1))
-			return Color.black;
-		
-		Color res = Color.black;
+			return Vector3.zero;
+
+        Vector3 res = Vector3.zero;
 		foreach(StaticLight l in map[cx,cz].GetStaticLightsCache())
 		{
 			Vector3 dir = pos-l.GlobalPosition;
-			
-			res+=l.Col/(dir.sqrMagnitude*l.Falloff);
+            float mag = dir.sqrMagnitude * dir.sqrMagnitude * l.Falloff;
+            Vector3 lightVal = new Vector3(
+                l.Col.r / (mag),
+                l.Col.g / (mag),
+                l.Col.b / (mag)
+                ) *l.Multiplier;
+            res += lightVal;
 		}
 		
 		
@@ -136,7 +141,7 @@ public class Map
 	}
 
 
-	public Color GetLightAmount(IntVector3 pos)
+    public Vector3 GetLightAmount(IntVector3 pos)
 	{
 		return GetLightAmount(pos/(float)segments);
 		/*

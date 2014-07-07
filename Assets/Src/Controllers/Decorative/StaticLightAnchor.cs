@@ -17,7 +17,9 @@ public class StaticLightAnchor : BaseManagedController {
 	// Update is called once per frame
 	void Update () {
 	
-		Color c = Color.white*(map.GetLightAmount(transform.position)*0.8f+new Color(0.2f,0.2f,0.2f));
+		//Color c = Color.white*(map.GetLightAmount(transform.position)*0.8f+new Color(0.2f,0.2f,0.2f));
+        //Vector3 c = 
+        Color c = Color.white;
 		renderer.material.SetColor("_Color",c);
 		foreach(Renderer r in cache)
 			r.material.SetColor("_Color",c);

@@ -7,6 +7,7 @@ public class StaticLight
 	public Vector3 Position;
 	public Color Col;
 	public Component Owner;
+    public float Multiplier=1;
 	public float Falloff=3;
 
 	public StaticLight()
