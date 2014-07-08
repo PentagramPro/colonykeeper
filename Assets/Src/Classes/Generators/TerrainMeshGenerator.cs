@@ -145,7 +145,8 @@ public class TerrainMeshGenerator : MeshGenerator {
 
 		int[,] pat = PreparePattern(x,z);
 
-		float tone =  0.4f ;
+		float tone =  0.15f ;
+        float toneh = 0.3f;
 //		float dark = 0.12f;
 		PanelGenerator.PanelSettings psettings = new PanelGenerator.PanelSettings(
 			map,new IntVector3(x*map.Segments,0,z*map.Segments),map.Segments);
@@ -161,24 +162,24 @@ public class TerrainMeshGenerator : MeshGenerator {
 			                          1-pat[1,2]*pat[2,2]*pat[2,1]*turnOnFog));
 			if(pat[0,1]==0)
 			{
-				Append(new PanelGenerator(psettings,PanelGenerator.Type.Left,tone,1,tone,1));
+                Append(new PanelGenerator(psettings, PanelGenerator.Type.Left, tone, toneh, tone, toneh));
 			}
 
 			if(pat[1,0]==0)
 			{
-				Append(new PanelGenerator(psettings,PanelGenerator.Type.Near,tone,tone,1,1));
+                Append(new PanelGenerator(psettings, PanelGenerator.Type.Near, tone, tone, toneh, toneh));
 
 			}
 			
 			if(pat[2,1]==0)
 			{
-				Append(new PanelGenerator(psettings,PanelGenerator.Type.Right,tone,tone,1,1));
+                Append(new PanelGenerator(psettings, PanelGenerator.Type.Right, tone, tone, toneh, toneh));
 
 			}
 			
 			if(pat[1,2]==0)
 			{
-				Append(new PanelGenerator(psettings,PanelGenerator.Type.Far,tone,1,tone,1));
+                Append(new PanelGenerator(psettings, PanelGenerator.Type.Far, tone, toneh, tone, toneh));
 
 			}
 		}

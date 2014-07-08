@@ -13,7 +13,7 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 	IJob currentJob;
 
 	//////////////////////////////////////////////
-	private enum Modes
+	public enum Modes
 	{
 		Start,Idle,Runaway,Work,Go,GoUnload,DoUnload,BlockedUnload,Load
 	}
@@ -30,6 +30,13 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 			//Debug.Log(this.GetHashCode()+": setting state to " + Enum.GetName(typeof(Modes), state));
 		}
 	}
+    public Modes State
+    {
+        get
+        {
+            return state_int;
+        }
+    }
 
 	IInventory destinationInv;
 

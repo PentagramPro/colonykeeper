@@ -77,6 +77,7 @@ public class GUIController : BaseManagedController {
 		WC.AddWindow(logWnd);
 
 		buildingsWnd.Show = false;
+        leftPanelWnd.Show = false;
 
 	}
 

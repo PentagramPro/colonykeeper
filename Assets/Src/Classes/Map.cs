@@ -5,10 +5,10 @@ using UnityEngine;
 public class Map
 {
 	//these variables are used to properly create map object after serialization
-	[SerializeField]
-	int width;
-	[SerializeField]
-	int height;
+	
+	public int width;
+	
+	public int height;
 
 	BlockController[,] map;
 	Vector3[,,] mapVertexes;

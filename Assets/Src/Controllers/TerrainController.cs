@@ -108,7 +108,8 @@ public class TerrainController : BaseManagedController, IStorable {
 			map = new Map(MapX,MapZ,3);
 		else
 		{
-
+            map.width = MapX;
+            map.height = MapZ;
 			map.Restore();
 		}
 		Init();
