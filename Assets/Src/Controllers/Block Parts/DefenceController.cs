@@ -12,6 +12,7 @@ public class DefenceController : BaseManagedController, IInteractive {
 	public Projector RangeIndicator;
 	public RadarMarkerController RadarMarkerPrefab;
 
+    UnityTickedQueue queueInstance;
 	TickedObject tickedObject;
 	Dictionary<Transform,RadarMarkerController> markers = new Dictionary<Transform, RadarMarkerController>();
 	Dictionary<Transform,RadarMarkerController> markersCache = new Dictionary<Transform, RadarMarkerController>();
@@ -30,7 +31,8 @@ public class DefenceController : BaseManagedController, IInteractive {
 
 		tickedObject = new TickedObject(OnUpdateRadar);
 		tickedObject.TickLength = 1;
-		UnityTickedQueue.Instance.Add(tickedObject);
+        queueInstance = UnityTickedQueue.Instance;
+        queueInstance.Add(tickedObject);
 	}
 	
 	// Update is called once per frame
@@ -164,7 +166,7 @@ public class DefenceController : BaseManagedController, IInteractive {
 
 	void OnDestroy()
 	{
-		UnityTickedQueue.Instance.Remove(tickedObject);
+        queueInstance.Remove(tickedObject);
 		foreach(RadarMarkerController rm in markers.Values)
 		{
 			if(rm!=null)

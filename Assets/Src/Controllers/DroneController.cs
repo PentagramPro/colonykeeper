@@ -141,7 +141,10 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 		if (state == Modes.Go)
 		{
 			state = Modes.Work;
-			currentJob.OnDriven();
+            if(currentJob!=null)
+			    currentJob.OnDriven();
+            else
+                state = Modes.Idle;
 		}
 		else if (state == Modes.GoUnload)
 		{

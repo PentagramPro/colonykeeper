@@ -13,6 +13,7 @@ public class TargeterController : BaseManagedController, IStorable {
 	public delegate void TargetFoundDelegate(VisualContact contact);
 	public event TargetFoundDelegate OnFound;
 
+    UnityTickedQueue queueInstance;
 	TickedObject tickedObject;
 	Vector3 lastp1,lastp2,lastt;
 
@@ -42,10 +43,11 @@ public class TargeterController : BaseManagedController, IStorable {
 
 		tickedObject = new TickedObject(OnUpdateTargets);
 		tickedObject.TickLength = 1f;
+        //UnityTickedQueue.GetInstance("AI");
+        queueInstance = UnityTickedQueue.Instance;
+        queueInstance.Add(tickedObject);
 
-		UnityTickedQueue.Instance.Add(tickedObject);
-
-
+        
 	}
 	
 	// Update is called once per frame
@@ -136,7 +138,7 @@ public class TargeterController : BaseManagedController, IStorable {
 
 	void OnDestroy()
 	{
-		UnityTickedQueue.Instance.Remove(tickedObject);
+        queueInstance.Remove(tickedObject);
 	}
 
 	#region IStorable implementation
