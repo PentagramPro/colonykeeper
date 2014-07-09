@@ -48,6 +48,7 @@ public class BuildingController : BaseManagedController, IStorable, IInteractive
                 light.Multiplier = l.Multiplier;
 				staticLights.Add(light);
 			}
+            Debug.Log("found " + lights.GetLength(0) + " lights");
 		}
 	}
 

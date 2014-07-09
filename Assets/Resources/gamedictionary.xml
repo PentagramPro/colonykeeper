@@ -39,6 +39,8 @@
   	</Building>
   	<Building Name="Construction Site" PrefabName="ConstructionSite" Hide="true">
   	</Building>
+    <Building Name="Strange Enemy Structure" PrefabName="EnemyStrangeStruct" Hide="true">
+    </Building>
   	<!--   Tier 1     -->
   	<Building Name="Silo" PrefabName="Silo">
   		<Ingredients>

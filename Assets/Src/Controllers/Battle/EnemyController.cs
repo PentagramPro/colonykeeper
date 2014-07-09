@@ -4,10 +4,10 @@ using System.Collections;
 public class EnemyController : BaseManagedController, IStorable {
 
 	enum Modes {
-		Inactive,Sentry,Attack,Intercept
+		Start,Inactive,Sentry,Attack,Intercept
 	}
 	//store
-	Modes state = Modes.Inactive;
+    Modes state = Modes.Start;
 	//store and instantiate
 	VisualContact curContact = null;
 
@@ -41,6 +41,7 @@ public class EnemyController : BaseManagedController, IStorable {
 		vehicle.OnPathWalked += OnPathWalked;
 		vehicle.OnActivated += OnActivated;
 
+
 	}
 	
 	// Update is called once per frame
@@ -49,6 +50,13 @@ public class EnemyController : BaseManagedController, IStorable {
 
 		switch(state)
 		{
+        case Modes.Start:
+                state = Modes.Inactive;
+                BlockController cell = M.terrainController.Map[vehicle.Hull.currentCell];
+                if (cell.Discovered)
+                    OnActivated();
+                    
+            break;
 		case Modes.Inactive:
 			break;
 		case Modes.Sentry:
@@ -61,8 +69,11 @@ public class EnemyController : BaseManagedController, IStorable {
 
 	void OnActivated()
 	{
-		state = Modes.Sentry;
-		targeter.Search(vehicle.Hull.Side);
+        if (state == Modes.Inactive)
+        {
+            state = Modes.Sentry;
+            targeter.Search(vehicle.Hull.Side);
+        }
 	}
 
 
