@@ -2,7 +2,7 @@ using System.Xml.Serialization;
 using System;
 using UnityEngine;
 
-public abstract class ObjectPrototype
+public abstract class ObjectPrototype : IListItem
 {
 	[XmlAttribute("Name")]
 	public string Name;
@@ -26,6 +26,11 @@ public abstract class ObjectPrototype
 
 		return obj;
 	}
+
+    public string GetName()
+    {
+        return Name;
+    }
 }
 
 

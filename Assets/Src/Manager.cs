@@ -65,6 +65,9 @@ public class Manager : MonoBehaviour {
 	[NonSerialized]
 	public Dictionary<int, object> LoadedLinks = new Dictionary<int, object>();
 
+    [NonSerialized]
+    public bool BlockMouseInput = false;
+
 	public GUIController GetGUIController()
 	{
 		if(guiController==null)
@@ -314,7 +317,8 @@ public class Manager : MonoBehaviour {
 		GameObject veh = GameD.VehiclesByName[name].Instantiate(terrainController.transform);
 		VehicleController vcontroller = veh.GetComponent<VehicleController>();
 		//VehiclesRegistry.Add(vcontroller);
-		veh.transform.position = position;
+        
+		veh.transform.position = new Vector3(position.x,0.1f,position.z);
 		return vcontroller;
 	}
 }

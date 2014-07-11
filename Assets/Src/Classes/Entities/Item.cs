@@ -3,7 +3,8 @@ using System.Collections;
 using System.Xml;
 using System.Xml.Serialization;
 
-public class Item  {
+public class Item : IListItem
+{
 
 
 	[XmlAttribute("Name")]
@@ -21,4 +22,9 @@ public class Item  {
 			return string.IsNullOrEmpty(cls);
 		return ItemClass.StartsWith(cls);
 	}
+
+    public string GetName()
+    {
+        return Name;
+    }
 }

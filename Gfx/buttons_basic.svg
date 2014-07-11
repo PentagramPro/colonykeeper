@@ -1,0 +1,670 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="buttons_basic.svg">
+  <defs
+     id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective3167" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="394.42371"
+     inkscape:cy="427.73247"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1018"
+     inkscape:window-x="1016"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#666666;stroke:#002b00;stroke-width:0.99999994000000003;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3101"
+       width="199"
+       height="99"
+       x="130"
+       y="566.2193"
+       ry="5.7106018"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_back.png"
+       inkscape:export-xdpi="115.2"
+       inkscape:export-ydpi="115.2" />
+    <g
+       id="g4159-3-4"
+       transform="translate(103.54064,158.08888)"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Gfx\btn_research.png"
+       inkscape:export-xdpi="105.84"
+       inkscape:export-ydpi="105.84">
+      <rect
+         ry="4.5750785"
+         y="260.35779"
+         x="229.06633"
+         height="88.135811"
+         width="103.03556"
+         id="rect3212-9-4-4"
+         style="fill:#1a1a1a;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-1-2-4"
+         d="m 229.06632,277.02529 103.41437,-0.25253"
+         style="fill:#008000;stroke:#002b00;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-3-5-8-4"
+         d="m 229.00318,297.85969 103.41437,-0.25253"
+         style="fill:#008000;stroke:#002b00;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-3-6-0-8-4"
+         d="m 228.37185,321.72455 103.41437,-0.25253"
+         style="fill:#008000;stroke:#002b00;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-3-6-1-3-7-2"
+         d="M 228.75065,343.82163 332.16502,343.5691"
+         style="fill:#008000;stroke:#002b00;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-8-6-5-9"
+         d="m 310.06794,258.84412 0.25253,89.88603"
+         style="fill:#008000;stroke:#002b00;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-3-62-4-8-3"
+         d="m 289.23354,258.78924 0.25253,89.88603"
+         style="fill:#008000;stroke:#002b00;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-3-6-14-9-1-0"
+         d="m 265.36868,258.2405 0.25253,89.88603"
+         style="fill:#008000;stroke:#002b00;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-3-6-1-6-2-2-7"
+         d="m 243.2716,258.56974 0.25253,89.88604"
+         style="fill:#008000;stroke:#002b00;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-8-2-9-5-7"
+         d="m 328.76472,258.53733 0.25253,89.88603"
+         style="fill:#008000;stroke:#002b00;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         id="rect3191-3-7-8"
+         d="m 230.95795,257.41727 c -2.53459,0 -4.5625,2.02791 -4.5625,4.5625 l 0,83.71875 c 0,2.53459 2.02791,4.5625 4.5625,4.5625 l 98.71875,0 c 2.53459,0 4.5625,-2.02791 4.5625,-4.5625 l 0,-83.71875 c 0,-2.53459 -2.02791,-4.5625 -4.5625,-4.5625 l -98.71875,0 z m 4.1875,4.28125 91.0625,0 c 2.28113,0 4.125,1.84387 4.125,4.125 l 0,75.3125 c 0,2.28113 -1.84387,4.125 -4.125,4.125 l -91.0625,0 c -2.28113,0 -4.125,-1.84387 -4.125,-4.125 l 0,-75.3125 c 0,-2.28113 1.84387,-4.125 4.125,-4.125 z"
+         style="fill:#808080;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+    </g>
+    <g
+       id="g4159-3"
+       transform="translate(-113.13708,153.03811)"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Gfx\btn_menu.png"
+       inkscape:export-xdpi="105.84"
+       inkscape:export-ydpi="105.84">
+      <rect
+         ry="4.5750785"
+         y="260.35779"
+         x="229.06633"
+         height="88.135811"
+         width="103.03556"
+         id="rect3212-9-4"
+         style="fill:#1a1a1a;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-1-2"
+         d="m 229.06632,277.02529 103.41437,-0.25253"
+         style="fill:#008000;stroke:#002b00;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-3-5-8"
+         d="m 229.00318,297.85969 103.41437,-0.25253"
+         style="fill:#008000;stroke:#002b00;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-3-6-0-8"
+         d="m 228.37185,321.72455 103.41437,-0.25253"
+         style="fill:#008000;stroke:#002b00;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-3-6-1-3-7"
+         d="M 228.75065,343.82163 332.16502,343.5691"
+         style="fill:#008000;stroke:#002b00;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-8-6-5"
+         d="m 310.06794,258.84412 0.25253,89.88603"
+         style="fill:#008000;stroke:#002b00;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-3-62-4-8"
+         d="m 289.23354,258.78924 0.25253,89.88603"
+         style="fill:#008000;stroke:#002b00;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-3-6-14-9-1"
+         d="m 265.36868,258.2405 0.25253,89.88603"
+         style="fill:#008000;stroke:#002b00;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-3-6-1-6-2-2"
+         d="m 243.2716,258.56974 0.25253,89.88604"
+         style="fill:#008000;stroke:#002b00;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-8-2-9-5"
+         d="m 328.76472,258.53733 0.25253,89.88603"
+         style="fill:#008000;stroke:#002b00;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         id="rect3191-3-7"
+         d="m 230.95795,257.41727 c -2.53459,0 -4.5625,2.02791 -4.5625,4.5625 l 0,83.71875 c 0,2.53459 2.02791,4.5625 4.5625,4.5625 l 98.71875,0 c 2.53459,0 4.5625,-2.02791 4.5625,-4.5625 l 0,-83.71875 c 0,-2.53459 -2.02791,-4.5625 -4.5625,-4.5625 l -98.71875,0 z m 4.1875,4.28125 91.0625,0 c 2.28113,0 4.125,1.84387 4.125,4.125 l 0,75.3125 c 0,2.28113 -1.84387,4.125 -4.125,4.125 l -91.0625,0 c -2.28113,0 -4.125,-1.84387 -4.125,-4.125 l 0,-75.3125 c 0,-2.28113 1.84387,-4.125 4.125,-4.125 z"
+         style="fill:#808080;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+    </g>
+    <g
+       id="g4159"
+       transform="translate(98.994946,51.51778)"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Gfx\btn_info.png"
+       inkscape:export-xdpi="105.84"
+       inkscape:export-ydpi="105.84">
+      <rect
+         ry="4.5750785"
+         y="260.35779"
+         x="229.06633"
+         height="88.135811"
+         width="103.03556"
+         id="rect3212-9"
+         style="fill:#1a1a1a;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-1"
+         d="m 229.06632,277.02529 103.41437,-0.25253"
+         style="fill:#008000;stroke:#002b00;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-3-5"
+         d="m 229.00318,297.85969 103.41437,-0.25253"
+         style="fill:#008000;stroke:#002b00;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-3-6-0"
+         d="m 228.37185,321.72455 103.41437,-0.25253"
+         style="fill:#008000;stroke:#002b00;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-3-6-1-3"
+         d="M 228.75065,343.82163 332.16502,343.5691"
+         style="fill:#008000;stroke:#002b00;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-8-6"
+         d="m 310.06794,258.84412 0.25253,89.88603"
+         style="fill:#008000;stroke:#002b00;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-3-62-4"
+         d="m 289.23354,258.78924 0.25253,89.88603"
+         style="fill:#008000;stroke:#002b00;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-3-6-14-9"
+         d="m 265.36868,258.2405 0.25253,89.88603"
+         style="fill:#008000;stroke:#002b00;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-3-6-1-6-2"
+         d="m 243.2716,258.56974 0.25253,89.88604"
+         style="fill:#008000;stroke:#002b00;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3214-8-2-9"
+         d="m 328.76472,258.53733 0.25253,89.88603"
+         style="fill:#008000;stroke:#002b00;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         id="rect3191-3"
+         d="m 230.95795,257.41727 c -2.53459,0 -4.5625,2.02791 -4.5625,4.5625 l 0,83.71875 c 0,2.53459 2.02791,4.5625 4.5625,4.5625 l 98.71875,0 c 2.53459,0 4.5625,-2.02791 4.5625,-4.5625 l 0,-83.71875 c 0,-2.53459 -2.02791,-4.5625 -4.5625,-4.5625 l -98.71875,0 z m 4.1875,4.28125 91.0625,0 c 2.28113,0 4.125,1.84387 4.125,4.125 l 0,75.3125 c 0,2.28113 -1.84387,4.125 -4.125,4.125 l -91.0625,0 c -2.28113,0 -4.125,-1.84387 -4.125,-4.125 l 0,-75.3125 c 0,-2.28113 1.84387,-4.125 4.125,-4.125 z"
+         style="fill:#808080;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+    </g>
+    <rect
+       style="fill:#00ff00;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3065"
+       width="47.857143"
+       height="14.285714"
+       x="130.57143"
+       y="427.50504"
+       ry="5.5956297"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Gfx\btn_menu.png"
+       inkscape:export-xdpi="105.84"
+       inkscape:export-ydpi="105.84" />
+    <rect
+       style="fill:#00ff00;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3069"
+       width="20.714285"
+       height="14.285714"
+       x="185.57143"
+       y="427.50504"
+       ry="5.5956297"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Gfx\btn_menu.png"
+       inkscape:export-xdpi="105.84"
+       inkscape:export-ydpi="105.84" />
+    <rect
+       style="fill:#00ff00;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3065-9"
+       width="47.857143"
+       height="14.285714"
+       x="130.27557"
+       y="449.78674"
+       ry="5.5956297"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Gfx\btn_menu.png"
+       inkscape:export-xdpi="105.84"
+       inkscape:export-ydpi="105.84" />
+    <rect
+       style="fill:#00ff00;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3069-4"
+       width="20.714285"
+       height="14.285714"
+       x="185.27557"
+       y="449.78674"
+       ry="5.5956297"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Gfx\btn_menu.png"
+       inkscape:export-xdpi="105.84"
+       inkscape:export-ydpi="105.84" />
+    <rect
+       style="fill:#00ff00;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3065-8"
+       width="47.857143"
+       height="14.285714"
+       x="130.29858"
+       y="472.25464"
+       ry="5.5956297"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Gfx\btn_menu.png"
+       inkscape:export-xdpi="105.84"
+       inkscape:export-ydpi="105.84" />
+    <rect
+       style="fill:#00ff00;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3069-8"
+       width="20.714285"
+       height="14.285714"
+       x="185.29858"
+       y="472.25464"
+       ry="5.5956297"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Gfx\btn_menu.png"
+       inkscape:export-xdpi="105.84"
+       inkscape:export-ydpi="105.84" />
+    <rect
+       style="fill:#00ff00;stroke:#000000;stroke-width:0.99999988;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3005-2"
+       width="72.14286"
+       height="9.6428576"
+       x="344.72949"
+       y="376.05295"
+       ry="4.8214288"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Gfx\btn_info.png"
+       inkscape:export-xdpi="105.84"
+       inkscape:export-ydpi="105.84" />
+    <rect
+       style="fill:#00ff00;stroke:#000000;stroke-width:0.86756617;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3007-4-1"
+       width="9.0715179"
+       height="56.489216"
+       x="485.82718"
+       y="57.229942"
+       ry="5.5956297"
+       transform="matrix(0.82505836,0.56504753,-0.56504753,0.82505836,0,0)"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Gfx\btn_info.png"
+       inkscape:export-xdpi="105.84"
+       inkscape:export-ydpi="105.84" />
+    <rect
+       style="fill:#00ff00;stroke:#000000;stroke-width:0.86756617;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3007-4-1-7"
+       width="9.0715179"
+       height="56.489216"
+       x="-139.61555"
+       y="485.1763"
+       ry="5.5956297"
+       transform="matrix(-0.82505836,0.56504753,0.56504753,0.82505836,0,0)"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Gfx\btn_info.png"
+       inkscape:export-xdpi="105.84"
+       inkscape:export-ydpi="105.84" />
+    <rect
+       style="fill:#00ff00;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3183"
+       width="19.697975"
+       height="18.687822"
+       x="369.21075"
+       y="351.33661"
+       ry="4.8214288"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Gfx\btn_info.png"
+       inkscape:export-xdpi="105.84"
+       inkscape:export-ydpi="105.84" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#808080;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path3185"
+       sodipodi:cx="365.35715"
+       sodipodi:cy="450.21933"
+       sodipodi:rx="16.071428"
+       sodipodi:ry="15"
+       d="m 381.42858,450.21933 a 16.071428,15 0 1 1 -32.14286,0 16.071428,15 0 1 1 32.14286,0 z"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Gfx\btn_research.png"
+       inkscape:export-xdpi="105.84"
+       inkscape:export-ydpi="105.84" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#808080;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path3187"
+       sodipodi:cx="392.14285"
+       sodipodi:cy="483.07648"
+       sodipodi:rx="10.714286"
+       sodipodi:ry="10"
+       d="m 402.85714,483.07648 a 10.714286,10 0 1 1 -21.42857,0 10.714286,10 0 1 1 21.42857,0 z"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Gfx\btn_research.png"
+       inkscape:export-xdpi="105.84"
+       inkscape:export-ydpi="105.84" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#808080;stroke:#000000;stroke-width:0.88191712000000000;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path3189"
+       sodipodi:cx="404.64285"
+       sodipodi:cy="454.86218"
+       sodipodi:rx="10.357142"
+       sodipodi:ry="7.5"
+       d="m 415,454.86218 a 10.357142,7.5 0 1 1 -20.71429,0 10.357142,7.5 0 1 1 20.71429,0 z"
+       transform="matrix(1,0,0,1.2857143,0,-132.10348)"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Gfx\btn_research.png"
+       inkscape:export-xdpi="105.84"
+       inkscape:export-ydpi="105.84" />
+    <g
+       id="g4274"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_build.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <rect
+         inkscape:export-ydpi="121"
+         inkscape:export-xdpi="121"
+         inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_build.png"
+         ry="4.5750785"
+         y="304.59677"
+         x="113.38963"
+         height="88.135811"
+         width="103.03556"
+         id="rect3212"
+         style="fill:#1a1a1a;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none" />
+      <path
+         inkscape:export-ydpi="121"
+         inkscape:export-xdpi="121"
+         inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_build.png"
+         inkscape:connector-curvature="0"
+         id="path3214"
+         d="m 113.38962,321.26427 103.41437,-0.25253"
+         style="fill:#008000;stroke:#002b00;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="121"
+         inkscape:export-xdpi="121"
+         inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_build.png"
+         inkscape:connector-curvature="0"
+         id="path3214-3"
+         d="m 113.32648,342.09867 103.41437,-0.25253"
+         style="fill:#008000;stroke:#002b00;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="121"
+         inkscape:export-xdpi="121"
+         inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_build.png"
+         inkscape:connector-curvature="0"
+         id="path3214-3-6"
+         d="M 112.69515,365.96353 216.10952,365.711"
+         style="fill:#008000;stroke:#002b00;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="121"
+         inkscape:export-xdpi="121"
+         inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_build.png"
+         inkscape:connector-curvature="0"
+         id="path3214-3-6-1"
+         d="m 113.07395,388.06061 103.41437,-0.25253"
+         style="fill:#008000;stroke:#002b00;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="121"
+         inkscape:export-xdpi="121"
+         inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_build.png"
+         inkscape:connector-curvature="0"
+         id="path3214-8"
+         d="m 195.12181,308.57081 0.23515,79.85339"
+         style="fill:#008000;stroke:#002b00;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="121"
+         inkscape:export-xdpi="121"
+         inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_build.png"
+         inkscape:connector-curvature="0"
+         id="path3214-3-62"
+         d="m 175.72128,308.52204 0.23515,79.85341"
+         style="fill:#008000;stroke:#002b00;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="121"
+         inkscape:export-xdpi="121"
+         inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_build.png"
+         inkscape:connector-curvature="0"
+         id="path3214-3-6-14"
+         d="m 153.49885,308.03456 0.23515,79.85339"
+         style="fill:#008000;stroke:#002b00;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="121"
+         inkscape:export-xdpi="121"
+         inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_build.png"
+         inkscape:connector-curvature="0"
+         id="path3214-3-6-1-6"
+         d="m 132.92254,308.32705 0.23515,79.85341"
+         style="fill:#008000;stroke:#002b00;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="121"
+         inkscape:export-xdpi="121"
+         inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_build.png"
+         inkscape:connector-curvature="0"
+         id="path3214-8-2"
+         d="m 213.08802,302.77631 0.25253,89.88603"
+         style="fill:#008000;stroke:#002b00;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:export-ydpi="121"
+         inkscape:export-xdpi="121"
+         inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_build.png"
+         id="rect3191"
+         d="M 115.28125 301.65625 C 112.74666 301.65625 110.71875 303.68416 110.71875 306.21875 L 110.71875 389.9375 C 110.71875 392.47209 112.74666 394.5 115.28125 394.5 L 214 394.5 C 216.53459 394.5 218.5625 392.47209 218.5625 389.9375 L 218.5625 306.21875 C 218.5625 303.68416 216.53459 301.65625 214 301.65625 L 115.28125 301.65625 z M 119.46875 305.9375 L 210.53125 305.9375 C 212.81238 305.9375 214.65625 307.78137 214.65625 310.0625 L 214.65625 385.375 C 214.65625 387.65613 212.81238 389.5 210.53125 389.5 L 119.46875 389.5 C 117.18762 389.5 115.34375 387.65613 115.34375 385.375 L 115.34375 310.0625 C 115.34375 307.78137 117.18762 305.9375 119.46875 305.9375 z "
+         style="fill:#808080;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none" />
+    </g>
+    <rect
+       style="fill:#00ff00;stroke:#000000;stroke-width:0.99999994;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3005"
+       width="75.159363"
+       height="15.864018"
+       x="129.84109"
+       y="314.02216"
+       ry="7.9320092"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_build.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#00ff00;stroke:#000000;stroke-width:0.86756623;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3007"
+       width="14.090987"
+       height="50.184174"
+       x="186.5769"
+       y="334.08823"
+       ry="4.9710732"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_build.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#00ff00;stroke:#000000;stroke-width:1.00042045;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3009"
+       width="7.1483669"
+       height="20.493084"
+       x="338.86447"
+       y="151.75079"
+       ry="3.5640149"
+       transform="matrix(0.74502088,0.66704114,-0.69702141,0.71705031,0,0)"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_build.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#00ff00;stroke:#000000;stroke-width:1.00040698;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3009-7"
+       width="7.1663771"
+       height="20.441025"
+       x="-103.02099"
+       y="362.09894"
+       ry="3.5549612"
+       transform="matrix(0.78476855,-0.61978894,0.65093076,0.75913711,0,0)"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_build.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#00ff00;stroke:#000000;stroke-width:1.00029337;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3009-4"
+       width="7.2188444"
+       height="20.287855"
+       x="-60.566479"
+       y="381.7789"
+       ry="3.5283229"
+       transform="matrix(0.8890519,-0.45780643,0.48798606,0.87285142,0,0)"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_build.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#00ff00;stroke:#000000;stroke-width:1.00029337;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3009-4-0"
+       width="7.2188444"
+       height="20.287855"
+       x="-328.62924"
+       y="241.07755"
+       ry="3.5283229"
+       transform="matrix(-0.8890519,-0.45780643,-0.48798606,0.87285142,0,0)"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_build.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#00ff00;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3065-1"
+       width="51.897755"
+       height="11.255257"
+       x="-284.33386"
+       y="568.88129"
+       ry="4.4086175"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_back.png"
+       inkscape:export-xdpi="115.2"
+       inkscape:export-ydpi="115.2"
+       transform="matrix(0.71765335,-0.6964005,0.6964005,0.71765335,0,0)" />
+    <rect
+       style="fill:#00ff00;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3065-1-7"
+       width="51.897755"
+       height="11.255257"
+       x="571.48804"
+       y="-313.05881"
+       ry="4.4086175"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_back.png"
+       inkscape:export-xdpi="115.2"
+       inkscape:export-ydpi="115.2"
+       transform="matrix(0.71765335,0.6964005,0.6964005,-0.71765335,0,0)" />
+    <rect
+       style="fill:#00ff00;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3065-1-4"
+       width="51.897755"
+       height="11.255257"
+       x="215.28128"
+       y="606.80029"
+       ry="4.4086175"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_back.png"
+       inkscape:export-xdpi="115.2"
+       inkscape:export-ydpi="115.2"
+       transform="matrix(0.99999768,0.00215276,-0.00215276,0.99999768,0,0)" />
+    <rect
+       style="fill:#666666;stroke:#002b00;stroke-width:0.99999994;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3101-0"
+       width="199"
+       height="99"
+       x="-577.35718"
+       y="566.43359"
+       ry="5.7106018"
+       transform="scale(-1,1)"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_next.png"
+       inkscape:export-xdpi="115.2"
+       inkscape:export-ydpi="115.2" />
+    <rect
+       style="fill:#00ff00;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3065-1-9"
+       width="51.897755"
+       height="11.255257"
+       x="-792.12036"
+       y="76.431229"
+       ry="4.4086175"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_next.png"
+       inkscape:export-xdpi="115.2"
+       inkscape:export-ydpi="115.2"
+       transform="matrix(-0.71765335,-0.6964005,-0.6964005,0.71765335,0,0)" />
+    <rect
+       style="fill:#00ff00;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3065-1-7-4"
+       width="51.897755"
+       height="11.255257"
+       x="64.000069"
+       y="-805.81647"
+       ry="4.4086175"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_next.png"
+       inkscape:export-xdpi="115.2"
+       inkscape:export-ydpi="115.2"
+       transform="matrix(-0.71765335,0.6964005,-0.6964005,-0.71765335,0,0)" />
+    <rect
+       style="fill:#00ff00;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3065-1-4-8"
+       width="51.897755"
+       height="11.255257"
+       x="-492.07376"
+       y="608.53735"
+       ry="4.4086175"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_next.png"
+       inkscape:export-xdpi="115.2"
+       inkscape:export-ydpi="115.2"
+       transform="matrix(-0.99999768,0.00215276,0.00215276,0.99999768,0,0)" />
+  </g>
+</svg>

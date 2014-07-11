@@ -13,6 +13,8 @@ public class TapController : BaseManagedController {
 
 	void OnMouseDown()
 	{
+        if (M.BlockMouseInput)
+            return;
 		curPanDistance = 0;
 		lastMousePos = Input.mousePosition;
 
@@ -20,6 +22,9 @@ public class TapController : BaseManagedController {
 	
 	void OnMouseDrag()
 	{
+        if (M.BlockMouseInput)
+            return;
+
 		Vector2 touchDeltaPosition = new Vector2(lastMousePos.x-Input.mousePosition.x,
 		                                         lastMousePos.y-Input.mousePosition.y);
 	
@@ -33,6 +38,9 @@ public class TapController : BaseManagedController {
 	
 	void OnMouseUp()
 	{
+        if (M.BlockMouseInput)
+            return;
+
 		if (curPanDistance < panDistance && OnTap!=null)
 			OnTap();
 	}
