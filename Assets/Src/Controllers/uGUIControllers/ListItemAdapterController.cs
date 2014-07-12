@@ -40,4 +40,15 @@ public class ListItemAdapterController : MonoBehaviour, IListItemAdapter
         if (adapter != null)
             adapter.Deactivate();
     }
+	public void Select()
+	{
+		if (adapter != null)
+			adapter.Select();
+	}
+	
+	public void Deselect()
+	{
+		if (adapter != null)
+			adapter.Deselect();
+	}
 }

@@ -4,9 +4,15 @@ using UnityEngine.UI;
 
 public class ItemItemController : MonoBehaviour, IListItemAdapter {
     public Text localNameLabel;
+
+	Color notSelected;
+	Image parent;
 	// Use this for initialization
 	void Start () {
         localNameLabel = GetComponentInChildren<Text>();
+
+		parent = GetComponent<Image>();
+		notSelected = parent.color;
 	}
 	
 	// Update is called once per frame
@@ -28,4 +34,14 @@ public class ItemItemController : MonoBehaviour, IListItemAdapter {
     {
         gameObject.SetActive(false);
     }
+
+	public void Select()
+	{
+		parent.color = Color.red;
+	}
+	
+	public void Deselect()
+	{
+		parent.color = notSelected;
+	}
 }

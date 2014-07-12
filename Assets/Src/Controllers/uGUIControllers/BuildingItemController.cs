@@ -7,12 +7,13 @@ public class BuildingItemController : MonoBehaviour, IListItemAdapter {
     public Text localNameLabel;
     public Text localDescrLabel;
     
-
- 
+	Color notSelected;
+	Image parent;
 
 	// Use this for initialization
 	void Start () {
-	
+		parent = GetComponent<Image>();
+		notSelected = parent.color;
 	}
 	
 	// Update is called once per frame
@@ -45,4 +46,14 @@ public class BuildingItemController : MonoBehaviour, IListItemAdapter {
     {
         gameObject.SetActive(false);
     }
+
+	public void Select()
+	{
+		parent.color = Color.red;
+	}
+
+	public void Deselect()
+	{
+		parent.color = notSelected;
+	}
 }

@@ -22,7 +22,7 @@ public class GUIController : BaseManagedController {
 		}
 	}
 
-	public delegate void PickedDelegate(Building pickedBuilding, RecipeInstance recipe);
+	public delegate void PickedDelegate(Building pickedBuilding);
 
 	public event PickedDelegate ItemPicked;
 
@@ -50,8 +50,7 @@ public class GUIController : BaseManagedController {
 
 	public RecipeInstance LastRecipeInstance{
 		get{
-			//return chooseItemsWnd.recipeInstance;
-            return null;
+			return ItemScreen.RecipeInst;
 		}
 	}
 
@@ -80,6 +79,7 @@ public class GUIController : BaseManagedController {
         if (state ==  Modes.BuildChoose)
         {
             BuildingScreen.gameObject.SetActive(false);
+			ItemScreen.gameObject.SetActive(false);
             StrategyScreen.gameObject.SetActive(true);
             state = Modes.Idle;
         }
@@ -105,6 +105,17 @@ public class GUIController : BaseManagedController {
         }
     }
 
+	public void OnItemsForBuildingReady()
+	{
+		if(state==Modes.BuildIngredients)
+		{
+
+			if(ItemPicked!=null)
+				ItemPicked(BuildingScreen.SelectedBuilding);
+			state = Modes.BuildPlace;
+			ItemScreen.gameObject.SetActive(false);
+		}
+	}
 
     public void OnStrategyInfo()
     {
@@ -134,7 +145,7 @@ public class GUIController : BaseManagedController {
 
 	public void OnPlaced()
 	{
-		
+		StrategyScreen.gameObject.SetActive(true);
 	}
 
 	public void OnDeselect()

@@ -6,7 +6,7 @@ public class PageListController : BaseManagedController
 {
     public ListItemAdapterController Slot1, Slot2, Slot3, Slot4, Slot5, Slot6, Slot7, Slot8;
     
-    List<IListItemAdapter> BuildingSlots = new List<IListItemAdapter>();
+    List<IListItemAdapter> DisplaySlot = new List<IListItemAdapter>();
 
     [System.NonSerialized]
     public List<IListItem> ItemsToDisplay = new List<IListItem>();
@@ -18,6 +18,8 @@ public class PageListController : BaseManagedController
 
     int currentPos = 0;
 
+	IListItemAdapter lastSlot = null;
+
     // Use this for initialization
     void Start()
     {
@@ -26,7 +28,7 @@ public class PageListController : BaseManagedController
 
     public void UpdateList()
     {
-        BuildingSlots.Clear();
+        DisplaySlot.Clear();
         AddSlot(Slot1);
         AddSlot(Slot2);
         AddSlot(Slot3);
@@ -48,7 +50,7 @@ public class PageListController : BaseManagedController
             if (s is IListItemAdapter)
             {
                 if (s != null)
-                    BuildingSlots.Add(s as IListItemAdapter);
+                    DisplaySlot.Add(s as IListItemAdapter);
             }
             else
             {
@@ -74,25 +76,27 @@ public class PageListController : BaseManagedController
 
         Debug.Log("DisplayFrom.... ItemsToDisplay.Count=" + ItemsToDisplay.Count+" pos="+pos);
 
-        int start = pos, end = Mathf.Min(pos + BuildingSlots.Count, ItemsToDisplay.Count);
+        int start = pos, end = Mathf.Min(pos + DisplaySlot.Count, ItemsToDisplay.Count);
         Debug.Log("start = " + start + " end = " + end);
         for (int i = start; i < end; i++)
         {
-            IListItemAdapter c = BuildingSlots[i - pos];
+            IListItemAdapter c = DisplaySlot[i - pos];
             IListItem b = ItemsToDisplay[i];
 
             c.SetListItem(b);
 
             c.Activate();
+			c.Deselect();
             Debug.Log("activating item "+i+" with name "+b.GetName());
         }
 
+		lastSlot = null;
         start = end ;
-        end = pos + BuildingSlots.Count;
+        end = pos + DisplaySlot.Count;
         Debug.Log("start = " + start + " end = " + end);
         for (int i = start; i < end; i++)
         {
-            BuildingSlots[i - pos].Deactivate();
+            DisplaySlot[i - pos].Deactivate();
         }
 
 
@@ -115,7 +119,7 @@ public class PageListController : BaseManagedController
 
     public void OnPrev()
     {
-        currentPos -= BuildingSlots.Count;
+        currentPos -= DisplaySlot.Count;
         if (currentPos < 0)
             currentPos = 0;
         DisplayFrom(currentPos);
@@ -123,8 +127,8 @@ public class PageListController : BaseManagedController
 
     public void OnNext()
     {
-        if (currentPos < ItemsToDisplay.Count - BuildingSlots.Count)
-            currentPos += BuildingSlots.Count;
+        if (currentPos < ItemsToDisplay.Count - DisplaySlot.Count)
+            currentPos += DisplaySlot.Count;
         DisplayFrom(currentPos);
     }
 
@@ -135,6 +139,14 @@ public class PageListController : BaseManagedController
         {
             SelectedItem = ItemsToDisplay[currentPos + index];
             Debug.Log("Selected " + SelectedItem.GetName());
+			IListItemAdapter newSlot = DisplaySlot[index];
+			if(newSlot!=lastSlot)
+			{
+				newSlot.Select();
+				if(lastSlot!=null)
+					lastSlot.Deselect();
+				lastSlot = newSlot;
+			}
         }
         else
             SelectedItem = null;

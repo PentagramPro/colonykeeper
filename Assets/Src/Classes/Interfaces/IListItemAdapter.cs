@@ -9,5 +9,7 @@ public interface IListItemAdapter
     void SetListItem(IListItem item);
     void Activate();
     void Deactivate();
+	void Select();
+	void Deselect();
 }
 

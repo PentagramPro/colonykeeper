@@ -211,7 +211,7 @@ public class TerrainController : BaseManagedController, IStorable {
 			return M.GameD;
 		}
 	}
-	void OnItemPicked(Building selected, RecipeInstance recipe)
+	void OnItemPicked(Building selected)
 	{
 		mode = TerrainControllerMode.Picked;
 		pickedObject = selected.Instantiate();
