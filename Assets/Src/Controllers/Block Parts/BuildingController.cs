@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 [RequireComponent(typeof(TapController))]
-public class BuildingController : BaseManagedController, IStorable, IInteractive{
+public class BuildingController : BaseManagedController, IStorable{
 
 	public string Name;
 	public string LocalName

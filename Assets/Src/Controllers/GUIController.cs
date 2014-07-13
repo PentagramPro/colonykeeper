@@ -35,6 +35,7 @@ public class GUIController : BaseManagedController {
 
 	public HullController SelectedObject{
 		set{
+			CallOnDeselected(HullPanel.HullToDisplay);
 			HullPanel.HullToDisplay = value;
 			if(value!=null)
 			{
@@ -44,6 +45,7 @@ public class GUIController : BaseManagedController {
 			{
 				HullPanel.gameObject.SetActive(false);
 			}
+			CallOnSelected(value);
 			/*if(value!=null)
 				LF.Info("SelectedObject is set to "+value.name);
             if (leftPanelWnd == null)
@@ -170,8 +172,10 @@ public class GUIController : BaseManagedController {
 	
 	}
 
-	void CallOnSelected(GameObject obj)
+	void CallOnSelected(HullController obj)
 	{
+		if(obj==null)
+			return;
 		Component[] components = obj.GetComponents<Component>();
 		foreach (Component c in components)
 		{
@@ -182,8 +186,10 @@ public class GUIController : BaseManagedController {
 		}
 	}
 
-	void CallOnDeselected(GameObject obj)
+	void CallOnDeselected(HullController obj)
 	{
+		if(obj==null)
+			return;
 		Component[] components = obj.GetComponents<Component>();
 		foreach (Component c in components)
 		{

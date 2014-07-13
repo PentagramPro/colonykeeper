@@ -22,6 +22,9 @@ public class HullPanelController : MonoBehaviour {
 				NameLabel.text = "";
 			}
 		}
+		get{
+			return hull;
+		}
 	}
 
 	// Use this for initialization

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Pile : IStorable {
+public class Pile : IStorable, IListItem {
 
 	ItemProps Properties = new ItemProps();
 	UidContainer uid;
@@ -19,6 +19,12 @@ public class Pile : IStorable {
 		}
 		set{
 			quantity = value;
+		}
+	}
+
+	public string StringQuantity{
+		get{
+			return ((float)quantity/100).ToString("0.00");
 		}
 	}
 
@@ -70,5 +76,14 @@ public class Pile : IStorable {
 	{
 		return uid.UID;
 	}
+	#endregion
+
+	#region IListItem implementation
+
+	public string GetName ()
+	{
+		return ItemType.GetName();
+	}
+
 	#endregion
 }

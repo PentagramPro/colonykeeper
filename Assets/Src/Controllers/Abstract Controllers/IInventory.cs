@@ -19,6 +19,21 @@ public class IInventory : BaseManagedController, IStorable
 	// report in and out items to Stats module of Manager
 	public bool ReportStatistic = true;
 
+	public Pile[] Items
+	{
+		get
+		{
+			Pile[] p = new Pile[items.Count];
+			int n =0;
+			foreach(Pile i in items.Values)
+			{
+				p[n] = i;
+				n++;
+			}
+			return p;
+		}
+	}
+
 	public int Quantity{
 		get{
 			return totalQuantity;
