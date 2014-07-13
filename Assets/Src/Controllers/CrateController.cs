@@ -39,7 +39,7 @@ public class CrateController : BaseManagedController {
 
 	public void OnMouseUpAsButton()
 	{
-		M.GetGUIController().SelectedObject = gameObject;
+		//M.GetGUIController().SelectedObject = gameObject;
 		
 		
 	}

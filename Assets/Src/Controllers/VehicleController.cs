@@ -58,7 +58,7 @@ public class VehicleController : BaseManagedController, IStorable  {
 		if(steerForPath!=null)
 			steerForPath.OnArrival+=OnArrival;
 
-		GetComponent<TapController>().OnTap+=OnTap;
+		//GetComponent<TapController>().OnTap+=OnTap;
 		if(!M.VehiclesRegistry.Contains(this))
 			M.VehiclesRegistry.Add(this);
 	}
@@ -154,13 +154,14 @@ public class VehicleController : BaseManagedController, IStorable  {
 
 	}
 
+	/*
 	void OnTap()
 	{
 		M.GetGUIController().SelectedObject = gameObject;
 		
 
 	}
-
+*/
 	#region IStorable implementation
 	public override void SaveUid (WriterEx b)
 	{

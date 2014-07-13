@@ -16,6 +16,12 @@ public class HullController : BaseManagedController, IStorable, IInteractive {
 	[HideInInspector]
 	public MapPoint currentCell;
 
+
+	public String LocalName
+	{
+		get;set;
+	}
+
 	public Vector3 CenterPos;
 	public Vector3 Center
 	{
@@ -36,7 +42,11 @@ public class HullController : BaseManagedController, IStorable, IInteractive {
 			return curHP;
 		}
 	}
-
+	public float RelativeHP{
+		get{
+			return (float)maxHP/(float)curHP;
+		}
+	}
 
 
 	void OnTriggerEnter(Collider other)
@@ -78,6 +88,15 @@ public class HullController : BaseManagedController, IStorable, IInteractive {
 			if(c is IValueModifier)
 				modifiers.Add(c as IValueModifier);
 		}
+
+		GetComponent<TapController>().OnTap+=OnTap;
+	}
+
+	void OnTap()
+	{
+		M.GetGUIController().SelectedObject = this;
+		
+		
 	}
 	
 	// Update is called once per frame

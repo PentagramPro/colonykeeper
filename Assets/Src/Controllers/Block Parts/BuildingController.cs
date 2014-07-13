@@ -20,19 +20,29 @@ public class BuildingController : BaseManagedController, IStorable, IInteractive
 
 	private List<StaticLight> staticLights = null;
 
+	HullController hull;
+	public HullController Hull{
+		get
+		{
+			return hull;
+		}
+	}
 	public Manager.Sides Side = Manager.Sides.Player;
 	float halfCell = TerrainMeshGenerator.CELL_SIZE/2;
 	// Use this for initialization
 	void Start () {
 	
-		GetComponent<TapController>().OnTap+=OnTap;
 
+
+		hull = GetComponent<HullController>();
 		if(ToRegistryOnStart && nativeBlock!=null)
 		{
 			M.BuildingsRegistry.Add(nativeBlock,this);
 		}
 
 		PrepareLights();
+
+		hull.LocalName = LocalName;
 	}
 
 	void PrepareLights()
@@ -52,12 +62,7 @@ public class BuildingController : BaseManagedController, IStorable, IInteractive
 		}
 	}
 
-	void OnTap()
-	{
-		M.GetGUIController().SelectedObject = gameObject;
-			
-		
-	}
+
 
 	void OnDrawGizmos()
 	{

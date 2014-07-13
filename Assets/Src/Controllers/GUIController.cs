@@ -30,11 +30,20 @@ public class GUIController : BaseManagedController {
     public Canvas StrategyScreen;
     public BuildingScreenController BuildingScreen;
     public ItemScreenController ItemScreen;
-
+	public HullPanelController HullPanel;
 	
 
-	public GameObject SelectedObject{
+	public HullController SelectedObject{
 		set{
+			HullPanel.HullToDisplay = value;
+			if(value!=null)
+			{
+				HullPanel.gameObject.SetActive(true);
+			}
+			else
+			{
+				HullPanel.gameObject.SetActive(false);
+			}
 			/*if(value!=null)
 				LF.Info("SelectedObject is set to "+value.name);
             if (leftPanelWnd == null)
