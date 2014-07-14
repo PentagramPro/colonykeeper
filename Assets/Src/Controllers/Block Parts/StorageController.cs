@@ -9,7 +9,8 @@ public class StorageController : IInventory, IInteractive {
 
 	void Start()
 	{
-		StoragePanel  = FindObjectOfType<StoragePanelController>();
+		//StoragePanel  = GameObject.Find ("StoragePanel",false).GetComponent<StoragePanelController>();
+		StoragePanel = M.GetGUIController().StoragePanel;
 	}
 	#region IInteractive implementation
 	public void OnSelected()

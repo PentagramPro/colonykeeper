@@ -31,7 +31,7 @@ public class GUIController : BaseManagedController {
     public BuildingScreenController BuildingScreen;
     public ItemScreenController ItemScreen;
 	public HullPanelController HullPanel;
-	
+	public StoragePanelController StoragePanel;
 
 	public HullController SelectedObject{
 		set{
