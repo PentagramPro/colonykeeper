@@ -5,17 +5,22 @@ public class ListItemAdapterController : MonoBehaviour, IListItemAdapter
 {
 
     IListItemAdapter adapter;
+
+	void Awake()
+	{
+		Component[] components = GetComponents<Component>();
+		foreach (Component c in components)
+		{
+			if (c is IListItemAdapter && c!=this)
+			{
+				adapter = c as IListItemAdapter;
+				break;
+			}
+		}
+	}
 	// Use this for initialization
 	void Start () {
-        Component[] components = GetComponents<Component>();
-        foreach (Component c in components)
-        {
-            if (c is IListItemAdapter && c!=this)
-            {
-                adapter = c as IListItemAdapter;
-                break;
-            }
-        }
+        
 	}
 	
 	// Update is called once per frame

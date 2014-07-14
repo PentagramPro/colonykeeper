@@ -5,7 +5,8 @@ using UnityEngine.UI;
 public class PageListController : BaseManagedController
 {
     public ListItemAdapterController Slot1, Slot2, Slot3, Slot4, Slot5, Slot6, Slot7, Slot8;
-    
+	public Text PagesIndicator;
+
     List<IListItemAdapter> DisplaySlot = new List<IListItemAdapter>();
 
     [System.NonSerialized]
@@ -99,12 +100,24 @@ public class PageListController : BaseManagedController
             DisplaySlot[i - pos].Deactivate();
         }
 
-
+		if(PagesIndicator!=null)
+		{
+			int cur=0,total=0;
+			if(DisplaySlot.Count>0)
+			{
+				cur = pos/DisplaySlot.Count+1;
+				total = ItemsToDisplay.Count / DisplaySlot.Count+1;
+			}
+			if(total>0)
+				PagesIndicator.text = cur+"/"+total;
+			else
+				PagesIndicator.text = "-/-";
+		}
 
     }
     void OnEnable()
     {
-        M.BlockMouseInput = true;
+        //M.BlockMouseInput = true;
         if (ItemsToDisplay.Count > 0)
             DisplayFrom(currentPos);
 
@@ -113,7 +126,7 @@ public class PageListController : BaseManagedController
 
     void OnDisable()
     {
-        M.BlockMouseInput = false;
+        //M.BlockMouseInput = false;
 
     }
 

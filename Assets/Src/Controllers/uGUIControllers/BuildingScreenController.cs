@@ -31,5 +31,14 @@ public class BuildingScreenController : BaseManagedController {
 	
 	}
 
+	void OnEnable()
+	{
+		M.BlockMouseInput = true;
+	}
+
+	void OnDisable()
+	{
+		M.BlockMouseInput = false;
+	}
     
 }
