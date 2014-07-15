@@ -68,6 +68,13 @@ public class Manager : MonoBehaviour {
     [NonSerialized]
     public bool BlockMouseInput = false;
 
+	public GUIController GUIController
+	{
+		get
+		{
+			return GetGUIController();
+		}
+	}
 	public GUIController GetGUIController()
 	{
 		if(guiController==null)

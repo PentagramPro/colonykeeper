@@ -10,18 +10,22 @@ public class TapController : BaseManagedController {
 	protected float curPanDistance = 0;
 
 	Vector3 lastMousePos;
+	bool mouseDown = false;
 
-	void OnMouseDown()
+	public void OnMouseDown()
 	{
         if (M.BlockMouseInput)
             return;
 		curPanDistance = 0;
 		lastMousePos = Input.mousePosition;
-
+		mouseDown = true;
 	}
 	
-	void OnMouseDrag()
+	public void OnMouseDrag()
 	{
+		if(!mouseDown)
+			return;
+
         if (M.BlockMouseInput)
             return;
 
@@ -36,13 +40,15 @@ public class TapController : BaseManagedController {
 		lastMousePos = Input.mousePosition;
 	}
 	
-	void OnMouseUp()
+	public void OnMouseUp()
 	{
         if (M.BlockMouseInput)
             return;
 
 		if (curPanDistance < panDistance && OnTap!=null)
 			OnTap();
+
+		mouseDown = false;
 	}
 
 	// Use this for initialization

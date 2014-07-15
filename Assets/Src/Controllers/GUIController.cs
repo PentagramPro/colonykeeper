@@ -31,7 +31,11 @@ public class GUIController : BaseManagedController {
     public BuildingScreenController BuildingScreen;
     public ItemScreenController ItemScreen;
 	public HullPanelController HullPanel;
+
+	// links to various pannels
 	public StoragePanelController StoragePanel;
+	public FactoryPanelController FactoryPanel;
+	public ProductionPanelController ProductionPanel;
 
 	public HullController SelectedObject{
 		set{

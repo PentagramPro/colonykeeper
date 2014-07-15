@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Recipe
+public class Recipe : IListItem
 {
 
 
@@ -100,6 +100,12 @@ public class Recipe
 		}
 	}
 
+	#region IListItem implementation
+	public string GetName ()
+	{
+		return Name;
+	}
+	#endregion
 }
 
 

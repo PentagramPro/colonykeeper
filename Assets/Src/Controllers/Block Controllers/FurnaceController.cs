@@ -27,10 +27,17 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 	float productionIncome = 0.5f;
 
 	Vector2 scroll = new Vector2(0,0);
-	List<Recipe> craftableRecipes;
+	public List<Recipe> CraftableRecipes;
 	string[] nameCache;
 
 
+	public string Name
+	{
+		get
+		{
+			return building.Name;
+		}
+	}
 	// Use this for initialization
 	void Start () {
 		building = GetComponent<BuildingController>();
@@ -46,6 +53,8 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 			throw new UnityException("Supply controller must not be null");
 		inputUnloadController.OnFreed+=OnFreedInput;
 		outputUnloadController.OnFreed+=OnFreedOutput;
+
+		CraftableRecipes = M.GameD.RecipesByDevice[building.Name];
 	}
 
 
@@ -150,23 +159,24 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 
 	public void OnSelected()
 	{
-		
+		M.GUIController.FactoryPanel.TargetFurnace = this;
+		M.GUIController.FactoryPanel.gameObject.SetActive(true);
 	}
 	
 	public void OnDeselected()
 	{
-		
+		M.GUIController.FactoryPanel.gameObject.SetActive(false);
 	}
 
 	public void OnDrawSelectionGUI ()
 	{
 
-		if (craftableRecipes == null || nameCache==null)
+		if (CraftableRecipes == null || nameCache==null)
 		{
-			craftableRecipes = M.GameD.RecipesByDevice[building.LocalName];
-			nameCache = new string[craftableRecipes.Count];
+			CraftableRecipes = M.GameD.RecipesByDevice[building.LocalName];
+			nameCache = new string[CraftableRecipes.Count];
 			int i=0;
-			foreach(Recipe r in craftableRecipes)
+			foreach(Recipe r in CraftableRecipes)
 				nameCache[i++]=r.Name;
 		}
 		if(state == Modes.Idle)
@@ -197,7 +207,7 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 			if(GUILayout.Button("Produce"))
 			{
 
-				Recipe recipe =craftableRecipes[selectedItem];
+				Recipe recipe =CraftableRecipes[selectedItem];
 				//---//
 				if(recipe.IsOneCombination)
 				{
