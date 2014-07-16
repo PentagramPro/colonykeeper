@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class TapController : BaseManagedController {
 
@@ -14,6 +15,7 @@ public class TapController : BaseManagedController {
 
 	public void OnMouseDown()
 	{
+
         if (M.BlockMouseInput)
             return;
 		curPanDistance = 0;

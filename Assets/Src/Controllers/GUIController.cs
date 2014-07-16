@@ -22,6 +22,8 @@ public class GUIController : BaseManagedController {
 		}
 	}
 
+	Action<RecipeInstance> itemCallback;
+
 	public delegate void PickedDelegate(Building pickedBuilding);
 
 	public event PickedDelegate ItemPicked;
@@ -120,6 +122,18 @@ public class GUIController : BaseManagedController {
         }
     }
 
+	public void RequestItemsForRecipe(Recipe r, Action<RecipeInstance> callback)
+	{
+		if (state == Modes.Idle)
+		{
+			ItemScreen.RecipeInst = new RecipeInstance();
+			ItemScreen.RecipeInst.Prototype = r;
+			ItemScreen.gameObject.SetActive(true);
+			itemCallback = callback;
+			state = Modes.Ingredients;
+		}
+	}
+
 	public void OnItemsForBuildingReady()
 	{
 		if(state==Modes.BuildIngredients)
@@ -129,6 +143,12 @@ public class GUIController : BaseManagedController {
 				ItemPicked(BuildingScreen.SelectedBuilding);
 			state = Modes.BuildPlace;
 			ItemScreen.gameObject.SetActive(false);
+		}
+		else if(state == Modes.Ingredients)
+		{
+			if(itemCallback!=null)
+				itemCallback(ItemScreen.RecipeInst);
+			state = Modes.Idle;
 		}
 	}
 

@@ -168,6 +168,14 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 		M.GUIController.FactoryPanel.gameObject.SetActive(false);
 	}
 
+	public void OnProduce(RecipeInstance recipeInstance)
+	{
+		if(state == Modes.Idle)
+		{
+
+		}
+	}
+
 	public void OnDrawSelectionGUI ()
 	{
 

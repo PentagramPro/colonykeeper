@@ -54,7 +54,8 @@ public class FactoryItemController : BaseManagedController, IListItemAdapter {
 
 	public void Deselect ()
 	{
-		bg.color = defColor;
+		if(bg!=null)
+			bg.color = defColor;
 	}
 
 	#endregion

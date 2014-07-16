@@ -35,13 +35,16 @@ public class FactoryPanelController : BaseManagedController {
 	
 	}
 
+
+
 	public void OnProduce()
 	{
 		if(adapter!=null && 
 		   adapter.SelectedItem!=null &&
 		   TargetFurnace!=null)
 		{
-
+			Recipe r = adapter.SelectedItem as Recipe;
+			M.GUIController.RequestItemsForRecipe(r,TargetFurnace.OnProduce);
 		}
 	}
 }
