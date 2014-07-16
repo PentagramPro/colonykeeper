@@ -2,17 +2,22 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class ItemItemController : MonoBehaviour, IListItemAdapter {
+public class ItemItemController : BaseController, IListItemAdapter {
     public Text localNameLabel;
 
 	Color notSelected;
 	Image parent;
-	// Use this for initialization
-	void Start () {
-        localNameLabel = GetComponentInChildren<Text>();
 
+	void Awake()
+	{
+		localNameLabel = GetComponentInChildren<Text>();
+		
 		parent = GetComponent<Image>();
 		notSelected = parent.color;
+	}
+	// Use this for initialization
+	void Start () {
+        
 	}
 	
 	// Update is called once per frame
@@ -22,7 +27,8 @@ public class ItemItemController : MonoBehaviour, IListItemAdapter {
 
     public void SetListItem(IListItem item)
     {
-        localNameLabel.text = item.GetName();
+		if(localNameLabel!=null)
+        	localNameLabel.text = item.GetName();
     }
 
     public void Activate()

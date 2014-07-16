@@ -313,7 +313,7 @@ public class TerrainController : BaseManagedController, IStorable {
 		
 
 		}
-		else if(mode==TerrainControllerMode.Idle)
+		else if(mode==TerrainControllerMode.Idle && !M.BlockMouseInput)
 		{
 			M.GetGUIController().OnDeselect();
 		}

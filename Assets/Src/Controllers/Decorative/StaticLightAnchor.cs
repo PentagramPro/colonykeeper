@@ -20,7 +20,7 @@ public class StaticLightAnchor : BaseManagedController {
 		//Color c = Color.white*(map.GetLightAmount(transform.position)*0.8f+new Color(0.2f,0.2f,0.2f));
         Vector3 bigc = map.GetLightAmount(transform.position);
         //Vector3 c = 
-        Color c = new Color(bigc.x,bigc.y,bigc.z);
+        Color c = PanelGenerator.ClampLight(bigc);
         if(renderer!=null)
 		    renderer.material.SetColor("_Color",c);
 		foreach(Renderer r in cache)

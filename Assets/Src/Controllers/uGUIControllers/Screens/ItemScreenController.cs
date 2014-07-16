@@ -59,8 +59,9 @@ public class ItemScreenController : BaseManagedController {
 	{
 		if(pageController.SelectedItem==null)
 			return;
+		int q = RecipeInst.Prototype.IngredientsLinks[curIngredient].Quantity;
 		RecipeInst.Ingredients.Add(new Pile(pageController.SelectedItem as Item,
-		                                    RecipeInst.Prototype.IngredientsLinks[curIngredient].Quantity));
+		                                    q));
 		curIngredient++;
 		if(curIngredient>=RecipeInst.Prototype.IngredientsLinks.Count)
 		{

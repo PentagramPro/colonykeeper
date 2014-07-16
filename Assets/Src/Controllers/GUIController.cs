@@ -93,7 +93,7 @@ public class GUIController : BaseManagedController {
 
     public void OnStrategyBuildCancel()
     {
-        if (state ==  Modes.BuildChoose)
+        if (state ==  Modes.BuildChoose || state == Modes.BuildIngredients || state==Modes.Ingredients)
         {
             BuildingScreen.gameObject.SetActive(false);
 			ItemScreen.gameObject.SetActive(false);
@@ -148,6 +148,7 @@ public class GUIController : BaseManagedController {
 		{
 			if(itemCallback!=null)
 				itemCallback(ItemScreen.RecipeInst);
+			ItemScreen.gameObject.SetActive(false);
 			state = Modes.Idle;
 		}
 	}

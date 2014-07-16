@@ -160,19 +160,31 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 	public void OnSelected()
 	{
 		M.GUIController.FactoryPanel.TargetFurnace = this;
-		M.GUIController.FactoryPanel.gameObject.SetActive(true);
+		if(state==Modes.Idle)
+		{
+			M.GUIController.FactoryPanel.gameObject.SetActive(true);
+		}
+		else
+		{
+			M.GUIController.ProductionPanel.gameObject.SetActive(true);
+		}
 	}
 	
 	public void OnDeselected()
 	{
 		M.GUIController.FactoryPanel.gameObject.SetActive(false);
+		M.GUIController.ProductionPanel.gameObject.SetActive(false);
 	}
 
 	public void OnProduce(RecipeInstance recipeInstance)
 	{
 		if(state == Modes.Idle)
 		{
-
+			targetRecipe = recipeInstance;
+			targetQuantity = 1;
+			UI ();
+			M.GUIController.FactoryPanel.gameObject.SetActive(false);
+			M.GUIController.ProductionPanel.gameObject.SetActive(true);
 		}
 	}
 

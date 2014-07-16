@@ -54,6 +54,7 @@ public class BuildingItemController : MonoBehaviour, IListItemAdapter {
 
 	public void Deselect()
 	{
-		parent.color = notSelected;
+		if(parent!=null)
+			parent.color = notSelected;
 	}
 }

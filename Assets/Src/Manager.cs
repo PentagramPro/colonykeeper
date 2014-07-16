@@ -19,7 +19,7 @@ public class Manager : MonoBehaviour {
 	float hourCounter = 0;
 
 	GUIController guiController;
-
+	int mouseBlockCount = 0;
 
 	public Stats Stat;
 
@@ -65,8 +65,23 @@ public class Manager : MonoBehaviour {
 	[NonSerialized]
 	public Dictionary<int, object> LoadedLinks = new Dictionary<int, object>();
 
-    [NonSerialized]
-    public bool BlockMouseInput = false;
+    
+    public bool BlockMouseInput 
+	{
+		get
+		{
+			return mouseBlockCount>0;
+		}
+		set
+		{
+			if(value)
+				mouseBlockCount++;
+			else
+				mouseBlockCount--;
+			if(mouseBlockCount<0)
+				mouseBlockCount=0;
+		}
+	}
 
 	public GUIController GUIController
 	{

@@ -65,15 +65,7 @@ public class PanelGenerator : MeshGenerator{
 		}
 	}
 
-    Color ClampLight(Vector3 light)
-    {
-        float k = 2f;
-        return new Color(
-            1-k/(light.x+k),
-            1-k/(light.y+k),
-            1-k/(light.z+k)
-            );
-    }
+    
 
 	private void GenerateGridEven(IntVector3 b, IntVector3 hor, IntVector3 vert,
 	                              Color cb,Color chor, Color cvert, Color c3)

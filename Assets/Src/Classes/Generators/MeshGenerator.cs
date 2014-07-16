@@ -46,5 +46,15 @@ public abstract class MeshGenerator {
 		uvs2.AddRange(source.uvs2);
 		colors.AddRange(source.colors);
 	}
+
+	public static Color ClampLight(Vector3 light)
+	{
+		float k = 2f;
+		return new Color(
+			1-k/(light.x+k),
+			1-k/(light.y+k),
+			1-k/(light.z+k)
+			);
+	}
 	//public abstract Mesh Generate(Map map,int i, int j);
 }

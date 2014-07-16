@@ -50,8 +50,9 @@ public class PageListController : BaseManagedController
         {
             if (s is IListItemAdapter)
             {
-                if (s != null)
-                    DisplaySlot.Add(s as IListItemAdapter);
+                
+                DisplaySlot.Add(s as IListItemAdapter);
+
             }
             else
             {

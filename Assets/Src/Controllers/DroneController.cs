@@ -282,7 +282,8 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 
 	public void Feed(IInventory inv)
 	{
-		inv.Put(inventory,inventory.Quantity,inventory.GetItemTypes()[0]);
+		if(inventory.Quantity>0)
+			inv.Put(inventory,inventory.Quantity,inventory.GetItemTypes()[0]);
 	}
 
 	public void Pick(IInventory inv, Item itemType, int quantity)
