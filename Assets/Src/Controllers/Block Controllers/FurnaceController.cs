@@ -106,7 +106,7 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 			}
 			else if(st==SupplyController.SupplyStatus.Complete)
 			{
-				OnProductionComplete();
+
 
 				state = Modes.FreeOut;
 				outputUnloadController.FreeInventory();
@@ -166,6 +166,7 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 	{
 		state = Modes.Idle;
 		targetRecipe = null;
+		OnProductionComplete();
 	}
 
 	void AddSupplyJobs()

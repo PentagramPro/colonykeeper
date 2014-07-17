@@ -21,6 +21,7 @@ public class ItemScreenController : BaseManagedController {
 
 	[System.NonSerialized]
 	public bool UseQuantity = false;
+	IngredientItemController lastSelectedItem;
 
 	protected override void Awake ()
 	{
@@ -41,6 +42,14 @@ public class ItemScreenController : BaseManagedController {
     void OnEnable()
     {
 		quantity = 1;
+		curIngredient = 0;
+		UpdateQuantity();
+
+		if(lastSelectedItem!=null)
+			lastSelectedItem.Deselect();
+		lastSelectedItem = IngredientSlots[0];
+		lastSelectedItem.Select();
+
         itemsCache.Clear();
         InitWindow();
         M.BlockMouseInput = true;
@@ -97,9 +106,12 @@ public class ItemScreenController : BaseManagedController {
 	}
 	// Update is called once per frame
 	void Update () {
-	
+		TxtQuantity.text = quantity.ToString();		
 	}
 
+	void UpdateQuantity()
+	{
+	}
 	void PlusMinus(Button b)
 	{
 		if(b==BtnPlus)
@@ -109,6 +121,7 @@ public class ItemScreenController : BaseManagedController {
 			if(quantity>1)
 				quantity--;
 		}
+		UpdateQuantity();
 	}
 
 	void OnItemSelected(IListItem item)
@@ -121,6 +134,14 @@ public class ItemScreenController : BaseManagedController {
 		IngredientItemController item = b.GetComponent<IngredientItemController>();
 		curIngredient = IngredientSlots.IndexOf(item);
 		FillListByIndex(curIngredient);
+
+		if(lastSelectedItem!=item)
+		{
+			if(lastSelectedItem!=null)
+				lastSelectedItem.Deselect();
+			item.Select();
+			lastSelectedItem = item;
+		}
 	}
 
 	public void OnNextIngredient()

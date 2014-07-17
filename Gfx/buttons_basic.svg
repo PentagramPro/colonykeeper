@@ -32,9 +32,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="773.84345"
-     inkscape:cy="512.18479"
+     inkscape:zoom="1.4"
+     inkscape:cx="519.04808"
+     inkscape:cy="546.71865"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -678,5 +678,48 @@
        inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\big_arrow_up.png"
        inkscape:export-xdpi="105"
        inkscape:export-ydpi="105" />
+    <rect
+       style="fill:#666666;stroke:#112b00;stroke-width:3.8;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3101-0-1"
+       width="99"
+       height="99"
+       x="-598.78571"
+       y="435.71933"
+       ry="5.7106018"
+       transform="scale(-1,1)"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_minus.png"
+       inkscape:export-xdpi="112.04863"
+       inkscape:export-ydpi="112.04863" />
+    <rect
+       style="fill:#00ff00;stroke:#000000;stroke-width:1.00000024;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3065-1-4-8-4"
+       width="74.038506"
+       height="19.757185"
+       x="-585.09827"
+       y="476.79327"
+       ry="7.7387724"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_minus.png"
+       inkscape:export-xdpi="112.04863"
+       inkscape:export-ydpi="112.04863"
+       transform="matrix(-0.99999649,0.00264885,0.00174958,0.99999847,0,0)" />
+    <rect
+       style="fill:#666666;stroke:#112b00;stroke-width:3.79999995;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3101-0-1-0"
+       width="99"
+       height="99"
+       x="-725.21429"
+       y="436.43362"
+       ry="5.7106018"
+       transform="scale(-1,1)"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_plus.png"
+       inkscape:export-xdpi="112.04863"
+       inkscape:export-ydpi="112.04863" />
+    <path
+       style="fill:#00ff00;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 677.90625 448.1875 L 673.625 448.21875 C 669.33773 448.22625 665.89489 451.68149 665.90625 455.96875 L 665.96875 475.34375 L 646.0625 475.40625 C 641.77524 475.41761 638.33625 478.90023 638.34375 483.1875 L 638.34375 487.46875 C 638.35125 491.75602 641.80649 495.19886 646.09375 495.1875 L 666 495.125 L 666.0625 514.53125 C 666.07386 518.81851 669.52523 522.2575 673.8125 522.25 L 678.09375 522.25 C 682.38102 522.2425 685.82386 518.75601 685.8125 514.46875 L 685.75 495.09375 L 704.65625 495.03125 C 708.94351 495.01989 712.3825 491.53727 712.375 487.25 L 712.375 482.96875 C 712.3675 478.68148 708.91226 475.23864 704.625 475.25 L 685.71875 475.3125 L 685.65625 455.90625 C 685.64489 451.61899 682.19352 448.18 677.90625 448.1875 z "
+       id="rect3065-1-4-8-4-9"
+       inkscape:export-filename="F:\workspace\unity\colonykeeper\Assets\Textures\btn_plus.png"
+       inkscape:export-xdpi="112.04863"
+       inkscape:export-ydpi="112.04863" />
   </g>
 </svg>

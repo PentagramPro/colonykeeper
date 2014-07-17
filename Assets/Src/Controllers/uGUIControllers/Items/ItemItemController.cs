@@ -43,7 +43,7 @@ public class ItemItemController : BaseController, IListItemAdapter {
 
 	public void Select()
 	{
-		parent.color = Color.red;
+		parent.color = Color.green;
 	}
 	
 	public void Deselect()

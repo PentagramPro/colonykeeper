@@ -7,6 +7,9 @@ public class IngredientItemController : MonoBehaviour {
 	public Text IngredientName, IngredientClass;
 	IListItem selectedItem;
 	Ingredient ingredient;
+	Image bg;
+	Color defColor;
+	public Color SelectionColor;
 
 	public IListItem SelectedItem
 	{
@@ -44,6 +47,15 @@ public class IngredientItemController : MonoBehaviour {
 			return ingredient;
 		}
 	}
+
+	void Awake()
+	{
+		if(bg==null)
+		{
+			bg = GetComponent<Image>();
+			defColor = bg.color;
+		}
+	}
 	// Use this for initialization
 	void Start () {
 	
@@ -52,5 +64,20 @@ public class IngredientItemController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	public void Select()
+	{
+		if(bg==null)
+		{
+			bg = GetComponent<Image>();
+			defColor = bg.color;
+		}
+		bg.color = SelectionColor;
+	}
+
+	public void Deselect()
+	{
+		bg.color = defColor;
 	}
 }
