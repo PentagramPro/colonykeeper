@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 public class PageListController : BaseManagedController
 {
+	public delegate void ItemSelectedDelegate(IListItem Item);
+	public event ItemSelectedDelegate OnItemSelected;
+
     public ListItemAdapterController Slot1, Slot2, Slot3, Slot4, Slot5, Slot6, Slot7, Slot8;
 	public Text PagesIndicator;
 
@@ -152,6 +155,8 @@ public class PageListController : BaseManagedController
         if (ItemsToDisplay.Count > currentPos + index)
         {
             SelectedItem = ItemsToDisplay[currentPos + index];
+			if(OnItemSelected!=null)
+				OnItemSelected(SelectedItem);
             Debug.Log("Selected " + SelectedItem.GetName());
 			IListItemAdapter newSlot = DisplaySlot[index];
 			if(newSlot!=lastSlot)

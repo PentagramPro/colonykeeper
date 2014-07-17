@@ -12,6 +12,8 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 
 	Modes state = Modes.Idle;
 	float productionPoints=0;
+
+	int maxTargetQuantity = 0;
 	int targetQuantity = 0;
 	RecipeInstance targetRecipe;
 
@@ -26,9 +28,9 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 	int selectedItem=0;
 	float productionIncome = 0.5f;
 
-	Vector2 scroll = new Vector2(0,0);
+	//Vector2 scroll = new Vector2(0,0);
 	public List<Recipe> CraftableRecipes;
-	string[] nameCache;
+	//string[] nameCache;
 
 
 	public string Name
@@ -36,6 +38,24 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 		get
 		{
 			return building.Name;
+		}
+	}
+
+	public string ProductionName
+	{
+		get{
+			if(targetRecipe!=null)
+				return targetRecipe.Name;
+			return "";
+		}
+	}
+
+	public int TargetQuantity{get{return targetQuantity;}}
+	public int MaxTargetQuantity{get{return maxTargetQuantity;}}
+
+	public float Progress{
+		get{
+			return productionPoints;
 		}
 	}
 	// Use this for initialization
@@ -86,7 +106,8 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 			}
 			else if(st==SupplyController.SupplyStatus.Complete)
 			{
-				M.DisplayMessage(string.Format(M.S["Message.ProdComplete"],building.LocalName));
+				OnProductionComplete();
+
 				state = Modes.FreeOut;
 				outputUnloadController.FreeInventory();
 			}
@@ -159,13 +180,15 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 
 	public void OnSelected()
 	{
-		M.GUIController.FactoryPanel.TargetFurnace = this;
+
 		if(state==Modes.Idle)
 		{
+			M.GUIController.FactoryPanel.TargetFurnace = this;
 			M.GUIController.FactoryPanel.gameObject.SetActive(true);
 		}
 		else
 		{
+			M.GUIController.ProductionPanel.TargetFurnace = this;
 			M.GUIController.ProductionPanel.gameObject.SetActive(true);
 		}
 	}
@@ -176,21 +199,31 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 		M.GUIController.ProductionPanel.gameObject.SetActive(false);
 	}
 
-	public void OnProduce(RecipeInstance recipeInstance)
+	public void OnProduce(RecipeInstance recipeInstance, int q)
 	{
 		if(state == Modes.Idle)
 		{
 			targetRecipe = recipeInstance;
-			targetQuantity = 1;
+			targetQuantity = q;
+			maxTargetQuantity = targetQuantity;
 			UI ();
 			M.GUIController.FactoryPanel.gameObject.SetActive(false);
+			M.GUIController.ProductionPanel.TargetFurnace = this;
 			M.GUIController.ProductionPanel.gameObject.SetActive(true);
 		}
 	}
 
+	void OnProductionComplete()
+	{
+		M.DisplayMessage(string.Format(M.S["Message.ProdComplete"],building.LocalName));
+		M.GUIController.ProductionPanel.gameObject.SetActive(false);
+		M.GUIController.FactoryPanel.TargetFurnace = this;
+		M.GUIController.FactoryPanel.gameObject.SetActive(true);
+	}
+
 	public void OnDrawSelectionGUI ()
 	{
-
+		/*
 		if (CraftableRecipes == null || nameCache==null)
 		{
 			CraftableRecipes = M.GameD.RecipesByDevice[building.LocalName];
@@ -271,7 +304,7 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 		else if(state == Modes.FreeOut)
 		{
 			GUILayout.Label("Discharging output...");
-		}
+		}*/
 	}
 
 

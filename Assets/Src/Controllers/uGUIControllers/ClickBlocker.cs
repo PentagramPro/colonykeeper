@@ -3,6 +3,7 @@ using System.Collections;
 
 public class ClickBlocker : BaseManagedController {
 
+	bool blocked = false;
 	// Use this for initialization
 	void Start () {
 	
@@ -15,11 +16,34 @@ public class ClickBlocker : BaseManagedController {
 
 	public void OnPointerEnter()
 	{
-		M.BlockMouseInput = true;
+		Block();
 	}
 
 	public void OnPointerLeave()
 	{
-		M.BlockMouseInput =false;
+		Unblock();
+	}
+
+	void OnDisable()
+	{
+		Unblock();
+	}
+
+	void Block()
+	{
+		if(blocked==false)
+		{
+			M.BlockMouseInput = true;
+			blocked = true;
+		}
+	}
+
+	void Unblock()
+	{
+		if(blocked==true)
+		{
+			M.BlockMouseInput = false;
+			blocked = false;
+		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(PageListController))]
 public class ItemScreenController : BaseManagedController {
@@ -9,17 +10,42 @@ public class ItemScreenController : BaseManagedController {
     List<Item> itemsCache = new List<Item>();
     int curIngredient = 0;
 
+	public List<IngredientItemController> IngredientSlots;
 
+	public Button BtnPlus, BtnMinus;
+	public Text TxtQuantity;
+	public Text ProductNameObject;
+
+	int quantity = 1;
+	public int Quantity{get{return quantity;}}
+
+	[System.NonSerialized]
+	public bool UseQuantity = false;
+
+	protected override void Awake ()
+	{
+		base.Awake ();
+		pageController = GetComponent<PageListController>();
+		pageController.OnItemSelected+=OnItemSelected;
+		BtnPlus.onClick.AddListener(PlusMinus);
+		BtnMinus.onClick.AddListener(PlusMinus);
+		foreach(IngredientItemController i in IngredientSlots)
+		{
+			i.GetComponent<Button>().onClick.AddListener(OnIngredientSlotClick);
+		}
+	}
 	// Use this for initialization
 	void Start () {
-        InitWindow();
 	}
 
     void OnEnable()
     {
+		quantity = 1;
         itemsCache.Clear();
         InitWindow();
         M.BlockMouseInput = true;
+
+
     }
 
     void OnDisable()
@@ -29,34 +55,77 @@ public class ItemScreenController : BaseManagedController {
     }
     void InitWindow()
     {
-        if (pageController == null)
-        {
-            Debug.Log("setting up page controller");
-            pageController = GetComponent<PageListController>();
-        }
-
         if (M != null && M.Stat != null && RecipeInst != null)
         {
-            Debug.Log("getting items for ingredient");
-			itemsCache.Clear();
-            M.Stat.GetItemsForIngredient(RecipeInst.Prototype.IngredientsLinks[curIngredient], itemsCache);
+			FillListByIndex(curIngredient);
+			foreach(IngredientItemController i in IngredientSlots)
+				i.gameObject.SetActive(false);
+
+			int n=0;
+			foreach(Ingredient i in RecipeInst.Prototype.IngredientsLinks)
+			{
+				IngredientItemController item = IngredientSlots[n];
+				item.gameObject.SetActive(true);
+				item.SelectedItem = null;
+				item.Ingredient = i;
+				n++;
+			}
         }
 
-		pageController.ItemsToDisplay.Clear();
-        foreach (Item i in itemsCache)
-        {
-            pageController.ItemsToDisplay.Add(i);
-        }
-		pageController.UpdateList();
+
+
+		BtnPlus.gameObject.SetActive(UseQuantity);
+		BtnMinus.gameObject.SetActive(UseQuantity);
+		TxtQuantity.gameObject.SetActive(UseQuantity);
+		ProductNameObject.text = RecipeInst.Name;
 
     }
+
+	void FillListByIndex(int index)
+	{
+
+		itemsCache.Clear();
+		M.Stat.GetItemsForIngredient(RecipeInst.Prototype.IngredientsLinks[curIngredient], itemsCache);
+
+		pageController.ItemsToDisplay.Clear();
+		foreach (Item i in itemsCache)
+		{
+			pageController.ItemsToDisplay.Add(i);
+		}
+		pageController.UpdateList();
+		
+	}
 	// Update is called once per frame
 	void Update () {
 	
 	}
 
+	void PlusMinus(Button b)
+	{
+		if(b==BtnPlus)
+			quantity++;
+		else
+		{
+			if(quantity>1)
+				quantity--;
+		}
+	}
+
+	void OnItemSelected(IListItem item)
+	{
+		IngredientSlots[curIngredient].SelectedItem = item;
+	}
+
+	void OnIngredientSlotClick(Button b)
+	{
+		IngredientItemController item = b.GetComponent<IngredientItemController>();
+		curIngredient = IngredientSlots.IndexOf(item);
+		FillListByIndex(curIngredient);
+	}
+
 	public void OnNextIngredient()
 	{
+		/*
 		if(pageController.SelectedItem==null)
 			return;
 		int q = RecipeInst.Prototype.IngredientsLinks[curIngredient].Quantity;
@@ -70,6 +139,23 @@ public class ItemScreenController : BaseManagedController {
 		else
 		{
 			InitWindow();
+		}*/
+
+
+		RecipeInst.Ingredients.Clear();
+		foreach(IngredientItemController item in IngredientSlots)
+		{
+			if(item.SelectedItem==null)
+				continue;
+			int q = item.Ingredient.Quantity;
+			RecipeInst.Ingredients.Add(new Pile(item.SelectedItem as Item,q));
+
+	
+		}
+
+		if(RecipeInst.Ingredients.Count == RecipeInst.Prototype.Ingredients.Count)
+		{
+			M.GetGUIController().OnItemsForBuildingReady();
 		}
 	}
 

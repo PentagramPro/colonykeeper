@@ -7,6 +7,7 @@ public class ProductionPanelController : MonoBehaviour {
 	public ProgressBarController ProgressBar;
 	public Text Title;
 	public Text Counter;
+	public FurnaceController TargetFurnace;
 
 	public float Progress
 	{
@@ -39,8 +40,18 @@ public class ProductionPanelController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
+		if(TargetFurnace!=null)
+		{
+			Progress = TargetFurnace.Progress;
+			TitleText = TargetFurnace.ProductionName;
+			SetCounter(TargetFurnace.MaxTargetQuantity-TargetFurnace.TargetQuantity,TargetFurnace.MaxTargetQuantity);
+		}
 	}
 
+	void OnDisable()
+	{
+		TargetFurnace = null;
+	}
 	public void SetCounter(int cur, int total)
 	{
 		if(total>0)
