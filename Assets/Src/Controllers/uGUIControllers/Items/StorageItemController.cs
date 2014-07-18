@@ -41,5 +41,10 @@ public class StorageItemController : BaseController, IListItemAdapter {
 	{
 
 	}
+
+	public Button GetButton()
+	{
+		return null;
+	}
 	#endregion
 }

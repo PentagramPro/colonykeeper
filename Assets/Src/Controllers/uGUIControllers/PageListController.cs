@@ -7,10 +7,11 @@ public class PageListController : BaseManagedController
 	public delegate void ItemSelectedDelegate(IListItem Item);
 	public event ItemSelectedDelegate OnItemSelected;
 
-    public ListItemAdapterController Slot1, Slot2, Slot3, Slot4, Slot5, Slot6, Slot7, Slot8;
+    //public ListItemAdapterController Slot1, Slot2, Slot3, Slot4, Slot5, Slot6, Slot7, Slot8;
 	public Text PagesIndicator;
 
-    List<IListItemAdapter> DisplaySlot = new List<IListItemAdapter>();
+	public List<ListItemAdapterController> DisplaySlot = new List<ListItemAdapterController>();
+
 
     [System.NonSerialized]
     public List<IListItem> ItemsToDisplay = new List<IListItem>();
@@ -24,6 +25,17 @@ public class PageListController : BaseManagedController
 
 	IListItemAdapter lastSlot = null;
 
+
+	protected override void Awake ()
+	{
+		base.Awake ();
+		foreach(IListItemAdapter i in DisplaySlot)
+		{
+			Button b = i.GetButton();
+			if(b!=null)
+				b.onClick.AddListener(OnAdapterClick);
+		}
+	}
     // Use this for initialization
     void Start()
     {
@@ -32,46 +44,18 @@ public class PageListController : BaseManagedController
 
     public void UpdateList()
     {
-        DisplaySlot.Clear();
-        AddSlot(Slot1);
-        AddSlot(Slot2);
-        AddSlot(Slot3);
-        AddSlot(Slot4);
 
-        AddSlot(Slot5);
-        AddSlot(Slot6);
-        AddSlot(Slot7);
-        AddSlot(Slot8);
     
         DisplayFrom(currentPos);
     }
 
 
-    void AddSlot(Component s)
-    {
-        if (s != null)
-        {
-            if (s is IListItemAdapter)
-            {
-                
-                DisplaySlot.Add(s as IListItemAdapter);
-
-            }
-            else
-            {
-                Debug.LogError("Not IListItemAdapter");
-            }
-        }
-        
-        
-        
-    }
     // Update is called once per frame
     void Update()
     {
         if (!firstTimeHack)
         {
-            DisplayFrom(currentPos);
+			UpdateList();
             firstTimeHack = true;
         }
     }
@@ -122,8 +106,8 @@ public class PageListController : BaseManagedController
     void OnEnable()
     {
         //M.BlockMouseInput = true;
-        if (ItemsToDisplay.Count > 0)
-            DisplayFrom(currentPos);
+        //if (ItemsToDisplay.Count > 0)
+        //    DisplayFrom(currentPos);
 
     }
 
@@ -171,45 +155,19 @@ public class PageListController : BaseManagedController
             SelectedItem = null;
     }
 
+	void OnAdapterClick(Button b)
+	{
+		int index = 0;
+		foreach(IListItemAdapter i in DisplaySlot)
+		{
+			if(i.GetButton()==b)
+				break;
+			index++;
+		}
 
-    public void OnButton1()
-    {
-        Debug.Log("Button 1");
-        SelectBuilding(0);
-    }
+		SelectBuilding(index);
 
-    public void OnButton2()
-    {
-        SelectBuilding(1);
-    }
 
-    public void OnButton3()
-    {
-        SelectBuilding(2);
-    }
+	}
 
-    public void OnButton4()
-    {
-        SelectBuilding(3);
-    }
-
-    public void OnButton5()
-    {
-        SelectBuilding(4);
-    }
-
-    public void OnButton6()
-    {
-        SelectBuilding(5);
-    }
-
-    public void OnButton7()
-    {
-        SelectBuilding(6);
-    }
-
-    public void OnButton8()
-    {
-        SelectBuilding(7);
-    }
 }

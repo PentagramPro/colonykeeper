@@ -7,10 +7,12 @@ public class ItemItemController : BaseController, IListItemAdapter {
 
 	Color notSelected;
 	Image parent;
+	Button button;
 
 	void Awake()
 	{
 		localNameLabel = GetComponentInChildren<Text>();
+		button = GetComponent<Button>();
 		
 		parent = GetComponent<Image>();
 		notSelected = parent.color;
@@ -49,5 +51,10 @@ public class ItemItemController : BaseController, IListItemAdapter {
 	public void Deselect()
 	{
 		parent.color = notSelected;
+	}
+
+	public Button GetButton()
+	{
+		return button;
 	}
 }

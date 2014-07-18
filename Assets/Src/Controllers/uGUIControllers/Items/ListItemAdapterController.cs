@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class ListItemAdapterController : MonoBehaviour, IListItemAdapter
 {
@@ -55,5 +56,12 @@ public class ListItemAdapterController : MonoBehaviour, IListItemAdapter
 	{
 		if (adapter != null)
 			adapter.Deselect();
+	}
+
+	public Button GetButton()
+	{
+		if(adapter!=null)
+			return adapter.GetButton();
+		return null;
 	}
 }
