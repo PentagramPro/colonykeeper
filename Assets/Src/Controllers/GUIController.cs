@@ -32,12 +32,13 @@ public class GUIController : BaseManagedController {
     public Canvas StrategyScreen;
     public BuildingScreenController BuildingScreen;
     public ItemScreenController ItemScreen;
-	public HullPanelController HullPanel;
+	public ColonyScreenController ColonyScreen;
 
 	// links to various pannels
 	public StoragePanelController StoragePanel;
 	public FactoryPanelController FactoryPanel;
 	public ProductionPanelController ProductionPanel;
+	public HullPanelController HullPanel;
 
 	public HullController SelectedObject{
 		set{
@@ -93,10 +94,12 @@ public class GUIController : BaseManagedController {
 
     public void OnStrategyBuildCancel()
     {
-        if (state ==  Modes.BuildChoose || state == Modes.BuildIngredients || state==Modes.Ingredients)
+        if (state ==  Modes.BuildChoose || state == Modes.BuildIngredients || state==Modes.Ingredients
+		    || state == Modes.Info)
         {
             BuildingScreen.gameObject.SetActive(false);
 			ItemScreen.gameObject.SetActive(false);
+			ColonyScreen.gameObject.SetActive(false);
             StrategyScreen.gameObject.SetActive(true);
             state = Modes.Idle;
         }
@@ -157,7 +160,12 @@ public class GUIController : BaseManagedController {
 
     public void OnStrategyInfo()
     {
-
+		if(state==Modes.Idle)
+		{
+			StrategyScreen.gameObject.SetActive(false);
+			ColonyScreen.gameObject.SetActive(true);
+			state = Modes.Info;
+		}
     }
 
     public void OnStrategyMenu()

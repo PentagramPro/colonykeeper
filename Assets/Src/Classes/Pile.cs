@@ -22,6 +22,13 @@ public class Pile : IStorable, IListItem {
 		}
 	}
 
+	public Pile copy()
+	{
+		Pile res = new Pile(itemType,quantity);
+		res.Properties = Properties.copy();
+		return res;
+	}
+
 	public string StringQuantity{
 		get{
 			return ((float)quantity/100).ToString("0.00");

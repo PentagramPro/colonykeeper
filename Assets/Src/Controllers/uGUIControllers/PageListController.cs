@@ -21,6 +21,7 @@ public class PageListController : BaseManagedController
 
     bool firstTimeHack = false;
 
+	public bool ConstantlyUpdate = false;
     int currentPos = 0;
 
 	IListItemAdapter lastSlot = null;
@@ -53,7 +54,7 @@ public class PageListController : BaseManagedController
     // Update is called once per frame
     void Update()
     {
-        if (!firstTimeHack)
+        if (!firstTimeHack || ConstantlyUpdate)
         {
 			UpdateList();
             firstTimeHack = true;

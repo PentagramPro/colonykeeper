@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(UnityEngine.EventSystems.EventTrigger))]
 public class ClickBlocker : BaseManagedController {
+
 
 	bool blocked = false;
 	// Use this for initialization

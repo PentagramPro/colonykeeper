@@ -75,19 +75,27 @@ public class IInventory : BaseManagedController, IStorable
 		if (ItemRemoved != null)
 			ItemRemoved();
 
-		if(ReportStatistic)
-			M.Stat.ChangeItemCount(itemType,-q);
+		Pile res;
+
 		if(pile.Quantity==q)
 		{
-			Pile res=pile;
+			res=pile;
 			items.Remove(itemType);
-			return res;
+			if(ReportStatistic)
+			{
+				M.Stat.RemovePile(res);	
+				//	M.Stat.ChangeItemCount(itemType,-q);
+			}
 		}
 		else
 		{
 			pile.Quantity-=q;
-			return new Pile(pile.ItemType,q);
+			res = new Pile(pile.ItemType,q);
 		}
+
+
+
+		return res;
 	}
 
 
@@ -136,13 +144,14 @@ public class IInventory : BaseManagedController, IStorable
 		{
 			pile = new Pile(type);
 			items.Add(type,pile);
+			if(ReportStatistic)
+				M.Stat.AddPile(pile);
 		}
 		
 		int toPut = Mathf.Min(quantity,free);
 		totalQuantity+=toPut;
 		pile.Quantity+=toPut;
-		if(ReportStatistic)
-			M.Stat.ChangeItemCount(type,toPut);
+
 		
 		return Mathf.Max(0,quantity-free);
 	}
@@ -154,7 +163,10 @@ public class IInventory : BaseManagedController, IStorable
 		foreach(Pile p in items.Values)
 		{
 			if(ReportStatistic)
-				M.Stat.ChangeItemCount(p.ItemType,-p.Quantity);
+			{
+				M.Stat.RemovePile(p);
+				//M.Stat.ChangeItemCount(p.ItemType,-p.Quantity);
+			}
 		}
 	}
 
@@ -243,7 +255,7 @@ public class IInventory : BaseManagedController, IStorable
 			p.Load(m,r);
 			items.Add(p.ItemType,p);
 			totalQuantity+=p.Quantity;
-			m.Stat.ChangeItemCount(p.ItemType,p.Quantity);
+			m.Stat.AddPile(p);
 		}
 	}
 	#endregion

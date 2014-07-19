@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class Stats : MonoBehaviour {
 
 	public Dictionary<Item,int> Items = new Dictionary<Item, int>();
+	public List<IListItem> ItemsList = new List<IListItem>();
 
 
 	public int GetItemCount(Item item)
@@ -11,6 +12,16 @@ public class Stats : MonoBehaviour {
 		int res = 0;
 		Items.TryGetValue(item,out res);
 		return res;
+	}
+
+	public void AddPile(Pile pile)
+	{
+		ItemsList.Add(pile);
+	}
+
+	public void RemovePile(Pile pile)
+	{
+		ItemsList.Remove(pile);
 	}
 
 	public void ChangeItemCount(Item item, int delta)
