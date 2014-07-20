@@ -79,7 +79,8 @@ public class DefDroneController : BaseManagedController, IStorable, IInteractive
 
 	void OnLoaded()
 	{
-		Pile p = inventory.Take(M.GameD.Items[shellName],inventory.Quantity);
+		Pile prot = new Pile(M.GameD.Items[shellName]);
+		Pile p = inventory.Take(prot,inventory.Quantity, true);
 		weapon.Ammunition = p.Quantity/100;
 		if(curContact!=null)
 			state = Modes.Intercept;

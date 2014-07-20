@@ -93,7 +93,7 @@ public class VehicleController : BaseManagedController, IStorable  {
 
 
 
-	public IInventory FindInventoryWith(Item itemType)
+	public IInventory FindInventoryWith(PileRequest prototype)
 	{
 		foreach (BlockController b in M.BuildingsRegistry.Keys) 
 		{
@@ -104,8 +104,7 @@ public class VehicleController : BaseManagedController, IStorable  {
 				continue;
 			
 			
-			
-			if(i.CanTake(itemType))
+			if(i.CanTake(prototype, false))
 				return i;
 			
 		}

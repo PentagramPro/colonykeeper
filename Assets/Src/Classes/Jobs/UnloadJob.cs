@@ -36,11 +36,10 @@ public class UnloadJob : IJob
 
 	public override void OnDriven ()
 	{
-		Item[] items = inventory.GetItemTypes();
-		if(items.GetLength(0)>0)
+		if(inventory.Quantity>0)
 		{
-			int q = inventory.GetItemQuantity(items[0]);
-			worker.Pick(inventory,items[0],q);
+			Pile p = inventory.FirstPile;
+			worker.Pick(inventory,p,p.Quantity);
 			state = Modes.Unload;
 			worker.Unload();		
 		}

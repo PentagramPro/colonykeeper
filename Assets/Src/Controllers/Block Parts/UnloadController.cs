@@ -36,8 +36,12 @@ public class UnloadController : BaseManagedController,ICustomer, IStorable {
 		switch(OperationMode)
 		{
 		case OperaionModes.OutputItems:
-			InventoryToUnload
-				.Put(r.ResultsLinks[0].ItemType, r.ResultsLinks[0].Quantity);
+			{
+				Pile res = new Pile(r.ResultsLinks[0].ItemType,r.ResultsLinks[0].Quantity);
+				res.Properties = r.Ingredients[0].Properties.copy();
+				InventoryToUnload
+					.Put(res);
+			}
 			break;
 		case OperaionModes.OutputVehicles:
 			VehicleController res =  M.CreateVehicle(r.Prototype.vehicle.Name,transform.position);
@@ -63,17 +67,17 @@ public class UnloadController : BaseManagedController,ICustomer, IStorable {
 			OnFreed();
 	}
 	
-	
+	// take items for recipe. Items are disappeared because they are considered to be 'used' for production
 	public bool TakeForRecipe(RecipeInstance r)
 	{
 		foreach(Pile p in r.Ingredients)
 		{
-			Item type = p.ItemType;
-			if(InventoryToUnload.GetItemQuantity(type)>=p.Quantity)
-				InventoryToUnload.Take(type,p.Quantity);
-			else
+			if(!InventoryToUnload.CanTake(p,true))
 				return false;
 		}
+
+		foreach(Pile p in r.Ingredients)
+			InventoryToUnload.Take(p,p.Quantity);
 		
 		return true;
 	}

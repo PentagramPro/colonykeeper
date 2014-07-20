@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Pile : IStorable, IListItem {
 
-	ItemProps Properties = new ItemProps();
+	public ItemProps Properties = new ItemProps();
 	UidContainer uid;
 
 	Item itemType;
@@ -54,6 +54,10 @@ public class Pile : IStorable, IListItem {
 		return p.itemType == itemType && Properties.IsSameProperties(p.Properties);
 	}
 
+	public bool IsSameItem(PileRequest p)
+	{
+		return p.ItemType == itemType && (p.Properties==null || Properties.IsSameProperties(p.Properties));
+	}
 
 	#region IStorable implementation
 	public void SaveUid(WriterEx b)

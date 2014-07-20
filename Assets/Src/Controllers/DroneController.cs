@@ -93,13 +93,13 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 				break;
 			case Modes.DoUnload:
 				{
-					Item itemToUnload = inventory.GetItemTypes()[0];
+					Pile pileToUnload = inventory.FirstPile;
 					destinationInv.Put(
 						inventory,
-						(int)(unloadAmount*Time.smoothDeltaTime),
-						itemToUnload);
+						pileToUnload,
+						(int)(unloadAmount*Time.smoothDeltaTime));
 					
-					string line = string.Format("{0:0.00} {1}", inventory.Quantity/100.0f,itemToUnload.Name);
+					string line = string.Format("{0:0.00} {1}", inventory.Quantity/100.0f,pileToUnload.GetName());
 					FloatingTextController.LastingText(this,hull.Center,line);
 
 					if(inventory.Quantity==0)
@@ -113,7 +113,7 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 						FloatingTextController.ResetText(this);
 						Unload();
 					}
-					else if(!destinationInv.CanTake(itemToUnload))
+					else if(!destinationInv.CanTake(pileToUnload,false))
 					{
 						FloatingTextController.ResetText(this);
 						Unload();
@@ -283,12 +283,12 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 	public void Feed(IInventory inv)
 	{
 		if(inventory.Quantity>0)
-			inv.Put(inventory,inventory.Quantity,inventory.GetItemTypes()[0]);
+			inv.Put(inventory, inventory.FirstPile,inventory.Quantity);
 	}
 
-	public void Pick(IInventory inv, Item itemType, int quantity)
+	public void Pick(IInventory inv, Pile prototype, int quantity)
 	{
-		inventory.Put(inv.Take(itemType,quantity));
+		inventory.Put(inv.Take(prototype,quantity));
 	}
 
 	#endregion

@@ -10,7 +10,7 @@ public class IInventory : BaseManagedController, IStorable
 
 	public string ItemClass = "";
 	public int MaxQuantity= 2000;
-	Dictionary<Item, Pile> items = new Dictionary<Item, Pile>();
+	Dictionary<Item, List<Pile>> items = new Dictionary<Item, List<Pile>>();
 	int totalQuantity=0;
 
 	public bool BlockInventory = false;
@@ -19,24 +19,50 @@ public class IInventory : BaseManagedController, IStorable
 	// report in and out items to Stats module of Manager
 	public bool ReportStatistic = true;
 
+	void EnumeratePiles(Action<Pile> callback)
+	{
+		foreach(List<Pile> lp in items.Values)
+		{
+			foreach(Pile p in lp)
+			{
+				callback(p);
+			}
+		}
+	}
+
 	public Pile[] Items
 	{
 		get
 		{
-			Pile[] p = new Pile[items.Count];
+			List<Pile> l = new List<Pile>();
+			EnumeratePiles((Pile p)=>{
+				l.Add(p);
+			});
+			Pile[] res = new Pile[l.Count];
+
 			int n =0;
-			foreach(Pile i in items.Values)
+			foreach(Pile i in l)
 			{
-				p[n] = i;
+				res[n] = i;
 				n++;
 			}
-			return p;
+			return res;
 		}
 	}
 
 	public int Quantity{
 		get{
 			return totalQuantity;
+		}
+	}
+
+	public Pile FirstPile
+	{
+		get
+		{
+			foreach(List<Pile> p in items.Values)
+				return p[0];
+			return null;
 		}
 	}
 
@@ -47,27 +73,53 @@ public class IInventory : BaseManagedController, IStorable
 			return;
 
 		IInventory crate = M.CreateCrate(transform);
-		foreach (Pile p in items.Values)
-		{
+		EnumeratePiles((Pile p)=>{
 			crate.Put(p);
-		}
+		});
+
 		items.Clear();
 		totalQuantity = 0;
 	}
-
-	public Pile Take (Item itemType, int quantity)
+	/*
+	public Pile Take (Pile prototype, int quantity)
 	{
-		if(quantity<0)
+		return Take (prototype,quantity,false);
+	}*/
+	public Pile Take (PileRequest prototype)
+	{
+		if(prototype.Quantity<0)
 			throw new UnityException("Negative values are not allowed!");
 		
 		
 		
-		if ( items.Count==0 || !items.ContainsKey(itemType))
+		if ( items.Count==0 || !items.ContainsKey(prototype.ItemType))
 			return null;
-		
-		Pile pile = items[itemType];
-		
-		int q = Mathf.Min(quantity,pile.Quantity);		
+
+
+		List<Pile> storedPiles = items[prototype.ItemType];
+		Pile targetPile = null;
+		if(prototype.HasProperties)
+		{
+			foreach(Pile p in storedPiles)
+			{
+				if(p.IsSameItem(prototype))
+				{
+					targetPile = p;
+					break;
+				}
+				
+			}
+
+		}
+		else
+		{
+			if(storedPiles.Count>0)
+				targetPile = storedPiles[0];
+		}
+		if(targetPile==null)
+			return null;
+
+		int q = Mathf.Min(prototype.Quantity,targetPile.Quantity);		
 		
 		totalQuantity -= q;
 		if(totalQuantity<0)
@@ -77,10 +129,13 @@ public class IInventory : BaseManagedController, IStorable
 
 		Pile res;
 
-		if(pile.Quantity==q)
+		if(targetPile.Quantity==q)
 		{
-			res=pile;
-			items.Remove(itemType);
+			res=targetPile;
+			storedPiles.Remove(targetPile);
+			if(storedPiles.Count==0)
+				items.Remove(targetPile.ItemType);
+
 			if(ReportStatistic)
 			{
 				M.Stat.RemovePile(res);	
@@ -89,8 +144,10 @@ public class IInventory : BaseManagedController, IStorable
 		}
 		else
 		{
-			pile.Quantity-=q;
-			res = new Pile(pile.ItemType,q);
+			res = targetPile.copy();
+			targetPile.Quantity-=q;
+			res.Quantity = q;
+
 		}
 
 
@@ -99,9 +156,9 @@ public class IInventory : BaseManagedController, IStorable
 	}
 
 
-	public bool Put(IInventory source, int amount, Item type)
+	public bool Put(IInventory source, Pile prototype, int quantity)
 	{
-		Pile taken = source.Take(type,amount);
+		Pile taken = source.Take(new PileRequest(prototype,quantity));
 		if(taken==null)
 			return false;
 		int put = Put(taken);
@@ -121,53 +178,101 @@ public class IInventory : BaseManagedController, IStorable
 	{
 		if(item==null)
 			return 0;
-		return Put (item.ItemType,item.Quantity);
-	}
 
-	// returns, how many items left (couldn`t be moved to
-	// this inventory)
-	public virtual int Put (Item type, int quantity)
-	{
-		if(!type.IsOfClass(ItemClass))
-			return quantity;
-		
+		//check if item has proper class
+		if(!item.ItemType.IsOfClass(ItemClass))
+			return item.Quantity;
+
+		// checking free space
 		int free = MaxQuantity -totalQuantity;
 		if(free<=0)
-			return quantity;
+			return item.Quantity;
 
-		if(!AllowSeveralTypes && items.Count>0 && !items.ContainsKey(type))
-			return quantity;
 
-		Pile pile = null;
-		items.TryGetValue(type, out pile);
-		if(pile==null)
+		// if this inventory can hold only signe type of item, we check it
+		if(!AllowSeveralTypes && items.Count>0 && !items.ContainsKey(item.ItemType))
+			return item.Quantity;
+
+		List<Pile> pileList;
+
+		int toPut = Mathf.Min(item.Quantity,free);
+		int left = Mathf.Max(0,item.Quantity-free);
+		item.Quantity = toPut;
+		totalQuantity += toPut;
+
+		if(items.TryGetValue(item.ItemType,out pileList))
 		{
-			pile = new Pile(type);
-			items.Add(type,pile);
-			if(ReportStatistic)
-				M.Stat.AddPile(pile);
+			Pile targetPile = null;
+			foreach(Pile p in pileList)
+			{
+				if(p.IsSameItem(item))
+				{
+					targetPile = p;
+					break;
+				}
+			}
+			if(targetPile==null)
+			{
+				pileList.Add(item.copy());
+			}
+			else
+			{
+				targetPile.Quantity+=item.Quantity;
+			}
 		}
-		
-		int toPut = Mathf.Min(quantity,free);
-		totalQuantity+=toPut;
-		pile.Quantity+=toPut;
+		else
+		{
+			pileList = new List<Pile>();
+			items.Add(item.ItemType,pileList);
+			pileList.Add(item.copy());
+		}
 
-		
-		return Mathf.Max(0,quantity-free);
+
+
+
+
+		return left;
 	}
 
+//	// returns, how many items left (couldn`t be moved to
+//	// this inventory)
+//	public virtual int Put (Item type, int quantity)
+//	{
+//		if(!type.IsOfClass(ItemClass))
+//			return quantity;
+//		
+//		int free = MaxQuantity -totalQuantity;
+//		if(free<=0)
+//			return quantity;
+//
+//		if(!AllowSeveralTypes && items.Count>0 && !items.ContainsKey(type))
+//			return quantity;
+//
+//		Pile pile = null;
+//		items.TryGetValue(type, out pile);
+//		if(pile==null)
+//		{
+//			pile = new Pile(type);
+//			items.Add(type,pile);
+//			if(ReportStatistic)
+//				M.Stat.AddPile(pile);
+//		}
+//		
+//		int toPut = Mathf.Min(quantity,free);
+//		totalQuantity+=toPut;
+//		pile.Quantity+=toPut;
+//
+//		
+//		return Mathf.Max(0,quantity-free);
+//	}
+//
 
 
 	public void OnDestroy()
 	{
-		foreach(Pile p in items.Values)
-		{
-			if(ReportStatistic)
-			{
-				M.Stat.RemovePile(p);
-				//M.Stat.ChangeItemCount(p.ItemType,-p.Quantity);
-			}
-		}
+		EnumeratePiles((Pile p)=>{
+			M.Stat.RemovePile(p);
+		});
 	}
 
 	// returns:
@@ -198,8 +303,26 @@ public class IInventory : BaseManagedController, IStorable
 		
 		return 0;
 	}
-	
-	public bool CanTake (Item item)
+
+
+
+	public bool CanTake(PileRequest pile, bool checkQuantity)
+	{
+		if(BlockInventory)
+			return false;
+
+		if(!items.ContainsKey(pile.ItemType))
+			return false;
+
+		List<Pile> list = items[pile.ItemType];
+		foreach(Pile p in list)
+		{
+			if(p.IsSameItem(pile) && (!checkQuantity || pile.Quantity<=p.Quantity))
+				return true;
+		}
+		return false;
+	}
+	/*public bool CanTake (Item item)
 	{
 		if(BlockInventory)
 			return false;
@@ -208,7 +331,7 @@ public class IInventory : BaseManagedController, IStorable
 			return false;
 		
 		return items.ContainsKey(item);
-	}
+	}*/
 	
 	public Item[] GetItemTypes ()
 	{
@@ -223,10 +346,13 @@ public class IInventory : BaseManagedController, IStorable
 
 	public int GetItemQuantity (Item item)
 	{
-		Pile p;
-		if(!items.TryGetValue(item,out p))
+		List<Pile> l;
+		if(!items.TryGetValue(item,out l))
 			return 0;
-		return p.Quantity;
+		int res = 0;
+		foreach(Pile p in l)
+			res+=p.Quantity;
+		return res;
 	}
 	
 	public bool IsFull ()
@@ -237,26 +363,26 @@ public class IInventory : BaseManagedController, IStorable
 	#region IStorable implementation
 	public void Save (WriterEx b)
 	{
-		b.Write(items.Values.Count);
-		foreach (Pile p in items.Values)
-		{
-			p.Save(b);
-		}
+//		b.Write(items.Values.Count);
+//		foreach (Pile p in items.Values)
+//		{
+//			p.Save(b);
+//		}
 	}
 	
 	public void Load (Manager m, ReaderEx r)
 	{
-		items.Clear();
-		totalQuantity = 0;
-		int count = r.ReadInt32();
-		for(int i=0;i<count;i++)
-		{
-			Pile p = new Pile(null);
-			p.Load(m,r);
-			items.Add(p.ItemType,p);
-			totalQuantity+=p.Quantity;
-			m.Stat.AddPile(p);
-		}
+//		items.Clear();
+//		totalQuantity = 0;
+//		int count = r.ReadInt32();
+//		for(int i=0;i<count;i++)
+//		{
+//			Pile p = new Pile(null);
+//			p.Load(m,r);
+//			items.Add(p.ItemType,p);
+//			totalQuantity+=p.Quantity;
+//			m.Stat.AddPile(p);
+//		}
 	}
 	#endregion
 }

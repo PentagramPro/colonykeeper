@@ -15,7 +15,7 @@ public class DroneLoaderController : BaseManagedController, IStorable {
 	public IInventory Inventory;
 	public int LoadAmount = 500;
 
-	Item itemToPick;
+	Pile itemToPick;
 	Modes state = Modes.Idle;
 	int maxQuantityToPick;
 	IInventory destinationInv;
@@ -42,10 +42,12 @@ public class DroneLoaderController : BaseManagedController, IStorable {
 			else
 			{
 				take = (int)Mathf.Min(take,LoadAmount*Time.smoothDeltaTime);
-				int left = Inventory.Put(destinationInv.Take(itemToPick,take));
+				Pile taken = destinationInv.Take(itemToPick,take);
+				int left = Inventory.Put(taken);
 				if(left>0)
 				{
-					destinationInv.Put(itemToPick,left);
+					taken.Quantity = left;
+					destinationInv.Put(taken);
 					if(OnLoaded!=null)
 						OnLoaded();
 					state = Modes.Idle;
@@ -81,15 +83,15 @@ public class DroneLoaderController : BaseManagedController, IStorable {
 		}
 	}
 
-	public bool Load (Item itemType)
+	/*public bool Load (Pile prototype)
 	{
-		return Load (itemType,Inventory.MaxQuantity-Inventory.Quantity);
-	}
-	public bool Load (Item itemType, int maxQuantity)
+		return Load (prototype,Inventory.MaxQuantity-Inventory.Quantity);
+	}*/
+	public bool Load (PileRequest prototype)
 	{
 		bool res = false;
-		IInventory inv = Vehicle.FindInventoryWith(itemType);
-		itemToPick = itemType;
+		IInventory inv = Vehicle.FindInventoryWith(prototype);
+		itemToPick = prototype;
 		maxQuantityToPick = maxQuantity;
 		if(inv!=null)
 		{

@@ -32,11 +32,11 @@ public class HeadquartersController : BaseManagedController, ICustomer, IStorabl
 
 		foreach(PileXML item in M.GameD.StartItemsList)
 		{
-			ColonyStorageInventory.Put(M.GameD.Items[item.Name],item.Quantity);
+			ColonyStorageInventory.Put(new Pile(M.GameD.Items[item.Name],item.Quantity));
 		}
 
 		waterItem = M.GameD.Items [waterItemName];
-		ColonyWaterInventory.Put(waterItem,initialWater);
+		ColonyWaterInventory.Put(new Pile(waterItem,initialWater));
 
 		buildingController = GetComponent<BuildingController>();
 		//M.BuildingsRegistry.Add(buildingController.nativeBlock,buildingController);
@@ -62,7 +62,7 @@ public class HeadquartersController : BaseManagedController, ICustomer, IStorabl
 				M.JobManager.AddJob(waterSupply, false);
 			}
 			if(take>0)
-				ColonyWaterInventory.Take(waterItem, take);
+				ColonyWaterInventory.Take(new Pile(waterItem),take,true);
 		} else
 		{
 

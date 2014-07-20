@@ -213,7 +213,10 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 			dustFX.Spark(0.1f);
 			if(BlockProt.HasItem)
 			{
-				int left = dest.Put(ContainedItem,digAmount);
+				Pile minedOre = new Pile(ContainedItem, digAmount);
+				minedOre.Properties = ContainedItem.BaseProperties.copy();
+
+				int left = dest.Put(minedOre);
 				if(left>0)
 				{
 					res = DigResult.DestinationFull;
