@@ -74,6 +74,22 @@ public class PileRequest
 
 		properties = p.Properties.copy();
 	}
+
+	public PileRequest(PileRequest p, int q)
+	{
+		itemType = p.ItemType;
+		quantity = q;
+		
+		properties = p.Properties.copy();
+	}
+
+	public PileRequest copy()
+	{
+		PileRequest res = new PileRequest(itemType,quantity);
+		if(properties!=null)
+			res.properties = properties.copy();
+		return res;
+	}
 }
 
 

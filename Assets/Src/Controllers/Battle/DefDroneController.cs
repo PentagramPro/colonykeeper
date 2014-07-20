@@ -74,13 +74,14 @@ public class DefDroneController : BaseManagedController, IStorable, IInteractive
 	{
 		M.DisplayMessage(M.S["Message.NoAmmo"]);
 		state = Modes.Reload;
-		droneLoader.Load(M.GameD.Items[shellName]);
+		PileRequest ammoRequest = new PileRequest(M.GameD.Items[shellName],inventory.MaxQuantity);
+		droneLoader.Load(ammoRequest);
 	}
 
 	void OnLoaded()
 	{
-		Pile prot = new Pile(M.GameD.Items[shellName]);
-		Pile p = inventory.Take(prot,inventory.Quantity, true);
+		PileRequest ammoRequest = new PileRequest(M.GameD.Items[shellName],inventory.MaxQuantity);
+		Pile p = inventory.Take(ammoRequest);
 		weapon.Ammunition = p.Quantity/100;
 		if(curContact!=null)
 			state = Modes.Intercept;

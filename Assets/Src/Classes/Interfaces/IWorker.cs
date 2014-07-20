@@ -14,13 +14,13 @@ public interface IWorker  {
 
 	bool Unload();
 
-	bool Load(Item itemType, int maxQuantity);
+	bool Load(PileRequest loadRequest);
 
 	void OnJobCompleted();
 
 	void Feed(IInventory inv);
 
-	void Pick(IInventory inv, Pile prototype, int quantity);
+	void Pick(IInventory inv, PileRequest pickRequest);
 
 
 }

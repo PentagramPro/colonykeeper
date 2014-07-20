@@ -29,7 +29,7 @@ public class SupplyController : BaseManagedController, ICustomer, IStorable {
 		foreach (Pile ingredient in targetRecipe.Ingredients)
 		{
 			SupplyJob j = new SupplyJob(M.JobManager,this,building,InInventory,
-			                            ingredient.ItemType,ingredient.Quantity*targetQuantity);
+			                            new PileRequest(ingredient,ingredient.Quantity*targetQuantity));
 			M.JobManager.AddJob(j,false);
 			supplyJobs.Add(j);
 		}
@@ -94,13 +94,13 @@ public class SupplyController : BaseManagedController, ICustomer, IStorable {
 	{
 		supplyJobs.Remove(sj);
 		
-		Item itemType = sj.ItemType;
-		int needed = targetQuantity * targetRecipe.GetIngredient(sj.ItemType);
-		int have = InInventory.GetItemQuantity(sj.ItemType);
+		PileRequest supplyRequest= sj.Request;
+		int needed = targetQuantity * targetRecipe.GetIngredient(supplyRequest);
+		int have = InInventory.GetItemQuantity(supplyRequest);
 		if (have < needed)
 		{
 			SupplyJob nj = new SupplyJob(M.JobManager, this, building, InInventory,
-			                             itemType, needed - have);
+			                             new PileRequest(supplyRequest, needed - have));
 			M.JobManager.AddJob(nj,false);
 			supplyJobs.Add(nj);
 		}

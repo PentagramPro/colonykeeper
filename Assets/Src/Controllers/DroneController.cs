@@ -113,7 +113,7 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 						FloatingTextController.ResetText(this);
 						Unload();
 					}
-					else if(!destinationInv.CanTake(pileToUnload,false))
+					else if(!destinationInv.CanTake(new PileRequest(pileToUnload,0),false))
 					{
 						FloatingTextController.ResetText(this);
 						Unload();
@@ -257,10 +257,10 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 		return res;
 	}
 
-	public bool Load (Item itemType, int maxQuantity)
+	public bool Load (PileRequest loadRequest)
 	{
 		state = Modes.Load;
-		return loaderController.Load(itemType,maxQuantity);
+		return loaderController.Load(loadRequest);
 	}
 
 	public void OnJobCompleted ()
@@ -286,9 +286,9 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 			inv.Put(inventory, inventory.FirstPile,inventory.Quantity);
 	}
 
-	public void Pick(IInventory inv, Pile prototype, int quantity)
+	public void Pick(IInventory inv,  PileRequest pickRequest)
 	{
-		inventory.Put(inv.Take(prototype,quantity));
+		inventory.Put(inv.Take(pickRequest));
 	}
 
 	#endregion

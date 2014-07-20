@@ -58,11 +58,11 @@ public class HeadquartersController : BaseManagedController, ICustomer, IStorabl
 		{
 			if (has < 100 && waterSupply == null)
 			{
-				waterSupply = new SupplyJob(M.JobManager, this, GetComponent<BuildingController>(), ColonyWaterInventory, waterItem, 100);
+				waterSupply = new SupplyJob(M.JobManager, this, GetComponent<BuildingController>(), ColonyWaterInventory, new PileRequest(waterItem,100));
 				M.JobManager.AddJob(waterSupply, false);
 			}
 			if(take>0)
-				ColonyWaterInventory.Take(new Pile(waterItem),take,true);
+				ColonyWaterInventory.Take(new PileRequest(waterItem,take));
 		} else
 		{
 

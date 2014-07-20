@@ -72,12 +72,12 @@ public class UnloadController : BaseManagedController,ICustomer, IStorable {
 	{
 		foreach(Pile p in r.Ingredients)
 		{
-			if(!InventoryToUnload.CanTake(p,true))
+			if(!InventoryToUnload.CanTake(new PileRequest(p,p.Quantity),true))
 				return false;
 		}
 
 		foreach(Pile p in r.Ingredients)
-			InventoryToUnload.Take(p,p.Quantity);
+			InventoryToUnload.Take(new PileRequest(p,p.Quantity));
 		
 		return true;
 	}

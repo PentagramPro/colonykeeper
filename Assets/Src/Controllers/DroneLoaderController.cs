@@ -15,9 +15,9 @@ public class DroneLoaderController : BaseManagedController, IStorable {
 	public IInventory Inventory;
 	public int LoadAmount = 500;
 
-	Pile itemToPick;
+	PileRequest itemToPick;
 	Modes state = Modes.Idle;
-	int maxQuantityToPick;
+	//int maxQuantityToPick;
 	IInventory destinationInv;
 
 	// Use this for initialization
@@ -32,7 +32,7 @@ public class DroneLoaderController : BaseManagedController, IStorable {
 		switch(state)
 		{
 		case Modes.DoLoad:
-			int take = maxQuantityToPick -Inventory.Quantity;//destinationInv.GetItemQuantity(itemToPick);
+			int take = itemToPick.Quantity -Inventory.Quantity;//destinationInv.GetItemQuantity(itemToPick);
 			if(take<=0)
 			{
 				state = Modes.Idle;
@@ -41,8 +41,9 @@ public class DroneLoaderController : BaseManagedController, IStorable {
 			}
 			else
 			{
-				take = (int)Mathf.Min(take,LoadAmount*Time.smoothDeltaTime);
-				Pile taken = destinationInv.Take(itemToPick,take);
+				PileRequest takeRequest = itemToPick.copy();
+				takeRequest.Quantity = (int)Mathf.Min(take,LoadAmount*Time.smoothDeltaTime);
+				Pile taken = destinationInv.Take(takeRequest);
 				int left = Inventory.Put(taken);
 				if(left>0)
 				{
@@ -92,7 +93,7 @@ public class DroneLoaderController : BaseManagedController, IStorable {
 		bool res = false;
 		IInventory inv = Vehicle.FindInventoryWith(prototype);
 		itemToPick = prototype;
-		maxQuantityToPick = maxQuantity;
+		//maxQuantityToPick = maxQuantity;
 		if(inv!=null)
 		{
 			state = Modes.GoLoad;
@@ -112,19 +113,19 @@ public class DroneLoaderController : BaseManagedController, IStorable {
 	public void Save (WriterEx b)
 	{
 
-		b.WriteEnum(state);
-		b.WriteLink(destinationInv);
-		b.Write(maxQuantityToPick);
-		b.WriteEx(itemToPick);
+//		b.WriteEnum(state);
+//		b.WriteLink(destinationInv);
+//		b.Write(maxQuantityToPick);
+//		b.WriteEx(itemToPick);
 
 	}
 
 	public void Load (Manager m, ReaderEx r)
 	{
-		state = (Modes)r.ReadEnum(typeof(Modes));
-		destinationInv = (IInventory)r.ReadLink(m);
-		maxQuantityToPick = r.ReadInt32();
-		itemToPick = (Item)r.ReadItem(m);
+//		state = (Modes)r.ReadEnum(typeof(Modes));
+//		destinationInv = (IInventory)r.ReadLink(m);
+//		maxQuantityToPick = r.ReadInt32();
+//		itemToPick = (Item)r.ReadItem(m);
 	}
 
 	#endregion

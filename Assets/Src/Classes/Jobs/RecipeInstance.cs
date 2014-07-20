@@ -23,11 +23,11 @@ public class RecipeInstance : IStorable
 		uidc = new UidContainer(this);
 	}
 
-	public int GetIngredient(Item itemType)
+	public int GetIngredient(PileRequest itemType)
 	{
 		foreach (Pile p in Ingredients)
 		{
-			if(p.ItemType==itemType)
+			if(p.IsSameItem(itemType))
 				return p.Quantity;
 		}
 		

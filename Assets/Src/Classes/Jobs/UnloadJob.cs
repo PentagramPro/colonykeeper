@@ -39,7 +39,7 @@ public class UnloadJob : IJob
 		if(inventory.Quantity>0)
 		{
 			Pile p = inventory.FirstPile;
-			worker.Pick(inventory,p,p.Quantity);
+			worker.Pick(inventory,new PileRequest(p,inventory.Quantity));
 			state = Modes.Unload;
 			worker.Unload();		
 		}

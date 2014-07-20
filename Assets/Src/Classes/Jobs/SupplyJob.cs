@@ -8,25 +8,30 @@ public class SupplyJob : IJob
 	}
 
 	Modes state = Modes.Start;
-	Item itemToPick;
-	int maxQuantity;
+	PileRequest itemToPick;
+
 	IInventory inventoryToSupply;
 	BuildingController building;
 
-	public Item ItemType{
-		get{ return itemToPick;}
+	/*public Item ItemType{
+		get{ return itemToPick.ItemType;}
+	}*/
+	public PileRequest Request
+	{
+		get{
+			return itemToPick;
+		}
 	}
 
 	public SupplyJob()
 	{
 	}
 
-	public SupplyJob (JobManager jobManager, ICustomer customer,BuildingController target, IInventory targetInventory, Item item, int quantity) 
+	public SupplyJob (JobManager jobManager, ICustomer customer,BuildingController target, IInventory targetInventory, PileRequest item) 
 		: base(jobManager, customer)
 	{
 		itemToPick = item;
 		inventoryToSupply = targetInventory;
-		maxQuantity = quantity;
 		building = target;
 	}
 
@@ -51,7 +56,7 @@ public class SupplyJob : IJob
 		switch(state)
 		{
 		case Modes.Start:
-			if(worker.Load(itemToPick,maxQuantity))
+			if(worker.Load(itemToPick))
 				state = Modes.Load;
 			else
 			{
@@ -68,21 +73,22 @@ public class SupplyJob : IJob
 	public override void Save (WriterEx b)
 	{
 		base.Save (b);
-		b.WriteEnum(state);
+		/*b.WriteEnum(state);
 		b.WriteLink(building);
 		b.Write(maxQuantity);
 		b.WriteEx(itemToPick);
-		b.WriteLink(inventoryToSupply);
+		b.WriteLink(inventoryToSupply);*/
 	}
 
 	public override void Load (Manager m, ReaderEx r)
 	{
 		base.Load (m, r);
-		state = (Modes)r.ReadEnum(typeof(Modes));
+		/*state = (Modes)r.ReadEnum(typeof(Modes));
 		building = (BuildingController)r.ReadLink(m);
 		maxQuantity = r.ReadInt32();
 		itemToPick = r.ReadItem(m);
 		inventoryToSupply = (IInventory)r.ReadLink(m);
+		*/
 
 	}
 }

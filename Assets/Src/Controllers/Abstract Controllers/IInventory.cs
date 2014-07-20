@@ -344,6 +344,16 @@ public class IInventory : BaseManagedController, IStorable
 		
 	}
 
+	public int GetItemQuantity (PileRequest request)
+	{
+		List<Pile> l;
+		if(!items.TryGetValue(request.ItemType,out l))
+			return 0;
+		foreach(Pile p in l)
+			if(p.IsSameItem(request))
+				return p.Quantity;
+		return 0;
+	}
 	public int GetItemQuantity (Item item)
 	{
 		List<Pile> l;
