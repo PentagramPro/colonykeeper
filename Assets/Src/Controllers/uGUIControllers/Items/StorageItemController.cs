@@ -21,9 +21,16 @@ public class StorageItemController : BaseController, IListItemAdapter {
 	#region IListItemAdapter implementation
 	public void SetListItem (IListItem item)
 	{
-		Pile p = item as Pile;
-		Name.text = p.GetName();
-		Quantity.text = p.StringQuantity;
+		Name.text = item.GetName();
+		if(item is Pile)
+		{
+			Pile p = item as Pile;
+			Quantity.text = p.StringQuantity;
+			Name.color = p.Properties.color*0.8f + new Color(0.2f,0.2f,0.2f,0.2f);
+		}
+
+
+
 	}
 	public void Activate ()
 	{

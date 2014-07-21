@@ -213,7 +213,12 @@ public class IInventory : BaseManagedController, IStorable
 			}
 			if(targetPile==null)
 			{
-				pileList.Add(item.copy());
+				Pile added =item.copy();
+				pileList.Add(added);
+				if(ReportStatistic)
+				{
+					M.Stat.AddPile(added);	
+				}
 			}
 			else
 			{
@@ -224,7 +229,12 @@ public class IInventory : BaseManagedController, IStorable
 		{
 			pileList = new List<Pile>();
 			items.Add(item.ItemType,pileList);
-			pileList.Add(item.copy());
+			Pile added =item.copy();
+			pileList.Add(added);
+			if(ReportStatistic)
+			{
+				M.Stat.AddPile(added);	
+			}
 		}
 
 

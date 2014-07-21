@@ -16,8 +16,8 @@ public class Item : IListItem
 	[XmlAttribute("Class")]
 	public string ItemClass;
 
-	[XmlAttribute("Properties")]
-	public ItemProps BaseProperties;
+
+	public ItemProps BaseProperties = new ItemProps();
 
 	public bool IsOfClass(string cls)
 	{

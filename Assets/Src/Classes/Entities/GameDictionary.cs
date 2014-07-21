@@ -138,6 +138,7 @@ public class GameDictionary  {
 		{
 			res =  new GameDictionary();
 		}
+		//res.Save("test.xml");
 		res.Sort();
 		return res;
 	}

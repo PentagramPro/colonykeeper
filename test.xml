@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<GameDictionary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Blocks>
+    <Block Name="Bedrock" PrefabName="Bedrock" Freq="0" DigSpeed="-1">
+      <Breakable>true</Breakable>
+    </Block>
+    <Block Name="Ground" PrefabName="Ground" Freq="0" DigSpeed="5">
+      <Breakable>true</Breakable>
+    </Block>
+    <Block Name="Iron Ore" PrefabName="IronOre" Contains="Iron Ore" Freq="100" DigSpeed="2">
+      <Breakable>true</Breakable>
+    </Block>
+    <Block Name="Ice Ore" PrefabName="IceOre" Contains="Ice" Freq="5" DigSpeed="4">
+      <Breakable>true</Breakable>
+    </Block>
+    <Block Name="Copper Ore" PrefabName="CopperOre" Contains="Copper Ore" Freq="5" DigSpeed="2">
+      <Breakable>true</Breakable>
+    </Block>
+    <Block Name="Cobalt Ore" PrefabName="CobaltOre" Contains="Copper Ore" Freq="0" DigSpeed="2">
+      <Breakable>true</Breakable>
+    </Block>
+    <Block Name="Nitrates" PrefabName="Nitrates" Contains="Nitrates" Freq="80" DigSpeed="4">
+      <Breakable>true</Breakable>
+    </Block>
+  </Blocks>
+  <Items>
+    <Item Name="Iron Ore" Class="Bulk.Ore">
+      <BaseProperties>
+        <color>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </color>
+        <conductivity>1</conductivity>
+        <durability>1</durability>
+        <hardness>1</hardness>
+        <heatSustain>1</heatSustain>
+      </BaseProperties>
+    </Item>
+    <Item Name="Copper Ore" Class="Bulk.Ore">
+      <BaseProperties>
+        <color>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </color>
+        <conductivity>1</conductivity>
+        <durability>1</durability>
+        <hardness>1</hardness>
+        <heatSustain>1</heatSustain>
+      </BaseProperties>
+    </Item>
+    <Item Name="Cobalt Ore" Class="Bulk.Ore">
+      <BaseProperties>
+        <color>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </color>
+        <conductivity>1</conductivity>
+        <durability>1</durability>
+        <hardness>1</hardness>
+        <heatSustain>1</heatSustain>
+      </BaseProperties>
+    </Item>
+    <Item Name="Ice" Class="Bulk.Ore">
+      <BaseProperties>
+        <color>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </color>
+        <conductivity>1</conductivity>
+        <durability>1</durability>
+        <hardness>1</hardness>
+        <heatSustain>1</heatSustain>
+      </BaseProperties>
+    </Item>
+    <Item Name="Nitrates" Class="Bulk.Minerals">
+      <BaseProperties>
+        <color>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </color>
+        <conductivity>1</conductivity>
+        <durability>1</durability>
+        <hardness>1</hardness>
+        <heatSustain>1</heatSustain>
+      </BaseProperties>
+    </Item>
+    <Item Name="Water" Class="Bulk.Liquid">
+      <BaseProperties>
+        <color>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </color>
+        <conductivity>1</conductivity>
+        <durability>1</durability>
+        <hardness>1</hardness>
+        <heatSustain>1</heatSustain>
+      </BaseProperties>
+    </Item>
+    <Item Name="Iron Ingot" Class="Good.Ingot">
+      <BaseProperties>
+        <color>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </color>
+        <conductivity>1</conductivity>
+        <durability>1</durability>
+        <hardness>1</hardness>
+        <heatSustain>1</heatSustain>
+      </BaseProperties>
+    </Item>
+    <Item Name="Copper Ingot" Class="Good.Ingot">
+      <BaseProperties>
+        <color>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </color>
+        <conductivity>1</conductivity>
+        <durability>1</durability>
+        <hardness>1</hardness>
+        <heatSustain>1</heatSustain>
+      </BaseProperties>
+    </Item>
+    <Item Name="Cobalt Ingot" Class="Good.Ingot">
+      <BaseProperties>
+        <color>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </color>
+        <conductivity>1</conductivity>
+        <durability>1</durability>
+        <hardness>1</hardness>
+        <heatSustain>1</heatSustain>
+      </BaseProperties>
+    </Item>
+    <Item Name="Plate" Class="Good.Part.Plate">
+      <BaseProperties>
+        <color>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </color>
+        <conductivity>1</conductivity>
+        <durability>1</durability>
+        <hardness>1</hardness>
+        <heatSustain>1</heatSustain>
+      </BaseProperties>
+    </Item>
+    <Item Name="Beam" Class="Good.Part.Beam">
+      <BaseProperties>
+        <color>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </color>
+        <conductivity>1</conductivity>
+        <durability>1</durability>
+        <hardness>1</hardness>
+        <heatSustain>1</heatSustain>
+      </BaseProperties>
+    </Item>
+    <Item Name="Iron Wire" Class="Good.Part.Wire">
+      <BaseProperties>
+        <color>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </color>
+        <conductivity>1</conductivity>
+        <durability>1</durability>
+        <hardness>1</hardness>
+        <heatSustain>1</heatSustain>
+      </BaseProperties>
+    </Item>
+    <Item Name="Copper Wire" Class="Good.Part.Wire">
+      <BaseProperties>
+        <color>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </color>
+        <conductivity>1</conductivity>
+        <durability>1</durability>
+        <hardness>1</hardness>
+        <heatSustain>1</heatSustain>
+      </BaseProperties>
+    </Item>
+    <Item Name="Cobalt Wire" Class="Good.Part.Wire">
+      <BaseProperties>
+        <color>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </color>
+        <conductivity>1</conductivity>
+        <durability>1</durability>
+        <hardness>1</hardness>
+        <heatSustain>1</heatSustain>
+      </BaseProperties>
+    </Item>
+    <Item Name="Servo" Class="Good.Part.Mechanism">
+      <BaseProperties>
+        <color>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </color>
+        <conductivity>1</conductivity>
+        <durability>1</durability>
+        <hardness>1</hardness>
+        <heatSustain>1</heatSustain>
+      </BaseProperties>
+    </Item>
+    <Item Name="Rocket Fuel" Class="Good.Chemical.Fuel">
+      <BaseProperties>
+        <color>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </color>
+        <conductivity>1</conductivity>
+        <durability>1</durability>
+        <hardness>1</hardness>
+        <heatSustain>1</heatSustain>
+      </BaseProperties>
+    </Item>
+    <Item Name="Missile" Class="Good.Weapon">
+      <BaseProperties>
+        <color>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </color>
+        <conductivity>1</conductivity>
+        <durability>1</durability>
+        <hardness>1</hardness>
+        <heatSustain>1</heatSustain>
+      </BaseProperties>
+    </Item>
+  </Items>
+  <StartItems>
+    <Item Name="Plate" Quantity="300" />
+    <Item Name="Beam" Quantity="300" />
+    <Item Name="Iron Wire" Quantity="300" />
+  </StartItems>
+  <Buildings>
+    <Building Name="Headquarters" PrefabName="Headquarters" Hide="true">
+      <Ingredients />
+    </Building>
+    <Building Name="Construction Site" PrefabName="ConstructionSite" Hide="true">
+      <Ingredients />
+    </Building>
+    <Building Name="Strange Enemy Structure" PrefabName="EnemyStrangeStruct" Hide="true">
+      <Ingredients />
+    </Building>
+    <Building Name="Silo" PrefabName="Silo" Hide="false">
+      <Ingredients>
+        <Ingredient Name="Good.Part.Plate.*" Quantity="100" />
+      </Ingredients>
+    </Building>
+    <Building Name="Storage" PrefabName="Storage" Hide="false">
+      <Ingredients>
+        <Ingredient Name="Good.Part.Plate.*" Quantity="100" />
+      </Ingredients>
+    </Building>
+    <Building Name="Furnace" PrefabName="Furnace" Hide="false">
+      <Ingredients>
+        <Ingredient Name="Good.Part.Plate.*" Quantity="100" />
+        <Ingredient Name="Good.Part.Beam.*" Quantity="100" />
+      </Ingredients>
+    </Building>
+    <Building Name="Mill" PrefabName="Mill" Hide="false">
+      <Ingredients>
+        <Ingredient Name="Good.Part.Plate.*" Quantity="100" />
+        <Ingredient Name="Good.Part.Beam.*" Quantity="100" />
+      </Ingredients>
+    </Building>
+    <Building Name="Tower" PrefabName="DefTower" Hide="false">
+      <Ingredients>
+        <Ingredient Name="Good.Part.Plate.*" Quantity="100" />
+        <Ingredient Name="Good.Part.Wire.*" Quantity="100" />
+      </Ingredients>
+    </Building>
+    <Building Name="Still" PrefabName="Still" Hide="false">
+      <Ingredients>
+        <Ingredient Name="Good.Part.Plate.*" Quantity="100" />
+        <Ingredient Name="Copper Wire" Quantity="100" />
+      </Ingredients>
+    </Building>
+    <Building Name="Assembler" PrefabName="Assembler" Hide="false">
+      <Ingredients>
+        <Ingredient Name="Good.Part.Plate.*" Quantity="100" />
+        <Ingredient Name="Copper Wire" Quantity="100" />
+      </Ingredients>
+    </Building>
+    <Building Name="Chemical Reactor" PrefabName="Chemical Reactor" Hide="false">
+      <Ingredients>
+        <Ingredient Name="Good.Part.Plate.*" Quantity="100" />
+        <Ingredient Name="Copper Wire" Quantity="100" />
+      </Ingredients>
+    </Building>
+    <Building Name="Vehicle Assembler" PrefabName="Vehicle Assembler" Hide="false">
+      <Ingredients>
+        <Ingredient Name="Good.Part.Plate.*" Quantity="100" />
+        <Ingredient Name="Servo" Quantity="100" />
+      </Ingredients>
+    </Building>
+    <Building Name="Radar" PrefabName="Radar" Hide="false">
+      <Ingredients>
+        <Ingredient Name="Good.Part.Plate.*" Quantity="100" />
+        <Ingredient Name="Cobalt Wire" Quantity="100" />
+      </Ingredients>
+    </Building>
+  </Buildings>
+  <Recipes>
+    <Recipe Device="Furnace" Name="Smelt Iron Ore">
+      <Ingredients>
+        <Ingredient Name="Iron Ore" Quantity="200" />
+      </Ingredients>
+      <Results>
+        <Result Name="Iron Ingot" Quantity="100" />
+      </Results>
+    </Recipe>
+    <Recipe Device="Furnace" Name="Smelt Copper Ore">
+      <Ingredients>
+        <Ingredient Name="Copper Ore" Quantity="200" />
+      </Ingredients>
+      <Results>
+        <Result Name="Copper Ingot" Quantity="100" />
+      </Results>
+    </Recipe>
+    <Recipe Device="Furnace" Name="Smelt Cobalt Ore">
+      <Ingredients>
+        <Ingredient Name="Cobalt Ore" Quantity="200" />
+      </Ingredients>
+      <Results>
+        <Result Name="Cobalt Ingot" Quantity="100" />
+      </Results>
+    </Recipe>
+    <Recipe Device="Mill" Name="Roll plate">
+      <Ingredients>
+        <Ingredient Name="Good.Ingot.*" Quantity="200" />
+      </Ingredients>
+      <Results>
+        <Result Name="Plate" Quantity="100" />
+      </Results>
+    </Recipe>
+    <Recipe Device="Mill" Name="Roll beam">
+      <Ingredients>
+        <Ingredient Name="Good.Ingot.*" Quantity="100" />
+      </Ingredients>
+      <Results>
+        <Result Name="Beam" Quantity="100" />
+      </Results>
+    </Recipe>
+    <Recipe Device="Mill" Name="Roll iron wire">
+      <Ingredients>
+        <Ingredient Name="Iron Ingot" Quantity="100" />
+      </Ingredients>
+      <Results>
+        <Result Name="Iron Wire" Quantity="100" />
+      </Results>
+    </Recipe>
+    <Recipe Device="Mill" Name="Roll copper wire">
+      <Ingredients>
+        <Ingredient Name="Copper Ingot" Quantity="100" />
+      </Ingredients>
+      <Results>
+        <Result Name="Copper Wire" Quantity="100" />
+      </Results>
+    </Recipe>
+    <Recipe Device="Mill" Name="Roll cobalt wire">
+      <Ingredients>
+        <Ingredient Name="Cobalt Ingot" Quantity="100" />
+      </Ingredients>
+      <Results>
+        <Result Name="Cobalt Wire" Quantity="100" />
+      </Results>
+    </Recipe>
+    <Recipe Device="Still" Name="Smelt ice">
+      <Ingredients>
+        <Ingredient Name="Ice" Quantity="100" />
+      </Ingredients>
+      <Results>
+        <Result Name="Water" Quantity="40" />
+      </Results>
+    </Recipe>
+    <Recipe Device="Assembler" Name="Assemble servo">
+      <Ingredients>
+        <Ingredient Name="Good.Part.Wire.*" Quantity="200" />
+      </Ingredients>
+      <Results>
+        <Result Name="Servo" Quantity="100" />
+      </Results>
+    </Recipe>
+    <Recipe Device="Assembler" Name="Assemble missile">
+      <Ingredients>
+        <Ingredient Name="Rocket Fuel" Quantity="100" />
+        <Ingredient Name="Good.Part.Plate.*" Quantity="100" />
+      </Ingredients>
+      <Results>
+        <Result Name="Missile" Quantity="100" />
+      </Results>
+    </Recipe>
+    <Recipe Device="Chemical Reactor" Name="Produce Rocket Fuel">
+      <Ingredients>
+        <Ingredient Name="Nitrates" Quantity="200" />
+      </Ingredients>
+      <Results>
+        <Result Name="Rocket Fuel" Quantity="100" />
+      </Results>
+    </Recipe>
+  </Recipes>
+  <Vehicles>
+    <Vehicle Name="Drone" PrefabName="Drone">
+      <Recipe Device="Vehicle Assembler" Name="Build Drone">
+        <Ingredients>
+          <Ingredient Name="Good.Part.Plate.*" Quantity="100" />
+          <Ingredient Name="Servo" Quantity="300" />
+        </Ingredients>
+        <Results />
+      </Recipe>
+    </Vehicle>
+    <Vehicle Name="Defender Drone" PrefabName="DefenderDrone">
+      <Recipe Device="Vehicle Assembler" Name="Build Defender Drone">
+        <Ingredients>
+          <Ingredient Name="Good.Part.Plate.*" Quantity="200" />
+          <Ingredient Name="Servo" Quantity="500" />
+        </Ingredients>
+        <Results />
+      </Recipe>
+    </Vehicle>
+    <Vehicle Name="Alien Sentry" PrefabName="Sentry" />
+    <Vehicle Name="Alien Sentry Tower" PrefabName="SentryTower" />
+    <Vehicle Name="Alien Enrager" PrefabName="Enrager" />
+  </Vehicles>
+</GameDictionary>

@@ -31,6 +31,11 @@ public class ItemItemController : BaseController, IListItemAdapter {
     {
 		if(localNameLabel!=null)
         	localNameLabel.text = item.GetName();
+		if(item is Pile)
+		{
+			Pile p = item as Pile;
+			localNameLabel.color = p.Properties.color/2 + new Color(0.5f,0.5f,0.5f,0.5f);
+		}
     }
 
     public void Activate()

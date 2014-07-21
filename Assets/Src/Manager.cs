@@ -141,7 +141,7 @@ public class Manager : MonoBehaviour {
 		//dataFile.
 		//path = Path.Combine(Application.dataPath, "Resources/strings.xml");
 		S = Strings.Load(stringsFile.text);
-	// 	GameD.Save(path);
+
 	}
 
 	public IInventory FindInventoryFor(Item itemType)

@@ -10,8 +10,34 @@
   	<Block Name="Nitrates" PrefabName="Nitrates" Contains="Nitrates" Freq="80" DigSpeed="4"></Block>
   </Blocks>
   <Items >
-  	<Item Name="Iron Ore" Class="Bulk.Ore"></Item>
-  	<Item Name="Copper Ore" Class="Bulk.Ore"></Item>
+  	<Item Name="Iron Ore" Class="Bulk.Ore">
+  	  <BaseProperties>
+        <color>
+          <r>0.8</r>
+          <g>0.7</g>
+          <b>0.5</b>
+          <a>1</a>
+        </color>
+        <conductivity>1</conductivity>
+        <durability>1</durability>
+        <hardness>1</hardness>
+        <heatSustain>1</heatSustain>
+      </BaseProperties>
+    </Item>
+  	<Item Name="Copper Ore" Class="Bulk.Ore">
+  	  <BaseProperties>
+        <color>
+          <r>0.8</r>
+          <g>0.6</g>
+          <b>0.3</b>
+          <a>1</a>
+        </color>
+        <conductivity>1.4</conductivity>
+        <durability>0.7</durability>
+        <hardness>0.8</hardness>
+        <heatSustain>0.8</heatSustain>
+      </BaseProperties>
+  	</Item>
   	<Item Name="Cobalt Ore" Class="Bulk.Ore"></Item>
   	<Item Name="Ice" Class="Bulk.Ore"></Item>
   	<Item Name="Nitrates" Class="Bulk.Minerals"></Item>
