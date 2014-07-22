@@ -27,29 +27,35 @@
     <Item Name="Iron Ore" Class="Bulk.Ore">
       <BaseProperties>
         <color>
+          <r>0.8</r>
+          <g>0.7</g>
+          <b>0.5</b>
+          <a>1</a>
+        </color>
+        <secondaryColor>
           <r>1</r>
           <g>1</g>
           <b>1</b>
           <a>1</a>
-        </color>
-        <conductivity>1</conductivity>
-        <durability>1</durability>
-        <hardness>1</hardness>
-        <heatSustain>1</heatSustain>
+        </secondaryColor>
+        <Properties />
       </BaseProperties>
     </Item>
     <Item Name="Copper Ore" Class="Bulk.Ore">
       <BaseProperties>
         <color>
+          <r>0.8</r>
+          <g>0.6</g>
+          <b>0.3</b>
+          <a>1</a>
+        </color>
+        <secondaryColor>
           <r>1</r>
           <g>1</g>
           <b>1</b>
           <a>1</a>
-        </color>
-        <conductivity>1</conductivity>
-        <durability>1</durability>
-        <hardness>1</hardness>
-        <heatSustain>1</heatSustain>
+        </secondaryColor>
+        <Properties />
       </BaseProperties>
     </Item>
     <Item Name="Cobalt Ore" Class="Bulk.Ore">
@@ -60,10 +66,13 @@
           <b>1</b>
           <a>1</a>
         </color>
-        <conductivity>1</conductivity>
-        <durability>1</durability>
-        <hardness>1</hardness>
-        <heatSustain>1</heatSustain>
+        <secondaryColor>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </secondaryColor>
+        <Properties />
       </BaseProperties>
     </Item>
     <Item Name="Ice" Class="Bulk.Ore">
@@ -74,10 +83,13 @@
           <b>1</b>
           <a>1</a>
         </color>
-        <conductivity>1</conductivity>
-        <durability>1</durability>
-        <hardness>1</hardness>
-        <heatSustain>1</heatSustain>
+        <secondaryColor>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </secondaryColor>
+        <Properties />
       </BaseProperties>
     </Item>
     <Item Name="Nitrates" Class="Bulk.Minerals">
@@ -88,10 +100,13 @@
           <b>1</b>
           <a>1</a>
         </color>
-        <conductivity>1</conductivity>
-        <durability>1</durability>
-        <hardness>1</hardness>
-        <heatSustain>1</heatSustain>
+        <secondaryColor>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </secondaryColor>
+        <Properties />
       </BaseProperties>
     </Item>
     <Item Name="Water" Class="Bulk.Liquid">
@@ -102,10 +117,13 @@
           <b>1</b>
           <a>1</a>
         </color>
-        <conductivity>1</conductivity>
-        <durability>1</durability>
-        <hardness>1</hardness>
-        <heatSustain>1</heatSustain>
+        <secondaryColor>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </secondaryColor>
+        <Properties />
       </BaseProperties>
     </Item>
     <Item Name="Iron Ingot" Class="Good.Ingot">
@@ -116,10 +134,13 @@
           <b>1</b>
           <a>1</a>
         </color>
-        <conductivity>1</conductivity>
-        <durability>1</durability>
-        <hardness>1</hardness>
-        <heatSustain>1</heatSustain>
+        <secondaryColor>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </secondaryColor>
+        <Properties />
       </BaseProperties>
     </Item>
     <Item Name="Copper Ingot" Class="Good.Ingot">
@@ -130,10 +151,13 @@
           <b>1</b>
           <a>1</a>
         </color>
-        <conductivity>1</conductivity>
-        <durability>1</durability>
-        <hardness>1</hardness>
-        <heatSustain>1</heatSustain>
+        <secondaryColor>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </secondaryColor>
+        <Properties />
       </BaseProperties>
     </Item>
     <Item Name="Cobalt Ingot" Class="Good.Ingot">
@@ -144,10 +168,13 @@
           <b>1</b>
           <a>1</a>
         </color>
-        <conductivity>1</conductivity>
-        <durability>1</durability>
-        <hardness>1</hardness>
-        <heatSustain>1</heatSustain>
+        <secondaryColor>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </secondaryColor>
+        <Properties />
       </BaseProperties>
     </Item>
     <Item Name="Plate" Class="Good.Part.Plate">
@@ -158,10 +185,13 @@
           <b>1</b>
           <a>1</a>
         </color>
-        <conductivity>1</conductivity>
-        <durability>1</durability>
-        <hardness>1</hardness>
-        <heatSustain>1</heatSustain>
+        <secondaryColor>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </secondaryColor>
+        <Properties />
       </BaseProperties>
     </Item>
     <Item Name="Beam" Class="Good.Part.Beam">
@@ -172,10 +202,13 @@
           <b>1</b>
           <a>1</a>
         </color>
-        <conductivity>1</conductivity>
-        <durability>1</durability>
-        <hardness>1</hardness>
-        <heatSustain>1</heatSustain>
+        <secondaryColor>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </secondaryColor>
+        <Properties />
       </BaseProperties>
     </Item>
     <Item Name="Iron Wire" Class="Good.Part.Wire">
@@ -186,10 +219,13 @@
           <b>1</b>
           <a>1</a>
         </color>
-        <conductivity>1</conductivity>
-        <durability>1</durability>
-        <hardness>1</hardness>
-        <heatSustain>1</heatSustain>
+        <secondaryColor>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </secondaryColor>
+        <Properties />
       </BaseProperties>
     </Item>
     <Item Name="Copper Wire" Class="Good.Part.Wire">
@@ -200,10 +236,13 @@
           <b>1</b>
           <a>1</a>
         </color>
-        <conductivity>1</conductivity>
-        <durability>1</durability>
-        <hardness>1</hardness>
-        <heatSustain>1</heatSustain>
+        <secondaryColor>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </secondaryColor>
+        <Properties />
       </BaseProperties>
     </Item>
     <Item Name="Cobalt Wire" Class="Good.Part.Wire">
@@ -214,10 +253,13 @@
           <b>1</b>
           <a>1</a>
         </color>
-        <conductivity>1</conductivity>
-        <durability>1</durability>
-        <hardness>1</hardness>
-        <heatSustain>1</heatSustain>
+        <secondaryColor>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </secondaryColor>
+        <Properties />
       </BaseProperties>
     </Item>
     <Item Name="Servo" Class="Good.Part.Mechanism">
@@ -228,10 +270,13 @@
           <b>1</b>
           <a>1</a>
         </color>
-        <conductivity>1</conductivity>
-        <durability>1</durability>
-        <hardness>1</hardness>
-        <heatSustain>1</heatSustain>
+        <secondaryColor>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </secondaryColor>
+        <Properties />
       </BaseProperties>
     </Item>
     <Item Name="Rocket Fuel" Class="Good.Chemical.Fuel">
@@ -242,10 +287,13 @@
           <b>1</b>
           <a>1</a>
         </color>
-        <conductivity>1</conductivity>
-        <durability>1</durability>
-        <hardness>1</hardness>
-        <heatSustain>1</heatSustain>
+        <secondaryColor>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </secondaryColor>
+        <Properties />
       </BaseProperties>
     </Item>
     <Item Name="Missile" Class="Good.Weapon">
@@ -256,10 +304,13 @@
           <b>1</b>
           <a>1</a>
         </color>
-        <conductivity>1</conductivity>
-        <durability>1</durability>
-        <hardness>1</hardness>
-        <heatSustain>1</heatSustain>
+        <secondaryColor>
+          <r>1</r>
+          <g>1</g>
+          <b>1</b>
+          <a>1</a>
+        </secondaryColor>
+        <Properties />
       </BaseProperties>
     </Item>
   </Items>

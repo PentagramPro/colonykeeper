@@ -76,7 +76,10 @@ public class PageListController : BaseManagedController
             c.SetListItem(b);
 
             c.Activate();
-			c.Deselect();
+			if(SelectedItem!=null && b==SelectedItem)
+				c.Select();
+			else
+				c.Deselect();
             Debug.Log("activating item "+i+" with name "+b.GetName());
         }
 

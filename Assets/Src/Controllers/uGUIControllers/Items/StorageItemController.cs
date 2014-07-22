@@ -6,7 +6,7 @@ public class StorageItemController : BaseController, IListItemAdapter {
 
 	public Text Name;
 	public Text Quantity;
-
+	Image bg;
 	// Use this for initialization
 	void Start () {
 	
@@ -42,16 +42,21 @@ public class StorageItemController : BaseController, IListItemAdapter {
 	}
 	public void Select ()
 	{
+		if(bg==null)
+			bg = GetComponent<Image>();
 
+		bg.color = new Color(bg.color.r,bg.color.g,bg.color.b,0.4f);
 	}
 	public void Deselect ()
 	{
-
+		if(bg==null)
+			bg = GetComponent<Image>();
+		bg.color = new Color(bg.color.r,bg.color.g,bg.color.b,0);
 	}
 
 	public Button GetButton()
 	{
-		return null;
+		return GetComponent<Button>();
 	}
 	#endregion
 }

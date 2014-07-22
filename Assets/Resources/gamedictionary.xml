@@ -18,10 +18,9 @@
           <b>0.5</b>
           <a>1</a>
         </color>
-        <conductivity>1</conductivity>
-        <durability>1</durability>
-        <hardness>1</hardness>
-        <heatSustain>1</heatSustain>
+        <Properties>
+          <Prop Name="Durability" Val="1.4"></Prop>
+        </Properties>
       </BaseProperties>
     </Item>
   	<Item Name="Copper Ore" Class="Bulk.Ore">
@@ -32,10 +31,9 @@
           <b>0.3</b>
           <a>1</a>
         </color>
-        <conductivity>1.4</conductivity>
-        <durability>0.7</durability>
-        <hardness>0.8</hardness>
-        <heatSustain>0.8</heatSustain>
+        <Properties>
+        
+        </Properties>
       </BaseProperties>
   	</Item>
   	<Item Name="Cobalt Ore" Class="Bulk.Ore"></Item>
