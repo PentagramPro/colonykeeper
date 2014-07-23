@@ -15,13 +15,19 @@ public class Recipe : IListItem
 	public string Name;
 
 	[XmlArray("Ingredients"),XmlArrayItem("Ingredient")]
-	public List<PileXML> Ingredients = new List<PileXML>();
+	public List<Ingredient> Ingredients = new List<Ingredient>();
 
 	[XmlArray("Results"),XmlArrayItem("Result")]
 	public List<PileXML> Results = new List<PileXML>();
 
-	[XmlIgnore]
-	public List<Ingredient> IngredientsLinks = new List<Ingredient>();
+	//[XmlIgnore]
+	public List<Ingredient> IngredientsLinks
+	{
+		get
+		{
+			return Ingredients;
+		}
+	}
 
 	[XmlIgnore]
 	public List<Pile> ResultsLinks = new List<Pile>();
@@ -61,15 +67,15 @@ public class Recipe : IListItem
 	public void Sort(GameDictionary g)
 	{
 
-		foreach(PileXML pxml in Ingredients)
+		foreach(Ingredient ing in Ingredients)
 		{
 
-			Ingredient ing = new Ingredient();
-			ing.Quantity = pxml.Quantity;
+			//Ingredient ing = new Ingredient();
+			//ing.Quantity = pxml.Quantity;
 
-			if(pxml.Name.EndsWith(".*"))
+			if(ing.Name.EndsWith(".*"))
 			{
-				string cls = pxml.Name.Substring(0,pxml.Name.Length-2);
+				string cls = ing.Name.Substring(0,ing.Name.Length-2);
 				ing.ClassName = cls;
 				foreach(Item i in g.Items.Values)
 				{
@@ -80,15 +86,15 @@ public class Recipe : IListItem
 			else
 			{
 				ing.ClassName = "";
-				if(!g.Items.ContainsKey(pxml.Name))
-					throw new UnityException("Item with name "+pxml.Name+" was not found while building ingredients for recipe "+Name);
-				ing.Items.Add(g.Items[pxml.Name]);
+				if(!g.Items.ContainsKey(ing.Name))
+					throw new UnityException("Item with name "+ing.Name+" was not found while building ingredients for recipe "+Name);
+				ing.Items.Add(g.Items[ing.Name]);
 			}
-
+			/*
 			if(ing.Items.Count>0)
 				IngredientsLinks.Add(ing);
 			else
-				Debug.LogWarning("No items found for recipe "+Name+", item name="+pxml.Name);
+				Debug.LogWarning("No items found for recipe "+Name+", item name="+ing.Name);*/
 		}
 		
 		foreach(PileXML pxml in Results)

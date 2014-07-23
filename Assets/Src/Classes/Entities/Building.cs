@@ -21,7 +21,7 @@ public class Building : ObjectPrototype
 
 
 	[XmlArray("Ingredients"),XmlArrayItem("Ingredient")]
-	public List<PileXML> Ingredients = new List<PileXML>();
+	public List<Ingredient> Ingredients = new List<Ingredient>();
 
 	[XmlAttribute("Hide")]
 	public bool Hide = false;

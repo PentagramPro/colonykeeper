@@ -35,16 +35,33 @@ public class UnloadController : BaseManagedController,ICustomer, IStorable {
 	{
 		switch(OperationMode)
 		{
-		case OperaionModes.OutputItems:
+			case OperaionModes.OutputItems:
 			{
 				Pile res = new Pile(r.ResultsLinks[0].ItemType,r.ResultsLinks[0].Quantity);
-				res.Properties = r.Ingredients[0].Properties.copy();
+				int index=0;
+				foreach(Ingredient i in r.Prototype.Ingredients)
+				{
+					Pile thatPile = r.Ingredients[index];
+					foreach(string sp in i.Properties)
+					{
+						if(sp=="Color")
+							res.Properties.color = thatPile.Properties.color;
+						else if (sp=="Color2")
+							res.Properties.secondaryColor = thatPile.Properties.secondaryColor;
+						else
+							res.Properties[sp]=thatPile.Properties[sp];
+					}
+					index++;
+				}
+				//res.Properties = r.Ingredients[0].Properties.copy();
 				InventoryToUnload
 					.Put(res);
 			}
 			break;
-		case OperaionModes.OutputVehicles:
-			VehicleController res =  M.CreateVehicle(r.Prototype.vehicle.Name,transform.position);
+			case OperaionModes.OutputVehicles:
+			{
+				VehicleController res =  M.CreateVehicle(r.Prototype.vehicle.Name,transform.position);
+			}
 			break;
 		}
 	}

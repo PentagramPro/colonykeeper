@@ -7,12 +7,10 @@ public class FactoryItemController : BaseManagedController, IListItemAdapter {
 	public Text Name;
 	public Text Description;
 	Image bg;
-	Button button;
 	Color defColor;
 	// Use this for initialization
 	void Start () {
 		bg = GetComponent<Image>();
-		button = GetComponent<Button>();
 		defColor = bg.color;
 	}
 	
@@ -62,7 +60,7 @@ public class FactoryItemController : BaseManagedController, IListItemAdapter {
 
 	public Button GetButton()
 	{
-		return button;
+		return GetComponent<Button>();
 	}
 
 	#endregion

@@ -19,7 +19,7 @@
           <a>1</a>
         </color>
         <Properties>
-          <Prop Name="Durability" Val="1.4"></Prop>
+          <Prop Name="Durability" Val="1.2"></Prop>
         </Properties>
       </BaseProperties>
     </Item>
@@ -32,7 +32,7 @@
           <a>1</a>
         </color>
         <Properties>
-        
+        	<Prop Name="Durability" Val="0.8"></Prop>
         </Properties>
       </BaseProperties>
   	</Item>
@@ -178,7 +178,12 @@
   	<!--       MILL RECIPES             -->
   	<Recipe Device="Mill" Name = "Roll plate">
   		<Ingredients>
-  			<Ingredient Name="Good.Ingot.*" Quantity="200"></Ingredient>
+  			<Ingredient Name="Good.Ingot.*" Quantity="200">
+  				<Props>
+  					<P>Durability</P>
+  					<P>Color</P>
+  				</Props>
+  			</Ingredient>
   		</Ingredients>
   		<Results>
   			<Result Name="Plate" Quantity="100"></Result>

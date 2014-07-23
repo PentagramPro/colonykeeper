@@ -1,16 +1,22 @@
-
+using System.Xml.Serialization;
 using System.Collections.Generic;
 
 public class Ingredient
 {
-	public int Quantity;
-
-	// each of the items from the list can be used as an ingredient
-	public List<Item> Items = new List<Item>();
-
+	[XmlAttribute("Name")]
+	public string Name;
+	[XmlAttribute("Quantity")]
+	public int Quantity = 100;
 	// list of property names. These properties will be taken from this ingredient during craft
+	[XmlArray("Props"),XmlArrayItem("P")]
 	public List<string> Properties = new List<string>();
 
+	// each of the items from the list can be used as an ingredient
+	[XmlIgnore]
+	public List<Item> Items = new List<Item>();
+
+
+	[XmlIgnore]
 	public string ClassName;
 
 	public bool Contains(Item item)
