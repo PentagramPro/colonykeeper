@@ -180,8 +180,8 @@
   		<Ingredients>
   			<Ingredient Name="Good.Ingot.*" Quantity="200">
   				<Props>
-  					<P>Durability</P>
-  					<P>Color</P>
+  					<P Src="Durability" Dst="Durability" X="1"></P>
+  					<P Dst="Color"></P>
   				</Props>
   			</Ingredient>
   		</Ingredients>
@@ -197,7 +197,7 @@
   			<Result Name="Beam" Quantity="100"></Result>
   		</Results>
   	</Recipe>
-  	<Recipe Device="Mill" Name = "Roll iron wire">
+  	<Recipe Device="Mill" Name = "Roll wire">
   		<Ingredients>
   			<Ingredient Name="Iron Ingot" Quantity="100"></Ingredient>
   		</Ingredients>

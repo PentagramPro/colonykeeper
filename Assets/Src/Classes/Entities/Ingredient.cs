@@ -9,7 +9,7 @@ public class Ingredient
 	public int Quantity = 100;
 	// list of property names. These properties will be taken from this ingredient during craft
 	[XmlArray("Props"),XmlArrayItem("P")]
-	public List<string> Properties = new List<string>();
+	public List<PropertyTransfer> Properties = new List<PropertyTransfer>();
 
 	// each of the items from the list can be used as an ingredient
 	[XmlIgnore]
