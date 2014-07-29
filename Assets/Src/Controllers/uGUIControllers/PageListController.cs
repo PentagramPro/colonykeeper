@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class PageListController : BaseManagedController
+public class PageListController : BaseController
 {
 	public delegate void ItemSelectedDelegate(IListItem Item);
 	public event ItemSelectedDelegate OnItemSelected;
@@ -27,9 +27,9 @@ public class PageListController : BaseManagedController
 	IListItemAdapter lastSlot = null;
 
 
-	protected override void Awake ()
+	protected void Awake ()
 	{
-		base.Awake ();
+		//base.Awake ();
 		foreach(IListItemAdapter i in DisplaySlot)
 		{
 			Button b = i.GetButton();
