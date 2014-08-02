@@ -36,7 +36,7 @@ public class ChooseItemsWindow : KWindow
 		
 		
 		
-			M.Stat.GetItemsForIngredient(ingredient, itemsCache);
+			//M.Stat.GetItemsForIngredient(ingredient, itemsCache);
 		
 			prepare = false;
 		}
@@ -111,7 +111,7 @@ public class ChooseItemsWindow : KWindow
 		
 		if (selected != null)
 		{
-			recipeInstance.Ingredients.Add(new Pile(selected, ingredient.Quantity));
+/*			recipeInstance.Ingredients.Add(new Pile(selected, ingredient.Quantity));
 			curItem++;
 			if (curItem >= recipeInstance.Prototype.IngredientsLinks.Count)
 			{
@@ -121,7 +121,7 @@ public class ChooseItemsWindow : KWindow
 			} else
 			{
 				prepare = true;
-			}
+			}*/
 		}
 	}
 }

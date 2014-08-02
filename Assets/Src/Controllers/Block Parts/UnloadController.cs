@@ -36,7 +36,7 @@ public class UnloadController : BaseManagedController,ICustomer, IStorable {
 		int index=0;
 		foreach(Ingredient i in r.Prototype.Ingredients)
 		{
-			Pile thatPile = r.Ingredients[index];
+			PileRequest thatPile = r.Ingredients[index];
 			foreach(PropertyTransfer transfer in i.Properties)
 			{
 				if(transfer.EmptyPropertyNames)
@@ -101,14 +101,14 @@ public class UnloadController : BaseManagedController,ICustomer, IStorable {
 	// take items for recipe. Items are disappeared because they are considered to be 'used' for production
 	public bool TakeForRecipe(RecipeInstance r)
 	{
-		foreach(Pile p in r.Ingredients)
+		foreach(PileRequest p in r.Ingredients)
 		{
-			if(!InventoryToUnload.CanTake(new PileRequest(p,p.Quantity),true))
+			if(!InventoryToUnload.CanTake(p,true))
 				return false;
 		}
 
-		foreach(Pile p in r.Ingredients)
-			InventoryToUnload.Take(new PileRequest(p,p.Quantity));
+		foreach(PileRequest p in r.Ingredients)
+			InventoryToUnload.Take(p);
 		
 		return true;
 	}

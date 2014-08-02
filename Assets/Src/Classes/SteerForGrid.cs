@@ -168,7 +168,7 @@ public class SteerForGrid : Steering {
 
 			Vector3 pos = (Vector3)info.node.position;//new Vector3(info.node.position.x/1000,info.node.position.y/1000,info.node.position.z/1000);
 			lastUnwalkableNode = pos;
-			Debug.LogWarning("Unwalkable node in :"+Vector3.Distance(pos,futurePosition));
+			//Debug.LogWarning("Unwalkable node in :"+Vector3.Distance(pos,futurePosition));
 
 			NNConstraint nn = new NNConstraint();
 			nn.constrainWalkability = true;

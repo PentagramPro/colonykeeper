@@ -26,7 +26,7 @@ public class SupplyController : BaseManagedController, ICustomer, IStorable {
 		this.targetQuantity = quantity;
 
 
-		foreach (Pile ingredient in targetRecipe.Ingredients)
+		foreach (PileRequest ingredient in targetRecipe.Ingredients)
 		{
 			SupplyJob j = new SupplyJob(M.JobManager,this,building,InInventory,
 			                            new PileRequest(ingredient,ingredient.Quantity*targetQuantity));
@@ -78,7 +78,7 @@ public class SupplyController : BaseManagedController, ICustomer, IStorable {
 			return SupplyStatus.Complete;
 		
 		SupplyStatus res = SupplyStatus.Ready;
-		foreach(Pile p in targetRecipe.Ingredients)
+		foreach(PileRequest p in targetRecipe.Ingredients)
 		{
 			if(InInventory.GetItemQuantity(p.ItemType)<p.Quantity)
 			{

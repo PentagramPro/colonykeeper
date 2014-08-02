@@ -42,12 +42,16 @@ public class Stats : MonoBehaviour {
 
 	}
 
-	public void GetItemsForIngredient(Ingredient ingredient,List<Item> result)
+	public void GetItemsForIngredient(Ingredient ingredient,List<Pile> result)
 	{
 		foreach(Item item in ingredient.Items)
 		{
-			if(Items.ContainsKey(item) && Items[item]>=ingredient.Quantity)
-				result.Add(item);
+			foreach(IListItem t in ItemsList)
+			{
+				Pile p = t as Pile;
+				if(p.ItemType==item)
+					result.Add(p);
+			}
 		}
 	}
 

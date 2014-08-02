@@ -7,7 +7,7 @@ public class ItemScreenController : BaseManagedController {
     PageListController pageController;
 
     public RecipeInstance RecipeInst { get; set; }
-    List<Item> itemsCache = new List<Item>();
+	List<Pile> itemsCache = new List<Pile>();
     int curIngredient = 0;
 
 	public List<IngredientItemController> IngredientSlots;
@@ -41,6 +41,9 @@ public class ItemScreenController : BaseManagedController {
 
     void OnEnable()
     {
+		foreach(IngredientItemController i in IngredientSlots)
+			i.SelectedItem = null;
+
 		quantity = 1;
 		curIngredient = 0;
 		UpdateQuantity();
@@ -97,7 +100,7 @@ public class ItemScreenController : BaseManagedController {
 		M.Stat.GetItemsForIngredient(RecipeInst.Prototype.IngredientsLinks[curIngredient], itemsCache);
 
 		pageController.ItemsToDisplay.Clear();
-		foreach (Item i in itemsCache)
+		foreach (Pile i in itemsCache)
 		{
 			pageController.ItemsToDisplay.Add(i);
 		}
@@ -169,7 +172,7 @@ public class ItemScreenController : BaseManagedController {
 			if(item.SelectedItem==null)
 				continue;
 			int q = item.Ingredient.Quantity;
-			RecipeInst.Ingredients.Add(new Pile(item.SelectedItem as Item,q));
+			RecipeInst.Ingredients.Add(new PileRequest(item.SelectedItem as Pile,q));
 
 	
 		}

@@ -9,12 +9,12 @@ public class BuildingItemController : MonoBehaviour, IListItemAdapter {
     
 	Color notSelected;
 	Image parent;
-	Button button;
+
 
 	// Use this for initialization
 	void Start () {
 		parent = GetComponent<Image>();
-		button = GetComponent<Button>();
+
 		notSelected = parent.color;
 	}
 	
@@ -62,6 +62,7 @@ public class BuildingItemController : MonoBehaviour, IListItemAdapter {
 
 	public Button GetButton()
 	{
-		return button;
+		Button b = GetComponent<Button>();
+		return b;
 	}
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 public class RecipeInstance : IStorable
 {
 	UidContainer uidc;
-	public List<Pile> Ingredients = new List<Pile>();
+	public List<PileRequest> Ingredients = new List<PileRequest>();
 	public Recipe Prototype;
 
 	public List<Pile> ResultsLinks{
@@ -25,7 +25,7 @@ public class RecipeInstance : IStorable
 
 	public int GetIngredient(PileRequest itemType)
 	{
-		foreach (Pile p in Ingredients)
+		foreach (PileRequest p in Ingredients)
 		{
 			if(p.IsSameItem(itemType))
 				return p.Quantity;
@@ -48,25 +48,25 @@ public class RecipeInstance : IStorable
 
 	public void Save (WriterEx b)
 	{
-		b.WriteEx(Prototype);
-		b.Write(Ingredients.Count);
-		foreach(Pile p in Ingredients)
-		{
-			p.Save(b);
-		}
+//		b.WriteEx(Prototype);
+//		b.Write(Ingredients.Count);
+//		foreach(Pile p in Ingredients)
+//		{
+//			p.Save(b);
+//		}
 	}
 
 	public void Load (Manager m, ReaderEx r)
 	{
-		Prototype = r.ReadRecipe(m);
-		Ingredients.Clear();
-		int count = r.ReadInt32();
-		for(int i=0;i<count;i++)
-		{
-			Pile p = new Pile(null);
-			p.Load(m,r);
-			Ingredients.Add(p);
-		}
+//		Prototype = r.ReadRecipe(m);
+//		Ingredients.Clear();
+//		int count = r.ReadInt32();
+//		for(int i=0;i<count;i++)
+//		{
+//			Pile p = new Pile(null);
+//			p.Load(m,r);
+//			Ingredients.Add(p);
+//		}
 
 	}
 

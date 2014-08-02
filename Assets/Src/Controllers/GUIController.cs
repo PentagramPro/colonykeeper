@@ -166,6 +166,11 @@ public class GUIController : BaseManagedController {
 			ColonyScreen.gameObject.SetActive(true);
 			state = Modes.Info;
 		}
+		else
+		{
+
+			Debug.LogWarning(System.Reflection.MethodBase.GetCurrentMethod().Name+": wrong mode "+state.ToString());
+		}
     }
 
     public void OnStrategyMenu()
@@ -192,6 +197,7 @@ public class GUIController : BaseManagedController {
 	public void OnPlaced()
 	{
 		StrategyScreen.gameObject.SetActive(true);
+		state = Modes.Idle;
 	}
 
 	public void OnDeselect()

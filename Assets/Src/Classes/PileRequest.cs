@@ -51,7 +51,10 @@ public class PileRequest
 		}
 	}
 
-
+	public bool IsSameItem(PileRequest p)
+	{
+		return p.ItemType == itemType && (p.Properties==null || Properties.IsSameProperties(p.Properties));
+	}
 
 	public PileRequest (Item item, int q)
 	{

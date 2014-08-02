@@ -42,7 +42,8 @@ public class BuildingController : BaseManagedController, IStorable{
 
 		PrepareLights();
 
-		hull.LocalName = LocalName;
+		if(hull!=null)
+			hull.LocalName = LocalName;
 	}
 
 	void PrepareLights()

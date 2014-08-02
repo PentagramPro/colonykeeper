@@ -7,7 +7,7 @@ public class ListItemAdapterController : MonoBehaviour, IListItemAdapter
 
     IListItemAdapter adapter;
 
-	void Awake()
+	void InitAdapter()
 	{
 		Component[] components = GetComponents<Component>();
 		foreach (Component c in components)
@@ -18,6 +18,10 @@ public class ListItemAdapterController : MonoBehaviour, IListItemAdapter
 				break;
 			}
 		}
+	}
+	void Awake()
+	{
+		InitAdapter();
 	}
 	// Use this for initialization
 	void Start () {
@@ -60,6 +64,9 @@ public class ListItemAdapterController : MonoBehaviour, IListItemAdapter
 
 	public Button GetButton()
 	{
+		if(adapter==null)
+			InitAdapter();
+
 		if(adapter!=null)
 			return adapter.GetButton();
 		return null;
