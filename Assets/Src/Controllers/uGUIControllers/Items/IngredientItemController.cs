@@ -35,11 +35,14 @@ public class IngredientItemController : MonoBehaviour {
 			ingredient= value;
 			if(value!=null)
 			{
+				string text;
 				if(value.ClassName!="")
-					IngredientClass.text = value.ClassName;
+					text = value.ClassName;
 				else
-					IngredientClass.text = value.Items[0].GetName();
+					text = value.Items[0].GetName();
 
+				text+=" x"+value.Quantity/100+":";
+				IngredientClass.text = text;
 			}
 		}
 		get

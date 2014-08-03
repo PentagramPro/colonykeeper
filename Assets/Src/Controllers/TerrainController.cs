@@ -382,33 +382,33 @@ public class TerrainController : BaseManagedController, IStorable {
 			}
 		}
 	}
-	public void Discover(int posI, int posJ)
+	public void Discover(int posX, int posZ)
 	{
 
 		
-		map[posI,posJ].Discovered = true;
-		OnCellUpdated(posI,posJ);
+		map[posX,posZ].Discovered = true;
+		OnCellUpdated(posX,posZ);
 		
-		int imin = System.Math.Max (posI-1,0);
-		int imax = System.Math.Min(posI+1,map.Height-1);
+		int xmin = System.Math.Max (posX-1,0);
+		int xmax = System.Math.Min(posX+1,map.Width-1);
 		
-		int jmin = System.Math.Max (posJ-1,0);
-		int jmax = System.Math.Min(posJ+1,map.Width-1);
-		for(int i = imin;i<=imax;i++)
+		int zmin = System.Math.Max (posZ-1,0);
+		int zmax = System.Math.Min(posZ+1,map.Height-1);
+		for(int x = xmin;x<=xmax;x++)
 		{
-			for (int j = jmin;j<=jmax;j++)
+			for (int z = zmin;z<=zmax;z++)
 			{
-				if(map[i,j].Discovered)
+				if(map[x,z].Discovered)
 					continue;
 				
-				if(map[i,j].Digged==true)
+				if(map[x,z].Digged==true)
 				{
-					Discover(i,j);
+					Discover(x,z);
 				}
 				else
 				{
-					map[i,j].Discovered = true;
-					OnCellUpdated(i,j);
+					map[x,z].Discovered = true;
+					OnCellUpdated(x,z);
 				}
 			}
 		}

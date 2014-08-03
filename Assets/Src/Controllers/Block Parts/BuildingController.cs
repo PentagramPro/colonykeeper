@@ -75,7 +75,7 @@ public class BuildingController : BaseManagedController, IStorable{
 	public Vector3 Position
 	{
 		get{
-			return transform.position+new Vector3(halfCell,0,halfCell);
+			return transform.position;//+new Vector3(halfCell,0,halfCell);
 		}
 	}
 

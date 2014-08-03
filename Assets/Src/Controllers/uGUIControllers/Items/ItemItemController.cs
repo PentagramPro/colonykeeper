@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class ItemItemController : BaseController, IListItemAdapter {
     public Text localNameLabel;
+	public Text quantityLabel;
 
 	Color notSelected;
 	Image parent;
@@ -11,7 +12,7 @@ public class ItemItemController : BaseController, IListItemAdapter {
 
 	void Awake()
 	{
-		localNameLabel = GetComponentInChildren<Text>();
+		//localNameLabel = GetComponentInChildren<Text>();
 
 		
 		parent = GetComponent<Image>();
@@ -35,6 +36,7 @@ public class ItemItemController : BaseController, IListItemAdapter {
 		{
 			Pile p = item as Pile;
 			localNameLabel.color = p.Properties.color/2 + new Color(0.5f,0.5f,0.5f,0.5f);
+			quantityLabel.text = p.StringQuantity;
 		}
     }
 
@@ -50,7 +52,7 @@ public class ItemItemController : BaseController, IListItemAdapter {
 
 	public void Select()
 	{
-		parent.color = Color.green;
+		parent.color = new Color(0.1f,0.8f,0.2f);
 	}
 	
 	public void Deselect()

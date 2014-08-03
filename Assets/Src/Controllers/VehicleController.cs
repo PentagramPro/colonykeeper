@@ -104,7 +104,7 @@ public class VehicleController : BaseManagedController, IStorable  {
 				continue;
 			
 			
-			if(i.CanTake(prototype, false))
+			if(i.CanTake(prototype, false) && !i.BlockInventory)
 				return i;
 			
 		}

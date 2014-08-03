@@ -15,7 +15,7 @@ public class ItemProps : IStorable
 
 	protected Dictionary<string,Field> Props;
 
-	
+
 	
 	public float this[string key]
 	{
@@ -62,8 +62,13 @@ public class ItemProps : IStorable
 		if(p.color!=color)
 			return false;
 
-		if( (p.Props==null || Props==null) )
-			return p.Props==Props;
+		bool hasProps = (Props!=null && Props.Count>0);
+		bool targetHasProps = (p.Props!=null && p.Props.Count>0);
+
+		if(hasProps!=targetHasProps)
+			return false;
+		if(hasProps==false && targetHasProps==false)
+			return true;
 
 		if(p.Props.Count!=Props.Count)
 			return false;

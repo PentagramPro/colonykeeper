@@ -48,6 +48,12 @@ public class HullController : BaseManagedController, IStorable, IInteractive {
 		}
 	}
 
+	bool selected = false;
+	public bool IsSelected{
+		get{
+			return selected;
+		}
+	}
 
 	void OnTriggerEnter(Collider other)
 	{
@@ -108,12 +114,12 @@ public class HullController : BaseManagedController, IStorable, IInteractive {
 
 	public void OnSelected()
 	{
-		
+		selected=true;
 	}
 	
 	public void OnDeselected()
 	{
-		
+		selected=false;
 	}
 
 	public void OnDrawSelectionGUI ()

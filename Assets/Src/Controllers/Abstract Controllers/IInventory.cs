@@ -318,8 +318,8 @@ public class IInventory : BaseManagedController, IStorable
 
 	public bool CanTake(PileRequest pile, bool checkQuantity)
 	{
-		if(BlockInventory)
-			return false;
+		//if(BlockInventory)
+		//	return false;
 
 		if(!items.ContainsKey(pile.ItemType))
 			return false;

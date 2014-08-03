@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 
-	enum Modes {
+	public enum Modes {
 		Idle, Ingredients, FreeIn,Fill,Prod,FreeOut
 	}
 
@@ -21,7 +21,7 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 
 	public SupplyController supplyController;
 	public UnloadController inputUnloadController, outputUnloadController;
-
+	HullController hull;
 
 	BuildingController building;
 
@@ -50,6 +50,11 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 		}
 	}
 
+	public Modes State{
+		get{
+			return state;
+		}
+	}
 	public int TargetQuantity{get{return targetQuantity;}}
 	public int MaxTargetQuantity{get{return maxTargetQuantity;}}
 
@@ -61,7 +66,7 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 	// Use this for initialization
 	void Start () {
 		building = GetComponent<BuildingController>();
-
+		hull = GetComponent<HullController>();
 
 		if(inputUnloadController==null || outputUnloadController==null)
 			throw new UnityException("Unload controllers must not be null");
@@ -133,13 +138,15 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 		}
 	}
 
-	void Cancel()
+	public void Cancel()
 	{
-		supplyController.Cancel();
-		targetQuantity = 0;
-		state = Modes.FreeOut;
-		outputUnloadController.FreeInventory();
-
+		if(state==Modes.Prod || state==Modes.Fill)
+		{
+			supplyController.Cancel();
+			targetQuantity = 0;
+			state = Modes.FreeOut;
+			outputUnloadController.FreeInventory();
+		}
 	}
 
 	void UI()
@@ -184,11 +191,13 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 
 		if(state==Modes.Idle)
 		{
+			M.GUIController.ProductionPanel.gameObject.SetActive(false);
 			M.GUIController.FactoryPanel.TargetFurnace = this;
 			M.GUIController.FactoryPanel.gameObject.SetActive(true);
 		}
 		else
 		{
+			M.GUIController.FactoryPanel.gameObject.SetActive(false);
 			M.GUIController.ProductionPanel.TargetFurnace = this;
 			M.GUIController.ProductionPanel.gameObject.SetActive(true);
 		}
@@ -208,18 +217,20 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 			targetQuantity = q;
 			maxTargetQuantity = targetQuantity;
 			UI ();
-			M.GUIController.FactoryPanel.gameObject.SetActive(false);
-			M.GUIController.ProductionPanel.TargetFurnace = this;
-			M.GUIController.ProductionPanel.gameObject.SetActive(true);
+			if(hull.IsSelected)
+			{
+				OnSelected();
+			}
 		}
 	}
 
 	void OnProductionComplete()
 	{
 		M.DisplayMessage(string.Format(M.S["Message.ProdComplete"],building.LocalName));
-		M.GUIController.ProductionPanel.gameObject.SetActive(false);
-		M.GUIController.FactoryPanel.TargetFurnace = this;
-		M.GUIController.FactoryPanel.gameObject.SetActive(true);
+		if(hull.IsSelected)
+		{
+			OnSelected();
+		}
 	}
 
 	public void OnDrawSelectionGUI ()
