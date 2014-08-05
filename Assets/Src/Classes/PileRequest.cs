@@ -19,6 +19,12 @@ public class PileRequest
 			quantity = value;
 		}
 	}
+  
+  public string StringQuantity{
+		get{
+			return ((float)quantity/100).ToString("0.00");
+		}
+	}
 
 	public Item ItemType{
 		get

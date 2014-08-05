@@ -19,15 +19,18 @@ public class UnloadController : BaseManagedController,ICustomer, IStorable {
 	
 	public void FreeInventory()
 	{
-		if(InventoryToUnload.Quantity==0)
-		{
-			CallOnFreed();
-		}
-		else
-		{
-			state = Modes.Unload;
-			AddJob();
-		}
+    if(state==Modes.Idle)
+    {
+      if(InventoryToUnload.Quantity==0)
+      {
+        CallOnFreed();
+      }
+      else
+      {
+        state = Modes.Unload;
+        AddJob();
+      }
+    }
 	}
 
 	void PutItemProduction(RecipeInstance r)

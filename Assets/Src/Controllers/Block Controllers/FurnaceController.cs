@@ -130,7 +130,7 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 						targetQuantity--;
 						outputUnloadController.PutProduction(targetRecipe);
 						FloatingTextController.SpawnText(targetRecipe.Name,transform.position);
-
+            outputUnloadController.FreeInventory();
 					}
 				}
 			}
@@ -171,9 +171,12 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 
 	void OnFreedOutput()
 	{
-		state = Modes.Idle;
-		targetRecipe = null;
-		OnProductionComplete();
+    if(state == Modes.FreeOut)
+    {
+      state = Modes.Idle;
+      targetRecipe = null;
+      OnProductionComplete();
+    }
 	}
 
 	void AddSupplyJobs()
