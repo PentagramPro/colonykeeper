@@ -288,8 +288,8 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 
 	public void Pick(IInventory inv,  PileRequest pickRequest)
 	{
-    Pile p = inv.Take(pickRequest);
-    FloatingTextController.SpawnText("->"+p.StringQuantity+" "+p.Name,transform.position);
+	    Pile p = inv.Take(pickRequest);
+	    //FloatingTextController.SpawnText(">"+p.StringQuantity+" "+p.GetName(),transform.position);
 		inventory.Put(p);
 	}
 

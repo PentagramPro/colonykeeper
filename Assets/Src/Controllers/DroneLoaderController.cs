@@ -36,6 +36,7 @@ public class DroneLoaderController : BaseManagedController, IStorable {
 			if(take<=0)
 			{
 				state = Modes.Idle;
+				FloatingTextController.SpawnText(">"+itemToPick.StringQuantity+" "+itemToPick.ItemType.GetName(),transform.position);
 				if(OnLoaded!=null)
 					OnLoaded();
 			}
@@ -49,6 +50,7 @@ public class DroneLoaderController : BaseManagedController, IStorable {
 				{
 					taken.Quantity = left;
 					destinationInv.Put(taken);
+					FloatingTextController.SpawnText(">"+itemToPick.StringQuantity+" "+itemToPick.ItemType.GetName(),transform.position);
 					if(OnLoaded!=null)
 						OnLoaded();
 					state = Modes.Idle;
