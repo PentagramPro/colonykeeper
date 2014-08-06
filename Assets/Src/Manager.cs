@@ -22,7 +22,7 @@ public class Manager : MonoBehaviour {
 	int mouseBlockCount = 0;
 
 	public Stats Stat;
-
+	public AI AI;
 	[NonSerialized]
 	public Strings S;
 

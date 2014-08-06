@@ -58,6 +58,8 @@ public class EnemyController : BaseManagedController, IStorable {
                     
             break;
 		case Modes.Inactive:
+			if(M.AI.HasTargets)
+				HandleAITarget(M.AI.GetFirstTarget());
 			break;
 		case Modes.Sentry:
 			break;
@@ -67,6 +69,15 @@ public class EnemyController : BaseManagedController, IStorable {
 		}
 	}
 
+	void HandleAITarget(AITarget ait)
+	{
+		if(ait==null)
+			return;
+
+		state = Modes.Intercept;
+		curContact = new VisualContact(ait.Target);
+		targeter.Search(vehicle.Hull.Side);
+	}
 	void OnActivated()
 	{
         if (state == Modes.Inactive)
@@ -87,6 +98,8 @@ public class EnemyController : BaseManagedController, IStorable {
 	{
 		if(state == Modes.Intercept )
 			vehicle.Stop();
+		if(target.IsTargetBuilding())
+			M.AI.CreateTarget(target.Target);
 		curContact = target;
 		state = Modes.Attack;
 		weapon.Attack(hull,target);

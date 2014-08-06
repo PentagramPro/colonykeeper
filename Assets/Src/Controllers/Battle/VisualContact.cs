@@ -61,6 +61,11 @@ public class VisualContact : IStorable
 
 	}
 
+	public bool IsTargetBuilding()
+	{
+		return Target!=null && Target.GetComponent<BuildingController>()!=null;
+	}
+
 	#region IStorable implementation
 	public void SaveUid (WriterEx b)
 	{
