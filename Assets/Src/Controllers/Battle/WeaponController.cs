@@ -37,7 +37,7 @@ public class WeaponController : BaseController, IStorable{
 	public Vector3 RelativeGunPosition;
 	public Vector3 GunPosition{
 		get{
-			return RelativeGunPosition+transform.position;
+			return transform.TransformPoint(RelativeGunPosition);
 		}
 	}
 
