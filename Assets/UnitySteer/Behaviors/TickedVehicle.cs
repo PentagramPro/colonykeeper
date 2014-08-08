@@ -312,6 +312,7 @@ public abstract class TickedVehicle : Vehicle
 	{
 		CanMove = false;
 		ZeroVelocity();
+
 	}
 
 

@@ -126,6 +126,8 @@ public class Map
         Vector3 res = Vector3.zero;
 		foreach(StaticLight l in map[cx,cz].GetStaticLightsCache())
 		{
+			if(l.Owner==null)
+				continue;
 			Vector3 dir = pos-l.GlobalPosition;
             float mag = dir.sqrMagnitude * dir.sqrMagnitude * l.Falloff;
             Vector3 lightVal = new Vector3(

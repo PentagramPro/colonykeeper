@@ -16,7 +16,7 @@ public class EnemyController : BaseManagedController, IStorable {
 	public VehicleController vehicle;
 	public bool Move = true;
 
-
+	AITarget aiTarget = null;
 
 	HullController hull;
 
@@ -58,15 +58,20 @@ public class EnemyController : BaseManagedController, IStorable {
                     
             break;
 		case Modes.Inactive:
-			if(M.AI.HasTargets)
-				HandleAITarget(M.AI.GetFirstTarget());
 			break;
 		case Modes.Sentry:
+			if(M.AI.HasTargets)
+				HandleAITarget(M.AI.GetFirstTarget());
 			break;
 		case Modes.Attack:
 			break;
 		
 		}
+	}
+	void OnDestroy()
+	{
+		if(M!=null)
+			M.AI.RemoveTarget(aiTarget);
 	}
 
 	void HandleAITarget(AITarget ait)
@@ -76,6 +81,9 @@ public class EnemyController : BaseManagedController, IStorable {
 
 		state = Modes.Intercept;
 		curContact = new VisualContact(ait.Target);
+		curContact.LastPosition = ait.Target.Center;
+		if(Move)
+			vehicle.DriveTo(curContact.LastPosition);
 		targeter.Search(vehicle.Hull.Side);
 	}
 	void OnActivated()
@@ -99,7 +107,12 @@ public class EnemyController : BaseManagedController, IStorable {
 		if(state == Modes.Intercept )
 			vehicle.Stop();
 		if(target.IsTargetBuilding())
-			M.AI.CreateTarget(target.Target);
+		{
+
+			M.AI.RemoveTarget(aiTarget);
+
+			aiTarget = M.AI.CreateTarget(target.Target);
+		}
 		curContact = target;
 		state = Modes.Attack;
 		weapon.Attack(hull,target);
@@ -116,6 +129,7 @@ public class EnemyController : BaseManagedController, IStorable {
 
 	void OnTargetDestroyed()
 	{
+		M.AI.RemoveTarget(aiTarget);
 		curContact = null;
 		state = Modes.Sentry;
 		targeter.Search(vehicle.Hull.Side);

@@ -181,7 +181,7 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 
 	void OnUnderAttack(Transform attacker)
 	{
-		if(state == Modes.Idle)
+		if(state == Modes.Idle && M.defenceController!=null)
 		{
 			state = Modes.Runaway;
 			vehicleController.DriveTo(M.defenceController.GetComponent<BuildingController>().Position);

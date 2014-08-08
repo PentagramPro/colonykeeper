@@ -41,13 +41,18 @@ public class TargeterController : BaseManagedController, IStorable {
 	void Start () {
 
 
-		tickedObject = new TickedObject(OnUpdateTargets);
-		tickedObject.TickLength = 1f;
-        //UnityTickedQueue.GetInstance("AI");
-        queueInstance = UnityTickedQueue.Instance;
-        queueInstance.Add(tickedObject);
+
 
         
+	}
+
+	void InitTickedObject()
+	{
+		tickedObject = new TickedObject(OnUpdateTargets);
+		tickedObject.TickLength = 1f;
+		//UnityTickedQueue.GetInstance("AI");
+		queueInstance = UnityTickedQueue.Instance;
+		queueInstance.Add(tickedObject);
 	}
 	
 	// Update is called once per frame
@@ -125,6 +130,8 @@ public class TargeterController : BaseManagedController, IStorable {
 
 	public void Search(Manager.Sides searchEneminesOf)
 	{
+		if(tickedObject==null)
+			InitTickedObject();
 		currentSide = searchEneminesOf;
 		state = Modes.Search;
 	}
@@ -138,7 +145,8 @@ public class TargeterController : BaseManagedController, IStorable {
 
 	void OnDestroy()
 	{
-        queueInstance.Remove(tickedObject);
+		if(queueInstance!=null && tickedObject!=null)
+        	queueInstance.Remove(tickedObject);
 	}
 
 	#region IStorable implementation
