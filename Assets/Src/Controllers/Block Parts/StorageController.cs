@@ -12,6 +12,11 @@ public class StorageController : IInventory, IInteractive {
 		//StoragePanel  = GameObject.Find ("StoragePanel",false).GetComponent<StoragePanelController>();
 		StoragePanel = M.GetGUIController().StoragePanel;
 	}
+
+	void Update()
+	{
+
+	}
 	#region IInteractive implementation
 	public void OnSelected()
 	{
@@ -29,6 +34,7 @@ public class StorageController : IInventory, IInteractive {
 			StoragePanel.TargetStorage = null;
 			StoragePanel.gameObject.SetActive(false);	
 		}
+
 	}
 
 

@@ -4,7 +4,14 @@ using System.Collections;
 public class StoragePanelController : BaseManagedController {
 
 	PageListController adapter;
+	public ProgressBarController CapacityIndicator;
 	public StorageController TargetStorage {get;set;}
+	public float Capacity{
+		set
+		{
+			CapacityIndicator.Progress = value;
+		}
+	}
 	// Use this for initialization
 	void Start () {
 
@@ -30,6 +37,7 @@ public class StoragePanelController : BaseManagedController {
 		foreach(Pile i in items)
 			adapter.ItemsToDisplay.Add(i);
 		adapter.UpdateList();
+		Capacity = (float)TargetStorage.Quantity/TargetStorage.MaxQuantity;
 	}
 
 

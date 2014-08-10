@@ -29,7 +29,7 @@ public class HullController : BaseManagedController, IStorable, IInteractive {
 			return transform.position+CenterPos;
 		}
 	}
-	int maxHP = 1000;
+	public int maxHP = 1000;
 	public int MaxHP{
 		get{
 			return maxHP;
