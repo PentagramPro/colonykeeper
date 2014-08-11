@@ -343,4 +343,9 @@ public class Manager : MonoBehaviour {
 		veh.transform.position = new Vector3(position.x,0.1f,position.z);
 		return vcontroller;
 	}
+
+	public void FinishLevel(bool victory)
+	{
+
+	}
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ScriptNodeController : MonoBehaviour {
+public class ScriptNodeController : BaseManagedController {
 
 	bool closing = false;
 	public ScriptConditions Condition;
@@ -34,8 +34,10 @@ public class ScriptNodeController : MonoBehaviour {
 		switch(Action)
 		{
 		case ScriptActions.Victory:
+				M.FinishLevel(true);
 			break;
 		case ScriptActions.Defeat:
+				M.FinishLevel(false);
 			break;
 		}
 	}
