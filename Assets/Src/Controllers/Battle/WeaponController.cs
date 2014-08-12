@@ -60,6 +60,7 @@ public class WeaponController : BaseController, IStorable{
 			{
 				if (OnTargetDestroyed != null)
 					OnTargetDestroyed();
+				curContact = null;
 				state = Modes.Idle;
 			}
 		}

@@ -7,6 +7,7 @@ public class StaticLightAnchor : BaseManagedController {
 
 	Renderer[] cache;
 	Map map;
+	public Vector3 AmbientLight = Vector3.zero;
 	// Use this for initialization
 	void Start () {
 	
@@ -18,7 +19,7 @@ public class StaticLightAnchor : BaseManagedController {
 	void Update () {
 	
 		//Color c = Color.white*(map.GetLightAmount(transform.position)*0.8f+new Color(0.2f,0.2f,0.2f));
-        Vector3 bigc = map.GetLightAmount(transform.position);
+		Vector3 bigc = map.GetLightAmount(transform.position)+AmbientLight;
         //Vector3 c = 
         Color c = PanelGenerator.ClampLight(bigc);
         if(renderer!=null)

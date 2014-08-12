@@ -22,7 +22,7 @@ public class AI : BaseManagedController {
 	public void RemoveTarget(AITarget target)
 	{
 		if(target!=null)
-			Destroy(target);
+			Destroy(target.gameObject);
 		AITarget[] targets = GetComponentsInChildren<AITarget>();
 		if(targets.GetLength(0)==0)
 			hasTargets = false;
@@ -32,8 +32,12 @@ public class AI : BaseManagedController {
 	{
 		AITarget[] targets = GetComponentsInChildren<AITarget>();
 		foreach(AITarget t in targets)
-			if (t.Target==target)
+		{
+			if(t.Target==null)
+				Destroy(t.gameObject);
+			else if (t.Target==target)
 				return t;
+		}
 		GameObject ai = new GameObject();
 		AITarget ait = ai.AddComponent<AITarget>();
 		ai.transform.parent = transform;

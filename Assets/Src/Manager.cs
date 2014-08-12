@@ -346,6 +346,8 @@ public class Manager : MonoBehaviour {
 
 	public void FinishLevel(bool victory)
 	{
-
+		var state = victory?MainMenuController.LoadMainMenuState.VictoryScreen : 
+			MainMenuController.LoadMainMenuState.DefeatScreen;
+		MainMenuController.LoadMainMenu(state);
 	}
 }

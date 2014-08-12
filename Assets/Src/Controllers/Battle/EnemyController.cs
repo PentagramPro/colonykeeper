@@ -17,7 +17,7 @@ public class EnemyController : BaseManagedController, IStorable {
 	public bool Move = true;
 
 	AITarget aiTarget = null;
-
+	Vector3 startPosition;
 	HullController hull;
 
 	// Use this for initialization
@@ -40,7 +40,7 @@ public class EnemyController : BaseManagedController, IStorable {
 
 		vehicle.OnPathWalked += OnPathWalked;
 		vehicle.OnActivated += OnActivated;
-
+		startPosition = transform.position;
 
 	}
 	
@@ -76,7 +76,7 @@ public class EnemyController : BaseManagedController, IStorable {
 
 	void HandleAITarget(AITarget ait)
 	{
-		if(ait==null)
+		if(ait==null || ait.Target==null)
 			return;
 
 		state = Modes.Intercept;
@@ -95,11 +95,22 @@ public class EnemyController : BaseManagedController, IStorable {
         }
 	}
 
-
+	void SentryOrReturn()
+	{
+		if(Vector3.Distance(transform.position,startPosition)<1)
+			state = Modes.Sentry;
+		else
+		{
+			state = Modes.Intercept;
+			vehicle.DriveTo(startPosition);
+		}
+	}
 	void OnPathWalked()
 	{
 		if(state==Modes.Intercept)
-			state = Modes.Sentry;
+		{
+			SentryOrReturn();
+		}
 	}
 
 	void OnFound(VisualContact target)
@@ -120,6 +131,8 @@ public class EnemyController : BaseManagedController, IStorable {
 
 	void OnTargetLost()
 	{
+		if(state==Modes.Intercept)
+			return;
 
 		state = Modes.Intercept;
 		if(Move)
@@ -131,7 +144,7 @@ public class EnemyController : BaseManagedController, IStorable {
 	{
 		M.AI.RemoveTarget(aiTarget);
 		curContact = null;
-		state = Modes.Sentry;
+		SentryOrReturn();
 		targeter.Search(vehicle.Hull.Side);
 	}
 
