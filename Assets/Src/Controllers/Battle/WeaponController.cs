@@ -41,6 +41,19 @@ public class WeaponController : BaseController, IStorable{
 		}
 	}
 
+	public float DPS
+	{
+		get{
+			return fireDamage*fireRoundSize / (fireRoundDelay+ (fireRoundSize-1)*fireDelay);
+		}
+	}
+
+	float reloadProgress=1;
+	public float ReloadProgress{
+		get{
+			return reloadProgress;
+		}
+	}
 	HullController owner;
 
 
@@ -105,6 +118,7 @@ public class WeaponController : BaseController, IStorable{
 
 			if(roundCounter>0)
 			{
+				reloadProgress = 1.0f-(roundCounter-1.0f)/(float)fireRoundSize;
 				if(fireCounter>fireDelay)
 				{
 					fireCounter=0;
@@ -115,11 +129,13 @@ public class WeaponController : BaseController, IStorable{
 					if(roundCounter>fireRoundSize)
 					{
 						roundCounter=0;
+						reloadProgress=0;
 					}
 				}
 			}
 			else
 			{
+				reloadProgress = fireCounter/fireRoundDelay;
 				if(fireCounter>fireRoundDelay)
 				{
 					roundCounter = 1;

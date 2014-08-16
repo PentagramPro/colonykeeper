@@ -39,6 +39,7 @@ public class GUIController : BaseManagedController {
 	public FactoryPanelController FactoryPanel;
 	public ProductionPanelController ProductionPanel;
 	public HullPanelController HullPanel;
+	public WeaponPanelController WeaponPanel;
 
 	public HullController SelectedObject{
 		set{

@@ -150,13 +150,13 @@
   	<Building Name="Still" PrefabName="Still">
   		<Ingredients>
   			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
-  			<Ingredient Name="Copper Wire" Quantity="100"></Ingredient>
+  			<Ingredient Name="Good.Part.Wire.*" Quantity="100"></Ingredient>
   		</Ingredients>
   	</Building>
   	<Building Name="Chemical Reactor" PrefabName="Chemical Reactor" Hide="true">
   		<Ingredients>
   			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
-  			<Ingredient Name="Copper Wire" Quantity="100"></Ingredient>
+  			<Ingredient Name="Good.Part.Wire.*" Quantity="100"></Ingredient>
   		</Ingredients>
   	</Building>
   	<Building Name="Vehicle Assembler" PrefabName="Vehicle Assembler" Hide="true">
@@ -169,7 +169,7 @@
   	<Building Name="Radar" PrefabName="Radar" Hide="true">
   		<Ingredients>
   			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
-  			<Ingredient Name="Cobalt Wire" Quantity="100"></Ingredient>
+  			<Ingredient Name="Good.Part.Wire.*" Quantity="100"></Ingredient>
   		</Ingredients>
   	</Building>
   </Buildings>

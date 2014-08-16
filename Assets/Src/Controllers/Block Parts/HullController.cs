@@ -44,7 +44,7 @@ public class HullController : BaseManagedController, IStorable, IInteractive {
 	}
 	public float RelativeHP{
 		get{
-			return (float)maxHP/(float)curHP;
+			return (float)curHP/(float)maxHP;
 		}
 	}
 

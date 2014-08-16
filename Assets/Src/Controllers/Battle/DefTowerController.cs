@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DefTowerController : BaseManagedController {
+public class DefTowerController : BaseManagedController, IInteractive {
 
 	public TargeterController targeter;
 	public WeaponController weapon;
@@ -44,4 +44,24 @@ public class DefTowerController : BaseManagedController {
 	void Update () {
 	
 	}
+
+	#region IInteractive implementation
+
+	public void OnDrawSelectionGUI ()
+	{
+
+	}
+
+	public void OnSelected ()
+	{
+		M.GUIController.WeaponPanel.TargetWeapon = weapon;
+		M.GUIController.WeaponPanel.gameObject.SetActive(true);
+	}
+
+	public void OnDeselected ()
+	{
+		M.GUIController.WeaponPanel.gameObject.SetActive(false);
+	}
+
+	#endregion
 }
