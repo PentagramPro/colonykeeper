@@ -140,9 +140,23 @@
   	</Building>
   	<Building Name="Tower" PrefabName="DefTower">
   		<Ingredients>
-  			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
-  			<Ingredient Name="Good.Part.Wire.*" Quantity="100"></Ingredient>
-  			<Ingredient Name="Servo" Quantity="100"></Ingredient>
+  			<Ingredient Name="Good.Part.Plate.*" Quantity="100">
+  				<Props>
+  					<P Src="Durability" Dst="Hp"></P>
+  					<P Dst="Color"></P>
+  				</Props>
+  			</Ingredient>
+  			<Ingredient Name="Good.Part.Wire.*" Quantity="100">
+  				<Props>
+  					<P Src="Conductivity" Dst="Damage"></P>
+  					<P Dst="Color2"></P>
+  				</Props>
+  			</Ingredient>
+  			<Ingredient Name="Servo" Quantity="100">
+  				<Props>
+  					<P Dst="Speed"></P>
+  				</Props>
+  			</Ingredient>
   			<Ingredient Name="Good.Part.Controller.*" Quantity="1"></Ingredient>
   		</Ingredients>
   	</Building>
@@ -198,7 +212,13 @@
   	<!--       FURNACE RECIPES             -->
   	<Recipe Device="Furnace" Name = "Smelt Iron Ore">
   		<Ingredients>
-  			<Ingredient Name="Iron Ore" Quantity="200"></Ingredient>
+  			<Ingredient Name="Iron Ore" Quantity="200">
+  				<Props>
+  					<P Dst="Durability"></P>
+  					<P Dst="Conductivity"></P>
+  					<P Dst="Color"></P>
+  				</Props>
+  			</Ingredient>
   		</Ingredients>
   		<Results>
   			<Result Name="Iron Ingot" Quantity="100"></Result>
@@ -206,7 +226,13 @@
   	</Recipe>
   	<Recipe Device="Furnace" Name = "Smelt Aluminium Ore">
   		<Ingredients>
-  			<Ingredient Name="Aluminium Ore" Quantity="200"></Ingredient>
+  			<Ingredient Name="Aluminium Ore" Quantity="200">
+  				<Props>
+  					<P Dst="Durability"></P>
+  					<P Dst="Conductivity"></P>
+  					<P Dst="Color"></P>
+  				</Props>
+  			</Ingredient>
   		</Ingredients>
   		<Results>
   			<Result Name="Aluminium Ingot" Quantity="100"></Result>
@@ -214,7 +240,13 @@
   	</Recipe>
   	<Recipe Device="Furnace" Name = "Smelt Silver Ore">
   		<Ingredients>
-  			<Ingredient Name="Silver Ore" Quantity="200"></Ingredient>
+  			<Ingredient Name="Silver Ore" Quantity="200">
+  				<Props>
+  					<P Dst="Durability"></P>
+  					<P Dst="Conductivity"></P>
+  					<P Dst="Color"></P>
+  				</Props>
+  			</Ingredient>
   		</Ingredients>
   		<Results>
   			<Result Name="Silver Ingot" Quantity="100"></Result>
@@ -222,7 +254,13 @@
   	</Recipe>
   	<Recipe Device="Furnace" Name = "Smelt Copper Ore">
   		<Ingredients>
-  			<Ingredient Name="Copper Ore" Quantity="200"></Ingredient>
+  			<Ingredient Name="Copper Ore" Quantity="200">
+  				<Props>
+  					<P Dst="Durability"></P>
+  					<P Dst="Conductivity"></P>
+  					<P Dst="Color"></P>
+  				</Props>
+  			</Ingredient>
   		</Ingredients>
   		<Results>
   			<Result Name="Copper Ingot" Quantity="100"></Result>
@@ -230,7 +268,13 @@
   	</Recipe>
   	<Recipe Device="Furnace" Name = "Smelt Cobalt Ore">
   		<Ingredients>
-  			<Ingredient Name="Cobalt Ore" Quantity="200"></Ingredient>
+  			<Ingredient Name="Cobalt Ore" Quantity="200">
+  				<Props>
+  					<P Dst="Durability"></P>
+  					<P Dst="Conductivity"></P>
+  					<P Dst="Color"></P>
+  				</Props>
+  			</Ingredient>
   		</Ingredients>
   		<Results>
   			<Result Name="Cobalt Ingot" Quantity="100"></Result>
@@ -242,7 +286,7 @@
   		<Ingredients>
   			<Ingredient Name="Good.Ingot.*" Quantity="200">
   				<Props>
-  					<P Src="Durability" Dst="Durability" X="1"></P>
+  					<P Dst="Durability"></P>
   					<P Dst="Color"></P>
   				</Props>
   			</Ingredient>
@@ -253,7 +297,13 @@
   	</Recipe>
   	<Recipe Device="Mill" Name = "Roll wire">
   		<Ingredients>
-  			<Ingredient Name="Good.Ingot.*" Quantity="100"></Ingredient>
+  			<Ingredient Name="Good.Ingot.*" Quantity="100">
+  				<Props>
+  					<P Dst="Durability"></P>
+  					<P Dst="Conductivity"></P>
+  					<P Dst="Color"></P>
+  				</Props>
+  			</Ingredient>
   		</Ingredients>
   		<Results>
   			<Result Name="Wire" Quantity="100"></Result>
@@ -274,7 +324,13 @@
   	<!--       ASSEMBLER RECIPES        -->
   	<Recipe Device="Assembler" Name = "Assemble servo">
   		<Ingredients>
-  			<Ingredient Name="Good.Part.Wire.*" Quantity="100"></Ingredient>
+  			<Ingredient Name="Good.Part.Wire.*" Quantity="100">
+  				<Props>
+  					<P Dst="Durability"></P>
+  					<P Src="Conductivity" Dst="Speed" X="0.5"></P>
+  					<P Dst="Color"></P>
+  				</Props>
+  			</Ingredient>
   			<Ingredient Name="HIC" Quantity="1"></Ingredient>
   		</Ingredients>
   		<Results>

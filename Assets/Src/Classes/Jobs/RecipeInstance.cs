@@ -34,6 +34,39 @@ public class RecipeInstance : IStorable
 		return 0;
 	}
 
+	public ItemProps GenerateItemProps()
+	{
+		ItemProps res = new ItemProps();
+
+
+		int index=0;
+		foreach(Ingredient i in Prototype.Ingredients)
+		{
+			PileRequest thatPile = Ingredients[index];
+			foreach(PropertyTransfer transfer in i.Properties)
+			{
+				if(transfer.EmptyPropertyNames)
+					continue;
+				
+				if(transfer.DestinationProperty=="Color")
+					res.color = thatPile.Properties.color;
+				else if (transfer.DestinationProperty=="Color2")
+					res.secondaryColor = thatPile.Properties.secondaryColor;
+				else
+				{
+					string src = transfer.SourceProperty;
+					string dst = transfer.DestinationProperty;
+					if(transfer.EqualPropertyNames)
+						src = transfer.DestinationProperty;
+					
+					res[dst]=thatPile.Properties[src]*transfer.Multiplier;
+				}
+			}
+			index++;
+		}
+		return res;
+	}
+
 	#region IStorable implementation
 
 	public void SaveUid (WriterEx b)

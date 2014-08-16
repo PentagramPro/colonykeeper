@@ -36,32 +36,8 @@ public class UnloadController : BaseManagedController,ICustomer, IStorable {
 	void PutItemProduction(RecipeInstance r)
 	{
 		Pile res = new Pile(r.ResultsLinks[0].ItemType,r.ResultsLinks[0].Quantity);
-		int index=0;
-		foreach(Ingredient i in r.Prototype.Ingredients)
-		{
-			PileRequest thatPile = r.Ingredients[index];
-			foreach(PropertyTransfer transfer in i.Properties)
-			{
-				if(transfer.EmptyPropertyNames)
-					continue;
 
-				if(transfer.DestinationProperty=="Color")
-					res.Properties.color = thatPile.Properties.color;
-				else if (transfer.DestinationProperty=="Color2")
-					res.Properties.secondaryColor = thatPile.Properties.secondaryColor;
-				else
-				{
-					string src = transfer.SourceProperty;
-					string dst = transfer.DestinationProperty;
-					if(transfer.EqualPropertyNames)
-						src = transfer.DestinationProperty;
-
-					res.Properties[dst]
-						=thatPile.Properties[src]*transfer.Multiplier;
-				}
-			}
-			index++;
-		}
+		res.Properties = r.GenerateItemProps();
 		//res.Properties = r.Ingredients[0].Properties.copy();
 		InventoryToUnload
 			.Put(res);
