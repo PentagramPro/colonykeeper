@@ -62,6 +62,7 @@ public class ConstructionController : BaseManagedController, IInteractive, IStor
 				M.BuildingsRegistry.Remove(ParentBlock);
 				targetBuilding.gameObject.SetActive(true);
 				ParentBlock.BuildImmediate(targetBuilding);
+				targetBuilding.GetComponent<HullController>().SetProperties(recipeInstance.GenerateItemProps());
 
 				GameObject.Destroy(transform.gameObject);
 			}

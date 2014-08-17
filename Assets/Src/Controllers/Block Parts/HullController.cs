@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-public class HullController : BaseManagedController, IStorable, IInteractive {
+public class HullController : BaseManagedController, IStorable, IInteractive, IPropertyReceiver {
 
 	public delegate void UnderAttack(Transform attacker);
 	public event UnderAttack OnUnderAttack;
@@ -109,6 +109,26 @@ public class HullController : BaseManagedController, IStorable, IInteractive {
 	void Update () {
 	
 	}
+
+	#region IPropertyReceiver implementation
+
+	public void SetProperties (ItemProps props)
+	{
+		Component[] comps = GetComponents<Component>();
+		foreach(Component c in comps)
+		{
+			if(c is IPropertyReceiver)
+				(c as IPropertyReceiver).SetProperties(props);
+		}
+
+		float hp = props["Hp"];
+		maxHP=(int)((float)maxHP*hp);
+		curHP=(int)((float)curHP*hp);
+		if(curHP>maxHP)
+			curHP = maxHP;
+	}
+
+	#endregion
 
 	#region IInteractive implementation
 

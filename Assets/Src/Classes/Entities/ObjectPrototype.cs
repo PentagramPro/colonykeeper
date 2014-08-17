@@ -1,7 +1,9 @@
 using System.Xml.Serialization;
 using System;
 using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 public abstract class ObjectPrototype : IListItem
 {
@@ -23,9 +25,11 @@ public abstract class ObjectPrototype : IListItem
 		if(obj==null)
 			throw new UnityException("Cannot find prefab with name: "+PrefabName);
 
-
+		#if UNITY_EDITOR
 		obj = (GameObject)PrefabUtility.InstantiatePrefab(obj);
-
+		#else
+		obj = (GameObject)GameObject.Instantiate(obj);
+		#endif
 		return obj;
 	}
 

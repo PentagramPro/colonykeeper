@@ -112,41 +112,41 @@
   	<!--   Tier 1     -->
   	<Building Name="Silo" PrefabName="Silo">
   		<Ingredients>
-  			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
+  			<Ingredient Name="Plate" Quantity="100"></Ingredient>
   		</Ingredients>
   	</Building>
   	<Building Name="Storage" PrefabName="Storage">
   		<Ingredients>
-  			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
+  			<Ingredient Name="Plate" Quantity="100"></Ingredient>
   		</Ingredients>
   	</Building>
   	<Building Name="Furnace" PrefabName="Furnace">
   		<Ingredients>
-  			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
+  			<Ingredient Name="Plate" Quantity="100"></Ingredient>
   			<Ingredient Name="Good.Part.Controller.*" Quantity="1"></Ingredient>
   		</Ingredients>
   	</Building>
   	<Building Name="Mill" PrefabName="Mill">
   		<Ingredients>
-  			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
+  			<Ingredient Name="Plate" Quantity="100"></Ingredient>
   			<Ingredient Name="Good.Part.Controller.*" Quantity="1"></Ingredient>
   		</Ingredients>
   	</Building>
   	<Building Name="Assembler" PrefabName="Assembler">
   		<Ingredients>
-  			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
+  			<Ingredient Name="Plate" Quantity="100"></Ingredient>
   			<Ingredient Name="Good.Part.Controller.*" Quantity="1"></Ingredient>
   		</Ingredients>
   	</Building>
   	<Building Name="Tower" PrefabName="DefTower">
   		<Ingredients>
-  			<Ingredient Name="Good.Part.Plate.*" Quantity="100">
+  			<Ingredient Name="Plate" Quantity="100">
   				<Props>
   					<P Src="Durability" Dst="Hp"></P>
   					<P Dst="Color"></P>
   				</Props>
   			</Ingredient>
-  			<Ingredient Name="Good.Part.Wire.*" Quantity="100">
+  			<Ingredient Name="Wire" Quantity="100">
   				<Props>
   					<P Src="Conductivity" Dst="Damage"></P>
   					<P Dst="Color2"></P>
@@ -163,8 +163,8 @@
   	<!--   Tier 2     -->
   	<Building Name="Still" PrefabName="Still">
   		<Ingredients>
-  			<Ingredient Name="Good.Part.Plate.*" Quantity="100"></Ingredient>
-  			<Ingredient Name="Good.Part.Wire.*" Quantity="100"></Ingredient>
+  			<Ingredient Name="Plate" Quantity="100"></Ingredient>
+  			<Ingredient Name="Wire" Quantity="100"></Ingredient>
   		</Ingredients>
   	</Building>
   	<Building Name="Chemical Reactor" PrefabName="Chemical Reactor" Hide="true">
@@ -324,7 +324,7 @@
   	<!--       ASSEMBLER RECIPES        -->
   	<Recipe Device="Assembler" Name = "Assemble servo">
   		<Ingredients>
-  			<Ingredient Name="Good.Part.Wire.*" Quantity="100">
+  			<Ingredient Name="Wire" Quantity="100">
   				<Props>
   					<P Dst="Durability"></P>
   					<P Src="Conductivity" Dst="Speed" X="0.5"></P>

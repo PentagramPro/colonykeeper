@@ -101,6 +101,8 @@ public class TerrainController : BaseManagedController, IStorable {
 		{
 			map[b.MapPos] = b;
 		}
+
+		GetComponent<TapController>().OnTap+=OnTap;
 	}
 	public void PrepareMapForEditor()
 	{
@@ -275,7 +277,7 @@ public class TerrainController : BaseManagedController, IStorable {
 			OnCellHover(x,z);
 	}
 
-	void OnMouseUp()
+	void OnTap()
 	{
 
 		int x,z;

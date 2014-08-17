@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DefTowerController : BaseManagedController, IInteractive {
+public class DefTowerController : BaseManagedController, IInteractive, IPropertyReceiver {
 
 	public TargeterController targeter;
 	public WeaponController weapon;
@@ -44,6 +44,20 @@ public class DefTowerController : BaseManagedController, IInteractive {
 	void Update () {
 	
 	}
+
+	#region IPropertyReceiver implementation
+
+	public void SetProperties (ItemProps props)
+	{
+
+		float damage = props["Damage"];
+		float speed = props["Speed"];
+
+		weapon.fireDamage*=damage;
+		weapon.rotationSpeed*=speed;
+	}
+
+	#endregion
 
 	#region IInteractive implementation
 
