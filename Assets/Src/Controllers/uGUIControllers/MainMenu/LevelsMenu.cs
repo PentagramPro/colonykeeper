@@ -4,7 +4,7 @@ using System.Collections;
 public class LevelsMenu : BaseController {
 
 	PageListController pageList;
-
+	LevelDataController selectedLevel;
 	void Awake()
 	{
 		LevelDataController[] levels = GetComponentsInChildren<LevelDataController>();
@@ -20,10 +20,15 @@ public class LevelsMenu : BaseController {
 
 	void OnItemSelected(IListItem item)
 	{
-		LevelDataController level = item as LevelDataController;
+		selectedLevel = item as LevelDataController;
 
 	}
 
+	public void OnStartLevel()
+	{
+		if(selectedLevel!=null)
+			Application.LoadLevel(selectedLevel.SceneName);
+	}
 	// Update is called once per frame
 	void Update () {
 	

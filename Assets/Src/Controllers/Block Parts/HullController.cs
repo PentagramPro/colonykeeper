@@ -117,7 +117,7 @@ public class HullController : BaseManagedController, IStorable, IInteractive, IP
 		Component[] comps = GetComponents<Component>();
 		foreach(Component c in comps)
 		{
-			if(c is IPropertyReceiver)
+			if(c is IPropertyReceiver && c!=this)
 				(c as IPropertyReceiver).SetProperties(props);
 		}
 
