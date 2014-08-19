@@ -32,28 +32,33 @@ public class DroneLoaderController : BaseManagedController, IStorable {
 		switch(state)
 		{
 		case Modes.DoLoad:
+
 			int take = itemToPick.Quantity -Inventory.Quantity;//destinationInv.GetItemQuantity(itemToPick);
 			if(take<=0)
 			{
-				state = Modes.Idle;
-				FloatingTextController.SpawnText(">"+itemToPick.StringQuantity+" "+itemToPick.ItemType.GetName(),transform.position);
-				if(OnLoaded!=null)
-					OnLoaded();
+				FinishLoad();
 			}
 			else
 			{
 				PileRequest takeRequest = itemToPick.copy();
 				takeRequest.Quantity = (int)Mathf.Min(take,LoadAmount*Time.smoothDeltaTime);
 				Pile taken = destinationInv.Take(takeRequest);
-				int left = Inventory.Put(taken);
-				if(left>0)
+				if(taken==null || taken.Quantity==0)
 				{
-					taken.Quantity = left;
-					destinationInv.Put(taken);
-					FloatingTextController.SpawnText(">"+itemToPick.StringQuantity+" "+itemToPick.ItemType.GetName(),transform.position);
-					if(OnLoaded!=null)
-						OnLoaded();
-					state = Modes.Idle;
+					FinishLoad();
+				}
+				else
+				{
+					int left = Inventory.Put(taken);
+
+					if(left>0)
+					{
+
+						taken.Quantity = left;
+						destinationInv.Put(taken);
+
+						FinishLoad();
+					}
 				}
 			}
 			break;
@@ -69,6 +74,13 @@ public class DroneLoaderController : BaseManagedController, IStorable {
 		}
 	}
 
+	void FinishLoad()
+	{
+		state = Modes.Idle;
+		FloatingTextController.SpawnText(">"+itemToPick.StringQuantity+" "+itemToPick.ItemType.GetName(),transform.position);
+		if(OnLoaded!=null)
+			OnLoaded();
+	}
 	void OnPathWalked()
 	{
 		if( state == Modes.GoLoad)
