@@ -44,7 +44,7 @@ public class SupplyJob : IJob
 	}
 	public override void OnLoaded ()
 	{
-		worker.DriveTo(building.Position);
+		worker.DriveTo(building.Position, building.collider);
 		state = Modes.Go;
 	}
 	public override void OnUnloaded ()

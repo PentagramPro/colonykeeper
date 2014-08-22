@@ -25,7 +25,9 @@ public class VehicleController : BaseManagedController, IStorable  {
 		}
 	}
 
+	readonly float distSquare = 0.025f;
 	Vector3 currentDestination = Vector3.zero;
+	Collider currentColliderDest = null;
 
 	SteerForPathSimplified steerForPath;
 	public TickedVehicle avehicle;
@@ -76,7 +78,12 @@ public class VehicleController : BaseManagedController, IStorable  {
 		{
 
 			M.PositionChanged(this);
-
+			if(currentColliderDest!=null)
+			{
+				Vector3 pt = currentColliderDest.ClosestPointOnBounds(hull.Center)-hull.Center;
+				if(pt.sqrMagnitude<=distSquare)
+					OnArrival(null);
+			}
 		}
 
 	}
@@ -117,10 +124,14 @@ public class VehicleController : BaseManagedController, IStorable  {
 			avehicle.Stop();
 	}
 
-
-
 	public void DriveTo(Vector3 dest)
 	{
+		DriveTo(dest,null);
+	}
+
+	public void DriveTo(Vector3 dest, Collider destCollider)
+	{
+		currentColliderDest = destCollider;
 		if(avehicle==null)
 			return;
 		avehicle.CanMove = true;
@@ -144,6 +155,7 @@ public class VehicleController : BaseManagedController, IStorable  {
 
 	private void OnArrival(UnitySteer.Helpers.SteeringEvent<Vehicle> sender)
 	{
+		currentColliderDest = null;
 		avehicle.Stop ();
 		state = Modes.Idle;
 		if(OnPathWalked!=null)

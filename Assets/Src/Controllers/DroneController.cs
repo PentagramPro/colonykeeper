@@ -204,8 +204,12 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 
 	public void DriveTo (Vector3 dest)
 	{
+		DriveTo(dest,null);
+	}
+	public void DriveTo (Vector3 dest, Collider collider)
+	{
 		state = Modes.Go;
-		vehicleController.DriveTo (dest);
+		vehicleController.DriveTo (dest, collider);
 	}
 
 	public BlockController.DigResult Dig (BlockController block)
@@ -241,7 +245,7 @@ public class DroneController : BaseManagedController, IWorker, IStorable{
 			if(destinationInv!=null)
 			{
 				state = Modes.GoUnload;
-				vehicleController.DriveTo(destinationInv.transform.position);
+				vehicleController.DriveTo(destinationInv.transform.position, destinationInv.collider);
 			}
 			else
 			{

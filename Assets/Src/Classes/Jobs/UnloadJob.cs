@@ -75,7 +75,7 @@ public class UnloadJob : IJob
 			}
 			else
 			{
-				worker.DriveTo(buildingPos);
+				worker.DriveTo(buildingPos, inventory.collider);
 				state = Modes.Go;
 			}
 			break;

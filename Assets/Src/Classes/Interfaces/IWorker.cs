@@ -9,6 +9,7 @@ public interface IWorker  {
 	void CancelCurrentJob();
 
 	void DriveTo(Vector3 dest);
+	void DriveTo(Vector3 dest, Collider collider);
 
 	BlockController.DigResult Dig(BlockController block);
 

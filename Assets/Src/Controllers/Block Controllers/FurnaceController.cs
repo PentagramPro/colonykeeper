@@ -130,7 +130,7 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 						targetQuantity--;
 						outputUnloadController.PutProduction(targetRecipe);
 						FloatingTextController.SpawnText(targetRecipe.Name,transform.position);
-            outputUnloadController.FreeInventory();
+            			outputUnloadController.FreeInventory();
 					}
 				}
 			}

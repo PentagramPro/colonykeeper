@@ -68,7 +68,7 @@ public class DroneLoaderController : BaseManagedController, IStorable {
 			{
 				state = Modes.GoLoad;
 				destinationInv = inv;
-				Vehicle.DriveTo(inv.transform.position);
+				Vehicle.DriveTo(inv.transform.position, inv.collider);
 			}
 			break;
 		}
@@ -112,7 +112,7 @@ public class DroneLoaderController : BaseManagedController, IStorable {
 		{
 			state = Modes.GoLoad;
 			destinationInv = inv;
-			Vehicle.DriveTo(inv.transform.position);
+			Vehicle.DriveTo(inv.transform.position, inv.collider);
 			res = true;
 		}
 		else

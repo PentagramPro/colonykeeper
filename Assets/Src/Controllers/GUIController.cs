@@ -28,6 +28,7 @@ public class GUIController : BaseManagedController {
 
 	public event PickedDelegate ItemPicked;
 
+	public Transform Panels;
 
     public Canvas StrategyScreen;
     public BuildingScreenController BuildingScreen;
@@ -87,7 +88,7 @@ public class GUIController : BaseManagedController {
     {
         if (state == Modes.Idle)
         {
-            StrategyScreen.gameObject.SetActive(false);
+            Panels.gameObject.SetActive(false);
             BuildingScreen.gameObject.SetActive(true);
             state = Modes.BuildChoose;
         }
@@ -101,7 +102,7 @@ public class GUIController : BaseManagedController {
             BuildingScreen.gameObject.SetActive(false);
 			ItemScreen.gameObject.SetActive(false);
 			ColonyScreen.gameObject.SetActive(false);
-            StrategyScreen.gameObject.SetActive(true);
+			Panels.gameObject.SetActive(true);
             state = Modes.Idle;
         }
     }
@@ -135,6 +136,7 @@ public class GUIController : BaseManagedController {
 			ItemScreen.RecipeInst.Prototype = r;
 			ItemScreen.UseQuantity = true;
 			ItemScreen.gameObject.SetActive(true);
+			Panels.gameObject.SetActive(false);
 			itemCallback = callback;
 			state = Modes.Ingredients;
 		}
@@ -149,12 +151,14 @@ public class GUIController : BaseManagedController {
 				ItemPicked(BuildingScreen.SelectedBuilding);
 			state = Modes.BuildPlace;
 			ItemScreen.gameObject.SetActive(false);
+			Panels.gameObject.SetActive(true);
 		}
 		else if(state == Modes.Ingredients)
 		{
 			if(itemCallback!=null)
 				itemCallback(ItemScreen.RecipeInst, ItemScreen.Quantity);
 			ItemScreen.gameObject.SetActive(false);
+			Panels.gameObject.SetActive(true);
 			state = Modes.Idle;
 		}
 	}
@@ -163,7 +167,7 @@ public class GUIController : BaseManagedController {
     {
 		if(state==Modes.Idle)
 		{
-			StrategyScreen.gameObject.SetActive(false);
+			Panels.gameObject.SetActive(false);
 			ColonyScreen.gameObject.SetActive(true);
 			state = Modes.Info;
 		}
@@ -197,7 +201,7 @@ public class GUIController : BaseManagedController {
 
 	public void OnPlaced()
 	{
-		StrategyScreen.gameObject.SetActive(true);
+		Panels.gameObject.SetActive(true);
 		state = Modes.Idle;
 	}
 
