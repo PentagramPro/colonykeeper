@@ -2,7 +2,7 @@ using System;
 
 public enum ScriptActions
 {
-	Defeat,Victory
+	Defeat,Victory,Tip
 }
 
 

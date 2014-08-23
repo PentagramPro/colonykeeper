@@ -3,6 +3,6 @@ using System;
 
 public enum ScriptConditions
 {
-	Destroyed
+	Sequence,Destroyed,Mined
 }
 

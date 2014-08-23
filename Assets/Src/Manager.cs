@@ -23,6 +23,8 @@ public class Manager : MonoBehaviour {
 
 	public Stats Stat;
 	public AI AI;
+	public ScriptManager Script;
+
 	[NonSerialized]
 	public Strings S;
 
