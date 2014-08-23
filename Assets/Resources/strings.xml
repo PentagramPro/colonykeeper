@@ -6,5 +6,7 @@
   	<String Name="Message.AttackOutOfRange">Our vehicle is under attack! Out of range of defending system! </String>
   	<String Name="Message.ProdComplete">{0}: production complete.</String>
   	<String Name="Message.NoAmmo">Defender drone: out of ammunition!</String>
+  	<String Name="Tip.1.Ore">This is iron ore. Click on it to mine.</String>
+  	<String Name="Tip.1.OreMined">Everything you mined is carried to silos and storages by your drones.</String>
   </SimpleStrings>
 </Strings>

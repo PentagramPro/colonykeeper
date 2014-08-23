@@ -8,7 +8,7 @@ public class GUIController : BaseManagedController {
 
 	//List<Block> blocks = new List<Block>();
 	enum Modes {
-		Idle, BuildChoose, BuildIngredients, BuildPlace, Info, Ingredients
+		Idle, Tip, BuildChoose, BuildIngredients, BuildPlace, Info, Ingredients
 	}
 	private Modes _state = Modes.Idle;
 
@@ -41,6 +41,7 @@ public class GUIController : BaseManagedController {
 	public ProductionPanelController ProductionPanel;
 	public HullPanelController HullPanel;
 	public WeaponPanelController WeaponPanel;
+	public TipPanelController TipPanel;
 
 	public HullController SelectedObject{
 		set{
@@ -106,6 +107,20 @@ public class GUIController : BaseManagedController {
             state = Modes.Idle;
         }
     }
+
+	public void OnTipClose()
+	{
+		OnStrategyBuildCancel();
+		TipPanel.gameObject.SetActive(false);
+		M.Script.OnTipClosed();
+	}
+	public void ShowTip(string stringName)
+	{
+		state = Modes.Tip;
+		TipPanel.gameObject.SetActive(true);
+		//Panels.gameObject.SetActive(false);
+		TipPanel.SetStringName(stringName);
+	}
 
     public void OnStrategyBuildSelected()
     {

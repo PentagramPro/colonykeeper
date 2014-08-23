@@ -6,6 +6,7 @@ using System;
 
 public class BlockController : BaseManagedController, ICustomer, IStorable {
 
+	public delegate void MinedDelegate();
 
 
 	public enum Accessibility{
@@ -28,6 +29,7 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	[HideInInspector]
 	public Accessibility IsAccessible;
 
+	public MinedDelegate OnMined;
 
 	public GameObject ConstructionSitePrefab;
 
@@ -238,6 +240,9 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 				digJob=null;
 				res = DigResult.Finished;
+
+				if(OnMined!=null)
+					OnMined();
 			}
 
 
