@@ -10,6 +10,8 @@ public class ScriptNodeController : BaseManagedController {
 
 	public string StringName;
 	public BlockController LinkedBlock;
+	public bool ChangeCameraLocation=false;
+
 	public bool Executed{
 		get{
 			return executed;
@@ -62,5 +64,10 @@ public class ScriptNodeController : BaseManagedController {
 				M.GUIController.ShowTip(StringName);
 			break;
 		}
+		if(LinkedBlock!=null && ChangeCameraLocation)
+		{
+			M.cameraController.ShowPoint(LinkedBlock.transform.position);
+		}
+		gameObject.SetActive(false);
 	}
 }
