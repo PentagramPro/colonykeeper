@@ -6,11 +6,9 @@ public class ScriptNodeController : BaseManagedController {
 	bool closing = false;
 	bool executed = false;
 	public ScriptConditions Condition;
-	public ScriptActions Action;
 
-	public string StringName;
+
 	public BlockController LinkedBlock;
-	public bool ChangeCameraLocation=false;
 
 	public bool Executed{
 		get{
@@ -52,22 +50,16 @@ public class ScriptNodeController : BaseManagedController {
 		if(executed)
 			return;
 		executed = true;
-		switch(Action)
+
+		Component[] components = GetComponents<Component>();
+		foreach(Component c in components)
 		{
-		case ScriptActions.Victory:
-				M.FinishLevel(true);
-			break;
-		case ScriptActions.Defeat:
-				M.FinishLevel(false);
-			break;
-		case ScriptActions.Tip:
-				M.GUIController.ShowTip(StringName);
-			break;
+			if(c is IScriptAction)
+			{
+				(c as IScriptAction).Execute();
+			}
 		}
-		if(LinkedBlock!=null && ChangeCameraLocation)
-		{
-			M.cameraController.ShowPoint(LinkedBlock.transform.position);
-		}
+
 		gameObject.SetActive(false);
 	}
 }
