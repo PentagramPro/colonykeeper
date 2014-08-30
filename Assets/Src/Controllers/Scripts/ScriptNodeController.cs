@@ -61,5 +61,6 @@ public class ScriptNodeController : BaseManagedController {
 		}
 
 		gameObject.SetActive(false);
+		M.Script.ExecuteSequence();
 	}
 }

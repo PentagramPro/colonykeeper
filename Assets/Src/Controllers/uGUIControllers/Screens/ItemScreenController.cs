@@ -28,11 +28,12 @@ public class ItemScreenController : BaseManagedController {
 		base.Awake ();
 		pageController = GetComponent<PageListController>();
 		pageController.OnItemSelected+=OnItemSelected;
-		BtnPlus.onClick.AddListener(PlusMinus);
-		BtnMinus.onClick.AddListener(PlusMinus);
+		BtnPlus.onClick.AddListener(() => {  PlusMinus(BtnPlus); });
+		BtnMinus.onClick.AddListener(() => {  PlusMinus(BtnMinus); });
 		foreach(IngredientItemController i in IngredientSlots)
 		{
-			i.GetComponent<Button>().onClick.AddListener(OnIngredientSlotClick);
+			Button b = i.GetComponent<Button>();
+			b.onClick.AddListener(() => {  OnIngredientSlotClick(b); });
 		}
 	}
 	// Use this for initialization

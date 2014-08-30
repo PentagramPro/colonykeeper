@@ -34,7 +34,8 @@ public class PageListController : BaseController
 		{
 			Button b = i.GetButton();
 			if(b!=null)
-				b.onClick.AddListener(OnAdapterClick);
+				b.onClick.AddListener(() => {  OnAdapterClick(b); });
+
 		}
 	}
     // Use this for initialization

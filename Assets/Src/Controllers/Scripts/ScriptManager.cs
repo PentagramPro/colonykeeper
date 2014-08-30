@@ -10,7 +10,7 @@ public class ScriptManager : BaseManagedController {
 	void Start () {
 		scripts = GetComponentsInChildren<ScriptNodeController>();
 		//if(scripts.Length==0)
-		ExecuteSequence(false);
+		ExecuteSequence();
 
 
 	}
@@ -22,30 +22,37 @@ public class ScriptManager : BaseManagedController {
 
 	public void OnTipClosed()
 	{
-		ScriptNodeController s = scripts[index];
-		if(s.Condition==ScriptConditions.TipClosed)
+		if(index<scripts.Length)
 		{
-			ExecuteSequence(true);
+
+			ScriptNodeController s = scripts[index];
+			if(s.Condition==ScriptConditions.TipClosed)
+			{
+				s.ExecuteAction();
+			}
 		}
 	}
 
-	void ExecuteSequence(bool includeFirst)
+	public void ExecuteSequence()
 	{
 		if(index>=scripts.Length)
 			return;
 
-		if(includeFirst)
+	
+
+		ScriptNodeController s = scripts[index];
+		while(s.Executed)
 		{
-			scripts[index].ExecuteAction();
 			index++;
+			if(index>=scripts.Length)
+				return;
+			s = scripts[index];
 		}
 
-		for(;index<scripts.Length;index++)
-		{
-			ScriptNodeController s = scripts[index];
-			if(s.Condition!=ScriptConditions.Sequence && s.Executed==false)
-				break;
-			s.ExecuteAction();
-		}
+		if(s.Condition!=ScriptConditions.Sequence)
+			return;
+		index++;
+		s.ExecuteAction();
+
 	}
 }
