@@ -2,17 +2,21 @@
 using System.Collections;
 
 public class ScriptNodeController : BaseManagedController {
+	enum Modes{
+		Idle, Countdown, Executed, End
+	}
 
-	bool closing = false;
-	bool executed = false;
 	public ScriptConditions Condition;
+	public float Delay = 0;
+	Modes state = Modes.Idle;
 
+	float counter = 0;
 
 	public BlockController LinkedBlock;
 
 	public bool Executed{
 		get{
-			return executed;
+			return state==Modes.Executed;
 		}
 	}
 	// Use this for initialization
@@ -23,17 +27,25 @@ public class ScriptNodeController : BaseManagedController {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if(state==Modes.Countdown)
+		{
+			counter+=Time.smoothDeltaTime;
+			if(counter>Delay)
+			{
+				state = Modes.Executed;
+				InternalExecute();
+			}
+		}
 	}
 
 	void OnApplicationQuit()
 	{
-		closing = true;
+		state = Modes.End;
 	}
 
 	void OnDestroy()
 	{
-		if(!closing && Condition==ScriptConditions.Destroyed)
+		if(state==Modes.Idle && Condition==ScriptConditions.Destroyed)
 		{
 			ExecuteAction();
 		}
@@ -41,16 +53,29 @@ public class ScriptNodeController : BaseManagedController {
 
 	void OnMined()
 	{
-		if(Condition==ScriptConditions.Mined)
+
+		if(state== Modes.Idle && Condition==ScriptConditions.Mined)
 			ExecuteAction();
 	}
 
 	public void ExecuteAction()
 	{
-		if(executed)
+		if(state==Modes.End || state==Modes.Executed)
 			return;
-		executed = true;
+		if(Delay==0)
+		{
+			state = Modes.Executed;
 
+			InternalExecute();
+		}
+		else
+		{
+			state = Modes.Countdown;
+		}
+	}
+
+	void InternalExecute()
+	{
 		Component[] components = GetComponents<Component>();
 		foreach(Component c in components)
 		{
@@ -59,7 +84,7 @@ public class ScriptNodeController : BaseManagedController {
 				(c as IScriptAction).Execute();
 			}
 		}
-
+		
 		gameObject.SetActive(false);
 		M.Script.ExecuteSequence();
 	}
