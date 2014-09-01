@@ -42,6 +42,8 @@ public class GUIController : BaseManagedController {
 	public HullPanelController HullPanel;
 	public WeaponPanelController WeaponPanel;
 	public TipPanelController TipPanel;
+	public GoalPanelController GoalPanel;
+
 
 	public HullController SelectedObject{
 		set{
