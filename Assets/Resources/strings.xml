@@ -7,8 +7,11 @@
   	<String Name="Message.ProdComplete">{0}: production complete.</String>
   	<String Name="Message.NoAmmo">Defender drone: out of ammunition!</String>
   	<String Name="Goal.1.Ore">mine iron ore.</String>
+  	<String Name="Goal.1.RollPlate">roll a plate in mill.</String>
+  	<String Name="Goal.1.ExploreRegion">explore source of radio signal.</String>
   	<String Name="Tip.1.Ore">This is iron ore. Click on it to mine.</String>
   	<String Name="Tip.1.OreMined">Everything you mined is carried to silos and storages by your drones.</String>
   	<String Name="Tip.1.Silo">Silo is a building where bulk and liquid materials are stored. You can click on silo to see its contents.</String>
+  	<String Name="Tip.1.Furnace">You can smelt ores in furnace. Try it now by selecting this building and choosing 'Smelt iron ore'</String>
   </SimpleStrings>
 </Strings>
