@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 
+	public delegate void ItemEvent();
+	public event ItemEvent OnItemProduced;
+
 	public enum Modes {
 		Idle, Ingredients, FreeIn,Fill,Prod,FreeOut
 	}
@@ -131,6 +134,8 @@ public class FurnaceController : BaseManagedController, IInteractive, IStorable{
 						outputUnloadController.PutProduction(targetRecipe);
 						FloatingTextController.SpawnText(targetRecipe.Name,transform.position);
             			outputUnloadController.FreeInventory();
+						if(OnItemProduced!=null)
+							OnItemProduced();
 					}
 				}
 			}

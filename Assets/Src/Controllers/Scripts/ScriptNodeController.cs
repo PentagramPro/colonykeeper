@@ -1,28 +1,47 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class ScriptNodeController : BaseManagedController {
 	enum Modes{
 		Idle, Countdown, Executed, End
 	}
 
-	public ScriptConditions Condition;
+
 	public float Delay = 0;
 	Modes state = Modes.Idle;
+	List<IScriptCondition> conditions = new List<IScriptCondition>();
+	List<IScriptAction> actions = new List<IScriptAction>();
 
 	float counter = 0;
 
-	public BlockController LinkedBlock;
 
 	public bool Executed{
 		get{
 			return state==Modes.Executed;
 		}
 	}
+
+	public int ConditionsCount{
+		get{
+			return conditions.Count;
+		}
+	}
+	protected override void Awake ()
+	{
+		base.Awake ();
+		Component[] components = GetComponents<Component>();
+		foreach(Component c in components)
+		{
+			if(c is IScriptAction)
+				actions.Add(c as IScriptAction);
+			if(c is IScriptCondition )
+				conditions.Add(c as IScriptCondition);
+		}
+	}
 	// Use this for initialization
 	void Start () {
-		if(Condition==ScriptConditions.Mined && LinkedBlock!=null)
-			LinkedBlock.OnMined+=OnMined;
+
+
 	}
 	
 	// Update is called once per frame
@@ -43,19 +62,33 @@ public class ScriptNodeController : BaseManagedController {
 		state = Modes.End;
 	}
 
-	void OnDestroy()
+
+	public void OnTipClosed()
 	{
-		if(state==Modes.Idle && Condition==ScriptConditions.Destroyed)
+		foreach(IScriptCondition c in conditions)
+			c.OnTipClosed();
+	}
+
+	public void OnConditionChecked()
+	{
+		if(state==Modes.End)
+			return;
+
+		bool allChecked=true;
+		foreach(IScriptCondition c in conditions)
+		{
+			if(!c.IsChecked())
+			{
+				allChecked=false;
+				break;
+			}
+		}
+
+		if(allChecked)
 		{
 			ExecuteAction();
 		}
-	}
 
-	void OnMined()
-	{
-
-		if(state== Modes.Idle && Condition==ScriptConditions.Mined)
-			ExecuteAction();
 	}
 
 	public void ExecuteAction()
@@ -76,15 +109,9 @@ public class ScriptNodeController : BaseManagedController {
 
 	void InternalExecute()
 	{
-		Component[] components = GetComponents<Component>();
-		foreach(Component c in components)
-		{
-			if(c is IScriptAction)
-			{
-				(c as IScriptAction).Execute();
-			}
-		}
-		
+		foreach(IScriptAction a in actions)
+			a.Execute();
+
 		gameObject.SetActive(false);
 		M.Script.ExecuteSequence();
 	}

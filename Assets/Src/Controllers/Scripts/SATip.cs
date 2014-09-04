@@ -6,7 +6,7 @@ public class SATip : BaseManagedController, IScriptAction {
 	public string StringName = "";
 	public Transform LinkedObject;
 
-	public bool ChangeCameraLocation=false;
+
 
 	// Use this for initialization
 	void Start () {
@@ -23,7 +23,7 @@ public class SATip : BaseManagedController, IScriptAction {
 	public void Execute ()
 	{
 		M.GUIController.ShowTip(StringName);
-		if(LinkedObject!=null && ChangeCameraLocation)
+		if(LinkedObject!=null)
 		{
 			M.cameraController.ShowPoint(LinkedObject.position);
 		}

@@ -22,14 +22,13 @@ public class ScriptManager : BaseManagedController {
 
 	public void OnTipClosed()
 	{
+
 		if(index<scripts.Length)
 		{
 
 			ScriptNodeController s = scripts[index];
-			if(s.Condition==ScriptConditions.TipClosed)
-			{
-				s.ExecuteAction();
-			}
+			s.OnTipClosed();
+
 		}
 	}
 
@@ -49,7 +48,7 @@ public class ScriptManager : BaseManagedController {
 			s = scripts[index];
 		}
 
-		if(s.Condition!=ScriptConditions.Sequence)
+		if(s.ConditionsCount!=0)
 			return;
 		index++;
 		s.ExecuteAction();
