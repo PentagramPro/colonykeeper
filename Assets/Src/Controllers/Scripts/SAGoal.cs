@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent (typeof (ScriptNodeController))]
 public class SAGoal : MonoBehaviour, IScriptAction {
 
 	public GoalController Goal;

@@ -100,7 +100,7 @@ public class GUIController : BaseManagedController {
     public void OnStrategyBuildCancel()
     {
         if (state ==  Modes.BuildChoose || state == Modes.BuildIngredients || state==Modes.Ingredients
-		    || state == Modes.Info)
+		    || state == Modes.Info || state == Modes.Tip)
         {
             BuildingScreen.gameObject.SetActive(false);
 			ItemScreen.gameObject.SetActive(false);
@@ -113,6 +113,7 @@ public class GUIController : BaseManagedController {
 	public void OnTipClose()
 	{
 		OnStrategyBuildCancel();
+
 		TipPanel.gameObject.SetActive(false);
 		M.Script.OnTipClosed();
 	}

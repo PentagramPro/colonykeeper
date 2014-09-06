@@ -19,11 +19,13 @@ public class ClickBlocker : BaseManagedController {
 	public void OnPointerEnter()
 	{
 		Block();
+		//Debug.Log("Pointer enter");
 	}
 
 	public void OnPointerLeave()
 	{
 		Unblock();
+		//Debug.Log("Pointer leave");
 	}
 
 	void OnDisable()

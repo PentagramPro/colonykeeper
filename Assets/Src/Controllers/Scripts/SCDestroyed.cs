@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent (typeof (ScriptNodeController))]
 public class SCDestroyed : ScriptConditionBase {
 
 	// Use this for initialization

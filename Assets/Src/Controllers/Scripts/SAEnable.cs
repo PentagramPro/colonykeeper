@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent (typeof (ScriptNodeController))]
 public class SAEnable : MonoBehaviour, IScriptAction {
 
 	public GameObject ObjectToEnable;
+	public bool Enable = true;
 	// Use this for initialization
 	void Start () {
 	
@@ -19,7 +21,7 @@ public class SAEnable : MonoBehaviour, IScriptAction {
 	public void Execute ()
 	{
 		if(ObjectToEnable!=null)
-			ObjectToEnable.SetActive(true);
+			ObjectToEnable.SetActive(Enable);
 	}
 
 	#endregion

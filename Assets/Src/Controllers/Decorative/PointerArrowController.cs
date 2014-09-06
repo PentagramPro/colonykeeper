@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PointerArrowController : MonoBehaviour {
 
-	public float Lifetime = 4f;
+	public float Lifetime = 0f;
 	public float Period = 2f;
 	public float Amplitude = 0.4f;
 	public Transform Arrow;
@@ -23,7 +23,7 @@ public class PointerArrowController : MonoBehaviour {
 	void Update () {
 		Arrow.localPosition = startPos+new Vector3( 0,-Amplitude*Mathf.Sin(Period*time),0);
 		time+=Time.smoothDeltaTime;
-		if(time>Lifetime)
+		if(Lifetime>0 && time>Lifetime)
 			Destroy(gameObject);
 	}
 }
