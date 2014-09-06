@@ -12,6 +12,10 @@ public class ConstructionController : BaseManagedController, IInteractive, IStor
 	BuildingController targetBuilding;
 	public BlockController ParentBlock;
 
+	public ParticleFxController DustParticles;
+	public Transform SiteModel;
+	Vector3 siteModelPos;
+
 	public BuildingController TargetGameObject{
 		set{
 			targetBuilding = value;
@@ -27,6 +31,7 @@ public class ConstructionController : BaseManagedController, IInteractive, IStor
 	void Start () {
 		if(supplyController==null)
 			throw new UnityException("Supply controller must not be null");
+		DustParticles.Stop();
 	}
 
 
@@ -43,15 +48,19 @@ public class ConstructionController : BaseManagedController, IInteractive, IStor
 			}
 			break;
 		case Modes.Prebuild:
-				productionPoints+=prebuildRate*Time.smoothDeltaTime;
+			{
+				float delta = prebuildRate*Time.smoothDeltaTime;
+				productionPoints+=delta;
+				SiteModel.localPosition=Vector3.MoveTowards(SiteModel.localPosition,siteModelPos,delta);
 				//transform.position+=new Vector3(0,prebuildRate*Time.smoothDeltaTime,0);
 				if(productionPoints>=1)
 				{
 					productionPoints=0;
 					state = Modes.Supply;
-
+					SiteModel.localPosition = siteModelPos;
 					supplyController.Supply(recipeInstance,1);
 				}
+			}
 			break;
 		case Modes.Build:
 			productionPoints+=productionRate*Time.smoothDeltaTime;
@@ -74,7 +83,10 @@ public class ConstructionController : BaseManagedController, IInteractive, IStor
 	{;
 		state = Modes.Prebuild;
 		recipeInstance = recipe;
-		
+
+		DustParticles.Play();
+		siteModelPos = SiteModel.transform.localPosition;
+		SiteModel.localPosition = siteModelPos-new Vector3(0,1,0);
 		//because Unity won`t call Start method of supply controller in time
 		//supplyController.Init();
 		//transform.position -= new Vector3(0, 1, 0);

@@ -1,6 +1,8 @@
 fileFormatVersion: 2
 guid: 6adb590da6cb8a74f915277ae7983594
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: green_cell_bg
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
