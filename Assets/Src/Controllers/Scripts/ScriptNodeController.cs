@@ -117,7 +117,8 @@ public class ScriptNodeController : BaseManagedController {
 		foreach(IScriptAction a in actions)
 			a.Execute();
 
-		gameObject.SetActive(false);
+
 		M.Script.ExecuteSequence(this);
+		gameObject.SetActive(false);
 	}
 }

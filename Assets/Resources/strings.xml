@@ -15,7 +15,7 @@
   	<String Name="Tip.1.Furnace">You can smelt ores in furnace. Try it now by selecting this building and choosing 'Smelt iron ore'</String>
   	<String Name="Tip.1.Smelted">Job is done. Drones will unload iron bars from furnace and carry them to storage.</String>
   	<String Name="Tip.1.DetectedSignal">There is an area which is active in long radio waves. Explore it with your drones by diggin a tunnel.</String>
-  	<String Name="Tip.1.BuildTowers">Don`n forget to build some towers for defence. We didnt found any lifeforms here, though there can be hostile animals underground.</String>
+  	<String Name="Tip.1.BuildTowers">Don`n forget to build some towers for defence. We haven`t found any lifeforms here, though there can be hostile animals underground.</String>
   	<String Name="Tip.1.EnemyFound">Unknown machines, they attack our drones!</String>
   </SimpleStrings>
 </Strings>

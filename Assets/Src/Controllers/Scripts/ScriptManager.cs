@@ -35,27 +35,16 @@ public class ScriptManager : BaseManagedController {
 		}
 	}
 
-	public void ExecuteSequence(ScriptNodeController lastExecuted)
+	public void ExecuteSequence(ScriptNodeController caller)
 	{
 		if(index>=scripts.Count)
 			return;
 
+		if(caller!=null && !scripts.Contains(caller))
+			return;
+
 		ScriptNodeController s = scripts[index];
-
-		if(lastExecuted!=null)
-		{
-			if(!scripts.Contains(lastExecuted))
-				return;
-			
-
-
-			if(s!=lastExecuted)
-			{
-				s = lastExecuted;
-				index = scripts.IndexOf(s);
-				Debug.LogWarning("A script node was executed not in time: "+s.gameObject.name);
-			}
-		}
+		
 		while(s.Executed)
 		{
 			index++;
@@ -63,6 +52,22 @@ public class ScriptManager : BaseManagedController {
 				return;
 			s = scripts[index];
 		}
+
+		if(caller!=null)
+		{
+			
+			ScriptNodeController lastExecuted = scripts[index-1];
+
+			if(lastExecuted!=caller)
+			{
+
+				index = scripts.IndexOf(caller);
+				s = scripts[index];
+				Debug.LogWarning("A script node was executed not in time: "+caller.gameObject.name);
+			}
+		}
+
+
 
 		if(s.ConditionsCount!=0)
 			return;
