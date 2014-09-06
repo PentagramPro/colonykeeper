@@ -8,6 +8,7 @@ public class ScriptManagerEditor : Editor
 	Type[] conditions = new Type[]{typeof(SCMined),
 		typeof(SCTipClosed),
 		typeof(SCItemProduced),
+		typeof(SCBlockExplored),
 		typeof(SCDestroyed)
 	};
 

@@ -8,11 +8,14 @@
   	<String Name="Message.NoAmmo">Defender drone: out of ammunition!</String>
   	<String Name="Goal.1.Ore">mine iron ore.</String>
   	<String Name="Goal.1.SmeltOre">smelt an iron bar.</String>
-  	<String Name="Goal.1.ExploreRegion">explore source of radio signal.</String>
+  	<String Name="Goal.1.ExploreRegion">explore active area.</String>
   	<String Name="Tip.1.Ore">This is iron ore. Click on it to mine.</String>
   	<String Name="Tip.1.OreMined">Everything you mined is carried to silos and storages by your drones.</String>
   	<String Name="Tip.1.Silo">Silo is a building where bulk and liquid materials are stored. You can click on silo to see its contents.</String>
   	<String Name="Tip.1.Furnace">You can smelt ores in furnace. Try it now by selecting this building and choosing 'Smelt iron ore'</String>
   	<String Name="Tip.1.Smelted">Job is done. Drones will unload iron bars from furnace and carry them to storage.</String>
+  	<String Name="Tip.1.DetectedSignal">There is an area which is active in long radio waves. Explore it with your drones by diggin a tunnel.</String>
+  	<String Name="Tip.1.BuildTowers">Don`n forget to build some towers for defence. We didnt found any lifeforms here, though there can be hostile animals underground.</String>
+  	<String Name="Tip.1.EnemyFound">Unknown machines, they attack our drones!</String>
   </SimpleStrings>
 </Strings>

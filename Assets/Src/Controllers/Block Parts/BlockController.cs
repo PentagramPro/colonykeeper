@@ -7,7 +7,7 @@ using System;
 public class BlockController : BaseManagedController, ICustomer, IStorable {
 
 	public delegate void MinedDelegate();
-
+	public delegate void DiscoveredDelegate();
 
 	public enum Accessibility{
 		Unknown, // this block is undiscovered
@@ -29,7 +29,8 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 	[HideInInspector]
 	public Accessibility IsAccessible;
 
-	public MinedDelegate OnMined;
+	public event MinedDelegate OnMined;
+	public event DiscoveredDelegate OnDiscovered;
 
 	public GameObject ConstructionSitePrefab;
 
@@ -149,7 +150,11 @@ public class BlockController : BaseManagedController, ICustomer, IStorable {
 		}
 		set{
 			if(value==true && discovered==false)
+			{
 				Activate();
+				if(OnDiscovered!=null)
+					OnDiscovered();
+			}
 			discovered = value;
 		}
 	}

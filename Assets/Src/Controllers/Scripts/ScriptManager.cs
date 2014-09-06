@@ -3,16 +3,19 @@ using System.Collections.Generic;
 
 public class ScriptManager : BaseManagedController {
 
-	ScriptNodeController[] scripts;
+	//ScriptNodeController[] scripts;
+	List<ScriptNodeController> scripts;
 
 	int index = 0;
+	protected override void Awake ()
+	{
+		base.Awake ();
+		ScriptNodeController[] s = GetComponentsInChildren<ScriptNodeController>();
+		scripts = new List<ScriptNodeController>(s);
+	}
 	// Use this for initialization
 	void Start () {
-		scripts = GetComponentsInChildren<ScriptNodeController>();
-		//if(scripts.Length==0)
-		ExecuteSequence();
-
-
+		ExecuteSequence(null);
 	}
 	
 	// Update is called once per frame
@@ -23,7 +26,7 @@ public class ScriptManager : BaseManagedController {
 	public void OnTipClosed()
 	{
 
-		if(index<scripts.Length)
+		if(index<scripts.Count)
 		{
 
 			ScriptNodeController s = scripts[index];
@@ -32,18 +35,31 @@ public class ScriptManager : BaseManagedController {
 		}
 	}
 
-	public void ExecuteSequence()
+	public void ExecuteSequence(ScriptNodeController lastExecuted)
 	{
-		if(index>=scripts.Length)
+		if(index>=scripts.Count)
 			return;
 
-	
-
 		ScriptNodeController s = scripts[index];
+
+		if(lastExecuted!=null)
+		{
+			if(!scripts.Contains(lastExecuted))
+				return;
+			
+
+
+			if(s!=lastExecuted)
+			{
+				s = lastExecuted;
+				index = scripts.IndexOf(s);
+				Debug.LogWarning("A script node was executed not in time: "+s.gameObject.name);
+			}
+		}
 		while(s.Executed)
 		{
 			index++;
-			if(index>=scripts.Length)
+			if(index>=scripts.Count)
 				return;
 			s = scripts[index];
 		}

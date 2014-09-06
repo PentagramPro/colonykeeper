@@ -62,6 +62,10 @@ public class ScriptNodeController : BaseManagedController {
 		state = Modes.End;
 	}
 
+	void OnDisable()
+	{
+		state = Modes.End;
+	}
 
 	public void OnTipClosed()
 	{
@@ -86,6 +90,7 @@ public class ScriptNodeController : BaseManagedController {
 
 		if(allChecked)
 		{
+
 			ExecuteAction();
 		}
 
@@ -113,6 +118,6 @@ public class ScriptNodeController : BaseManagedController {
 			a.Execute();
 
 		gameObject.SetActive(false);
-		M.Script.ExecuteSequence();
+		M.Script.ExecuteSequence(this);
 	}
 }
