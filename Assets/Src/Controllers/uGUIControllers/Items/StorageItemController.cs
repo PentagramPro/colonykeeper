@@ -28,6 +28,12 @@ public class StorageItemController : BaseController, IListItemAdapter {
 			Quantity.text = cp.StringQuantity;
 			Name.color = cp.FirstPile.Properties.color*0.8f + new Color(0.2f,0.2f,0.2f,0.2f);
 		}
+		else if(item is Pile)
+		{
+			Pile p = item as Pile;
+			Quantity.text = p.StringQuantity;
+			Name.color = p.Properties.color*0.8f + new Color(0.2f,0.2f,0.2f,0.2f);
+		}
 
 
 

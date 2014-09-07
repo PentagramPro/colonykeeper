@@ -173,7 +173,8 @@ public class ItemScreenController : BaseManagedController {
 			if(item.SelectedItem==null)
 				continue;
 			int q = item.Ingredient.Quantity;
-			RecipeInst.Ingredients.Add(new PileRequest(item.SelectedItem as Pile,q));
+			Pile p = (item.SelectedItem as CombinedPile).FirstPile;
+			RecipeInst.Ingredients.Add(new PileRequest(p,q));
 
 	
 		}
