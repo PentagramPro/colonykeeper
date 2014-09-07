@@ -25,14 +25,14 @@ public class ColonyScreenController : BaseManagedController {
 	void OnResourceItemSelected(IListItem item)
 	{
 		PropertiesList.ItemsToDisplay.Clear();
-		if(item==null || !(item is Pile))
+		if(item==null || !(item is CombinedPile))
 		{
 			PropertiesList.UpdateList();
 			return;
 		}
 
-		Pile p = item as Pile;
-
+		CombinedPile cp = item as CombinedPile;
+		Pile p = cp.FirstPile;
 		foreach(Field f in p.Properties.PropertiesList)
 		{
 			PropertiesList.ItemsToDisplay.Add(f);

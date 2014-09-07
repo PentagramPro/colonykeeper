@@ -13,7 +13,7 @@ public class InfoWindow : KWindow
 
 	protected override void OnDraw()
 	{
-		scroll = GUILayout.BeginScrollView(scroll);
+		/*scroll = GUILayout.BeginScrollView(scroll);
 		
 
 		foreach(Item i in M.Stat.Items.Keys)
@@ -30,7 +30,7 @@ public class InfoWindow : KWindow
 		}
 		GUILayout.EndScrollView();
 		if(GUILayout.Button("Close"))
-			Close(Results.Close);
+			Close(Results.Close);*/
 	}
 
 	public override void Init()

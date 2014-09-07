@@ -29,6 +29,8 @@ public class ScriptNodeController : BaseManagedController {
 	protected override void Awake ()
 	{
 		base.Awake ();
+		if(Delay==0)
+			Delay = 0.05f;
 		Component[] components = GetComponents<Component>();
 		foreach(Component c in components)
 		{

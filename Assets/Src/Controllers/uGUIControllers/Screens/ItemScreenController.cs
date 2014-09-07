@@ -7,7 +7,7 @@ public class ItemScreenController : BaseManagedController {
     PageListController pageController;
 
     public RecipeInstance RecipeInst { get; set; }
-	List<Pile> itemsCache = new List<Pile>();
+	List<CombinedPile> itemsCache = new List<CombinedPile>();
     int curIngredient = 0;
 
 	public List<IngredientItemController> IngredientSlots;
@@ -101,7 +101,7 @@ public class ItemScreenController : BaseManagedController {
 		M.Stat.GetItemsForIngredient(RecipeInst.Prototype.IngredientsLinks[curIngredient], itemsCache);
 
 		pageController.ItemsToDisplay.Clear();
-		foreach (Pile i in itemsCache)
+		foreach (CombinedPile i in itemsCache)
 		{
 			pageController.ItemsToDisplay.Add(i);
 		}

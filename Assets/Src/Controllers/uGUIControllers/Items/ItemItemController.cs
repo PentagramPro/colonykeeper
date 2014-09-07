@@ -32,11 +32,12 @@ public class ItemItemController : BaseController, IListItemAdapter {
     {
 		if(localNameLabel!=null)
         	localNameLabel.text = item.GetName();
-		if(item is Pile)
+		if(item is CombinedPile)
 		{
-			Pile p = item as Pile;
-			localNameLabel.color = p.Properties.color/2 + new Color(0.5f,0.5f,0.5f,0.5f);
-			quantityLabel.text = p.StringQuantity;
+			CombinedPile cp = item as CombinedPile;
+
+			localNameLabel.color = cp.FirstPile.Properties.color/2 + new Color(0.5f,0.5f,0.5f,0.5f);
+			quantityLabel.text = cp.StringQuantity;
 		}
     }
 

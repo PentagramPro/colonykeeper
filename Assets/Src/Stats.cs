@@ -3,54 +3,70 @@ using System.Collections.Generic;
 
 public class Stats : MonoBehaviour {
 
-	public Dictionary<Item,int> Items = new Dictionary<Item, int>();
+	//public Dictionary<Item,int> Items = new Dictionary<Item, int>();
 	public List<IListItem> ItemsList = new List<IListItem>();
 
 
-	public int GetItemCount(Item item)
+	/*public int GetItemCount(Item item)
 	{
 		int res = 0;
-		Items.TryGetValue(item,out res);
+		//Items.TryGetValue(item,out res);
 		return res;
-	}
+	}*/
 
 	public void AddPile(Pile pile)
 	{
-		ItemsList.Add(pile);
+		CombinedPile toAdd = null;
+		foreach(IListItem i in ItemsList)
+		{
+			CombinedPile cp = i as CombinedPile;
+			if(cp.IsSame(pile))
+			{
+				toAdd = cp;
+
+				break;
+			}
+		}
+
+		if(toAdd==null)
+		{
+			toAdd = new CombinedPile();
+			ItemsList.Add(toAdd);
+		}
+
+		toAdd.AddPile(pile);
 	}
 
 	public void RemovePile(Pile pile)
 	{
-		ItemsList.Remove(pile);
-	}
-
-	public void ChangeItemCount(Item item, int delta)
-	{
-		if(Items.ContainsKey(item))
+		CombinedPile toRemove=null;
+		foreach(IListItem i in ItemsList)
 		{
-			int count = Items[item];
-			count+=delta;
-			if(count>0)
-				Items[item]=count;
-			else
-				Items.Remove(item);
-		}
-		else if(delta>0)
-		{
-			Items.Add(item,delta);
+			CombinedPile cp = i as CombinedPile;
+			if(cp.IsSame(pile))
+			{
+				cp.RemovePile(pile);
+				if(cp.IsEmpty())
+					toRemove = cp;
+			}
 		}
 
+		if(toRemove!=null)
+			ItemsList.Remove(toRemove);
 	}
 
-	public void GetItemsForIngredient(Ingredient ingredient,List<Pile> result)
+
+
+	public void GetItemsForIngredient(Ingredient ingredient,List<CombinedPile> result)
 	{
 		foreach(Item item in ingredient.Items)
 		{
 			foreach(IListItem t in ItemsList)
 			{
-				Pile p = t as Pile;
-				if(p.ItemType==item)
-					result.Add(p);
+				CombinedPile cp = t as CombinedPile;
+				if(cp.IsSame(item))
+					result.Add(cp);
+
 			}
 		}
 	}
